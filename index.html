@@ -9,18 +9,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
       integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
       crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
     <style>
       body { background: #bcd1e9; }
       main { padding-bottom: 1.5rem; }
       .btn-check:focus+.btn, .btn:focus { box-shadow: none; }
       .card-footer { background: var(--bs-white); }
+      pre code { color: #444; display: block; overflow-x: auto; padding: .5em; background: #f0f0f0; }
     </style>
   </head>
   <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
       <div class="container mt-4">
-        <h1><img src="favicon.ico" alt="Yii.Rocks"> <strong>Yii.Rocks</strong>!</h1>
+        <h1><img src="favicon.ico" alt="Yii.Rocks" width="64" height="64"> <strong>Yii.Rocks</strong></h1>
         <div class="accordion" id="accordion">
           <div class="card">
             <div class="card-header" id="headingOne"><button class="btn btn-link btn-block text-left text-decoration-none px-0"
@@ -37,7 +37,7 @@
                   class="text-nowrap">Bootstrap Icons</a> and <a href="https://fontawesome.com/icons"
                   class="text-nowrap">Font Awesome Icons</a>.</div>
               <div class="card-body">
-                <pre><code class="language-php">$svg-&gt;file($svgFileName);</code></pre>
+                <pre><code>$svg-&gt;file($svgFileName);</code></pre>
               </div>
               <div class="card-footer d-flex justify-content-between"><code class="bash mt-1">composer
                   require yiirocks/svg-inline</code>
@@ -73,7 +73,7 @@
                   Framework 3.0</a> applications to add <a href="https://icons.getbootstrap.com/"
                   class="text-nowrap">Bootstrap Icons</a> inline.</div>
               <div class="card-body">
-                <pre><code class="language-php">$svg-&gt;bootstrap($iconName);</code></pre>
+                <pre><code>$svg-&gt;bootstrap($iconName);</code></pre>
               </div>
               <div class="card-footer d-flex justify-content-between"><code class="mt-1">composer
                   require yiirocks/svg-inline-bootstrap</code>
@@ -109,7 +109,7 @@
                   Framework 3.0</a> applications to add <a href="https://fontawesome.com/icons"
                   class="text-nowrap">Font Awesome Icons</a> inline.</div>
               <div class="card-body">
-                <pre><code class="language-php">$svg-&gt;fai($iconName);<br>$svg-&gt;fai($iconName, $iconStyle);</code></pre>
+                <pre><code>$svg-&gt;fai($iconName);<br>$svg-&gt;fai($iconName, $iconStyle);</code></pre>
               </div>
               <div class="card-footer d-flex justify-content-between"><code class="mt-1">composer
                   require yiirocks/svg-inline-fontawesome</code>
@@ -149,7 +149,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
 integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
 crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
     <script>
         for (var links=document.links, i=0, a; a=links[i]; i++) {
@@ -159,7 +158,6 @@ crossorigin="anonymous"></script>
         }
         const observer = lozad('img');
         observer.observe();
-        hljs.initHighlightingOnLoad();
     </script>
   </body>
 </html>
