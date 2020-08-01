@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Yii.Rocks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Mister 42">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous">
+    <style>
+        body { background: #bcd1e9; }
+        main { padding-bottom: 1.5rem; }
+        .text-shadow { text-shadow: 2px 2px 2px #777; }
+        .card-body a[target="_blank"]::after {
+            content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+            margin: 0 3px;
+        }
+        pre { margin-bottom: 0; }
+        pre code { color: #444; background: #f0f0f0; display: block; overflow-x: auto; padding: .5em; }
+    </style>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+      <div class="container mt-4">
+        <h1><a href="/" title="Yii.Rocks"><img src="/favicon.ico" alt="Yii.Rocks"
+              width="64" height="64"></a> <strong class="text-shadow">SvgInline</strong></h1>
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">YiiRocks/SvgInline</h2>
+            <p><a href="https://github.com/YiiRocks/svg-inline" class="text-nowrap">svg-inline</a>
+              provides simple functions for your <a href="http://www.yiiframework.com/"
+                class="text-nowrap">Yii Framework 3.0</a> applications to add
+              SVG Files inline and manipulate its properties. It can be extended
+              with <a href="https://icons.getbootstrap.com/" class="text-nowrap">Bootstrap
+                Icons</a> and <a href="https://fontawesome.com/icons" class="text-nowrap">Font
+                Awesome Icons</a>.</p>
+            <h3 class="card-title">Options</h3>
+            <ul class="list-unstyled">
+              <li>
+                <p><code>file</code> <span class="font-monospace">string</span>
+                  Valid path to a custom file.</p>
+              </li>
+              <li>
+                <p><code>class</code> <span class="font-monospace">string</span>
+                  Additional custom classes.</p>
+              </li>
+              <li>
+                <p><code>css</code> <span class="font-monospace">array</span>
+                  Additional CSS attributes.</p>
+              </li>
+              <li>
+                <p><code>fill</code> <span class="font-monospace">string</span>
+                  Color of the icon.</p>
+              </li>
+              <li>
+                <p><code>height</code> <span class="font-monospace">int</span>
+                  The height of the icon. If <code>height</code> is given
+                  without <code>width</code>, the latter will be calculated
+                  from the SVG size.</p>
+              </li>
+              <li>
+                <p><code>id</code> <span class="font-monospace">string</span>
+                  Id for the SVG tag.</p>
+              </li>
+              <li>
+                <p><code>title</code> <span class="font-monospace">string</span>
+                  Sets a title to the SVG output.</p>
+              </li>
+              <li>
+                <p><code>width</code> <span class="font-monospace">int</span>
+                  The width of the icon. If <code>width</code> is given without
+                  <code>height</code>, the latter will be calculated from the
+                  SVG size.</p>
+              </li>
+            </ul>
+            <h3 class="card-title">Example</h3>
+            <pre><code>echo $svg-&gt;file('@vendor/path/icon.svg')
+  -&gt;height(42)
+  -&gt;title('Yii Rocks')
+;</code></pre>
+          </div>
+          <div class="card-footer d-flex justify-content-between"><code class="bash mt-1">composer
+              require yiirocks/svg-inline</code>
+            <div class="text-right"> <a href="https://packagist.org/packages/yiirocks/svg-inline"><img
+                  src="https://img.shields.io/packagist/v/yiirocks/svg-inline.svg"
+                  alt="Packagist Version" class="d-none"></a> <a href="https://codeclimate.com/github/YiiRocks/svg-inline/maintainability"><img
+                  src="https://img.shields.io/codeclimate/maintainability/YiiRocks/svg-inline.svg"
+                  alt="Code Climate maintainability"></a> <a href="https://app.codacy.com/gh/YiiRocks/svg-inline"><img
+                  src="https://img.shields.io/codacy/grade/1a826829576d45668a766abaae2321bb/master.svg"
+                  alt="Codacy branch grade"></a> <a href="https://scrutinizer-ci.com/g/yiirocks/svg-inline/?branch=master"><img
+                  src="https://img.shields.io/scrutinizer/quality/g/yiirocks/svg-inline/master.svg"
+                  alt="Scrutinizer code quality (GitHub/Bitbucket)"></a> <img src="https://img.shields.io/github/workflow/status/yiirocks/svg-inline/PHP%20Composer"
+                alt="GitHub Workflow Status"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer mt-auto py-1 bg-light">
+      <div class="container d-flex justify-content-between"> <span class="text-muted"><a
+            href="https://github.com/YiiRocks/" class="text-decoration-none" title="YiiRocks on GitHub"><svg
+              xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 448 512"
+              aria-hidden="true" role="img"><path d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM277.3 415.7c-8.4 1.5-11.5-3.7-11.5-8 0-5.4.2-33 .2-55.3 0-15.6-5.2-25.5-11.3-30.7 37-4.1 76-9.2 76-73.1 0-18.2-6.5-27.3-17.1-39 1.7-4.3 7.4-22-1.7-45-13.9-4.3-45.7 17.9-45.7 17.9-13.2-3.7-27.5-5.6-41.6-5.6-14.1 0-28.4 1.9-41.6 5.6 0 0-31.8-22.2-45.7-17.9-9.1 22.9-3.5 40.6-1.7 45-10.6 11.7-15.6 20.8-15.6 39 0 63.6 37.3 69 74.3 73.1-4.8 4.3-9.1 11.7-10.6 22.3-9.5 4.3-33.8 11.7-48.3-13.9-9.1-15.8-25.5-17.1-25.5-17.1-16.2-.2-1.1 10.2-1.1 10.2 10.8 5 18.4 24.2 18.4 24.2 9.7 29.7 56.1 19.7 56.1 19.7 0 13.9.2 36.5.2 40.6 0 4.3-3 9.5-11.5 8-66-22.1-112.2-84.9-112.2-158.3 0-91.8 70.2-161.5 162-161.5S388 165.6 388 257.4c.1 73.4-44.7 136.3-110.7 158.3zm-98.1-61.1c-1.9.4-3.7-.4-3.9-1.7-.2-1.5 1.1-2.8 3-3.2 1.9-.2 3.7.6 3.9 1.9.3 1.3-1 2.6-3 3zm-9.5-.9c0 1.3-1.5 2.4-3.5 2.4-2.2.2-3.7-.9-3.7-2.4 0-1.3 1.5-2.4 3.5-2.4 1.9-.2 3.7.9 3.7 2.4zm-13.7-1.1c-.4 1.3-2.4 1.9-4.1 1.3-1.9-.4-3.2-1.9-2.8-3.2.4-1.3 2.4-1.9 4.1-1.5 2 .6 3.3 2.1 2.8 3.4zm-12.3-5.4c-.9 1.1-2.8.9-4.3-.6-1.5-1.3-1.9-3.2-.9-4.1.9-1.1 2.8-.9 4.3.6 1.3 1.3 1.8 3.3.9 4.1zm-9.1-9.1c-.9.6-2.6 0-3.7-1.5s-1.1-3.2 0-3.9c1.1-.9 2.8-.2 3.7 1.3 1.1 1.5 1.1 3.3 0 4.1zm-6.5-9.7c-.9.9-2.4.4-3.5-.6-1.1-1.3-1.3-2.8-.4-3.5.9-.9 2.4-.4 3.5.6 1.1 1.3 1.3 2.8.4 3.5zm-6.7-7.4c-.4.9-1.7 1.1-2.8.4-1.3-.6-1.9-1.7-1.5-2.6.4-.6 1.5-.9 2.8-.4 1.3.7 1.9 1.8 1.5 2.6z"></path></svg></a></span>
+        <span class="text-muted"><a href="https://www.mr42.me/" class="text-decoration-none"
+            title="Visit Mr.42"><svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+              height="20" viewBox="0 0 593 462" aria-hidden="true" role="img" fill="#003B6F"><path
+                d="M456 0l-12 1a337 337 0 00-29 4 205 205 0 00-17 5l-8 5a38 38 0 00-9 5l-16 10-19 19a200 200 0 00-14 21l-3 8a75 75 0 00-7 19 128 128 0 009 84l1 2 4 5a106 106 0 0023 24 86 86 0 0034 15c9 2 27 1 35-1a61 61 0 0038-32l3-7 1-6a65 65 0 00-1-28c-5-16-20-31-27-28l-4 7-3 6-1 2c0 2-5 6-9 8-3 2-6 2-11 2a31 31 0 01-22-10l-6-5a68 68 0 01-12-31V90a55 55 0 0117-37c7-7 18-15 18-13h1c5-4 23-6 35-4 20 3 38 18 49 41a139 139 0 0110 34c2 14 2 48-1 63a264 264 0 01-22 67 115 115 0 00-3 9 479 479 0 01-13 24l-2 1-1 2-14 22-4 6-6 7-4 6-4 5a69 69 0 00-4 5l-6 6-5 6a124 124 0 01-8 11l-8 9-26 31-5 6-13 15-2 3-6 6-6 7a106 106 0 00-7 10 81 81 0 00-15 23l115 1c106 0 116 0 118-2a84 84 0 0013-12 67 67 0 0011-21 81 81 0 001-40l-1-3-3-10c-6-10-11-12-14-5a46 46 0 01-34 27c-11 2-49 3-61 1-14-2-22-6-22-12 0-7 6-14 23-30l29-26a545 545 0 0050-53l11-14 1-2 6-9a262 262 0 0026-56v-5c-1-1 1-3 1-5l1-6a205 205 0 000-64 164 164 0 00-18-48c-6-10-20-27-30-36a148 148 0 00-31-19 156 156 0 00-46-11 124 124 0 01-10-1zM62 4l-2 1c-4 1-8 5-8 10 0 3 7 16 15 27 2 3 9 18 10 23l2 7v24l-1 6-1 5-1 5-4 17-2 8-5 15-3 13a82 82 0 01-3 7l-1 5a402 402 0 01-8 25 47 47 0 01-3 8l-4 11-4 11-1 3-3 9-24 64C1 332-2 345 1 353c4 8 13 14 28 15h100v5a280 280 0 01-3 31 94 94 0 01-14 37l-4 4-5 5c-6 4-12 11-11 12h82c90 0 84 0 80-6a50 50 0 00-8-7 65 65 0 01-11-12 130 130 0 01-23-70c0-2 1-2 6-3 12-3 27-9 37-15 9-6 20-18 21-24l2-6a57 57 0 00-2-29 46 46 0 00-19-23c-6-3-15-4-21-3l-7 3c-1 1 1 5 2 7a34 34 0 013 5c2 6 2 12 0 15v3l-5 6a34 34 0 01-21 11l-6 1v-5c-1-6 0-60 1-71a1319 1319 0 015-60l1-8a1153 1153 0 018-52l4-20c2-12 2-20 0-24-2-2-7-4-10-4-5 0-14 11-25 32a521 521 0 01-19 34l-3 6a77 77 0 00-13 31l-1 6-1 4a950 950 0 00-3 20l-1 7a713 713 0 00-4 32l-1 8-1 10-1 10-2 17-1 10-1 8c-2 18-3 21-5 22a251 251 0 01-35 0l-6-1-5-1-5-1-4-1a12 12 0 00-4-2 27 27 0 01-12-9c-5-9-3-16 14-45a354 354 0 0110-20l10-17a272 272 0 016-12l8-14 4-8 9-16a1402 1402 0 0116-30l10-22c11-22 23-49 25-56l3-9a90 90 0 003-44c0-2-6-9-10-11-3-2-5-2-21-2l-17 1-22-1-19-2-25-1z"></path></svg></a></span>
+      </div>
+    </footer>
+    <script>
+        for (var links=document.links, i=0, a; a=links[i]; i++) {
+            if (a.host !== location.host && a.host !== 'www.yii.rocks') {
+                a.target = '_blank';
+            }
+        }
+    </script>
+  </body>
+</html>
