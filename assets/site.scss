@@ -1,0 +1,41 @@
+---
+---
+body {
+    background: #bcd1e9;
+}
+
+main {
+    padding-bottom: 1.5rem;
+}
+
+.text-shadow {
+    text-shadow: 2px 2px 2px #777;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-body,
+.card-body {
+    a[target="_blank"]::after {
+        content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+        margin: 0 3px;
+    }
+}
+
+pre {
+    margin-bottom: 0;
+}
+
+pre code {
+    background: #f0f0f0;
+    color: #444;
+    display: block;
+    overflow-x: auto;
+    padding: .5em;
+}
+
+.card-footer {
+    background: var(--bs-light);
+}
