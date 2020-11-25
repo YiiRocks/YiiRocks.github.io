@@ -5,6 +5,37 @@ title: Yii.Rocks
 
 <div class="accordion bg-light" id="accordion">
     <div class="accordion-item">
+        <h2 class="accordion-header" id="headSimpleHtmlDom">
+            <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseSimpleHtmlDom" aria-expanded="false" aria-controls="collapseSvgInline">
+                SimpleHtmlDom
+            </button>
+        </h2>
+        <div id="collapseSimpleHtmlDom" class="accordion-collapse collapse" aria-labelledby="headSimpleHtmlDom" data-parent="#accordion">
+            <div class="accordion-body">
+                <p>
+                    <a href="https://github.com/YiiRocks/simple-html-dom" class="text-nowrap">simple-html-dom</a>
+                    configures <a href="https://github.com/voku/simple_html_dom/"
+                    class="text-nowrap">voku\helper\DomParserInterface</a>.
+                </p>
+                <div>
+                    Quick usage:<br>
+                    <pre><code>use voku\helper\DomParserInterface;
+
+class Class {
+    private DomParserInterface $dom;
+
+    __construct(DomParserInterface $dom) {
+            $this->dom = $dom;
+    }
+}</code></pre>
+                    Available options can be found in the <a href="https://github.com/voku/simple_html_dom/blob/master/README_API.md">API
+                    Readme</a>.
+                </div>
+            </div>
+            {% include footer_simple-html-dom.html %}
+        </div>
+    </div>
+    <div class="accordion-item">
         <h2 class="accordion-header" id="headSvgInline">
             <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseSvgInline" aria-expanded="false" aria-controls="collapseSvgInline">
                 SvgInline
