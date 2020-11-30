@@ -15,16 +15,16 @@ title: Yii.Rocks
                 <p>
                     <a href="https://github.com/YiiRocks/simple-html-dom" class="text-nowrap">simple-html-dom</a>
                     configures <a href="https://github.com/voku/simple_html_dom/"
-                    class="text-nowrap">voku\helper\DomParserInterface</a>.
+                    class="text-nowrap">voku/simple_html_dom</a>.
                 </p>
                 <div>
                     Quick usage:<br>
-                    <pre><code>use voku\helper\DomParserInterface;
+                    <pre><code>use YiiRocks\SimpleHtmlDom\SimpleHtmlDomInterface;
 
 class Class {
-    private DomParserInterface $dom;
+    private SimpleHtmlDomInterface $dom;
 
-    __construct(DomParserInterface $dom) {
+    __construct(SimpleHtmlDomInterface $dom) {
             $this->dom = $dom;
     }
 }</code></pre>
