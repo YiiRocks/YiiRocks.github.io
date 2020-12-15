@@ -75,13 +75,13 @@ title: yii2-fontawesome-inline
         </ul>
 
         <h3 class="card-title">Usage as a Class</h3>
-        <pre class="mb-3"><code>$icon = new \thoulah\fontawesome\Icon();
+        <pre class="mb-3"><code class="php">$icon = new \thoulah\fontawesome\Icon();
 echo $icon-&gt;show('at');
 echo $icon-&gt;show('github', ['style' =&gt; 'brands', 'fill' =&gt; '#003865']);
 echo $icon-&gt;show('font-awesome', ['class' =&gt; 'yourClass', 'style' =&gt; 'brands']);</code></pre>
 
         <h3 class="card-title">Usage as a Widget</h3>
-        <pre class="mb-3"><code>use thoulah\fontawesome\IconWidget4 as IconWidget;
+        <pre class="mb-3"><code class="php">use thoulah\fontawesome\IconWidget4 as IconWidget;
 echo IconWidget::widget(['name' =&gt; 'at']);
 echo IconWidget::widget(['name' =&gt; 'github', 'options' =&gt; ['style' =&gt; 'brands', 'fill' =&gt; '#003865']]);
 
@@ -99,7 +99,7 @@ echo IconWidget::widget([
             default options throughout your application.
         </p>
         Add the component to your Yii config file:
-        <pre><code>'components' =&gt; [
+        <pre><code class="php">'components' =&gt; [
     'fontawesome' =&gt; [
         'class' =&gt; thoulah\fontawesome\IconComponent::class,
 //      'fontAwesomeFolder' =&gt; '@npm/fontawesome-pro/svgs',
@@ -107,12 +107,12 @@ echo IconWidget::widget([
     ]
 ]</code></pre>
         Now you can globally insert an icon:
-        <pre class="mb-3"><code>echo Yii::$app-&gt;fontawesome-&gt;name('at');
+        <pre class="mb-3"><code class="php">echo Yii::$app-&gt;fontawesome-&gt;name('at');
 echo Yii::$app-&gt;fontawesome-&gt;name('github', 'brands')-&gt;fill-&gt;('#003865');
 echo Yii::$app-&gt;fontawesome-&gt;name('font-awesome', 'brands')-&gt;class('yourClass');</code></pre>
 
         <h3 class="card-title">Usage from ActiveForm (automatic)</h3>
-        <pre class="mb-3"><code>use thoulah\fontawesome\bootstrap4\ActiveForm;
+        <pre class="mb-3"><code class="php">use thoulah\fontawesome\bootstrap4\ActiveForm;
 
 $form = ActiveForm::begin();
 
@@ -139,7 +139,7 @@ ActiveForm::end();</code></pre>
 
         <h3 class="card-title">Usage from ActiveForm (manual)</h3>
         For <code>$icon</code> you can use any earlier described usage method.
-        <pre class="mb-3"><code>$form = ActiveForm::begin();
+        <pre class="mb-3"><code class="php">$form = ActiveForm::begin();
 
 echo $form-&gt;field($model, 'field', [
     'inputTemplate' =&gt; $icon->activeFieldAddon('font-awesome', ['style' =&gt; 'brands']),
