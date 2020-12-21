@@ -123,6 +123,40 @@ class Class {
             </div>
         </div>
         <div class="accordion-item">
+            <h2 class="accordion-header" id="headYiiBootstrapIcons">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseYiiBootstrapIcons" aria-expanded="false" aria-controls="cardYii2FontAwesome">
+                    Yii/Bootstrap/Icons
+                </button>
+            </h2>
+            <div id="collapseYiiBootstrapIcons" class="accordion-collapse collapse" aria-labelledby="headYiiBootstrapIcons" data-bs-parent="#accordion">
+                <div class="accordion-body">
+                    <p>
+                        <a href="https://github.com/YiiRocks/yii-bootstrap-icons"
+                        class="text-nowrap">yii-bootstrap-icons</a> provides the
+                        Asset Bundle to use Bootstrap Icons in your project.
+                    </p>
+                    <div class="alert alert-info" role="alert">
+                        Looking for a <strong>Font Awesome</strong> Asset Bundle instead? Step over
+                        to <a href="https://github.com/yii-extension/fontawesome" class="alert-link">yii-extension/fontawesome</a>!
+                    </div>
+                    <p>
+                        All valid icons can be found on the <a href="https://icons.getbootstrap.com/#icons">Bootstrap
+                        Icons</a> page.
+                    </p>
+                    <div>Quick usage:
+                        <pre><code class="php">$assetManager->register([
+    \YiiRocks\Yii\Bootstrap\Icons\Assets\BootstrapIconsAsset::class,
+]);
+
+echo '&lt;i class=&quot;bi-alarm&quot;&gt;&lt;/i&gt;';
+echo Html::tag('i', ['class' => 'bi-alarm']);
+</code></pre>
+                    </div>
+                </div>
+                {% include footer_yii-bootstrap-icons.html %}
+            </div>
+        </div>
+        <div class="accordion-item">
             <h2 class="accordion-header" id="headYii2FontAwesome">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cardYii2FontAwesome" aria-expanded="false" aria-controls="cardYii2FontAwesome">
                     yii2-fontawesome-inline
