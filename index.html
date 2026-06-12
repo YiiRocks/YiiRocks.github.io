@@ -120,10 +120,42 @@ echo Html::tag('i', '', ['class' => 'bi-alarm']);
                     </div>
                 </div>
                 {% include footer_yii-bootstrap-icons.html %}
-            </div>
         </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headYii2FontAwesome">
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headRecaptcha">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRecaptcha" aria-expanded="false" aria-controls="collapseRecaptcha">
+                reCAPTCHA
+            </button>
+        </h2>
+        <div id="collapseRecaptcha" class="accordion-collapse collapse" aria-labelledby="headRecaptcha" data-bs-parent="#accordion">
+            <div class="accordion-body">
+                <p>
+                    <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
+                    provides Google reCAPTCHA v2 and v3 widget and server-side
+                    validation for your <a href="http://www.yiiframework.com/"
+                    class="text-nowrap">Yii Framework 3</a> applications.
+                </p>
+                <p>
+                    Various <a href="/recaptcha/">options</a> are
+                    available to manipulate the result.
+                </p>
+            <div>
+                Quick usage:<br>
+                <pre><code class="php">echo RecaptchaV2::widget()
+    ->withSiteKey($siteKey);
+
+echo RecaptchaV3::widget()
+    ->withSiteKey($siteKey)
+    ->withAction('login')
+    ->withFormId('login-form');</code></pre>
+            </div>
+            </div>
+            {% include footer_recaptcha.html %}
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headYii2FontAwesome">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cardYii2FontAwesome" aria-expanded="false" aria-controls="cardYii2FontAwesome">
                     yii2-fontawesome-inline
                 </button>

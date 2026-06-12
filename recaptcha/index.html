@@ -1,0 +1,180 @@
+---
+layout: default
+title: reCAPTCHA
+---
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">YiiRocks/reCAPTCHA</h2>
+        <p>
+            <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
+            provides Google reCAPTCHA v2 and v3 widget and server-side
+            validation for your <a href="http://www.yiiframework.com/"
+            class="text-nowrap">Yii Framework 3</a> applications.
+        </p>
+
+        <h3 class="card-title">Configuration</h3>
+        <p>
+            Set your site keys and secret keys in the params:
+        </p>
+        <pre class="mb-3"><code class="php">'yiirocks/recaptcha' => [
+    'siteKeyV2' => '6Lc...',
+    'secretV2' => '6Lc...',
+    'siteKeyV3' => '6Lc...',
+    'secretV3' => '6Lc...',
+    'verifyUrl' => 'https://www.google.com/recaptcha/api/siteverify',
+    'sendRemoteIp' => false,
+],</code></pre>
+
+        <h3 class="card-title">reCAPTCHA v2 Widget</h3>
+        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2;
+use YiiRocks\Recaptcha\RecaptchaV2Theme;
+use YiiRocks\Recaptcha\RecaptchaV2Size;
+use YiiRocks\Recaptcha\RecaptchaV2Type;
+
+echo RecaptchaV2::widget()
+    ->withSiteKey($siteKey)
+    ->withTheme(RecaptchaV2Theme::Dark)
+    ->withSize(RecaptchaV2Size::Normal)
+    ->withType(RecaptchaV2Type::Image)
+    ->withCallback('onCaptchaSuccess')
+    ->withExpiredCallback('onCaptchaExpired')
+    ->withErrorCallback('onCaptchaError')
+    ->withId('my-captcha');</code></pre>
+
+        <h3 class="card-title">reCAPTCHA v2 Options</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>siteKey</code> <span class="font-monospace">( string )</span>
+                Your reCAPTCHA v2 site key
+            </li>
+            <li class="list-group-item">
+                <code>theme</code> <span class="font-monospace">( RecaptchaV2Theme )</span>
+                <code>Light</code> (default) or <code>Dark</code>
+            </li>
+            <li class="list-group-item">
+                <code>size</code> <span class="font-monospace">( RecaptchaV2Size )</span>
+                <code>Normal</code> (default), <code>Compact</code>, or <code>Invisible</code>
+            </li>
+            <li class="list-group-item">
+                <code>type</code> <span class="font-monospace">( RecaptchaV2Type )</span>
+                <code>Image</code> (default) or <code>Audio</code>
+            </li>
+            <li class="list-group-item">
+                <code>callback</code> <span class="font-monospace">( string )</span>
+                JavaScript callback function name on successful verification
+            </li>
+            <li class="list-group-item">
+                <code>expiredCallback</code> <span class="font-monospace">( string )</span>
+                JavaScript callback function name when the CAPTCHA expires
+            </li>
+            <li class="list-group-item">
+                <code>errorCallback</code> <span class="font-monospace">( string )</span>
+                JavaScript callback function name when an error occurs
+            </li>
+            <li class="list-group-item">
+                <code>id</code> <span class="font-monospace">( string )</span>
+                HTML id attribute for the container div
+            </li>
+            <li class="list-group-item">
+                <code>jsApiUrl</code> <span class="font-monospace">( string )</span>
+                Custom JS API URL
+            </li>
+        </ul>
+
+        <h3 class="card-title">reCAPTCHA v3 Widget</h3>
+        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV3;
+use YiiRocks\Recaptcha\RecaptchaV3Badge;
+
+echo RecaptchaV3::widget()
+    ->withSiteKey($siteKey)
+    ->withAction('login')
+    ->withFormId('login-form')
+    ->withFieldName('g-recaptcha-response')
+    ->withBadge(RecaptchaV3Badge::BottomRight);</code></pre>
+
+        <h3 class="card-title">reCAPTCHA v3 Options</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>siteKey</code> <span class="font-monospace">( string )</span>
+                Your reCAPTCHA v3 site key
+            </li>
+            <li class="list-group-item">
+                <code>action</code> <span class="font-monospace">( string = 'submit' )</span>
+                Action name to pass to reCAPTCHA
+            </li>
+            <li class="list-group-item">
+                <code>formId</code> <span class="font-monospace">( string )</span>
+                Form ID to bind the token on submit
+            </li>
+            <li class="list-group-item">
+                <code>fieldName</code> <span class="font-monospace">( string = 'g-recaptcha-response' )</span>
+                Hidden input field name
+            </li>
+            <li class="list-group-item">
+                <code>fieldId</code> <span class="font-monospace">( string )</span>
+                Hidden input field ID
+            </li>
+            <li class="list-group-item">
+                <code>badge</code> <span class="font-monospace">( RecaptchaV3Badge )</span>
+                <code>BottomRight</code> (default), <code>BottomLeft</code>, or <code>Hidden</code>
+            </li>
+            <li class="list-group-item">
+                <code>jsApiUrl</code> <span class="font-monospace">( string )</span>
+                Custom JS API URL
+            </li>
+        </ul>
+
+        <h3 class="card-title">Validation</h3>
+        <p>Use attributes on your form model properties:</p>
+        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
+use YiiRocks\Recaptcha\RecaptchaV3Rule;
+
+class LoginForm
+{
+    #[RecaptchaV2Rule(
+        message: 'The CAPTCHA verification failed.',
+        secret: null,
+        sendRemoteIp: false,
+    )]
+    public string $gRecaptchaResponse = '';
+
+    #[RecaptchaV3Rule(
+        message: 'The CAPTCHA verification failed.',
+        scoreTooLowMessage: 'The CAPTCHA score is too low.',
+        actionMismatchMessage: 'The CAPTCHA action does not match.',
+        threshold: 0.5,
+        action: 'login',
+        sendRemoteIp: false,
+    )]
+    public string $gRecaptchaResponseV3 = '';
+}</code></pre>
+
+        <h3 class="card-title">Server-Side Verification</h3>
+        <p>
+            Use <code>RecaptchaClient</code> for manual verification:
+        </p>
+        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaClient;
+
+/** @var RecaptchaClient $client */
+$result = $client->verify($token);
+$result = $client->verifyV3($token);
+$result = $client->verifyWithSecret($token, $secret);
+
+$result->success;     // bool
+$result->score;       // ?float (v3 only)
+$result->action;      // ?string (v3 only)
+$result->errorCodes;  // array
+$result->hostname;    // ?string
+$result->challengeTs; // ?string</code></pre>
+
+        <h3 class="card-title">Support</h3>
+        <p>
+            <a href="https://github.com/YiiRocks/recaptcha/issues"><img class="me-1"
+            alt="GitHub issues" src="https://img.shields.io/github/issues/YiiRocks/recaptcha">Create
+            an Issue</a>
+        </p>
+    </div>
+
+    {% include footer_recaptcha.html %}
+</div>
