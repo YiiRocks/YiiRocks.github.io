@@ -8,7 +8,7 @@ title: reCAPTCHA
         <h2 class="card-title">YiiRocks/reCAPTCHA</h2>
         <p>
             <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
-            provides Google reCAPTCHA v2 and v3 widget and server-side
+            provides Google reCAPTCHA v2 and v3 field + server-side
             validation for your <a href="http://www.yiiframework.com/"
             class="text-nowrap">Yii Framework 3</a> applications.
         </p>
@@ -28,81 +28,111 @@ title: reCAPTCHA
     'translation.category' => 'yii3-recaptcha',
 ],</code></pre>
         <p>
-            Once configured, the widget pulls the site key from the
+            Once configured, the field pulls the site key from the
             registry automatically — no need to call
             <code>withSiteKey()</code> in your view code.
         </p>
 
-        <h3 class="card-title">reCAPTCHA v2 Widget</h3>
-        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2;
+        <h3 class="card-title">reCAPTCHA v2 Field</h3>
+        <pre class="mb-3"><code class="php">use Yiisoft\FormModel\FormModel;
+use YiiRocks\Recaptcha\RecaptchaV2Field;
 use YiiRocks\Recaptcha\RecaptchaV2Theme;
 use YiiRocks\Recaptcha\RecaptchaV2Size;
 use YiiRocks\Recaptcha\RecaptchaV2Type;
 
-// Site key is pulled from config automatically:
-echo RecaptchaV2::widget()
+echo RecaptchaV2Field::field($form, 'captcha')
     ->withTheme(RecaptchaV2Theme::Dark)
-    ->withSize(RecaptchaV2Size::Normal)
+    ->withSize(RecaptchaV2Size::Compact)
+    ->withType(RecaptchaV2Type::Audio)
+    ->withId('my-captcha')
+    ->withCallback('onSuccess')
     ->render();</code></pre>
 
         <h3 class="card-title">reCAPTCHA v2 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <code>siteKey</code> <span class="font-monospace">( string, from config )</span>
+                <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
                 Explicit site key override. Optional — pulled from config by default
             </li>
             <li class="list-group-item">
-                <code>theme</code> <span class="font-monospace">( RecaptchaV2Theme )</span>
-                <code>Light</code> (default) or <code>Dark</code>
+                <code>withId(string)</code> <span class="font-monospace">( 'g-recaptcha-{uniqid}' )</span>
+                Widget element ID
             </li>
             <li class="list-group-item">
-                <code>size</code> <span class="font-monospace">( RecaptchaV2Size )</span>
-                <code>Normal</code> (default), <code>Compact</code>, or <code>Invisible</code>
+                <code>withTheme(RecaptchaV2Theme)</code> <span class="font-monospace">( Light )</span>
+                <code>Light</code> or <code>Dark</code>
             </li>
             <li class="list-group-item">
-                <code>type</code> <span class="font-monospace">( RecaptchaV2Type )</span>
-                <code>Image</code> (default) or <code>Audio</code>
+                <code>withType(RecaptchaV2Type)</code> <span class="font-monospace">( Image )</span>
+                <code>Image</code> or <code>Audio</code>
             </li>
             <li class="list-group-item">
-                <code>callback</code> <span class="font-monospace">( string )</span>
+                <code>withSize(RecaptchaV2Size)</code> <span class="font-monospace">( Normal )</span>
+                <code>Normal</code>, <code>Compact</code>, or <code>Invisible</code>
+            </li>
+            <li class="list-group-item">
+                <code>withJsApiUrl(string)</code> <span class="font-monospace">( Google CDN )</span>
+                Custom JS API URL
+            </li>
+            <li class="list-group-item">
+                <code>withCallback(string)</code> <span class="font-monospace">( — )</span>
                 JavaScript callback function name on successful verification
             </li>
             <li class="list-group-item">
-                <code>expiredCallback</code> <span class="font-monospace">( string )</span>
+                <code>withExpiredCallback(string)</code> <span class="font-monospace">( — )</span>
                 JavaScript callback function name when the CAPTCHA expires
             </li>
             <li class="list-group-item">
-                <code>errorCallback</code> <span class="font-monospace">( string )</span>
+                <code>withErrorCallback(string)</code> <span class="font-monospace">( — )</span>
                 JavaScript callback function name when an error occurs
-            </li>
-            <li class="list-group-item">
-                <code>id</code> <span class="font-monospace">( string )</span>
-                HTML id attribute for the container div
-            </li>
-            <li class="list-group-item">
-                <code>jsApiUrl</code> <span class="font-monospace">( string )</span>
-                Custom JS API URL
             </li>
         </ul>
 
-        <h3 class="card-title">reCAPTCHA v3 Widget</h3>
+        <p class="mt-3"><strong>Inherited from <code>InputField</code>:</strong></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>->name(string)</code> — override the hidden input name (default: auto-derived from form model as <code>FormName[attribute]</code>)
+            </li>
+            <li class="list-group-item">
+                <code>->inputId(?string)</code> — override the hidden input ID (default: auto-generated unique ID)
+            </li>
+        </ul>
+
+        <p class="mt-3"><strong>Container (inherited from <code>BaseField</code>):</strong></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>->containerTag(string)</code> <span class="font-monospace">( 'div' )</span>
+                Wrapper tag
+            </li>
+            <li class="list-group-item">
+                <code>->containerClass(string ...)</code> <span class="font-monospace">( 'mb-3' )</span>
+                Wrapper CSS class(es)
+            </li>
+            <li class="list-group-item">
+                <code>->useContainer(bool)</code> <span class="font-monospace">( true )</span>
+                Enable/disable wrapper
+            </li>
+            <li class="list-group-item">
+                <code>->containerAttributes(array)</code> — set all wrapper attributes
+            </li>
+            <li class="list-group-item">
+                <code>->addContainerAttributes(array)</code> — merge additional wrapper attributes
+            </li>
+        </ul>
+
+        <h3 class="card-title mt-3">reCAPTCHA v3 Field</h3>
         <p>
             The token is fetched on form submit (not on page load),
             preventing unexpected challenge popups. The form is auto-resolved
             via <code>closest("form")</code> — no <code>formId</code> needed
             when the hidden input is inside the form.
         </p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV3;
+        <pre class="mb-3"><code class="php">use Yiisoft\FormModel\FormModel;
+use YiiRocks\Recaptcha\RecaptchaV3Field;
 use YiiRocks\Recaptcha\RecaptchaV3Badge;
 
-// Site key from config, form auto-detected:
-echo RecaptchaV3::widget()
+echo RecaptchaV3Field::field($form, 'captcha')
     ->withAction('login')
-    ->withBadge(RecaptchaV3Badge::BottomRight)
-    ->render();
-
-// With explicit form ID (input outside the form):
-echo RecaptchaV3::widget()
     ->withFormId('login-form')
     ->withBadge(RecaptchaV3Badge::Hidden)
     ->render();</code></pre>
@@ -110,62 +140,126 @@ echo RecaptchaV3::widget()
         <h3 class="card-title">reCAPTCHA v3 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <code>siteKey</code> <span class="font-monospace">( string, from config )</span>
+                <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
                 Explicit site key override. Optional — pulled from config by default
             </li>
             <li class="list-group-item">
-                <code>action</code> <span class="font-monospace">( string = 'submit' )</span>
-                Action name to pass to reCAPTCHA
+                <code>withAction(string)</code> <span class="font-monospace">( '' )</span>
+                Action name sent to Google (must match the rule's <code>action</code> if set)
             </li>
             <li class="list-group-item">
-                <code>formId</code> <span class="font-monospace">( string )</span>
+                <code>withFormId(string)</code> <span class="font-monospace">( — )</span>
                 Explicit form ID. When omitted the form is auto-resolved via <code>closest("form")</code>
             </li>
             <li class="list-group-item">
-                <code>fieldName</code> <span class="font-monospace">( string = 'g-recaptcha-response' )</span>
-                Hidden input field name
+                <code>withBadge(RecaptchaV3Badge)</code> <span class="font-monospace">( BottomRight )</span>
+                <code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>
             </li>
             <li class="list-group-item">
-                <code>fieldId</code> <span class="font-monospace">( string )</span>
-                Hidden input field ID
-            </li>
-            <li class="list-group-item">
-                <code>badge</code> <span class="font-monospace">( RecaptchaV3Badge )</span>
-                <code>BottomRight</code> (default), <code>BottomLeft</code>, or <code>Hidden</code>
-            </li>
-            <li class="list-group-item">
-                <code>jsApiUrl</code> <span class="font-monospace">( string )</span>
+                <code>withJsApiUrl(string)</code> <span class="font-monospace">( Google CDN )</span>
                 Custom JS API URL
             </li>
             <li class="list-group-item">
-                <code>translator</code> <span class="font-monospace">( TranslatorInterface )</span>
-                Translator for the hidden badge legal notice. Pulled from registry if omitted
+                <code>withTranslator(?TranslatorInterface)</code> <span class="font-monospace">( from registry )</span>
+                Translator for the hidden badge legal notice
+            </li>
+            <li class="list-group-item">
+                <code>withExecuteTimeout(?int)</code> <span class="font-monospace">( 15000 ms )</span>
+                Fallback form submission timeout (null = disabled)
             </li>
         </ul>
 
-        <h3 class="card-title">Validation</h3>
+        <p class="mt-3"><strong>Inherited from <code>InputField</code>:</strong></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>->name(string)</code> — override the hidden input name (default: auto-derived from form model as <code>FormName[attribute]</code>)
+            </li>
+            <li class="list-group-item">
+                <code>->inputId(?string)</code> — override the hidden input ID (default: auto-generated unique ID)
+            </li>
+        </ul>
+
+        <p class="mt-3"><strong>Container (inherited from <code>BaseField</code>):</strong></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>->containerTag(string)</code> <span class="font-monospace">( 'div' )</span>
+                Wrapper tag
+            </li>
+            <li class="list-group-item">
+                <code>->containerClass(string ...)</code> <span class="font-monospace">( 'mb-3' )</span>
+                Wrapper CSS class(es)
+            </li>
+            <li class="list-group-item">
+                <code>->useContainer(bool)</code> <span class="font-monospace">( true )</span>
+                Enable/disable wrapper
+            </li>
+            <li class="list-group-item">
+                <code>->containerAttributes(array)</code> — set all wrapper attributes
+            </li>
+            <li class="list-group-item">
+                <code>->addContainerAttributes(array)</code> — merge additional wrapper attributes
+            </li>
+        </ul>
+
+        <p class="mt-3">
+            <strong>Hidden badge:</strong> When <code>Badge::Hidden</code> is selected, the legal notice text
+            ("This site is protected by reCAPTCHA…") is displayed automatically and
+            translated when a translator is available (either via <code>withTranslator()</code> or
+            through <code>RecaptchaRegistry</code>).
+        </p>
+
+        <h3 class="card-title mt-3">Validation</h3>
         <p>Use attributes on your form model properties:</p>
         <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
 use YiiRocks\Recaptcha\RecaptchaV3Rule;
 
-class LoginForm
+final class LoginForm
 {
-    #[RecaptchaV2Rule(
-        message: 'The CAPTCHA verification failed.',
-        secret: null,
-        sendRemoteIp: false,
-    )]
-    public string $gRecaptchaResponse = '';
+    #[RecaptchaV2Rule]
+    public string $captcha = '';
 
     #[RecaptchaV3Rule(
         threshold: 0.5,
         action: 'login',
-        message: 'The CAPTCHA verification failed.',
-        scoreTooLowMessage: 'The CAPTCHA score is too low.',
-        actionMismatchMessage: 'The CAPTCHA action does not match.',
     )]
-    public string $gRecaptchaResponseV3 = '';
+    public string $captcha = '';
 }</code></pre>
+
+        <p><strong>Important:</strong> If you set <code>->withAction('...')</code> on the v3 field,
+        you must also set <code>action: '...'</code> on the rule with the same value.
+        If neither is set, no action is sent and the check is skipped entirely.</p>
+
+        <h4>v3 rule parameters</h4>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <code>threshold</code> <span class="font-monospace">( 0.5 )</span>
+                Minimum score (0.0 — 1.0)
+            </li>
+            <li class="list-group-item">
+                <code>action</code> <span class="font-monospace">( null )</span>
+                Expected action name (skipped if <code>null</code>)
+            </li>
+            <li class="list-group-item">
+                <code>message</code> <span class="font-monospace">( 'The CAPTCHA verification failed.' )</span>
+                Error message (translatable)
+            </li>
+            <li class="list-group-item">
+                <code>scoreTooLowMessage</code> <span class="font-monospace">( 'The CAPTCHA score is too low.' )</span>
+                Error when score is below threshold
+            </li>
+            <li class="list-group-item">
+                <code>actionMismatchMessage</code> <span class="font-monospace">( 'The CAPTCHA action does not match.' )</span>
+                Error when action doesn't match
+            </li>
+            <li class="list-group-item">
+                <code>secret</code> <span class="font-monospace">( null )</span>
+                Custom secret (uses config default if <code>null</code>)
+            </li>
+            <li class="list-group-item">
+                <code>sendRemoteIp</code> <span class="font-monospace">( false )</span>
+                Whether to include the user's IP in verification
+            </li>
+        </ul>
 
         <h3 class="card-title">Server-Side Verification</h3>
         <p>
