@@ -1,0 +1,25 @@
+{% assign p = site.data.projects[include.project] %}
+{% assign code_class = "mt-1" %}
+{% if p.cli %}{% assign code_class = code_class | append: " bash" %}{% endif %}
+<div class="card-footer d-flex justify-content-between">
+    <code class="{{ code_class }}">composer require {{ p.package }}</code>
+    <div class="text-end">
+        {% include badge.html url="https://img.shields.io/packagist/v/" | append: p.package | append: ".svg" alt="Packagist Version" %}
+        {% if p.qlty_id %}
+            {% if p.qlty_type == "uuid" %}
+                {% assign qlty_url = "https://qlty.sh/badges/" | append: p.qlty_id | append: "/maintainability.svg" %}
+            {% else %}
+                {% assign qlty_url = "https://qlty.sh/gh/YiiRocks/projects/" | append: p.qlty_id | append: "/maintainability.svg" %}
+            {% endif %}
+            {% include badge.html url=qlty_url alt="Maintainability" %}
+        {% endif %}
+        {% if p.codacy %}
+            {% include badge.html url="https://img.shields.io/codacy/grade/" | append: p.codacy | append: "/master.svg" alt="Codacy branch grade" %}
+        {% endif %}
+        {% if p.travis %}
+            {% include badge.html url="https://img.shields.io/travis/com/yiirocks/" | append: p.repo | append: "/master.svg" alt="Travis (.com) branch" %}
+        {% else %}
+            {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/" | append: p.repo | append: "/" | append: p.workflow alt="GitHub Workflow Status" %}
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,170 @@
+svg-inline:
+  name: SvgInline
+  package: yiirocks/svg-inline
+  repo: svg-inline
+  workflow: phpunit.yml
+  qlty_type: uuid
+  qlty_id: 4cb2a6ba-29f4-4933-883c-1b1ff0f60825
+  codacy: 1a826829576d45668a766abaae2321bb
+  cli: true
+  head_id: headSvgInline
+  collapse_id: collapseSvgInline
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/svg-inline" class="text-nowrap">svg-inline</a>
+        provides simple functions for your <a href="http://www.yiiframework.com/"
+        class="text-nowrap">Yii Framework 3</a> applications to
+        add SVG Files inline and manipulate its properties. It can be
+        extended with <button class="btn btn-link align-baseline p-0"
+        type="button" data-bs-toggle="collapse" data-bs-target="#collapseSvgInlineBootstrap">
+        Bootstrap Icons</button> and <button class="btn btn-link align-baseline p-0"
+        type="button" data-bs-toggle="collapse" data-bs-target="#collapseSvgInlineFontAwesome">
+        Font Awesome Icons</button>.
+    </p>
+    <p>
+        Various <a href="/svg-inline/">options</a> are available to
+        manipulate the result.
+    </p>
+    <div>
+        Quick usage:<br>
+        <pre><code class="php">$svg-&gt;file('@vendor/path/icon.svg');</code></pre>
+    </div>
+
+svg-inline-bootstrap:
+  name: SvgInline/Bootstrap
+  package: yiirocks/svg-inline-bootstrap
+  repo: svg-inline-bootstrap
+  workflow: phpunit.yml
+  qlty_type: uuid
+  qlty_id: c0c355d2-bfc8-40bf-8611-65e42e856b35
+  codacy: 1ac06a8fb1fe4d17ba208399381945e2
+  head_id: headSvgInlineBootstrap
+  collapse_id: collapseSvgInlineBootstrap
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/svg-inline-bootstrap" class="text-nowrap">svg-inline-bootstrap</a>
+        provides simple functions for your <a href="http://www.yiiframework.com/" class="text-nowrap">Yii Framework 3</a> applications to add <a href="https://icons.getbootstrap.com/" class="text-nowrap">Bootstrap Icons</a> inline and depends on
+        <button class="btn btn-link align-baseline p-0" type="button"
+        data-bs-toggle="collapse" data-bs-target="#collapseSvgInline" aria-expanded="false"
+        aria-controls="cardSvgInline">SvgInline</button>.
+    </p>
+    <p>
+        Various <a href="/svg-inline/bootstrap/">options</a> are
+        available to manipulate the result.
+    </p>
+    <div>Quick usage:
+        <pre><code class="php">$svg-&gt;bootstrap($iconName);</code></pre>
+    </div>
+
+svg-inline-fontawesome:
+  name: SvgInline/FontAwesome
+  package: yiirocks/svg-inline-fontawesome
+  repo: svg-inline-fontawesome
+  workflow: phpunit.yml
+  qlty_type: uuid
+  qlty_id: a1116206-e5ca-498d-8cbb-8ba8b4ce9191
+  codacy: 41c0fc9e1e244d1292f7ba51b6ed1065
+  head_id: headSvgInlineFontAwesome
+  collapse_id: collapseSvgInlineFontAwesome
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/svg-inline-fontawesome"
+        class="text-nowrap">svg-inline-fontawesome</a> provides
+        simple functions for your <a href="http://www.yiiframework.com/"
+        class="text-nowrap">Yii Framework 3</a> applications to
+        add <a href="https://fontawesome.com/icons" class="text-nowrap">
+        Font Awesome Icons</a> inline and depends on <button class="btn btn-link align-baseline p-0"
+        type="button" data-bs-toggle="collapse" data-bs-target="#collapseSvgInline">
+        SvgInline</button>.
+    </p>
+    <p>Various <a href="/svg-inline/fontawesome/">options</a> are
+        available to manipulate the result.
+    </p>
+    <div>Quick usage:
+        <pre><code class="php">$svg-&gt;fai($iconName);
+        $svg-&gt;fai($iconName, $iconStyle);</code></pre>
+    </div>
+
+yii-bootstrap-icons:
+  name: Yii/Bootstrap/Icons
+  package: yiirocks/yii-bootstrap-icons
+  repo: yii-bootstrap-icons
+  workflow: phpunit.yml
+  qlty_type: slug
+  qlty_id: yii-bootstrap-icons
+  codacy: 1a80083546d049dc83a682b93901e4bc
+  head_id: headYiiBootstrapIcons
+  collapse_id: collapseYiiBootstrapIcons
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/yii-bootstrap-icons"
+        class="text-nowrap">yii-bootstrap-icons</a> provides the
+        Asset Bundle to use Bootstrap Icons in your project.
+    </p>
+    <p>
+        All valid icons can be found on the <a href="https://icons.getbootstrap.com/#icons">Bootstrap
+        Icons</a> page.
+    </p>
+    <div>Quick usage:
+        <pre><code class="php">$assetManager->register(
+    \YiiRocks\Yii\Bootstrap\Icons\Assets\BootstrapIconsAsset::class,
+    );
+
+    echo '&lt;i class=&quot;bi-alarm&quot;&gt;&lt;/i&gt;';
+    echo Html::tag('i', '', ['class' => 'bi-alarm']);</code></pre>
+    </div>
+
+recaptcha:
+  name: reCAPTCHA
+  package: yiirocks/recaptcha
+  repo: recaptcha
+  workflow: build.yml
+  qlty_type: slug
+  qlty_id: recaptcha
+  cli: true
+  head_id: headRecaptcha
+  collapse_id: collapseRecaptcha
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
+        provides Google reCAPTCHA v2 and v3 field + server-side
+        validation for your <a href="http://www.yiiframework.com/"
+        class="text-nowrap">Yii Framework 3</a> applications.
+    </p>
+    <p>
+        Various <a href="/recaptcha/">options</a> are
+        available to manipulate the result.
+    </p>
+    <div>
+        Quick usage:<br>
+        <pre><code class="php">echo RecaptchaV2Field::field($form, 'captcha')
+    ->withSiteKey($siteKey);
+
+    echo RecaptchaV3Field::field($form, 'captcha')
+    ->withAction('login')
+    ->withFormId('login-form');</code></pre>
+    </div>
+
+yii2-fontawesome-inline:
+  name: yii2-fontawesome-inline
+  package: thoulah/yii2-fontawesome-inline
+  repo: yii2-fontawesome-inline
+  travis: true
+  codacy: 77359b0ae813411895da7d33bb009bf0
+  head_id: headYii2FontAwesome
+  collapse_id: cardYii2FontAwesome
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/yii2-fontawesome-inline"
+        class="text-nowrap">yii2-fontawesome-inline</a> provides
+        simple functions for your <a href="http://www.yiiframework.com/"
+        class="text-nowrap">Yii Framework 2.0</a> applications to add
+        <a href="https://fontawesome.com/icons" class="text-nowrap">Font
+        Awesome Icons</a> inline.
+    </p>
+    <p>Various <a href="/yii2-fontawesome-inline/">options</a> are
+        available to manipulate the result.
+    </p>
+    <div>Quick usage:
+        <pre><code class="php">$icon = new \thoulah\fontawesome\Icon();<br>echo $icon-&gt;show('github', ['style' =&gt; 'brands', 'fill' =&gt; '#003865']);</code></pre>
+    </div>
