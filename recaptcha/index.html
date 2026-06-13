@@ -6,6 +6,15 @@ title: reCAPTCHA
 <div class="card">
     <div class="card-body">
         <h2 class="card-title">YiiRocks/reCAPTCHA</h2>
+        <nav class="small mb-4">
+            <a href="#config">Configuration</a> &middot;
+            <a href="#v2-field">v2 Field</a> &middot;
+            <a href="#v2-options">v2 Options</a> &middot;
+            <a href="#v3-field">v3 Field</a> &middot;
+            <a href="#v3-options">v3 Options</a> &middot;
+            <a href="#validation">Validation</a> &middot;
+            <a href="#server">Verify</a>
+        </nav>
         <p>
             <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
             provides Google reCAPTCHA v2 and v3 field + server-side
@@ -13,7 +22,7 @@ title: reCAPTCHA
             class="text-nowrap">Yii Framework 3</a> applications.
         </p>
 
-        <h3 class="card-title">Configuration</h3>
+        <h3 class="card-title" id="config">Configuration</h3>
         <p>
             Set your site keys and secret keys via environment variables
             or directly in <code>config/params.php</code>:
@@ -33,7 +42,7 @@ title: reCAPTCHA
             <code>withSiteKey()</code> in your view code.
         </p>
 
-        <h3 class="card-title">reCAPTCHA v2 Field</h3>
+        <h3 class="card-title" id="v2-field">reCAPTCHA v2 Field</h3>
         <pre class="mb-3"><code class="php">use Yiisoft\FormModel\FormModel;
 use YiiRocks\Recaptcha\RecaptchaV2Field;
 use YiiRocks\Recaptcha\RecaptchaV2Theme;
@@ -48,7 +57,7 @@ echo RecaptchaV2Field::field($form, 'captcha')
     ->withCallback('onSuccess')
     ->render();</code></pre>
 
-        <h3 class="card-title">reCAPTCHA v2 Options</h3>
+        <h3 class="card-title" id="v2-options">reCAPTCHA v2 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
@@ -120,7 +129,7 @@ echo RecaptchaV2Field::field($form, 'captcha')
             </li>
         </ul>
 
-        <h3 class="card-title mt-3">reCAPTCHA v3 Field</h3>
+        <h3 class="card-title mt-3" id="v3-field">reCAPTCHA v3 Field</h3>
         <p>
             The token is fetched on form submit (not on page load),
             preventing unexpected challenge popups. The form is auto-resolved
@@ -137,7 +146,7 @@ echo RecaptchaV3Field::field($form, 'captcha')
     ->withBadge(RecaptchaV3Badge::Hidden)
     ->render();</code></pre>
 
-        <h3 class="card-title">reCAPTCHA v3 Options</h3>
+        <h3 class="card-title" id="v3-options">reCAPTCHA v3 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
@@ -208,7 +217,7 @@ echo RecaptchaV3Field::field($form, 'captcha')
             through <code>RecaptchaRegistry</code>).
         </p>
 
-        <h3 class="card-title mt-3">Validation</h3>
+        <h3 class="card-title mt-3" id="validation">Validation</h3>
         <p>Use attributes on your form model properties:</p>
         <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
 use YiiRocks\Recaptcha\RecaptchaV3Rule;
@@ -261,7 +270,7 @@ final class LoginForm
             </li>
         </ul>
 
-        <h3 class="card-title">Server-Side Verification</h3>
+        <h3 class="card-title" id="server">Server-Side Verification</h3>
         <p>
             Use <code>RecaptchaClient</code> for manual verification:
         </p>

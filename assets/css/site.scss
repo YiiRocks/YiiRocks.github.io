@@ -1,19 +1,55 @@
 ---
 ---
 body {
-    background: #bcd1e9;
+    background: #eef2f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 main {
     padding-bottom: 1.5rem;
 }
 
-.text-shadow {
-    text-shadow: 2px 2px 2px #777;
+h1 strong {
+    letter-spacing: -.02em;
+}
+
+.lead {
+    font-size: 1.15rem;
+    color: #555;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: .5rem;
+    border-radius: .5rem !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+.accordion-item:first-of-type,
+.accordion-item:last-of-type {
+    border-radius: .5rem !important;
+}
+
+.accordion-button {
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: #fff;
+}
+
+.accordion-button:not(.collapsed) {
+    background: #fff;
+    color: #333;
+    box-shadow: none;
 }
 
 .accordion-button:focus {
     box-shadow: none;
+    border-color: rgba(0, 0, 0, .125);
+}
+
+.accordion-body {
+    background: #fafbfc;
 }
 
 .accordion-body,
@@ -29,11 +65,13 @@ pre {
 }
 
 pre code {
-    background: #f0f0f0;
+    border-radius: .5rem;
+    border-left: 4px solid #7fb330;
+    background: #f8f9fa;
     color: #444;
     display: block;
     overflow-x: auto;
-    padding: .5em;
+    padding: .75em 1em;
 }
 
 .card-footer {
