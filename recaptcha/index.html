@@ -15,16 +15,23 @@ title: reCAPTCHA
 
         <h3 class="card-title">Configuration</h3>
         <p>
-            Set your site keys and secret keys in the params:
+            Set your site keys and secret keys via environment variables
+            or directly in <code>config/params.php</code>:
         </p>
         <pre class="mb-3"><code class="php">'yiirocks/recaptcha' => [
-    'siteKeyV2' => '6Lc...',
-    'secretV2' => '6Lc...',
-    'siteKeyV3' => '6Lc...',
-    'secretV3' => '6Lc...',
+    'siteKeyV2' => $_ENV['RECAPTCHA_SITE_KEY_V2'] ?? '',
+    'secretV2' => $_ENV['RECAPTCHA_SECRET_V2'] ?? '',
+    'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'] ?? '',
+    'secretV3' => $_ENV['RECAPTCHA_SECRET_V3'] ?? '',
     'verifyUrl' => 'https://www.google.com/recaptcha/api/siteverify',
     'sendRemoteIp' => false,
+    'translation.category' => 'yii3-recaptcha',
 ],</code></pre>
+        <p>
+            Once configured, the widget pulls the site key from the
+            registry automatically — no need to call
+            <code>withSiteKey()</code> in your view code.
+        </p>
 
         <h3 class="card-title">reCAPTCHA v2 Widget</h3>
         <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2;
@@ -32,21 +39,17 @@ use YiiRocks\Recaptcha\RecaptchaV2Theme;
 use YiiRocks\Recaptcha\RecaptchaV2Size;
 use YiiRocks\Recaptcha\RecaptchaV2Type;
 
+// Site key is pulled from config automatically:
 echo RecaptchaV2::widget()
-    ->withSiteKey($siteKey)
     ->withTheme(RecaptchaV2Theme::Dark)
     ->withSize(RecaptchaV2Size::Normal)
-    ->withType(RecaptchaV2Type::Image)
-    ->withCallback('onCaptchaSuccess')
-    ->withExpiredCallback('onCaptchaExpired')
-    ->withErrorCallback('onCaptchaError')
-    ->withId('my-captcha');</code></pre>
+    ->render();</code></pre>
 
         <h3 class="card-title">reCAPTCHA v2 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <code>siteKey</code> <span class="font-monospace">( string )</span>
-                Your reCAPTCHA v2 site key
+                <code>siteKey</code> <span class="font-monospace">( string, from config )</span>
+                Explicit site key override. Optional — pulled from config by default
             </li>
             <li class="list-group-item">
                 <code>theme</code> <span class="font-monospace">( RecaptchaV2Theme )</span>
@@ -83,21 +86,32 @@ echo RecaptchaV2::widget()
         </ul>
 
         <h3 class="card-title">reCAPTCHA v3 Widget</h3>
+        <p>
+            The token is fetched on form submit (not on page load),
+            preventing unexpected challenge popups. The form is auto-resolved
+            via <code>closest("form")</code> — no <code>formId</code> needed
+            when the hidden input is inside the form.
+        </p>
         <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV3;
 use YiiRocks\Recaptcha\RecaptchaV3Badge;
 
+// Site key from config, form auto-detected:
 echo RecaptchaV3::widget()
-    ->withSiteKey($siteKey)
     ->withAction('login')
+    ->withBadge(RecaptchaV3Badge::BottomRight)
+    ->render();
+
+// With explicit form ID (input outside the form):
+echo RecaptchaV3::widget()
     ->withFormId('login-form')
-    ->withFieldName('g-recaptcha-response')
-    ->withBadge(RecaptchaV3Badge::BottomRight);</code></pre>
+    ->withBadge(RecaptchaV3Badge::Hidden)
+    ->render();</code></pre>
 
         <h3 class="card-title">reCAPTCHA v3 Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                <code>siteKey</code> <span class="font-monospace">( string )</span>
-                Your reCAPTCHA v3 site key
+                <code>siteKey</code> <span class="font-monospace">( string, from config )</span>
+                Explicit site key override. Optional — pulled from config by default
             </li>
             <li class="list-group-item">
                 <code>action</code> <span class="font-monospace">( string = 'submit' )</span>
@@ -105,7 +119,7 @@ echo RecaptchaV3::widget()
             </li>
             <li class="list-group-item">
                 <code>formId</code> <span class="font-monospace">( string )</span>
-                Form ID to bind the token on submit
+                Explicit form ID. When omitted the form is auto-resolved via <code>closest("form")</code>
             </li>
             <li class="list-group-item">
                 <code>fieldName</code> <span class="font-monospace">( string = 'g-recaptcha-response' )</span>
@@ -122,6 +136,10 @@ echo RecaptchaV3::widget()
             <li class="list-group-item">
                 <code>jsApiUrl</code> <span class="font-monospace">( string )</span>
                 Custom JS API URL
+            </li>
+            <li class="list-group-item">
+                <code>translator</code> <span class="font-monospace">( TranslatorInterface )</span>
+                Translator for the hidden badge legal notice. Pulled from registry if omitted
             </li>
         </ul>
 
@@ -140,12 +158,11 @@ class LoginForm
     public string $gRecaptchaResponse = '';
 
     #[RecaptchaV3Rule(
+        threshold: 0.5,
+        action: 'login',
         message: 'The CAPTCHA verification failed.',
         scoreTooLowMessage: 'The CAPTCHA score is too low.',
         actionMismatchMessage: 'The CAPTCHA action does not match.',
-        threshold: 0.5,
-        action: 'login',
-        sendRemoteIp: false,
     )]
     public string $gRecaptchaResponseV3 = '';
 }</code></pre>
@@ -166,7 +183,9 @@ $result->score;       // ?float (v3 only)
 $result->action;      // ?string (v3 only)
 $result->errorCodes;  // array
 $result->hostname;    // ?string
-$result->challengeTs; // ?string</code></pre>
+$result->challengeTs; // ?string
+
+$config = $client->getConfig(); // RecaptchaConfig</code></pre>
 
         <h3 class="card-title">Support</h3>
         <p>
