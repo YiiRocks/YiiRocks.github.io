@@ -132,7 +132,7 @@ echo Html::tag('i', '', ['class' => 'bi-alarm']);
             <div class="accordion-body">
                 <p>
                     <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
-                    provides Google reCAPTCHA v2 and v3 widget and server-side
+                    provides Google reCAPTCHA v2 and v3 field + server-side
                     validation for your <a href="http://www.yiiframework.com/"
                     class="text-nowrap">Yii Framework 3</a> applications.
                 </p>
@@ -142,11 +142,10 @@ echo Html::tag('i', '', ['class' => 'bi-alarm']);
                 </p>
             <div>
                 Quick usage:<br>
-                <pre><code class="php">echo RecaptchaV2::widget()
+                <pre><code class="php">echo RecaptchaV2Field::field($form, 'captcha')
     ->withSiteKey($siteKey);
 
-echo RecaptchaV3::widget()
-    ->withSiteKey($siteKey)
+echo RecaptchaV3Field::field($form, 'captcha')
     ->withAction('login')
     ->withFormId('login-form');</code></pre>
             </div>
