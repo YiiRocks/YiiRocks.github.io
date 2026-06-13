@@ -3,7 +3,7 @@
 {% if p.cli %}{% assign code_class = code_class | append: " bash" %}{% endif %}
 {% capture packagist_url %}https://img.shields.io/packagist/v/{{ p.package }}.svg{% endcapture %}
 <div class="card-footer d-flex justify-content-between">
-    <code class="{{ code_class }}">composer require {{ p.package }}</code>
+    <code class="{{ code_class }}" data-clipboard="composer require {{ p.package }}">composer require {{ p.package }}</code>
     <div class="text-end d-flex flex-wrap gap-1 justify-content-end">
         {% include badge.html url=packagist_url alt="Packagist Version" %}
         {% if p.qlty_id %}

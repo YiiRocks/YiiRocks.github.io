@@ -77,3 +77,7 @@ pre code {
 .card-footer {
     background: var(--bs-light);
 }
+
+[data-clipboard] {
+    cursor: pointer;
+}

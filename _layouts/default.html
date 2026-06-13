@@ -44,6 +44,16 @@
                     a.target = '_blank';
                 }
             }
+            document.addEventListener('click', function (e) {
+                var el = e.target.closest('[data-clipboard]');
+                if (!el) return;
+                var text = el.getAttribute('data-clipboard');
+                var orig = el.textContent;
+                navigator.clipboard.writeText(text).then(function () {
+                    el.textContent = 'Copied!';
+                    setTimeout(function () { el.textContent = orig; }, 1500);
+                });
+            });
         </script>
     </body>
 </html>
