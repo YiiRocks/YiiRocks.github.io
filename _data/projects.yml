@@ -82,7 +82,7 @@ svg-inline-fontawesome:
     </p>
     <div>Quick usage:
         <pre><code class="php">$svg-&gt;fai($iconName);
-        $svg-&gt;fai($iconName, $iconStyle);</code></pre>
+    $svg-&gt;fai($iconName, $iconStyle);</code></pre>
     </div>
 
 yii-bootstrap-icons:
@@ -108,10 +108,10 @@ yii-bootstrap-icons:
     <div>Quick usage:
         <pre><code class="php">$assetManager->register(
         \YiiRocks\Yii\Bootstrap\Icons\Assets\BootstrapIconsAsset::class,
-        );
+    );
 
-        echo '&lt;i class=&quot;bi-alarm&quot;&gt;&lt;/i&gt;';
-        echo Html::tag('i', '', ['class' => 'bi-alarm']);</code></pre>
+    echo '&lt;i class=&quot;bi-alarm&quot;&gt;&lt;/i&gt;';
+    echo Html::tag('i', '', ['class' => 'bi-alarm']);</code></pre>
     </div>
 
 recaptcha:
@@ -140,7 +140,7 @@ recaptcha:
         <pre><code class="php">echo RecaptchaV2Field::field($form, 'captcha')
         ->withSiteKey($siteKey);
 
-        echo RecaptchaV3Field::field($form, 'captcha')
+    echo RecaptchaV3Field::field($form, 'captcha')
         ->withAction('login')
         ->withFormId('login-form');</code></pre>
     </div>
