@@ -145,6 +145,32 @@ recaptcha:
         ->withFormId('login-form');</code></pre>
     </div>
 
+voyti:
+  name: Voyti
+  package: yiirocks/voyti
+  repo: voyti
+  workflow: phpunit.yml
+  cli: true
+  head_id: headVoyti
+  collapse_id: collapseVoyti
+  body: |
+    <p>
+        <a href="https://github.com/YiiRocks/voyti" class="text-nowrap">voyti</a>
+        provides highly customizable user management, authentication, and
+        authorization for your <a href="http://www.yiiframework.com/"
+        class="text-nowrap">Yii Framework 3</a> applications.
+    </p>
+    <p>
+        Full-featured module with RBAC management, two-factor authentication,
+        social auth, GDPR compliance, and more — see the
+        <a href="/voyti/">docs</a> for details.
+    </p>
+    <div>
+        Quick start:<br>
+        <pre><code class="bash">composer require yiirocks/voyti
+        php yii migrate</code></pre>
+    </div>
+
 yii2-fontawesome-inline:
   name: yii2-fontawesome-inline
   package: thoulah/yii2-fontawesome-inline
