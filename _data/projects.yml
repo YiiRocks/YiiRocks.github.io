@@ -1,5 +1,6 @@
 svg-inline:
   name: SvgInline
+  tagline: Inline SVG file manipulation
   package: yiirocks/svg-inline
   repo: svg-inline
   workflow: phpunit.yml
@@ -32,6 +33,7 @@ svg-inline:
 
 svg-inline-bootstrap:
   name: SvgInline/Bootstrap
+  tagline: Bootstrap Icons inline
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
   workflow: phpunit.yml
@@ -58,6 +60,7 @@ svg-inline-bootstrap:
 
 svg-inline-fontawesome:
   name: SvgInline/FontAwesome
+  tagline: Font Awesome Icons inline
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
   workflow: phpunit.yml
@@ -87,6 +90,7 @@ svg-inline-fontawesome:
 
 yii-bootstrap-icons:
   name: Yii/Bootstrap/Icons
+  tagline: Bootstrap Icons asset bundle
   package: yiirocks/yii-bootstrap-icons
   repo: yii-bootstrap-icons
   workflow: phpunit.yml
@@ -116,6 +120,7 @@ yii-bootstrap-icons:
 
 recaptcha:
   name: reCAPTCHA
+  tagline: reCAPTCHA v2 &amp; v3 fields &amp; validation
   package: yiirocks/recaptcha
   repo: recaptcha
   workflow: build.yml
@@ -147,6 +152,7 @@ recaptcha:
 
 voyti:
   name: Voyti
+  tagline: User management, authentication &amp; authorization
   package: yiirocks/voyti
   repo: voyti
   workflow: phpunit.yml
@@ -173,6 +179,7 @@ voyti:
 
 yii2-fontawesome-inline:
   name: yii2-fontawesome-inline
+  tagline: Font Awesome inline for Yii2
   package: thoulah/yii2-fontawesome-inline
   repo: yii2-fontawesome-inline
   travis: true

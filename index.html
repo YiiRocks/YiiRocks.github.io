@@ -12,7 +12,7 @@ title: Yii.Rocks
     <div class="accordion-item">
         <h2 class="accordion-header" id="{{ p.head_id }}">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ p.collapse_id }}" aria-expanded="false" aria-controls="{{ p.collapse_id }}">
-                {{ p.name }}
+                {{ p.name }}{% if p.tagline %} <small class="text-muted fw-normal ms-2">{{ p.tagline }}</small>{% endif %}
             </button>
         </h2>
         <div id="{{ p.collapse_id }}" class="accordion-collapse collapse" aria-labelledby="{{ p.head_id }}" data-bs-parent="#accordion">
