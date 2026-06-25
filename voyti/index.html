@@ -6,10 +6,14 @@ title: Voyti
 <div class="card">
     <div class="card-body">
         <h2 class="card-title">YiiRocks/Voyti</h2>
+        <p class="text-muted small mb-3">
+            <em>войти</em> — <em>/vɐjˈtʲi/</em> — <em>verb</em> — "to enter" or "to log in"
+        </p>
         <nav class="small mb-4">
             <a href="#install">Installation</a> &middot;
             <a href="#quick-start">Quick Start</a> &middot;
             <a href="#config">Configuration</a> &middot;
+            <a href="#routes">Routes</a> &middot;
             <a href="#commands">Console</a> &middot;
             <a href="#middleware">Middleware</a> &middot;
             <a href="#rbac">RBAC</a> &middot;
@@ -21,7 +25,9 @@ title: Voyti
             is a highly customizable user management, authentication, and authorization
             extension for <a href="http://www.yiiframework.com/"
             class="text-nowrap">Yii Framework 3</a>, ported from
-            <a href="https://github.com/2amigos/yii2-usuario">2amigos/yii2-usuario</a>.
+            <a href="https://github.com/2amigos/yii2-usuario">2amigos/yii2-usuario</a>
+            and rebuilt with PSR-15 middleware, PSR-11 DI, ActiveRecord entities,
+            FormModel forms, and <code>yiisoft/rbac</code>.
         </p>
 
         <h3 class="card-title" id="install">Installation</h3>
@@ -32,18 +38,35 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <h3 class="card-title" id="quick-start">Quick Start</h3>
 
-        <h4>1. Run migrations</h4>
-        <pre class="mb-3"><code class="bash">php yii migrate</code></pre>
+        <h4>1. Wire migrations in the host app</h4>
         <p>
-            Five migrations create the <code>user</code>, <code>profile</code>,
-            <code>social_account</code>, <code>token</code>, and
-            <code>session_history</code> tables with all columns included.
+            Voyti exposes its migration defaults in the package-specific
+            <code>voyti-migration</code> config group. In your application, merge
+            that into the console migration service:
         </p>
+        <pre class="mb-3"><code class="php">// config/di-console.php
+use Yiisoft\Db\Migration\Service\MigrationService;
+
+return [
+    MigrationService::class => [
+        'class' => MigrationService::class,
+        'setNewMigrationPath()' => [$config->get('voyti-migration')['newMigrationPath']],
+        'setSourcePaths()' => [$config->get('voyti-migration')['sourcePaths']],
+    ],
+];</code></pre>
+        <p>
+            One migration creates the <code>user</code>, <code>user_profile</code>,
+            <code>user_social_account</code>, <code>user_token</code>, and
+            <code>user_session_history</code> tables with all columns (2FA, GDPR,
+            password expiration, last login IP, etc.) included. Run:
+        </p>
+        <pre class="mb-3"><code class="bash">./yii migrate:up</code></pre>
 
         <h4>2. Configure the module (optional)</h4>
         <p>
-            Sensible defaults are auto-registered via the Yii3 config plugin — no
-            manual setup is required. To customize, override <code>ModuleConfig</code>
+            Sensible defaults are auto-registered via the
+            <a href="https://github.com/yiisoft/config">Yii3 config plugin</a> — no
+            manual setup required. To customize, override <code>ModuleConfig</code>
             in <code>config/params.php</code>:
         </p>
         <pre class="mb-3"><code class="php">use YiiRocks\Voyti\ModuleConfig;
@@ -57,314 +80,478 @@ return [
         emailChangeStrategy: 1,
         enableGdprCompliance: true,
         maxPasswordAge: 90,
+        viewPath: '/path/to/your/custom/views',
         enableRestApi: true,
     ),
 ];</code></pre>
 
-        <h4>3. Done</h4>
+        <h4>3. Register routes</h4>
         <p>
-            Routes, DI bindings, event listeners, and console commands are all
-            auto-registered. The package works out of the box under the
-            <code>/voyti</code> URL prefix. REST API routes (under
-            <code>/voyti/api/v1</code>) are enabled when
-            <code>enableRestApi</code> is <code>true</code>.
+            The package exposes its routes under the <code>voyti-routes</code> config
+            group. In your application's router DI definition, include them alongside
+            your own routes:
+        </p>
+        <pre class="mb-3"><code class="php">// config/common/di/router.php
+use Yiisoft\Config\Config;
+use Yiisoft\Definitions\DynamicReference;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollector;
+
+/** @var Config $config */
+
+return [
+    RouteCollectionInterface::class => [
+        'class' => RouteCollection::class,
+        '__construct()' => [
+            'collector' => DynamicReference::to(
+                static fn() => (new RouteCollector())->addRoute(
+                    Group::create('/')
+                        ->routes(...[
+                            ...$config->get("routes"),
+                            Group::create('user/')
+                                ->routes(...$config->get("voyti-routes"))
+                        ],
+                    ),
+                ),
+            ),
+        ],
+    ],
+];</code></pre>
+        <p>
+            Routes are available at URLs like <code>/login</code>,
+            <code>/register</code>, <code>/settings</code>, etc. REST API routes
+            (under <code>/api/v1</code>) are enabled when <code>enableRestApi</code>
+            is <code>true</code>.
+        </p>
+
+        <h4>4. Done</h4>
+        <p>
+            DI bindings, event listeners, and console commands are all
+            auto-registered via the config plugin.
+        </p>
+
+        <h3 class="card-title" id="routes">Available Routes</h3>
+        <p>
+            The library does not provide a menu model or navigation contract. It
+            only exposes named routes that the host application can use in its own
+            menu, sidebar, or access rules.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Route name</th>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>voyti/login</code></td><td><code>GET, POST</code></td><td><code>login</code></td><td>User login</td></tr>
+                    <tr><td><code>voyti/logout</code></td><td><code>GET, POST</code></td><td><code>logout</code></td><td>User logout</td></tr>
+                    <tr><td><code>voyti/confirm</code></td><td><code>GET, POST</code></td><td><code>confirm</code></td><td>Two-factor confirmation step</td></tr>
+                    <tr><td><code>voyti/auth</code></td><td><code>GET</code></td><td><code>auth/{provider}</code></td><td>Social auth callback</td></tr>
+                    <tr><td><code>voyti/connect</code></td><td><code>GET</code></td><td><code>auth/connect/{provider}</code></td><td>Social account connect callback</td></tr>
+                    <tr><td><code>voyti/register</code></td><td><code>GET, POST</code></td><td><code>register</code></td><td>New user registration</td></tr>
+                    <tr><td><code>voyti/registration-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm/{id}/{code}</code></td><td>Email confirmation link</td></tr>
+                    <tr><td><code>voyti/resend</code></td><td><code>GET, POST</code></td><td><code>resend</code></td><td>Resend confirmation email</td></tr>
+                    <tr><td><code>voyti/registration-connect</code></td><td><code>GET</code></td><td><code>connect/{code}</code></td><td>Social registration link</td></tr>
+                    <tr><td><code>voyti/forgot</code></td><td><code>GET, POST</code></td><td><code>forgot</code></td><td>Password recovery request</td></tr>
+                    <tr><td><code>voyti/recover</code></td><td><code>GET, POST</code></td><td><code>recover/{id}/{code}</code></td><td>Password reset</td></tr>
+                    <tr><td><code>voyti/profile</code></td><td><code>GET</code></td><td><code>profile/{id}</code></td><td>Public user profile</td></tr>
+                    <tr><td><code>voyti/settings</code></td><td><code>GET, POST</code></td><td><code>settings</code></td><td>Profile settings</td></tr>
+                    <tr><td><code>voyti/settings-account</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
+                    <tr><td><code>voyti/settings-networks</code></td><td><code>GET</code></td><td><code>settings/networks</code></td><td>Linked social networks</td></tr>
+                    <tr><td><code>voyti/settings-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy</code></td><td>Privacy settings</td></tr>
+                    <tr><td><code>voyti/gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/gdpr-consent</code></td><td>GDPR consent</td></tr>
+                    <tr><td><code>voyti/gdpr-delete</code></td><td><code>GET, POST</code></td><td><code>settings/gdpr-delete</code></td><td>GDPR data removal</td></tr>
+                    <tr><td><code>voyti/settings-delete</code></td><td><code>POST</code></td><td><code>settings/delete</code></td><td>Account deletion</td></tr>
+                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor setup</td></tr>
+                    <tr><td><code>voyti/settings-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-enable</code></td><td>Enable 2FA</td></tr>
+                    <tr><td><code>voyti/settings-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor-disable</code></td><td>Disable 2FA</td></tr>
+                    <tr><td><code>voyti/settings-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
+                    <tr><td><code>voyti/settings-disconnect</code></td><td><code>POST</code></td><td><code>settings/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
+                    <tr><td><code>voyti/settings-export</code></td><td><code>GET</code></td><td><code>settings/export</code></td><td>Export user data</td></tr>
+                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin</code></td><td>Admin dashboard</td></tr>
+                    <tr><td><code>voyti/admin-create</code></td><td><code>GET, POST</code></td><td><code>admin/create</code></td><td>Create user</td></tr>
+                    <tr><td><code>voyti/admin-update</code></td><td><code>GET, POST</code></td><td><code>admin/update/{id}</code></td><td>Update user</td></tr>
+                    <tr><td><code>voyti/admin-update-profile</code></td><td><code>GET, POST</code></td><td><code>admin/update-profile/{id}</code></td><td>Update user profile</td></tr>
+                    <tr><td><code>voyti/admin-info</code></td><td><code>GET</code></td><td><code>admin/info/{id}</code></td><td>User details</td></tr>
+                    <tr><td><code>voyti/admin-confirm</code></td><td><code>POST</code></td><td><code>admin/confirm/{id}</code></td><td>Confirm user</td></tr>
+                    <tr><td><code>voyti/admin-delete</code></td><td><code>POST</code></td><td><code>admin/delete/{id}</code></td><td>Delete user</td></tr>
+                    <tr><td><code>voyti/admin-block</code></td><td><code>POST</code></td><td><code>admin/block/{id}</code></td><td>Block user</td></tr>
+                    <tr><td><code>voyti/admin-switch</code></td><td><code>POST</code></td><td><code>admin/switch-identity/{id}</code></td><td>Switch identity</td></tr>
+                    <tr><td><code>voyti/admin-password-reset</code></td><td><code>POST</code></td><td><code>admin/password-reset/{id}</code></td><td>Send password reset</td></tr>
+                    <tr><td><code>voyti/admin-force-password</code></td><td><code>POST</code></td><td><code>admin/force-password-change/{id}</code></td><td>Force password change</td></tr>
+                    <tr><td><code>voyti/admin-assignments</code></td><td><code>GET, POST</code></td><td><code>admin/assignments/{id}</code></td><td>Manage RBAC assignments</td></tr>
+                    <tr><td><code>voyti/admin-session-history</code></td><td><code>GET</code></td><td><code>admin/session-history/{id}</code></td><td>Session history</td></tr>
+                    <tr><td><code>voyti/admin-terminate-sessions</code></td><td><code>POST</code></td><td><code>admin/terminate-sessions/{id}</code></td><td>Terminate sessions</td></tr>
+                    <tr><td><code>voyti/permissions</code></td><td><code>GET</code></td><td><code>permissions</code></td><td>List permissions</td></tr>
+                    <tr><td><code>voyti/permissions-create</code></td><td><code>GET, POST</code></td><td><code>permissions/create</code></td><td>Create permission</td></tr>
+                    <tr><td><code>voyti/permissions-update</code></td><td><code>GET, POST</code></td><td><code>permissions/update/{name}</code></td><td>Update permission</td></tr>
+                    <tr><td><code>voyti/permissions-delete</code></td><td><code>POST</code></td><td><code>permissions/delete/{name}</code></td><td>Delete permission</td></tr>
+                    <tr><td><code>voyti/roles</code></td><td><code>GET</code></td><td><code>roles</code></td><td>List roles</td></tr>
+                    <tr><td><code>voyti/roles-create</code></td><td><code>GET, POST</code></td><td><code>roles/create</code></td><td>Create role</td></tr>
+                    <tr><td><code>voyti/roles-update</code></td><td><code>GET, POST</code></td><td><code>roles/update/{name}</code></td><td>Update role</td></tr>
+                    <tr><td><code>voyti/roles-delete</code></td><td><code>POST</code></td><td><code>roles/delete/{name}</code></td><td>Delete role</td></tr>
+                    <tr><td><code>voyti/rules</code></td><td><code>GET</code></td><td><code>rules</code></td><td>List rules</td></tr>
+                    <tr><td><code>voyti/rules-create</code></td><td><code>GET, POST</code></td><td><code>rules/create</code></td><td>Create rule</td></tr>
+                    <tr><td><code>voyti/rules-update</code></td><td><code>GET, POST</code></td><td><code>rules/update/{name}</code></td><td>Update rule</td></tr>
+                    <tr><td><code>voyti/rules-delete</code></td><td><code>POST</code></td><td><code>rules/delete/{name}</code></td><td>Delete rule</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            When <code>enableRestApi</code> is <code>true</code>, the API routes are
+            mounted under <code>adminRestPrefix</code> and expose user CRUD
+            endpoints.
         </p>
 
         <h3 class="card-title" id="config">Configuration</h3>
         <p>
-            <code>ModuleConfig</code> provides the following options, all
-            configurable via named arguments:
+            <code>ModuleConfig</code> provides 40+ options, all configurable via
+            named arguments:
         </p>
 
         <h4>General</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>enableRegistration</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>true</code></td>
-                    <td>Allow new user registration</td>
-                </tr>
-                <tr>
-                    <td><code>enableEmailConfirmation</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>true</code></td>
-                    <td>Require email confirmation</td>
-                </tr>
-                <tr>
-                    <td><code>allowPasswordRecovery</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>true</code></td>
-                    <td>Allow password recovery</td>
-                </tr>
-                <tr>
-                    <td><code>allowAccountDelete</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Allow users to delete their account</td>
-                </tr>
-                <tr>
-                    <td><code>generatePasswords</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Auto-generate passwords on registration</td>
-                </tr>
-                <tr>
-                    <td><code>enableAutoLogin</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>true</code></td>
-                    <td>Auto-login after registration</td>
-                </tr>
-                <tr>
-                    <td><code>allowUnconfirmedEmailLogin</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Allow login without email confirmation</td>
-                </tr>
-                <tr>
-                    <td><code>enableSocialNetworkRegistration</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>true</code></td>
-                    <td>Allow social network registration</td>
-                </tr>
-                <tr>
-                    <td><code>rememberLoginLifespan</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>1209600</code></td>
-                    <td>Remember-me duration in seconds</td>
-                </tr>
-                <tr>
-                    <td><code>tokenConfirmationLifespan</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>86400</code></td>
-                    <td>Confirmation token validity in seconds</td>
-                </tr>
-                <tr>
-                    <td><code>tokenRecoveryLifespan</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>21600</code></td>
-                    <td>Recovery token validity in seconds</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableRegistration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow new user registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableEmailConfirmation</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Require email confirmation</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableAutoLogin</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Auto-login after registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableSocialNetworkRegistration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow social network registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowPasswordRecovery</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow password recovery</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowAccountDelete</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Allow users to delete their account</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowUnconfirmedEmailLogin</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Allow login without email confirmation</td>
+                    </tr>
+                    <tr>
+                        <td><code>generatePasswords</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Auto-generate passwords on registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>rememberLoginLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1209600</code></td>
+                        <td>Remember-me duration in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>tokenConfirmationLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>86400</code></td>
+                        <td>Confirmation token validity in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>tokenRecoveryLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>21600</code></td>
+                        <td>Recovery token validity in seconds</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>Security &amp; Passwords</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>blowfishCost</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>10</code></td>
-                    <td>Bcrypt cost factor</td>
-                </tr>
-                <tr>
-                    <td><code>maxPasswordAge</code></td>
-                    <td><span class="font-monospace">?int</span></td>
-                    <td><code>null</code></td>
-                    <td>Max password age in days (<code>null</code> = no limit)</td>
-                </tr>
-                <tr>
-                    <td><code>minPasswordRequirements</code></td>
-                    <td><span class="font-monospace">array</span></td>
-                    <td><code>['lower'=>1,'digit'=>1,'upper'=>1]</code></td>
-                    <td>Minimum character type requirements</td>
-                </tr>
-                <tr>
-                    <td><code>disableIpLogging</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Disable IP address logging</td>
-                </tr>
-                <tr>
-                    <td><code>administrators</code></td>
-                    <td><span class="font-monospace">array</span></td>
-                    <td><code>[]</code></td>
-                    <td>Admin user IDs or usernames</td>
-                </tr>
-                <tr>
-                    <td><code>administratorPermissionName</code></td>
-                    <td><span class="font-monospace">?string</span></td>
-                    <td><code>null</code></td>
-                    <td>Permission name for admin access</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>maxPasswordAge</code></td>
+                        <td><span class="font-monospace">?int</span></td>
+                        <td><code>null</code></td>
+                        <td>Max password age in days (<code>null</code> = no limit)</td>
+                    </tr>
+                    <tr>
+                        <td><code>minPasswordRequirements</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>['lower'=>1,'digit'=>1,'upper'=>1]</code></td>
+                        <td>Minimum character type requirements</td>
+                    </tr>
+                    <tr>
+                        <td><code>disableIpLogging</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Disable IP address logging</td>
+                    </tr>
+                    <tr>
+                        <td><code>administrators</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[]</code></td>
+                        <td>Admin user IDs or usernames</td>
+                    </tr>
+                    <tr>
+                        <td><code>administratorPermissionName</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>Permission name for admin access</td>
+                    </tr>
+                    <tr>
+                        <td><code>loginPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'/user/login'</code></td>
+                        <td>Redirect target for unauthenticated access</td>
+                    </tr>
+                    <tr>
+                        <td><code>accountSettingsPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'/user/settings/account'</code></td>
+                        <td>Redirect target for password age and 2FA enforcement</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>Two-Factor Authentication</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>enableTwoFactorAuthentication</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Enable 2FA</td>
-                </tr>
-                <tr>
-                    <td><code>twoFactorAuthenticationForcedPermissions</code></td>
-                    <td><span class="font-monospace">array</span></td>
-                    <td><code>[]</code></td>
-                    <td>Permissions that require 2FA</td>
-                </tr>
-                <tr>
-                    <td><code>twoFactorAuthenticationCycles</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>1</code></td>
-                    <td>2FA code generation cycles</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableTwoFactorAuthentication</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable 2FA</td>
+                    </tr>
+                    <tr>
+                        <td><code>twoFactorAuthenticationForcedPermissions</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[]</code></td>
+                        <td>Permissions that require 2FA</td>
+                    </tr>
+                    <tr>
+                        <td><code>twoFactorAuthenticationCycles</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1</code></td>
+                        <td>2FA code generation cycles</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>GDPR Compliance</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>enableGdprCompliance</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Enable GDPR features</td>
-                </tr>
-                <tr>
-                    <td><code>gdprPrivacyPolicyUrl</code></td>
-                    <td><span class="font-monospace">?string</span></td>
-                    <td><code>null</code></td>
-                    <td>URL to privacy policy</td>
-                </tr>
-                <tr>
-                    <td><code>gdprAnonymizePrefix</code></td>
-                    <td><span class="font-monospace">string</span></td>
-                    <td><code>'GDPR'</code></td>
-                    <td>Prefix for anonymized usernames</td>
-                </tr>
-                <tr>
-                    <td><code>gdprRequireConsentToAll</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Require consent on all pages</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableGdprCompliance</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable GDPR features</td>
+                    </tr>
+                    <tr>
+                        <td><code>gdprPrivacyPolicyUrl</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>URL to privacy policy</td>
+                    </tr>
+                    <tr>
+                        <td><code>gdprAnonymizePrefix</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'GDPR'</code></td>
+                        <td>Prefix for anonymized usernames</td>
+                    </tr>
+                    <tr>
+                        <td><code>gdprRequireConsentToAll</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Require consent on all pages</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>Email</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>emailChangeStrategy</code></td>
-                    <td><span class="font-monospace">int</span></td>
-                    <td><code>1</code></td>
-                    <td>0=insecure, 1=default (confirm new), 2=secure (confirm both)</td>
-                </tr>
-                <tr>
-                    <td><code>mailParams</code></td>
-                    <td><span class="font-monospace">array</span></td>
-                    <td><code>[...]</code></td>
-                    <td>Mail from address and subject overrides</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>emailChangeStrategy</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1</code></td>
+                        <td>0=insecure, 1=default (confirm new), 2=secure (confirm both)</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailParams</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[...]</code></td>
+                        <td>Mail from address and subject overrides</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>Session &amp; reCAPTCHA</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>enableSessionHistory</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Track session history</td>
-                </tr>
-                <tr>
-                    <td><code>numberSessionHistory</code></td>
-                    <td><span class="font-monospace">int|false</span></td>
-                    <td><code>false</code></td>
-                    <td>Max sessions to keep per user</td>
-                </tr>
-                <tr>
-                    <td><code>timeoutSessionHistory</code></td>
-                    <td><span class="font-monospace">int|false</span></td>
-                    <td><code>false</code></td>
-                    <td>Session timeout in seconds</td>
-                </tr>
-                <tr>
-                    <td><code>recaptchaVersion</code></td>
-                    <td><span class="font-monospace">?string</span></td>
-                    <td><code>null</code></td>
-                    <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableSessionHistory</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Track session history</td>
+                    </tr>
+                    <tr>
+                        <td><code>numberSessionHistory</code></td>
+                        <td><span class="font-monospace">int|false</span></td>
+                        <td><code>false</code></td>
+                        <td>Max sessions to keep per user</td>
+                    </tr>
+                    <tr>
+                        <td><code>timeoutSessionHistory</code></td>
+                        <td><span class="font-monospace">int|false</span></td>
+                        <td><code>false</code></td>
+                        <td>Session timeout in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>recaptchaVersion</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>REST API</h4>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Option</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>enableRestApi</code></td>
-                    <td><span class="font-monospace">bool</span></td>
-                    <td><code>false</code></td>
-                    <td>Enable REST API</td>
-                </tr>
-                <tr>
-                    <td><code>adminRestPrefix</code></td>
-                    <td><span class="font-monospace">string</span></td>
-                    <td><code>'api/v1'</code></td>
-                    <td>REST API URL prefix</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableRestApi</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable REST API</td>
+                    </tr>
+                    <tr>
+                        <td><code>adminRestPrefix</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'api/v1'</code></td>
+                        <td>REST API URL prefix</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Views</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>viewPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'src/resources/views/bootstrap5'</code></td>
+                        <td>Base path for bundled web templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'src/resources/mail'</code></td>
+                        <td>Base path for bundled mail templates</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h3 class="card-title" id="commands">Console Commands</h3>
         <table class="table table-sm table-striped">
@@ -406,19 +593,23 @@ return [
             <tbody>
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
-                    <td>Redirects non-admin users; checks <code>administratorPermissionName</code></td>
+                    <td>Redirects guests to <code>loginPath</code>; checks <code>administratorPermissionName</code> for admin access</td>
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to password change when <code>maxPasswordAge</code> is exceeded</td>
+                    <td>Redirects to <code>accountSettingsPath</code> when <code>maxPasswordAge</code> is exceeded</td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to 2FA setup when required permissions are assigned</td>
+                    <td>Redirects to <code>accountSettingsPath</code> when required permissions are assigned</td>
                 </tr>
             </tbody>
         </table>
-        <p>Register them in your application's middleware pipeline as needed.</p>
+        <p>
+            Both redirect targets are configurable in <code>ModuleConfig</code>, so
+            you can map them to your own route structure. Register them in your
+            application's middleware pipeline as needed.
+        </p>
 
         <h3 class="card-title" id="rbac">RBAC Management</h3>
         <p>
@@ -437,7 +628,7 @@ return [
 ];</code></pre>
 
         <h3 class="card-title" id="social">Social Authentication</h3>
-        <p>Nine built-in auth clients are included:</p>
+        <p>Nine built-in auth clients:</p>
         <ul>
             <li>Facebook, GitHub, Google, Keycloak</li>
             <li>LinkedIn, Microsoft365, Twitter, VKontakte, Yandex</li>
@@ -452,53 +643,41 @@ return [
 
         <h4>Web Views</h4>
         <p>
-            Web views are in <code>src/resources/views/bootstrap5/</code> and use
-            the <code>@voytiViews</code> alias. Override via Yii3 View theme
-            <code>pathMap</code>:
+            Web views are in <code>src/resources/views/bootstrap5/</code>. Override
+            them by setting <code>viewPath</code> in <code>ModuleConfig</code>:
         </p>
         <pre class="mb-3"><code class="php">// config/params.php
-'yiisoft/view' => [
-    'theme' => [
-        'pathMap' => [
-            '@voytiViews' => [
-                '/path/to/your/custom/views',
-                '@voyti/resources/views/bootstrap5',
-            ],
-        ],
-    ],
-],</code></pre>
+use YiiRocks\Voyti\ModuleConfig;
+
+return [
+    ModuleConfig::class => new ModuleConfig(
+        viewPath: '/path/to/your/custom/views',
+    ),
+];</code></pre>
 
         <h4>Mail Views</h4>
         <p>
-            Mail templates use the <code>@voytiMail</code> alias — separate from
-            web views so they can be overridden independently:
+            Mail templates are in <code>src/resources/mail/</code> — separate from
+            web views so they can be overridden independently via
+            <code>mailPath</code>:
         </p>
-        <pre class="mb-3"><code class="php">'yiisoft/view' => [
-    'theme' => [
-        'pathMap' => [
-            '@voytiMail' => [
-                '/path/to/your/custom/mail',
-                '@voyti/resources/mail',
-            ],
-        ],
-    ],
-],</code></pre>
+        <pre class="mb-3"><code class="php">use YiiRocks\Voyti\ModuleConfig;
+
+return [
+    ModuleConfig::class => new ModuleConfig(
+        mailPath: '/path/to/your/custom/mail',
+    ),
+];</code></pre>
 
         <h3 class="card-title">Testing</h3>
-        <pre class="mb-3"><code class="bash"># Unit tests (264 tests, 3509 assertions)
+        <pre class="mb-3"><code class="bash"># Unit tests
 composer phpunit
 
-# Mutation testing (275 mutants, 100% MSI)
+# Mutation testing
 composer infection
 
-# Code style
-composer php-cs-fixer
-
 # Static analysis
-composer psalm
-
-# Mess detector
-composer phpmd</code></pre>
+composer psalm</code></pre>
 
         <h3 class="card-title">Support</h3>
         <p>
