@@ -155,7 +155,7 @@ voyti:
   tagline: User management, authentication &amp; authorization
   package: yiirocks/voyti
   repo: voyti
-  workflow: phpunit.yml
+  workflow: build.yml
   cli: true
   head_id: headVoyti
   collapse_id: collapseVoyti
