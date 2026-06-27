@@ -70,21 +70,27 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
             <code>ModuleConfig::defaults()</code>.
         </p>
 
-        <h4>3. Done</h4>
+        <h4>3. Register routes</h4>
         <p>
-            Routes, DI bindings, event listeners, console commands, and
-            translations are all auto-registered via the config plugin. Routes
-            are available at <code>/login</code>, <code>/register</code>,
-            <code>/settings</code>, etc. Access the admin panel at
-            <code>/admin</code>.
+            Routes are <strong>not</strong> auto-registered — you must add
+            them to your router configuration. See the
+            <a href="#routes">Router Setup</a> section below.
+        </p>
+
+        <h4>4. Done</h4>
+        <p>
+            DI bindings, event listeners, console commands, and translations
+            are auto-registered via the config plugin. No manual wiring needed.
         </p>
 
         <h3 class="card-title" id="routes">Available Routes</h3>
         <p>
-            Routes are auto-registered by the config plugin and mounted at the
-            application root. The library does not provide a menu model or
-            navigation contract — it only exposes named routes that the host
-            application can use in its own menu, sidebar, or access rules.
+            Route definitions are provided but <strong>not</strong>
+            auto-registered. You must pull the <code>voyti-routes</code> config
+            group and add them to your router. The library does not provide a
+            menu model or navigation contract — it only exposes named routes
+            that the host application can use in its own menu, sidebar, or
+            access rules.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -152,10 +158,11 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
             </table>
         </div>
 
-        <h4>Router Setup (prefix mounting)</h4>
+        <h4>Router Setup</h4>
         <p>
-            To mount Voyti routes under a prefix (e.g. <code>/user</code>),
-            pull the <code>voyti-routes</code> config group and add the prefix:
+            Pull the <code>voyti-routes</code> config group into your router
+            definition. The example below mounts them under a
+            <code>user/</code> prefix — omit or change the prefix as needed:
         </p>
         <pre class="mb-3"><code class="php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -185,7 +192,8 @@ return [
     ],
 ];</code></pre>
         <p>
-            Without this setup, routes are registered at the root
+            Without this configuration, Voyti routes are not registered at all.
+            Set the prefix to <code>''</code> if you want routes at the root
             (<code>/login</code>, <code>/register</code>, etc.).
         </p>
 
