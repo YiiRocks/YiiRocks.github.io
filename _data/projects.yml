@@ -166,15 +166,31 @@ voyti:
         authorization for your <a href="http://www.yiiframework.com/"
         class="text-nowrap">Yii Framework 3</a> applications.
     </p>
+    <ul class="list-unstyled mb-3">
+        <li><strong>User management</strong> — registration, email confirmation, login/logout, password recovery</li>
+        <li><strong>RBAC</strong> — full admin UI for roles, permissions, and rules</li>
+        <li><strong>Social authentication</strong> — 9 built-in providers</li>
+        <li><strong>Two-factor authentication</strong> — TOTP, email, SMS</li>
+        <li><strong>GDPR compliance</strong> — consent management, data export, anonymized deletion</li>
+        <li><strong>Session management</strong> — history tracking and termination</li>
+        <li><strong>REST API</strong> — optional JSON API for user CRUD</li>
+        <li><strong>reCAPTCHA</strong> — optional v2/v3 integration</li>
+        <li><strong>i18n</strong> — built-in translations for English, German, Dutch, Russian</li>
+    </ul>
     <p>
-        Full-featured module with RBAC management, two-factor authentication,
-        social auth, GDPR compliance, and more — see the
-        <a href="/voyti/">docs</a> for details.
+        <a href="/voyti/">Full documentation &rarr;</a>
     </p>
     <div>
-        Quick start:<br>
-        <pre><code class="bash">composer require yiirocks/voyti
-        php yii migrate</code></pre>
+        Quick configuration:<br>
+        <pre><code class="php">use YiiRocks\Voyti\ModuleConfig;
+
+    return [
+        ModuleConfig::class => new ModuleConfig(
+            enableTwoFactorAuthentication: true,
+            enableGdprCompliance: true,
+            maxPasswordAge: 90,
+        ),
+    ];</code></pre>
     </div>
 
 yii2-fontawesome-inline:

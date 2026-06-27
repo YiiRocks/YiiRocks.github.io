@@ -639,6 +639,35 @@ return [
             handles account lookup, creation, linking, and user login.
         </p>
 
+        <h3 class="card-title" id="events">Events &amp; Listeners</h3>
+        <p>Voyti dispatches events at key points in the user lifecycle,
+        allowing your application to react, log, or extend behaviour:</p>
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>When</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>UserRegisteredEvent</code></td><td>A new user signs up</td></tr>
+                <tr><td><code>UserLoggedInEvent</code></td><td>User successfully logs in</td></tr>
+                <tr><td><code>UserLoggedOutEvent</code></td><td>User logs out</td></tr>
+                <tr><td><code>UserConfirmedEvent</code></td><td>Email address is confirmed</td></tr>
+                <tr><td><code>UserUpdatedEvent</code></td><td>Profile or account is updated</td></tr>
+                <tr><td><code>UserDeletedEvent</code></td><td>User account is deleted</td></tr>
+                <tr><td><code>UserProfileUpdatedEvent</code></td><td>Profile fields are changed</td></tr>
+                <tr><td><code>UserPasswordChangedEvent</code></td><td>Password is updated</td></tr>
+                <tr><td><code>UserSessionsTerminatedEvent</code></td><td>Active sessions are terminated</td></tr>
+                <tr><td><code>SocialAccountConnectedEvent</code></td><td>Social account is linked</td></tr>
+                <tr><td><code>SocialAccountDisconnectedEvent</code></td><td>Social account is unlinked</td></tr>
+            </tbody>
+        </table>
+        <p>Four listeners are registered by default: mail notifications
+        for confirmation, recovery, re-confirmation, and GDPR admin alerts.
+        Attach additional listeners via the Yii3 event dispatcher
+        configuration.</p>
+
         <h3 class="card-title" id="views">Views</h3>
 
         <h4>Web Views</h4>
@@ -669,15 +698,36 @@ return [
     ),
 ];</code></pre>
 
+        <h3 class="card-title" id="structure">Project Structure</h3>
+        <pre class="mb-3"><code>src/
+├── AuthClient/         9 social auth providers
+├── Command/            4 console commands
+├── Controller/         11 web controllers + 1 API controller
+├── Entity/             5 ActiveRecord entities
+├── Event/              11 event classes
+├── Factory/            TokenFactory, MailFactory
+├── Form/               9 form models
+├── Helper/             5 helpers
+├── Listener/           4 event listeners
+├── Middleware/          3 PSR-15 middleware
+├── Migration/          5 table-creation migrations
+├── Repository/         6 repositories
+├── Service/            22 + 5 session-history services
+├── Strategy/           3 email-change strategies
+├── Validator/          5 validators
+├── Widget/             4 widgets
+├── resources/mail/     5 mail templates
+├── resources/messages/ 4 locales
+├── resources/views/    33 Bootstrap 5 templates
+└── ModuleConfig.php    40+ configuration options</code></pre>
+
         <h3 class="card-title">Testing</h3>
-        <pre class="mb-3"><code class="bash"># Unit tests
-composer phpunit
-
-# Mutation testing
-composer infection
-
-# Static analysis
-composer psalm</code></pre>
+        <p>264 unit tests with 3,509 assertions, 100% mutation score:</p>
+        <pre class="mb-3"><code class="bash">composer phpunit       # unit tests
+composer infection     # mutation testing
+composer psalm         # static analysis
+composer php-cs-fixer  # code style
+composer phpmd         # mess detection</code></pre>
 
         <h3 class="card-title">Support</h3>
         <p>
