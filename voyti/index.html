@@ -66,24 +66,21 @@ return [
         <p>
             Sensible defaults are auto-registered via the
             <a href="https://github.com/yiisoft/config">Yii3 config plugin</a> — no
-            manual setup required. To customize, override <code>ModuleConfig</code>
-            in <code>config/params.php</code>:
+            manual setup required. To customize, override the
+            <code>yiirocks/voyti</code> key in <code>config/params.php</code>:
         </p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Voyti\ModuleConfig;
-
-return [
-    ModuleConfig::class => new ModuleConfig(
-        enableRegistration: true,
-        enablePasswordRecovery: true,
-        enableTwoFactorAuthentication: true,
-        recaptchaVersion: 'v3',
-        emailChangeStrategy: 1,
-        enableGdprCompliance: true,
-        maxPasswordAge: 90,
-        viewPath: '/path/to/your/custom/views',
-        enableRestApi: true,
-    ),
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'enableTwoFactorAuthentication' => true,
+        'enableGdprCompliance' => true,
+        'maxPasswordAge' => 90,
+        'enableRestApi' => true,
+    ],
 ];</code></pre>
+        <p>
+            Values set here are merged with the built-in defaults from
+            <code>ModuleConfig::defaults()</code>.
+        </p>
 
         <h4>3. Register routes</h4>
         <p>
@@ -211,11 +208,20 @@ return [
 
         <h3 class="card-title" id="config">Configuration</h3>
         <p>
-            <code>ModuleConfig</code> provides 40+ options, all configurable via
-            named arguments:
+            Override the <code>yiirocks/voyti</code> key in
+            <code>config/params.php</code>. Only the options you want to
+            change need to be specified — they are merged with the built-in
+            defaults from <code>ModuleConfig::defaults()</code>:
         </p>
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'enableTwoFactorAuthentication' => true,
+        'enableGdprCompliance' => true,
+        'maxPasswordAge' => 90,
+    ],
+];</code></pre>
 
-        <h4>General</h4>
+        <h4>Registration &amp; Accounts</h4>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -240,16 +246,16 @@ return [
                         <td>Require email confirmation</td>
                     </tr>
                     <tr>
-                        <td><code>enableAutoLogin</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Auto-login after registration</td>
-                    </tr>
-                    <tr>
                         <td><code>enableSocialNetworkRegistration</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>true</code></td>
-                        <td>Allow social network registration</td>
+                        <td>Allow registration via social providers</td>
+                    </tr>
+                    <tr>
+                        <td><code>socialNetworkClients</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[]</code></td>
+                        <td>Auth client class names to register</td>
                     </tr>
                     <tr>
                         <td><code>allowPasswordRecovery</code></td>
@@ -258,16 +264,16 @@ return [
                         <td>Allow password recovery</td>
                     </tr>
                     <tr>
+                        <td><code>allowAdminPasswordRecovery</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow admins to trigger password recovery for users</td>
+                    </tr>
+                    <tr>
                         <td><code>allowAccountDelete</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Allow users to delete their account</td>
-                    </tr>
-                    <tr>
-                        <td><code>allowUnconfirmedEmailLogin</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Allow login without email confirmation</td>
+                        <td>Allow users to delete their own account</td>
                     </tr>
                     <tr>
                         <td><code>generatePasswords</code></td>
@@ -279,19 +285,19 @@ return [
                         <td><code>rememberLoginLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1209600</code></td>
-                        <td>Remember-me duration in seconds</td>
+                        <td>Remember-me cookie duration (seconds)</td>
                     </tr>
                     <tr>
                         <td><code>tokenConfirmationLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>86400</code></td>
-                        <td>Confirmation token validity in seconds</td>
+                        <td>Email confirmation token validity (seconds)</td>
                     </tr>
                     <tr>
                         <td><code>tokenRecoveryLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>21600</code></td>
-                        <td>Recovery token validity in seconds</td>
+                        <td>Password recovery token validity (seconds)</td>
                     </tr>
                 </tbody>
             </table>
@@ -313,43 +319,55 @@ return [
                         <td><code>maxPasswordAge</code></td>
                         <td><span class="font-monospace">?int</span></td>
                         <td><code>null</code></td>
-                        <td>Max password age in days (<code>null</code> = no limit)</td>
+                        <td>Max password age in days (<code>null</code> = never expires)</td>
                     </tr>
                     <tr>
-                        <td><code>minPasswordRequirements</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>['lower'=>1,'digit'=>1,'upper'=>1]</code></td>
-                        <td>Minimum character type requirements</td>
+                        <td><code>enablePasswordExpiration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enforce password expiration (requires <code>maxPasswordAge</code>)</td>
                     </tr>
                     <tr>
                         <td><code>disableIpLogging</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Disable IP address logging</td>
-                    </tr>
-                    <tr>
-                        <td><code>administrators</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>[]</code></td>
-                        <td>Admin user IDs or usernames</td>
+                        <td>Disable IP address logging on login</td>
                     </tr>
                     <tr>
                         <td><code>administratorPermissionName</code></td>
                         <td><span class="font-monospace">?string</span></td>
                         <td><code>null</code></td>
-                        <td>Permission name for admin access</td>
+                        <td>Permission name required for admin panel access</td>
                     </tr>
                     <tr>
-                        <td><code>loginPath</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'/user/login'</code></td>
-                        <td>Redirect target for unauthenticated access</td>
+                        <td><code>enableSwitchIdentities</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow admins to impersonate users</td>
                     </tr>
                     <tr>
-                        <td><code>accountSettingsPath</code></td>
+                        <td><code>switchIdentitySessionKey</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>'voyti_original_user'</code></td>
+                        <td>Session key for storing the original identity</td>
+                    </tr>
+                    <tr>
+                        <td><code>loginRoute</code></td>
                         <td><span class="font-monospace">string</span></td>
-                        <td><code>'/user/settings/account'</code></td>
-                        <td>Redirect target for password age and 2FA enforcement</td>
+                        <td><code>'voyti/login'</code></td>
+                        <td>Route name for the login page</td>
+                    </tr>
+                    <tr>
+                        <td><code>accountSettingsRoute</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'voyti/settings-account'</code></td>
+                        <td>Route name for the account settings page</td>
+                    </tr>
+                    <tr>
+                        <td><code>profileVisibility</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>0</code></td>
+                        <td>0=public, 1=registered only, 2=private</td>
                     </tr>
                 </tbody>
             </table>
@@ -371,19 +389,13 @@ return [
                         <td><code>enableTwoFactorAuthentication</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable 2FA</td>
+                        <td>Enable 2FA (TOTP, email, SMS)</td>
                     </tr>
                     <tr>
                         <td><code>twoFactorAuthenticationForcedPermissions</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>[]</code></td>
-                        <td>Permissions that require 2FA</td>
-                    </tr>
-                    <tr>
-                        <td><code>twoFactorAuthenticationCycles</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>1</code></td>
-                        <td>2FA code generation cycles</td>
+                        <td>Permissions that require 2FA to be set up</td>
                     </tr>
                 </tbody>
             </table>
@@ -405,25 +417,47 @@ return [
                         <td><code>enableGdprCompliance</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable GDPR features</td>
+                        <td>Enable GDPR consent, export, and deletion features</td>
                     </tr>
                     <tr>
-                        <td><code>gdprPrivacyPolicyUrl</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td>URL to privacy policy</td>
+                        <td><code>gdprExportProperties</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>['email','username',...]</code></td>
+                        <td>User properties included in data export</td>
                     </tr>
                     <tr>
                         <td><code>gdprAnonymizePrefix</code></td>
                         <td><span class="font-monospace">string</span></td>
                         <td><code>'GDPR'</code></td>
-                        <td>Prefix for anonymized usernames</td>
+                        <td>Prefix for anonymised usernames after deletion</td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Session</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
                     <tr>
-                        <td><code>gdprRequireConsentToAll</code></td>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableSessionHistory</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Require consent on all pages</td>
+                        <td>Track user session history</td>
+                    </tr>
+                    <tr>
+                        <td><code>numberSessionHistory</code></td>
+                        <td><span class="font-monospace">int|false</span></td>
+                        <td><code>false</code></td>
+                        <td>Max sessions to keep per user (<code>false</code> = unlimited)</td>
                     </tr>
                 </tbody>
             </table>
@@ -445,19 +479,25 @@ return [
                         <td><code>emailChangeStrategy</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1</code></td>
-                        <td>0=insecure, 1=default (confirm new), 2=secure (confirm both)</td>
+                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailAdminOnRegister</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>Email address to notify on new registrations</td>
                     </tr>
                     <tr>
                         <td><code>mailParams</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>[...]</code></td>
-                        <td>Mail from address and subject overrides</td>
+                        <td>From address and subject overrides for all mail templates</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <h4>Session &amp; reCAPTCHA</h4>
+        <h4>reCAPTCHA</h4>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -469,24 +509,6 @@ return [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>enableSessionHistory</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Track session history</td>
-                    </tr>
-                    <tr>
-                        <td><code>numberSessionHistory</code></td>
-                        <td><span class="font-monospace">int|false</span></td>
-                        <td><code>false</code></td>
-                        <td>Max sessions to keep per user</td>
-                    </tr>
-                    <tr>
-                        <td><code>timeoutSessionHistory</code></td>
-                        <td><span class="font-monospace">int|false</span></td>
-                        <td><code>false</code></td>
-                        <td>Session timeout in seconds</td>
-                    </tr>
                     <tr>
                         <td><code>recaptchaVersion</code></td>
                         <td><span class="font-monospace">?string</span></td>
@@ -513,13 +535,13 @@ return [
                         <td><code>enableRestApi</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable REST API</td>
+                        <td>Enable REST API for user CRUD</td>
                     </tr>
                     <tr>
                         <td><code>adminRestPrefix</code></td>
                         <td><span class="font-monospace">string</span></td>
                         <td><code>'api/v1'</code></td>
-                        <td>REST API URL prefix</td>
+                        <td>URL prefix for REST API routes</td>
                     </tr>
                 </tbody>
             </table>
@@ -540,14 +562,14 @@ return [
                     <tr>
                         <td><code>viewPath</code></td>
                         <td><span class="font-monospace">string</span></td>
-                        <td><code>'src/resources/views/bootstrap5'</code></td>
-                        <td>Base path for bundled web templates</td>
+                        <td><code>'.../resources/views/bootstrap5'</code></td>
+                        <td>Path to custom web view templates</td>
                     </tr>
                     <tr>
                         <td><code>mailPath</code></td>
                         <td><span class="font-monospace">string</span></td>
-                        <td><code>'src/resources/mail'</code></td>
-                        <td>Base path for bundled mail templates</td>
+                        <td><code>'.../resources/mail'</code></td>
+                        <td>Path to custom mail templates</td>
                     </tr>
                 </tbody>
             </table>
@@ -673,15 +695,12 @@ return [
         <h4>Web Views</h4>
         <p>
             Web views are in <code>src/resources/views/bootstrap5/</code>. Override
-            them by setting <code>viewPath</code> in <code>ModuleConfig</code>:
+            them by setting <code>viewPath</code> in <code>config/params.php</code>:
         </p>
-        <pre class="mb-3"><code class="php">// config/params.php
-use YiiRocks\Voyti\ModuleConfig;
-
-return [
-    ModuleConfig::class => new ModuleConfig(
-        viewPath: '/path/to/your/custom/views',
-    ),
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'viewPath' => '/path/to/your/custom/views',
+    ],
 ];</code></pre>
 
         <h4>Mail Views</h4>
@@ -690,12 +709,10 @@ return [
             web views so they can be overridden independently via
             <code>mailPath</code>:
         </p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Voyti\ModuleConfig;
-
-return [
-    ModuleConfig::class => new ModuleConfig(
-        mailPath: '/path/to/your/custom/mail',
-    ),
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'mailPath' => '/path/to/your/custom/mail',
+    ],
 ];</code></pre>
 
         <h3 class="card-title" id="structure">Project Structure</h3>

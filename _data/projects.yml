@@ -180,18 +180,6 @@ voyti:
     <p>
         <a href="/voyti/">Full documentation &rarr;</a>
     </p>
-    <div>
-        Quick configuration:<br>
-        <pre><code class="php">use YiiRocks\Voyti\ModuleConfig;
-
-    return [
-        ModuleConfig::class => new ModuleConfig(
-            enableTwoFactorAuthentication: true,
-            enableGdprCompliance: true,
-            maxPasswordAge: 90,
-        ),
-    ];</code></pre>
-    </div>
 
 yii2-fontawesome-inline:
   name: yii2-fontawesome-inline
