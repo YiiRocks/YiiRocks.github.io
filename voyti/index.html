@@ -38,36 +38,24 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <h3 class="card-title" id="quick-start">Quick Start</h3>
 
-        <h4>1. Wire migrations in the host app</h4>
         <p>
-            Voyti exposes its migration defaults in the package-specific
-            <code>voyti-migration</code> config group. In your application, merge
-            that into the console migration service:
+            The <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>
+            auto-discovers all package configuration — no manual wiring required.
         </p>
-        <pre class="mb-3"><code class="php">// config/di-console.php
-use Yiisoft\Db\Migration\Service\MigrationService;
 
-return [
-    MigrationService::class => [
-        'class' => MigrationService::class,
-        'setNewMigrationPath()' => [$config->get('voyti-migration')['newMigrationPath']],
-        'setSourcePaths()' => [$config->get('voyti-migration')['sourcePaths']],
-    ],
-];</code></pre>
+        <h4>1. Run migrations</h4>
+        <pre class="mb-3"><code class="bash">./yii migrate:up</code></pre>
         <p>
             One migration creates the <code>user</code>, <code>user_profile</code>,
             <code>user_social_account</code>, <code>user_token</code>, and
             <code>user_session_history</code> tables with all columns (2FA, GDPR,
-            password expiration, last login IP, etc.) included. Run:
+            password expiration, last login IP, etc.) included.
         </p>
-        <pre class="mb-3"><code class="bash">./yii migrate:up</code></pre>
 
         <h4>2. Configure the module (optional)</h4>
         <p>
-            Sensible defaults are auto-registered via the
-            <a href="https://github.com/yiisoft/config">Yii3 config plugin</a> — no
-            manual setup required. To customize, override the
-            <code>yiirocks/voyti</code> key in <code>config/params.php</code>:
+            To customize, override the <code>yiirocks/voyti</code> key in
+            <code>config/params.php</code>:
         </p>
         <pre class="mb-3"><code class="php">return [
     'yiirocks/voyti' => [
@@ -82,58 +70,21 @@ return [
             <code>ModuleConfig::defaults()</code>.
         </p>
 
-        <h4>3. Register routes</h4>
+        <h4>3. Done</h4>
         <p>
-            The package exposes its routes under the <code>voyti-routes</code> config
-            group. In your application's router DI definition, include them alongside
-            your own routes:
-        </p>
-        <pre class="mb-3"><code class="php">// config/common/di/router.php
-use Yiisoft\Config\Config;
-use Yiisoft\Definitions\DynamicReference;
-use Yiisoft\Router\Group;
-use Yiisoft\Router\RouteCollection;
-use Yiisoft\Router\RouteCollectionInterface;
-use Yiisoft\Router\RouteCollector;
-
-/** @var Config $config */
-
-return [
-    RouteCollectionInterface::class => [
-        'class' => RouteCollection::class,
-        '__construct()' => [
-            'collector' => DynamicReference::to(
-                static fn() => (new RouteCollector())->addRoute(
-                    Group::create('/')
-                        ->routes(...[
-                            ...$config->get("routes"),
-                            Group::create('user/')
-                                ->routes(...$config->get("voyti-routes"))
-                        ],
-                    ),
-                ),
-            ),
-        ],
-    ],
-];</code></pre>
-        <p>
-            Routes are available at URLs like <code>/login</code>,
-            <code>/register</code>, <code>/settings</code>, etc. REST API routes
-            (under <code>/api/v1</code>) are enabled when <code>enableRestApi</code>
-            is <code>true</code>.
-        </p>
-
-        <h4>4. Done</h4>
-        <p>
-            DI bindings, event listeners, and console commands are all
-            auto-registered via the config plugin.
+            Routes, DI bindings, event listeners, console commands, and
+            translations are all auto-registered via the config plugin. Routes
+            are available at <code>/login</code>, <code>/register</code>,
+            <code>/settings</code>, etc. Access the admin panel at
+            <code>/admin</code>.
         </p>
 
         <h3 class="card-title" id="routes">Available Routes</h3>
         <p>
-            The library does not provide a menu model or navigation contract. It
-            only exposes named routes that the host application can use in its own
-            menu, sidebar, or access rules.
+            Routes are auto-registered by the config plugin and mounted at the
+            application root. The library does not provide a menu model or
+            navigation contract — it only exposes named routes that the host
+            application can use in its own menu, sidebar, or access rules.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -650,15 +601,30 @@ return [
 ];</code></pre>
 
         <h3 class="card-title" id="social">Social Authentication</h3>
-        <p>Nine built-in auth clients:</p>
+        <p>Nine built-in auth clients are bundled:</p>
         <ul>
             <li>Facebook, GitHub, Google, Keycloak</li>
             <li>LinkedIn, Microsoft365, Twitter, VKontakte, Yandex</li>
         </ul>
         <p>
-            Each implements the auth client interface and maps provider attributes
-            to the <code>SocialNetworkAccount</code> entity. The service layer
-            handles account lookup, creation, linking, and user login.
+            Register the clients you need via the <code>socialNetworkClients</code>
+            config option:
+        </p>
+        <pre class="mb-3"><code class="php">use YiiRocks\Voyti\AuthClient\Facebook;
+use YiiRocks\Voyti\AuthClient\GitHub;
+
+return [
+    'yiirocks/voyti' => [
+        'socialNetworkClients' => [
+            Facebook::class,
+            GitHub::class,
+        ],
+    ],
+];</code></pre>
+        <p>
+            Each client implements the auth client interface and maps provider
+            attributes to the <code>SocialNetworkAccount</code> entity. The
+            service layer handles account lookup, creation, linking, and login.
         </p>
 
         <h3 class="card-title" id="events">Events &amp; Listeners</h3>
@@ -672,23 +638,20 @@ return [
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>UserRegisteredEvent</code></td><td>A new user signs up</td></tr>
-                <tr><td><code>UserLoggedInEvent</code></td><td>User successfully logs in</td></tr>
-                <tr><td><code>UserLoggedOutEvent</code></td><td>User logs out</td></tr>
-                <tr><td><code>UserConfirmedEvent</code></td><td>Email address is confirmed</td></tr>
-                <tr><td><code>UserUpdatedEvent</code></td><td>Profile or account is updated</td></tr>
-                <tr><td><code>UserDeletedEvent</code></td><td>User account is deleted</td></tr>
-                <tr><td><code>UserProfileUpdatedEvent</code></td><td>Profile fields are changed</td></tr>
-                <tr><td><code>UserPasswordChangedEvent</code></td><td>Password is updated</td></tr>
-                <tr><td><code>UserSessionsTerminatedEvent</code></td><td>Active sessions are terminated</td></tr>
-                <tr><td><code>SocialAccountConnectedEvent</code></td><td>Social account is linked</td></tr>
-                <tr><td><code>SocialAccountDisconnectedEvent</code></td><td>Social account is unlinked</td></tr>
+                <tr><td><code>AfterLoginEvent</code></td><td>User logs in (password expiry check, session tracking)</td></tr>
+                <tr><td><code>AfterRegisterEvent</code></td><td>Admin notification on new registration</td></tr>
+                <tr><td><code>EmailChangeEvent</code></td><td>User requests an email change</td></tr>
+                <tr><td><code>AfterLogin</code> (yiisoft/user)</td><td>Session auth is established</td></tr>
+                <tr><td><code>AfterLogout</code> (yiisoft/user)</td><td>Session auth is torn down</td></tr>
             </tbody>
         </table>
-        <p>Four listeners are registered by default: mail notifications
-        for confirmation, recovery, re-confirmation, and GDPR admin alerts.
-        Attach additional listeners via the Yii3 event dispatcher
-        configuration.</p>
+        <p>Additional events are dispatched but have no default listeners:
+        <code>UserConfirmedEvent</code>, <code>UserUpdatedEvent</code>,
+        <code>UserDeletedEvent</code>, <code>UserProfileUpdatedEvent</code>,
+        <code>UserPasswordChangedEvent</code>, <code>UserSessionsTerminatedEvent</code>,
+        <code>SocialAccountConnectedEvent</code>,
+        <code>SocialAccountDisconnectedEvent</code>. Attach listeners via
+        the Yii3 event dispatcher configuration.</p>
 
         <h3 class="card-title" id="views">Views</h3>
 
