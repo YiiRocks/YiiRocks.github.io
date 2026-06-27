@@ -151,6 +151,44 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
                 </tbody>
             </table>
         </div>
+
+        <h4>Router Setup (prefix mounting)</h4>
+        <p>
+            To mount Voyti routes under a prefix (e.g. <code>/user</code>),
+            pull the <code>voyti-routes</code> config group and add the prefix:
+        </p>
+        <pre class="mb-3"><code class="php">use Yiisoft\Config\Config;
+use Yiisoft\Definitions\DynamicReference;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollector;
+
+/** @var Config $config */
+
+return [
+    RouteCollectionInterface::class => [
+        'class' => RouteCollection::class,
+        '__construct()' => [
+            'collector' => DynamicReference::to(
+                static fn() => (new RouteCollector())->addRoute(
+                    Group::create('/')
+                        ->routes(...[
+                            ...$config->get('routes'),
+                            Group::create('user/')
+                                ->routes(...$config->get('voyti-routes')),
+                        ]),
+                    ),
+                ),
+            ),
+        ],
+    ],
+];</code></pre>
+        <p>
+            Without this setup, routes are registered at the root
+            (<code>/login</code>, <code>/register</code>, etc.).
+        </p>
+
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix</code> and expose user CRUD
@@ -206,7 +244,7 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
                         <td><code>socialNetworkClients</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>[]</code></td>
-                        <td>Auth client class names to register</td>
+                        <td>OAuth client IDs, secrets, and provider-specific options</td>
                     </tr>
                     <tr>
                         <td><code>allowPasswordRecovery</code></td>
@@ -442,11 +480,19 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
                         <td><code>mailParams</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>[...]</code></td>
-                        <td>From address and subject overrides for all mail templates</td>
+                        <td>From address and subject overrides: <code>fromEmail</code>, <code>welcomeMailSubject</code>, etc.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <p class="small text-muted">
+            Default <code>mailParams</code> structure:
+            <code>fromEmail</code> (<code>'no-reply@example.com'</code>),
+            <code>welcomeMailSubject</code>, <code>confirmationMailSubject</code>,
+            <code>reconfirmationMailSubject</code>, <code>recoveryMailSubject</code>,
+            <code>twoFactorMailSubject</code>. Subjects support a <code>{app}</code>
+            placeholder.
+        </p>
 
         <h4>reCAPTCHA</h4>
         <div class="table-responsive">
@@ -610,17 +656,39 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
             Register the clients you need via the <code>socialNetworkClients</code>
             config option:
         </p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Voyti\AuthClient\Facebook;
-use YiiRocks\Voyti\AuthClient\GitHub;
-
-return [
+        <pre class="mb-3"><code class="php">return [
     'yiirocks/voyti' => [
         'socialNetworkClients' => [
-            Facebook::class,
-            GitHub::class,
+            'github' => [
+                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
+            ],
         ],
     ],
 ];</code></pre>
+        <p>Each provider accepts these common options:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>clientId</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client ID from the provider</td></tr>
+                    <tr><td><code>clientSecret</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client secret from the provider</td></tr>
+                    <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>absolute callback URL</td><td>Override the callback URL</td></tr>
+                    <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Override the OAuth scope string</td></tr>
+                    <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>Disable without removing config</td></tr>
+                    <tr><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Base URL for Keycloak SSO</td></tr>
+                    <tr><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Keycloak realm name</td></tr>
+                </tbody>
+            </table>
+        </div>
         <p>
             Each client implements the auth client interface and maps provider
             attributes to the <code>SocialNetworkAccount</code> entity. The
