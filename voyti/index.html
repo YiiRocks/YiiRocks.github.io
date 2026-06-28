@@ -43,6 +43,11 @@ title: Voyti
         <pre class="mb-3"><code class="bash">composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <h4>2. Run migrations</h4>
+        <p>
+            Voyti provides its migration path through <code>config/params-console.php</code>
+            using the standard <code>yiisoft/db-migration</code> configuration keys.
+            With <code>yiisoft/db-migration</code> enabled in your console app, run:
+        </p>
         <pre class="mb-3"><code class="bash">./yii migrate:up</code></pre>
         <p>
             One migration creates the <code>user</code>, <code>user_profile</code>,
@@ -53,11 +58,13 @@ title: Voyti
 
         <h4>3. Register routes</h4>
         <p>
-            Routes are <strong>not</strong> auto-registered — you must add
-            them to your router configuration. Pull the
-            <code>voyti-routes</code> config group into your router definition.
-            The example below mounts them under a <code>user/</code> prefix —
-            omit or change the prefix as needed:
+            Routes are <strong>not</strong> auto-registered — you must add them
+            to your router configuration.
+        </p>
+        <p>
+            Pull the <code>voyti-routes</code> config group into your router
+            definition. The example below mounts them under a <code>user/</code>
+            prefix — omit or change the prefix as needed:
         </p>
         <pre class="mb-3"><code class="php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -77,9 +84,9 @@ return [
                     ->addRoute(
                         Group::create('/')
                             ->routes(...[
-                                ...$config->get('routes'), // your routes
+                                ...$config->get("routes"), // your routes
                                 Group::create('user/')
-                                    ->routes(...$config->get('voyti-routes'))
+                                    ->routes(...$config->get("voyti-routes"))
                             ]),
                     )
             ),
@@ -89,7 +96,7 @@ return [
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix</code> and expose user CRUD
-            endpoints for list, view, create, update, and delete..
+            endpoints.
         </p>
 
         <h4>4. Done</h4>
@@ -101,18 +108,20 @@ return [
 
         <h3 class="card-title" id="config">Configuration</h3>
         <p>
-            Override the <code>yiirocks/voyti</code> key in
-            <code>config/params.php</code>. Only the options you want to
-            change need to be specified — they are merged with the built-in
-            defaults from <code>ModuleConfig::defaults()</code>:
+            Override Voyti params in your app's <code>config/params.php</code> using
+            the <code>yiirocks/voyti</code> key:
         </p>
         <pre class="mb-3"><code class="php">return [
     'yiirocks/voyti' => [
         'enableTwoFactorAuthentication' => true,
-        'enableGdprCompliance' => true,
-        'maxPasswordAge' => 90,
+        'recaptchaVersion' => 'v3',
     ],
 ];</code></pre>
+        <p>
+            Below are all top-level <code>yiirocks/voyti</code> options, followed by
+            the nested <code>mailParams</code> and <code>socialNetworkClients</code>
+            options.
+        </p>
 
         <h4>Authentication &amp; Registration</h4>
         <div class="table-responsive">
@@ -148,7 +157,7 @@ return [
                         <td><code>enableSocialNetworkRegistration</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>true</code></td>
-                        <td>Allow registration via social providers</td>
+                        <td>Allow social network registration</td>
                     </tr>
                     <tr>
                         <td><code>socialNetworkClients</code></td>
@@ -178,37 +187,37 @@ return [
                         <td><code>allowAdminPasswordRecovery</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>true</code></td>
-                        <td>Allow admins to trigger password recovery for users</td>
+                        <td>Allow admin-initiated password recovery</td>
                     </tr>
                     <tr>
                         <td><code>allowAccountDelete</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Allow users to delete their own account</td>
+                        <td>Allow users to delete their account</td>
                     </tr>
                     <tr>
                         <td><code>emailChangeStrategy</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1</code></td>
-                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
+                        <td>0=insecure, 1=default, 2=secure</td>
                     </tr>
                     <tr>
                         <td><code>rememberLoginLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1209600</code></td>
-                        <td>Remember-me cookie lifetime and idle auth timeout (seconds)</td>
+                        <td>Remember-me cookie lifetime and idle auth timeout in seconds</td>
                     </tr>
                     <tr>
                         <td><code>tokenConfirmationLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>86400</code></td>
-                        <td>Confirmation token validity (seconds)</td>
+                        <td>Confirmation token validity</td>
                     </tr>
                     <tr>
                         <td><code>tokenRecoveryLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>21600</code></td>
-                        <td>Recovery token validity (seconds)</td>
+                        <td>Recovery token validity</td>
                     </tr>
                     <tr>
                         <td><code>enableSwitchIdentities</code></td>
@@ -254,17 +263,21 @@ return [
                         <td><code>enableTwoFactorAuthentication</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable 2FA (TOTP, email, SMS)</td>
+                        <td>Enable 2FA</td>
                     </tr>
                     <tr>
                         <td><code>twoFactorAuthenticationForcedPermissions</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>[]</code></td>
-                        <td>Permissions that require 2FA to be set up</td>
+                        <td>Permissions that require 2FA</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <pre class="mb-3"><code class="php">'yiirocks/voyti' => [
+    'enableTwoFactorAuthentication' => true,
+    'twoFactorAuthenticationForcedPermissions' => ['admin'],
+],</code></pre>
 
         <h4>GDPR</h4>
         <div class="table-responsive">
@@ -282,23 +295,27 @@ return [
                         <td><code>enableGdprCompliance</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable GDPR consent, export, and deletion features</td>
+                        <td>Enable GDPR features</td>
                     </tr>
                     <tr>
                         <td><code>gdprAnonymizePrefix</code></td>
                         <td><span class="font-monospace">string</span></td>
                         <td><code>'GDPR'</code></td>
-                        <td>Prefix for anonymised usernames after deletion</td>
+                        <td>Prefix for anonymized usernames</td>
                     </tr>
                     <tr>
                         <td><code>gdprExportProperties</code></td>
                         <td><span class="font-monospace">array</span></td>
-                        <td><code>['email','username',...]</code></td>
-                        <td>User properties included in data export</td>
+                        <td><code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio']</code></td>
+                        <td>Properties included in data export</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <pre class="mb-3"><code class="php">'yiirocks/voyti' => [
+    'enableGdprCompliance' => true,
+    'gdprAnonymizePrefix' => 'ANON-',
+],</code></pre>
 
         <h4>Session &amp; Security</h4>
         <div class="table-responsive">
@@ -316,13 +333,13 @@ return [
                         <td><code>enableSessionHistory</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Track user session history</td>
+                        <td>Track session history</td>
                     </tr>
                     <tr>
                         <td><code>numberSessionHistory</code></td>
                         <td><span class="font-monospace">int|false</span></td>
                         <td><code>false</code></td>
-                        <td>Max sessions to keep per user (<code>false</code> = unlimited)</td>
+                        <td>Max sessions to keep per user</td>
                     </tr>
                     <tr>
                         <td><code>disableIpLogging</code></td>
@@ -340,7 +357,7 @@ return [
                         <td><code>maxPasswordAge</code></td>
                         <td><span class="font-monospace">?int</span></td>
                         <td><code>null</code></td>
-                        <td>Max password age in days (<code>null</code> = never expires)</td>
+                        <td>Max password age in days</td>
                     </tr>
                     <tr>
                         <td><code>administratorPermissionName</code></td>
@@ -352,7 +369,7 @@ return [
                         <td><code>profileVisibility</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>0</code></td>
-                        <td>Profile visibility: 0=public, 1=registered only, 2=private</td>
+                        <td>Profile visibility level</td>
                     </tr>
                 </tbody>
             </table>
@@ -373,27 +390,25 @@ return [
                     <tr>
                         <td><code>viewPath</code></td>
                         <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/views/bootstrap5'</code></td>
+                        <td><code>__DIR__ . '/resources/views/bootstrap5'</code></td>
                         <td>Base path for web templates</td>
                     </tr>
                     <tr>
                         <td><code>mailPath</code></td>
                         <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/mail'</code></td>
+                        <td><code>__DIR__ . '/resources/mail'</code></td>
                         <td>Base path for mail templates</td>
                     </tr>
                     <tr>
                         <td><code>mailParams</code></td>
                         <td><span class="font-monospace">array</span></td>
                         <td><code>see below</code></td>
-                        <td>From address and subject overrides</td>
+                        <td>Mail from address and subjects</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <p class="small text-muted">
-            <code>mailParams</code> defaults:
-        </p>
+        <p>Mail params defaults:</p>
         <pre class="mb-3"><code class="php">[
     'fromEmail' => 'no-reply@example.com',
     'welcomeMailSubject' => 'Welcome to {app}',
@@ -402,9 +417,7 @@ return [
     'recoveryMailSubject' => 'Complete password reset on {app}',
     'twoFactorMailSubject' => 'Code for two factor authentication on {app}',
 ]</code></pre>
-        <p class="small text-muted">
-            <code>mailParams</code> accepts the following keys:
-        </p>
+        <p><code>mailParams</code> accepts the following keys:</p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -472,46 +485,25 @@ return [
                         <td><code>enableRestApi</code></td>
                         <td><span class="font-monospace">bool</span></td>
                         <td><code>false</code></td>
-                        <td>Enable REST API for user CRUD</td>
+                        <td>Enable REST API</td>
                     </tr>
                     <tr>
                         <td><code>adminRestPrefix</code></td>
                         <td><span class="font-monospace">string</span></td>
                         <td><code>'api/v1'</code></td>
-                        <td>URL prefix for REST API routes</td>
+                        <td>REST API URL prefix</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <h3 class="card-title" id="social">Social Authentication</h3>
-        <p>Various built-in auth clients are bundled:</p>
-        <ul>
-            <li>Facebook, GitHub, Google, Keycloak</li>
-            <li>LinkedIn, Microsoft365, X (formerly Twitter), VKontakte, Yandex</li>
-        </ul>
+        <h4>Social Authentication Providers</h4>
         <p>
-            The <code>SocialAuthProviderService</code> handles the OAuth redirect/callback
-            flow. The <code>UserSocialAuthenticateService</code> handles account lookup,
-            creation, and user login. The <code>UserSocialAccountConnectService</code>
-            links a social account to an existing user. Register the clients you need
-            via the <code>socialNetworkClients</code> config option:
+            <code>socialNetworkClients</code> is a keyed array where each key is a
+            provider name such as <code>github</code>, <code>google</code>, or
+            <code>keycloak</code>.
         </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
-        'socialNetworkClients' => [
-            'github' => [
-                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
-                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
-            ],
-            'google' => [
-                'clientId' => $_ENV['GOOGLE_CLIENT_ID'] ?? '',
-                'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'] ?? '',
-            ],
-        ],
-    ],
-];</code></pre>
-        <p>Each provider accepts these common options:</p>
+        <p>Every provider accepts these options unless noted otherwise:</p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -524,25 +516,62 @@ return [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>clientId</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client ID from the provider</td></tr>
-                    <tr><td><code>clientSecret</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client secret from the provider</td></tr>
-                    <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>generated callback URL</td><td>Override the callback URL</td></tr>
-                    <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Override the OAuth scope string</td></tr>
-                    <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>Disable without removing config</td></tr>
-                    <tr><td><code>authorizationParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params for the authorization request</td></tr>
-                    <tr><td><code>tokenParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra fields for the token exchange request body</td></tr>
-                    <tr><td><code>userInfoQuery</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params merged into the user-info request</td></tr>
-                    <tr><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Base URL for Keycloak SSO</td></tr>
-                    <tr><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Keycloak realm name</td></tr>
+                    <tr><td><code>clientId</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>none</td><td>OAuth client/application ID issued by the provider</td></tr>
+                    <tr><td><code>clientSecret</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>none</td><td>OAuth client secret issued by the provider</td></tr>
+                    <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>generated callback URL</td><td>Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/auth</code> or <code>voyti/connect</code></td></tr>
+                    <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Replaces the built-in default scope string</td></tr>
+                    <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>If <code>false</code>, the provider is not registered and no button is rendered</td></tr>
+                    <tr><td><code>authorizationParams</code></td><td><span class="font-monospace">array&lt;string, scalar&gt;</span></td><td>no</td><td><code>[]</code></td><td>Extra query parameters appended to the authorization request</td></tr>
+                    <tr><td><code>tokenParams</code></td><td><span class="font-monospace">array&lt;string, scalar&gt;</span></td><td>no</td><td><code>[]</code></td><td>Extra fields merged into the token exchange request body</td></tr>
+                    <tr><td><code>userInfoQuery</code></td><td><span class="font-monospace">array&lt;string, scalar&gt;</span></td><td>no</td><td><code>[]</code></td><td>Extra query parameters merged into the user-info request</td></tr>
                 </tbody>
             </table>
         </div>
-        <p>Built-in defaults by provider (used unless <code>scope</code> or <code>redirectUri</code> is overridden):</p>
+        <p>Only Keycloak adds recognized extra options:</p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
-                        <th>Provider</th>
+                        <th>Provider key</th>
+                        <th>Extra option</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>keycloak</code></td><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>Base Keycloak URL, for example <code>https://sso.example.com</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>Keycloak realm name used to build auth, token, and userinfo endpoints</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="card-title" id="social">Social Authentication</h3>
+        <p>
+            Various auth clients are included. Each implements the auth client
+            interface and maps provider attributes to the
+            <code>SocialNetworkAccount</code> entity:
+        </p>
+        <ul>
+            <li>Facebook, GitHub, Google, Keycloak, LinkedIn, Microsoft365, VKontakte, X (formerly Twitter), Yandex</li>
+        </ul>
+        <p>
+            The <code>SocialAuthProviderService</code> handles the OAuth redirect/callback
+            flow. The <code>UserSocialAuthenticateService</code> handles account lookup,
+            creation, and user login. The <code>UserSocialAccountConnectService</code>
+            links a social account to an existing user.
+        </p>
+
+        <h4>Built-in defaults by provider</h4>
+        <p>
+            The following table shows Voyti's built-in endpoints and scopes. These are
+            used unless you override <code>scope</code> or <code>redirectUri</code>.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider key</th>
                         <th>Default scope</th>
                         <th>Authorization URL</th>
                         <th>Token URL</th>
@@ -562,12 +591,14 @@ return [
                 </tbody>
             </table>
         </div>
-        <p>Provider-specific built-in request behavior:</p>
+
+        <h4>Provider-specific built-in request behavior</h4>
+        <p>Voyti also applies a few provider-specific defaults during the user-info step:</p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
-                        <th>Provider</th>
+                        <th>Provider key</th>
                         <th>Built-in behavior</th>
                     </tr>
                 </thead>
@@ -575,16 +606,33 @@ return [
                     <tr><td><code>facebook</code></td><td>Sends <code>access_token</code> and <code>fields=id,name,email</code> on the user-info request.</td></tr>
                     <tr><td><code>github</code></td><td>If <code>/user</code> does not include an email, Voyti also requests <code>https://api.github.com/user/emails</code> and picks the first primary or verified address.</td></tr>
                     <tr><td><code>vkontakte</code></td><td>Sends <code>access_token</code>, <code>fields=screen_name</code>, and <code>v=5.199</code>; email is read from the token response when present.</td></tr>
-                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email.</td></tr>
+                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email (X API v2 does not expose the user's email address without elevated access).</td></tr>
                     <tr><td><code>yandex</code></td><td>Sends <code>format=json</code> on the user-info request.</td></tr>
                 </tbody>
             </table>
         </div>
-        <p>
-            Each client implements the auth client interface and maps provider
-            attributes to the <code>SocialNetworkAccount</code> entity. The
-            service layer handles account lookup, creation, linking, and login.
-        </p>
+
+        <h4>Example</h4>
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'socialNetworkClients' => [
+            'github' => [
+                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
+            ],
+            'google' => [
+                'clientId' => $_ENV['GOOGLE_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'] ?? '',
+            ],
+        ],
+    ],
+];</code></pre>
+        <p>With credentials configured:</p>
+        <ol>
+            <li>The login page shows social login buttons for configured providers.</li>
+            <li><code>settings/networks</code> lists connected providers and renders connect buttons for the remaining configured providers.</li>
+            <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
+        </ol>
 
         <h3 class="card-title" id="console">Console Commands</h3>
         <table class="table table-sm table-striped">
@@ -649,11 +697,15 @@ return [
         <h3 class="card-title" id="rbac">RBAC Management</h3>
         <p>
             Built on <a href="https://github.com/yiisoft/rbac"><code>yiisoft/rbac</code></a>.
-            The extension provides a full admin UI for managing permissions, roles,
-            and rules with parent-child hierarchy support, assignment management,
-            and filtering. Default roles are configured in
-            <code>config/rbac.php</code>:
+            The extension provides:
         </p>
+        <ul>
+            <li><strong>Admin UI</strong> for managing permissions, roles, and rules (create, update, delete, filter)</li>
+            <li><strong>Assignment management</strong> — assign/revoke roles and permissions per user from the admin panel</li>
+            <li><strong>Parent-child hierarchy</strong> — roles can have child permissions/roles</li>
+            <li><strong>Rule management</strong> — register and manage custom <code>RuleInterface</code> classes</li>
+        </ul>
+        <p>Default roles are configured in <code>config/rbac.php</code>:</p>
         <pre class="mb-3"><code class="php">return [
     'rbac' => [
         'guest' => [],
@@ -664,12 +716,9 @@ return [
 
         <h3 class="card-title" id="routes">Available Routes</h3>
         <p>
-            Route definitions are provided but <strong>not</strong>
-            auto-registered. You must pull the <code>voyti-routes</code> config
-            group and add them to your router. The library does not provide a
-            menu model or navigation contract — it only exposes named routes
-            that the host application can use in its own menu, sidebar, or
-            access rules.
+            The library does not provide a menu model or navigation contract.
+            It only exposes named routes that the host application can use in its
+            own menu, sidebar, or access rules.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
