@@ -13,15 +13,15 @@ title: Voyti
             <p>"to enter" or "to log in"</p>
         </blockquote>
         <nav class="small mb-4">
-            <a href="#install">Installation</a> &middot;
             <a href="#quick-start">Quick Start</a> &middot;
             <a href="#config">Configuration</a> &middot;
-            <a href="#routes">Routes</a> &middot;
-            <a href="#commands">Console</a> &middot;
+            <a href="#social">Social Auth</a> &middot;
+            <a href="#console">Console</a> &middot;
             <a href="#middleware">Middleware</a> &middot;
             <a href="#rbac">RBAC</a> &middot;
-            <a href="#social">Social Auth</a> &middot;
-            <a href="#events">Events</a>
+            <a href="#routes">Routes</a> &middot;
+            <a href="#events">Events</a> &middot;
+            <a href="#support">Support</a>
         </nav>
         <p>
             <a href="https://github.com/YiiRocks/voyti" class="text-nowrap">voyti</a>
@@ -33,47 +33,22 @@ title: Voyti
             FormModel forms, and <code>yiisoft/rbac</code>.
         </p>
 
-        <h3 class="card-title" id="install">Installation</h3>
-        <pre class="mb-3"><code class="bash">composer require yiirocks/voyti</code></pre>
-        <h4>Optional packages</h4>
-        <p>For reCAPTCHA support:</p>
-        <pre class="mb-3"><code class="bash">composer require yiirocks/recaptcha</code></pre>
-        <p>For 2FA TOTP support:</p>
-        <pre class="mb-3"><code class="bash">composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
-
         <h3 class="card-title" id="quick-start">Quick Start</h3>
 
-        <p>
-            The <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>
-            auto-discovers DI bindings, event listeners, console commands, and
-            translations — no manual wiring needed for those.
-        </p>
+        <h4>1. Install</h4>
+        <pre class="mb-3"><code class="bash">composer require yiirocks/voyti</code></pre>
+        <p>For reCAPTCHA support (optional):</p>
+        <pre class="mb-3"><code class="bash">composer require yiirocks/recaptcha</code></pre>
+        <p>For 2FA TOTP support (optional):</p>
+        <pre class="mb-3"><code class="bash">composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
-        <h4>1. Run migrations</h4>
+        <h4>2. Run migrations</h4>
         <pre class="mb-3"><code class="bash">./yii migrate:up</code></pre>
         <p>
             One migration creates the <code>user</code>, <code>user_profile</code>,
             <code>user_social_account</code>, <code>user_token</code>, and
             <code>user_session_history</code> tables with all columns (2FA, GDPR,
             password expiration, last login IP, etc.) included.
-        </p>
-
-        <h4>2. Configure the module (optional)</h4>
-        <p>
-            To customize, populate the <code>yiirocks/voyti</code> key in your
-            <code>config/params.php</code>:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
-        'enableTwoFactorAuthentication' => true,
-        'enableGdprCompliance' => true,
-        'maxPasswordAge' => 90,
-        'enableRestApi' => true,
-    ],
-];</code></pre>
-        <p>
-            Values set here are merged with the built-in defaults from
-            <code>ModuleConfig::defaults()</code>.
         </p>
 
         <h4>3. Register routes</h4>
@@ -114,7 +89,7 @@ return [
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix</code> and expose user CRUD
-            endpoints.
+            endpoints for list, view, create, update, and delete..
         </p>
 
         <h4>4. Done</h4>
@@ -123,6 +98,569 @@ return [
             via the <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>.
             No manual wiring needed.
         </p>
+
+        <h3 class="card-title" id="config">Configuration</h3>
+        <p>
+            Override the <code>yiirocks/voyti</code> key in
+            <code>config/params.php</code>. Only the options you want to
+            change need to be specified — they are merged with the built-in
+            defaults from <code>ModuleConfig::defaults()</code>:
+        </p>
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'enableTwoFactorAuthentication' => true,
+        'enableGdprCompliance' => true,
+        'maxPasswordAge' => 90,
+    ],
+];</code></pre>
+
+        <h4>Authentication &amp; Registration</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>loginRoute</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'voyti/login'</code></td>
+                        <td>Login route name</td>
+                    </tr>
+                    <tr>
+                        <td><code>accountSettingsRoute</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'voyti/settings-account'</code></td>
+                        <td>Route for account settings redirects</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableRegistration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow new user registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableSocialNetworkRegistration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow registration via social providers</td>
+                    </tr>
+                    <tr>
+                        <td><code>socialNetworkClients</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[]</code></td>
+                        <td>OAuth client IDs, secrets, and provider-specific options</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableEmailConfirmation</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Require email confirmation</td>
+                    </tr>
+                    <tr>
+                        <td><code>generatePasswords</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Auto-generate passwords on registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowPasswordRecovery</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow password recovery</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowAdminPasswordRecovery</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow admins to trigger password recovery for users</td>
+                    </tr>
+                    <tr>
+                        <td><code>allowAccountDelete</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Allow users to delete their own account</td>
+                    </tr>
+                    <tr>
+                        <td><code>emailChangeStrategy</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1</code></td>
+                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
+                    </tr>
+                    <tr>
+                        <td><code>rememberLoginLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1209600</code></td>
+                        <td>Remember-me cookie lifetime and idle auth timeout (seconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>tokenConfirmationLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>86400</code></td>
+                        <td>Confirmation token validity (seconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>tokenRecoveryLifespan</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>21600</code></td>
+                        <td>Recovery token validity (seconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableSwitchIdentities</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow admin to switch user identities</td>
+                    </tr>
+                    <tr>
+                        <td><code>switchIdentitySessionKey</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>'voyti_original_user'</code></td>
+                        <td>Session key for switched identity</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailAdminOnRegister</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>Email notified on new registration</td>
+                    </tr>
+                    <tr>
+                        <td><code>recaptchaVersion</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Two-Factor Authentication</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableTwoFactorAuthentication</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable 2FA (TOTP, email, SMS)</td>
+                    </tr>
+                    <tr>
+                        <td><code>twoFactorAuthenticationForcedPermissions</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>[]</code></td>
+                        <td>Permissions that require 2FA to be set up</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>GDPR</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableGdprCompliance</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable GDPR consent, export, and deletion features</td>
+                    </tr>
+                    <tr>
+                        <td><code>gdprAnonymizePrefix</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'GDPR'</code></td>
+                        <td>Prefix for anonymised usernames after deletion</td>
+                    </tr>
+                    <tr>
+                        <td><code>gdprExportProperties</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>['email','username',...]</code></td>
+                        <td>User properties included in data export</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Session &amp; Security</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableSessionHistory</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Track user session history</td>
+                    </tr>
+                    <tr>
+                        <td><code>numberSessionHistory</code></td>
+                        <td><span class="font-monospace">int|false</span></td>
+                        <td><code>false</code></td>
+                        <td>Max sessions to keep per user (<code>false</code> = unlimited)</td>
+                    </tr>
+                    <tr>
+                        <td><code>disableIpLogging</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Disable IP address logging</td>
+                    </tr>
+                    <tr>
+                        <td><code>enablePasswordExpiration</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable password expiration</td>
+                    </tr>
+                    <tr>
+                        <td><code>maxPasswordAge</code></td>
+                        <td><span class="font-monospace">?int</span></td>
+                        <td><code>null</code></td>
+                        <td>Max password age in days (<code>null</code> = never expires)</td>
+                    </tr>
+                    <tr>
+                        <td><code>administratorPermissionName</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>Permission name for admin access</td>
+                    </tr>
+                    <tr>
+                        <td><code>profileVisibility</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>0</code></td>
+                        <td>Profile visibility: 0=public, 1=registered only, 2=private</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Views &amp; Mail</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>viewPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'.../resources/views/bootstrap5'</code></td>
+                        <td>Base path for web templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailPath</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'.../resources/mail'</code></td>
+                        <td>Base path for mail templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailParams</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>see below</code></td>
+                        <td>From address and subject overrides</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="small text-muted">
+            <code>mailParams</code> defaults:
+        </p>
+        <pre class="mb-3"><code class="php">[
+    'fromEmail' => 'no-reply@example.com',
+    'welcomeMailSubject' => 'Welcome to {app}',
+    'confirmationMailSubject' => 'Confirm account on {app}',
+    'reconfirmationMailSubject' => 'Confirm email change on {app}',
+    'recoveryMailSubject' => 'Complete password reset on {app}',
+    'twoFactorMailSubject' => 'Code for two factor authentication on {app}',
+]</code></pre>
+        <p class="small text-muted">
+            <code>mailParams</code> accepts the following keys:
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>fromEmail</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'no-reply@example.com'</code></td>
+                        <td>Sender address for Voyti mail</td>
+                    </tr>
+                    <tr>
+                        <td><code>welcomeMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Welcome to {app}'</code></td>
+                        <td>Welcome email subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>confirmationMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Confirm account on {app}'</code></td>
+                        <td>Registration confirmation subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>reconfirmationMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Confirm email change on {app}'</code></td>
+                        <td>Email change confirmation subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>recoveryMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Complete password reset on {app}'</code></td>
+                        <td>Password recovery subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>twoFactorMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Code for two factor authentication on {app}'</code></td>
+                        <td>2FA email code subject</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>REST API</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>enableRestApi</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>false</code></td>
+                        <td>Enable REST API for user CRUD</td>
+                    </tr>
+                    <tr>
+                        <td><code>adminRestPrefix</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'api/v1'</code></td>
+                        <td>URL prefix for REST API routes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="card-title" id="social">Social Authentication</h3>
+        <p>Various built-in auth clients are bundled:</p>
+        <ul>
+            <li>Facebook, GitHub, Google, Keycloak</li>
+            <li>LinkedIn, Microsoft365, X (formerly Twitter), VKontakte, Yandex</li>
+        </ul>
+        <p>
+            The <code>SocialAuthProviderService</code> handles the OAuth redirect/callback
+            flow. The <code>UserSocialAuthenticateService</code> handles account lookup,
+            creation, and user login. The <code>UserSocialAccountConnectService</code>
+            links a social account to an existing user. Register the clients you need
+            via the <code>socialNetworkClients</code> config option:
+        </p>
+        <pre class="mb-3"><code class="php">return [
+    'yiirocks/voyti' => [
+        'socialNetworkClients' => [
+            'github' => [
+                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
+            ],
+            'google' => [
+                'clientId' => $_ENV['GOOGLE_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'] ?? '',
+            ],
+        ],
+    ],
+];</code></pre>
+        <p>Each provider accepts these common options:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>clientId</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client ID from the provider</td></tr>
+                    <tr><td><code>clientSecret</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client secret from the provider</td></tr>
+                    <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>generated callback URL</td><td>Override the callback URL</td></tr>
+                    <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Override the OAuth scope string</td></tr>
+                    <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>Disable without removing config</td></tr>
+                    <tr><td><code>authorizationParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params for the authorization request</td></tr>
+                    <tr><td><code>tokenParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra fields for the token exchange request body</td></tr>
+                    <tr><td><code>userInfoQuery</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params merged into the user-info request</td></tr>
+                    <tr><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Base URL for Keycloak SSO</td></tr>
+                    <tr><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Keycloak realm name</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Built-in defaults by provider (used unless <code>scope</code> or <code>redirectUri</code> is overridden):</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Default scope</th>
+                        <th>Authorization URL</th>
+                        <th>Token URL</th>
+                        <th>User info URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td><td><code>https://graph.facebook.com/v19.0/oauth/access_token</code></td><td><code>https://graph.facebook.com/me</code></td></tr>
+                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td><td><code>https://github.com/login/oauth/access_token</code></td><td><code>https://api.github.com/user</code></td></tr>
+                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td><td><code>https://oauth2.googleapis.com/token</code></td><td><code>https://openidconnect.googleapis.com/v1/userinfo</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/auth</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/token</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/userinfo</code></td></tr>
+                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td><td><code>https://www.linkedin.com/oauth/v2/accessToken</code></td><td><code>https://api.linkedin.com/v2/userinfo</code></td></tr>
+                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/authorize</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/token</code></td><td><code>https://graph.microsoft.com/oidc/userinfo</code></td></tr>
+                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td><td><code>https://oauth.vk.com/access_token</code></td><td><code>https://api.vk.com/method/users.get</code></td></tr>
+                    <tr><td><code>x</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td><td><code>https://api.twitter.com/2/oauth2/token</code></td><td><code>https://api.twitter.com/2/users/me</code></td></tr>
+                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td><td><code>https://oauth.yandex.com/token</code></td><td><code>https://login.yandex.ru/info</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Provider-specific built-in request behavior:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Built-in behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td>Sends <code>access_token</code> and <code>fields=id,name,email</code> on the user-info request.</td></tr>
+                    <tr><td><code>github</code></td><td>If <code>/user</code> does not include an email, Voyti also requests <code>https://api.github.com/user/emails</code> and picks the first primary or verified address.</td></tr>
+                    <tr><td><code>vkontakte</code></td><td>Sends <code>access_token</code>, <code>fields=screen_name</code>, and <code>v=5.199</code>; email is read from the token response when present.</td></tr>
+                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email.</td></tr>
+                    <tr><td><code>yandex</code></td><td>Sends <code>format=json</code> on the user-info request.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            Each client implements the auth client interface and maps provider
+            attributes to the <code>SocialNetworkAccount</code> entity. The
+            service layer handles account lookup, creation, linking, and login.
+        </p>
+
+        <h3 class="card-title" id="console">Console Commands</h3>
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>voyti:create</code></td>
+                    <td>Create a new user</td>
+                </tr>
+                <tr>
+                    <td><code>voyti:delete</code></td>
+                    <td>Delete a user</td>
+                </tr>
+                <tr>
+                    <td><code>voyti:confirm</code></td>
+                    <td>Confirm a user's email</td>
+                </tr>
+                <tr>
+                    <td><code>voyti:password</code></td>
+                    <td>Change a user's password</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="card-title" id="middleware">Middleware</h3>
+        <p>The extension ships three PSR-15 middleware classes for access control:</p>
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Middleware</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>AccessRuleMiddleware</code></td>
+                    <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
+                </tr>
+                <tr>
+                    <td><code>PasswordAgeEnforceMiddleware</code></td>
+                    <td>Redirects to <code>accountSettingsRoute</code> when <code>maxPasswordAge</code> is exceeded</td>
+                </tr>
+                <tr>
+                    <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
+                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            Register them in your application's middleware pipeline as needed.
+            The two redirect targets (<code>loginRoute</code> and
+            <code>accountSettingsRoute</code>) are configurable via
+            <code>ModuleConfig</code>, so you can map them to your own route
+            structure.
+        </p>
+
+        <h3 class="card-title" id="rbac">RBAC Management</h3>
+        <p>
+            Built on <a href="https://github.com/yiisoft/rbac"><code>yiisoft/rbac</code></a>.
+            The extension provides a full admin UI for managing permissions, roles,
+            and rules with parent-child hierarchy support, assignment management,
+            and filtering. Default roles are configured in
+            <code>config/rbac.php</code>:
+        </p>
+        <pre class="mb-3"><code class="php">return [
+    'rbac' => [
+        'guest' => [],
+        'user' => [],
+        'admin' => [],
+    ],
+];</code></pre>
 
         <h3 class="card-title" id="routes">Available Routes</h3>
         <p>
@@ -198,572 +736,6 @@ return [
                 </tbody>
             </table>
         </div>
-        <p>
-            When <code>enableRestApi</code> is <code>true</code>, the API routes are
-            mounted under <code>adminRestPrefix</code> and expose user CRUD
-            endpoints for list, view, create, update, and delete.
-        </p>
-
-        <h3 class="card-title" id="config">Configuration</h3>
-        <p>
-            Override the <code>yiirocks/voyti</code> key in
-            <code>config/params.php</code>. Only the options you want to
-            change need to be specified — they are merged with the built-in
-            defaults from <code>ModuleConfig::defaults()</code>:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
-        'enableTwoFactorAuthentication' => true,
-        'enableGdprCompliance' => true,
-        'maxPasswordAge' => 90,
-    ],
-];</code></pre>
-
-        <h4>Registration &amp; Accounts</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>enableRegistration</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow new user registration</td>
-                    </tr>
-                    <tr>
-                        <td><code>enableEmailConfirmation</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Require email confirmation</td>
-                    </tr>
-                    <tr>
-                        <td><code>enableSocialNetworkRegistration</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow registration via social providers</td>
-                    </tr>
-                    <tr>
-                        <td><code>socialNetworkClients</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>[]</code></td>
-                        <td>OAuth client IDs, secrets, and provider-specific options</td>
-                    </tr>
-                    <tr>
-                        <td><code>allowPasswordRecovery</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow password recovery</td>
-                    </tr>
-                    <tr>
-                        <td><code>allowAdminPasswordRecovery</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow admins to trigger password recovery for users</td>
-                    </tr>
-                    <tr>
-                        <td><code>allowAccountDelete</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Allow users to delete their own account</td>
-                    </tr>
-                    <tr>
-                        <td><code>generatePasswords</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Auto-generate passwords on registration</td>
-                    </tr>
-                    <tr>
-                        <td><code>emailChangeStrategy</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>1</code></td>
-                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailAdminOnRegister</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td>Email address to notify on new registrations</td>
-                    </tr>
-                    <tr>
-                        <td><code>rememberLoginLifespan</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>1209600</code></td>
-                        <td>Remember-me cookie lifetime and idle auth timeout (seconds)</td>
-                    </tr>
-                    <tr>
-                        <td><code>tokenConfirmationLifespan</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>86400</code></td>
-                        <td>Email confirmation token validity (seconds)</td>
-                    </tr>
-                    <tr>
-                        <td><code>tokenRecoveryLifespan</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>21600</code></td>
-                        <td>Password recovery token validity (seconds)</td>
-                    </tr>
-                    <tr>
-                        <td><code>loginRoute</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'voyti/login'</code></td>
-                        <td>Route name for the login page</td>
-                    </tr>
-                    <tr>
-                        <td><code>accountSettingsRoute</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'voyti/settings-account'</code></td>
-                        <td>Route name for account settings redirects</td>
-                    </tr>
-                    <tr>
-                        <td><code>enableSwitchIdentities</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow admins to impersonate users</td>
-                    </tr>
-                    <tr>
-                        <td><code>switchIdentitySessionKey</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>'voyti_original_user'</code></td>
-                        <td>Session key for storing the original identity</td>
-                    </tr>
-                    <tr>
-                        <td><code>recaptchaVersion</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>Security &amp; Passwords</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>maxPasswordAge</code></td>
-                        <td><span class="font-monospace">?int</span></td>
-                        <td><code>null</code></td>
-                        <td>Max password age in days (<code>null</code> = never expires)</td>
-                    </tr>
-                    <tr>
-                        <td><code>enablePasswordExpiration</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Enforce password expiration (requires <code>maxPasswordAge</code>)</td>
-                    </tr>
-                    <tr>
-                        <td><code>disableIpLogging</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Disable IP address logging on login</td>
-                    </tr>
-                    <tr>
-                        <td><code>administratorPermissionName</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td>Permission name required for admin panel access</td>
-                    </tr>
-                    <tr>
-                        <td><code>profileVisibility</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>0</code></td>
-                        <td>0=public, 1=registered only, 2=private</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>Two-Factor Authentication</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>enableTwoFactorAuthentication</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Enable 2FA (TOTP, email, SMS)</td>
-                    </tr>
-                    <tr>
-                        <td><code>twoFactorAuthenticationForcedPermissions</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>[]</code></td>
-                        <td>Permissions that require 2FA to be set up</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>GDPR Compliance</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>enableGdprCompliance</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Enable GDPR consent, export, and deletion features</td>
-                    </tr>
-                    <tr>
-                        <td><code>gdprExportProperties</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>['email','username',...]</code></td>
-                        <td>User properties included in data export</td>
-                    </tr>
-                    <tr>
-                        <td><code>gdprAnonymizePrefix</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'GDPR'</code></td>
-                        <td>Prefix for anonymised usernames after deletion</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>Session</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>enableSessionHistory</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Track user session history</td>
-                    </tr>
-                    <tr>
-                        <td><code>numberSessionHistory</code></td>
-                        <td><span class="font-monospace">int|false</span></td>
-                        <td><code>false</code></td>
-                        <td>Max sessions to keep per user (<code>false</code> = unlimited)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>REST API</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>enableRestApi</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
-                        <td>Enable REST API for user CRUD</td>
-                    </tr>
-                    <tr>
-                        <td><code>adminRestPrefix</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'api/v1'</code></td>
-                        <td>URL prefix for REST API routes</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>Views &amp; Mail</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>viewPath</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/views/bootstrap5'</code></td>
-                        <td>Path to custom web view templates</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailPath</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/mail'</code></td>
-                        <td>Path to custom mail templates</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailParams</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>see below</code></td>
-                        <td>Sender address and subject overrides for mail templates</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p class="small text-muted">
-            <code>mailParams</code> accepts the following keys:
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>fromEmail</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'no-reply@example.com'</code></td>
-                        <td>Sender address for Voyti mail</td>
-                    </tr>
-                    <tr>
-                        <td><code>welcomeMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Welcome to {app}'</code></td>
-                        <td>Welcome email subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>confirmationMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Confirm account on {app}'</code></td>
-                        <td>Registration confirmation subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>reconfirmationMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Confirm email change on {app}'</code></td>
-                        <td>Email change confirmation subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>recoveryMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Complete password reset on {app}'</code></td>
-                        <td>Password recovery subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>twoFactorMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Code for two factor authentication on {app}'</code></td>
-                        <td>2FA email code subject</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h3 class="card-title" id="commands">Console Commands</h3>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Command</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>voyti:create</code></td>
-                    <td>Create a new user</td>
-                </tr>
-                <tr>
-                    <td><code>voyti:delete</code></td>
-                    <td>Delete a user</td>
-                </tr>
-                <tr>
-                    <td><code>voyti:confirm</code></td>
-                    <td>Confirm a user's email</td>
-                </tr>
-                <tr>
-                    <td><code>voyti:password</code></td>
-                    <td>Change a user's password</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h3 class="card-title" id="middleware">Middleware</h3>
-        <p>PSR-15 middleware classes for access control:</p>
-        <table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Middleware</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>AccessRuleMiddleware</code></td>
-                    <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
-                </tr>
-                <tr>
-                    <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsRoute</code> when <code>maxPasswordAge</code> is exceeded</td>
-                </tr>
-                <tr>
-                    <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>
-            The two redirect targets (<code>loginRoute</code> and
-            <code>accountSettingsRoute</code>) are configurable via
-            <code>ModuleConfig</code>, so you can map them to your own route
-            structure. Register them in your application's middleware pipeline
-            as needed.
-        </p>
-
-        <h3 class="card-title" id="rbac">RBAC Management</h3>
-        <p>
-            Built on <a href="https://github.com/yiisoft/rbac"><code>yiisoft/rbac</code></a>.
-            The extension provides a full admin UI for managing permissions, roles,
-            and rules with parent-child hierarchy support, assignment management,
-            and filtering. Default roles are configured in
-            <code>config/rbac.php</code>:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'rbac' => [
-        'guest' => [],
-        'user' => [],
-        'admin' => [],
-    ],
-];</code></pre>
-
-        <h3 class="card-title" id="social">Social Authentication</h3>
-        <p>Various built-in auth clients are bundled:</p>
-        <ul>
-            <li>Facebook, GitHub, Google, Keycloak</li>
-            <li>LinkedIn, Microsoft365, X (formerly Twitter), VKontakte, Yandex</li>
-        </ul>
-        <p>
-            Register the clients you need via the <code>socialNetworkClients</code>
-            config option:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
-        'socialNetworkClients' => [
-            'github' => [
-                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
-                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
-            ],
-        ],
-    ],
-];</code></pre>
-        <p>Each provider accepts these common options:</p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Required</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>clientId</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client ID from the provider</td></tr>
-                    <tr><td><code>clientSecret</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>—</td><td>OAuth client secret from the provider</td></tr>
-                    <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>absolute callback URL</td><td>Override the callback URL</td></tr>
-                    <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Override the OAuth scope string</td></tr>
-                    <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>Disable without removing config</td></tr>
-                    <tr><td><code>authorizationParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params for the authorization request</td></tr>
-                    <tr><td><code>tokenParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra fields for the token exchange request body</td></tr>
-                    <tr><td><code>userInfoQuery</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params merged into the user-info request</td></tr>
-                    <tr><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Base URL for Keycloak SSO</td></tr>
-                    <tr><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Keycloak realm name</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p>Built-in defaults by provider (used unless <code>scope</code> or <code>redirectUri</code> is overridden):</p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Provider</th>
-                        <th>Default scope</th>
-                        <th>Authorization URL</th>
-                        <th>Token URL</th>
-                        <th>User info URL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td><td><code>https://graph.facebook.com/v19.0/oauth/access_token</code></td><td><code>https://graph.facebook.com/me</code></td></tr>
-                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td><td><code>https://github.com/login/oauth/access_token</code></td><td><code>https://api.github.com/user</code></td></tr>
-                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td><td><code>https://oauth2.googleapis.com/token</code></td><td><code>https://openidconnect.googleapis.com/v1/userinfo</code></td></tr>
-                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/auth</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/token</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/userinfo</code></td></tr>
-                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td><td><code>https://www.linkedin.com/oauth/v2/accessToken</code></td><td><code>https://api.linkedin.com/v2/userinfo</code></td></tr>
-                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/authorize</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/token</code></td><td><code>https://graph.microsoft.com/oidc/userinfo</code></td></tr>
-                    <tr><td><code>x</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td><td><code>https://api.twitter.com/2/oauth2/token</code></td><td><code>https://api.twitter.com/2/users/me</code></td></tr>
-                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td><td><code>https://oauth.vk.com/access_token</code></td><td><code>https://api.vk.com/method/users.get</code></td></tr>
-                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td><td><code>https://oauth.yandex.com/token</code></td><td><code>https://login.yandex.ru/info</code></td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p>Provider-specific built-in request behavior:</p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Provider</th>
-                        <th>Built-in behavior</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>facebook</code></td><td>Sends <code>access_token</code> and <code>fields=id,name,email</code> on the user-info request.</td></tr>
-                    <tr><td><code>github</code></td><td>If <code>/user</code> does not include an email, Voyti also requests <code>https://api.github.com/user/emails</code> and picks the first primary or verified address.</td></tr>
-                    <tr><td><code>vkontakte</code></td><td>Sends <code>access_token</code>, <code>fields=screen_name</code>, and <code>v=5.199</code>; email is read from the token response when present.</td></tr>
-                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email.</td></tr>
-                    <tr><td><code>yandex</code></td><td>Sends <code>format=json</code> on the user-info request.</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <p>
-            Each client implements the auth client interface and maps provider
-            attributes to the <code>SocialNetworkAccount</code> entity. The
-            service layer handles account lookup, creation, linking, and login.
-        </p>
 
         <h3 class="card-title" id="events">Events &amp; Listeners</h3>
         <p>Voyti dispatches events at key points in the user lifecycle,
@@ -791,7 +763,7 @@ return [
         <code>SocialAccountDisconnectedEvent</code>. Attach listeners via
         the Yii3 event dispatcher configuration.</p>
 
-        <h3 class="card-title">Support</h3>
+        <h3 class="card-title" id="support">Support</h3>
         <p>
             <a href="https://github.com/YiiRocks/voyti/issues"><img class="me-1"
             alt="GitHub issues" src="https://img.shields.io/github/issues/YiiRocks/voyti">Create
