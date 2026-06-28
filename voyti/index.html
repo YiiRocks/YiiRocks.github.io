@@ -276,6 +276,18 @@ return [
                         <td>Auto-generate passwords on registration</td>
                     </tr>
                     <tr>
+                        <td><code>emailChangeStrategy</code></td>
+                        <td><span class="font-monospace">int</span></td>
+                        <td><code>1</code></td>
+                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailAdminOnRegister</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td>Email address to notify on new registrations</td>
+                    </tr>
+                    <tr>
                         <td><code>rememberLoginLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1209600</code></td>
@@ -457,48 +469,6 @@ return [
             </table>
         </div>
 
-        <h4>Email</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>emailChangeStrategy</code></td>
-                        <td><span class="font-monospace">int</span></td>
-                        <td><code>1</code></td>
-                        <td>0=insecure (immediate), 1=default (confirm new), 2=secure (confirm both)</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailAdminOnRegister</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td>Email address to notify on new registrations</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailParams</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>[...]</code></td>
-                        <td>From address and subject overrides: <code>fromEmail</code>, <code>welcomeMailSubject</code>, etc.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p class="small text-muted">
-            Default <code>mailParams</code> structure:
-            <code>fromEmail</code> (<code>'no-reply@example.com'</code>),
-            <code>welcomeMailSubject</code>, <code>confirmationMailSubject</code>,
-            <code>reconfirmationMailSubject</code>, <code>recoveryMailSubject</code>,
-            <code>twoFactorMailSubject</code>. Subjects support a <code>{app}</code>
-            placeholder.
-        </p>
-
         <h4>reCAPTCHA</h4>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -549,7 +519,7 @@ return [
             </table>
         </div>
 
-        <h4>Mail &amp; Views</h4>
+        <h4>Views &amp; Mail</h4>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -572,6 +542,65 @@ return [
                         <td><span class="font-monospace">string</span></td>
                         <td><code>'.../resources/mail'</code></td>
                         <td>Path to custom mail templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>mailParams</code></td>
+                        <td><span class="font-monospace">array</span></td>
+                        <td><code>see below</code></td>
+                        <td>Sender address and subject overrides for mail templates</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="small text-muted">
+            <code>mailParams</code> accepts the following keys:
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>fromEmail</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'no-reply@example.com'</code></td>
+                        <td>Sender address for Voyti mail</td>
+                    </tr>
+                    <tr>
+                        <td><code>welcomeMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Welcome to {app}'</code></td>
+                        <td>Welcome email subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>confirmationMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Confirm account on {app}'</code></td>
+                        <td>Registration confirmation subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>reconfirmationMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Confirm email change on {app}'</code></td>
+                        <td>Email change confirmation subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>recoveryMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Complete password reset on {app}'</code></td>
+                        <td>Password recovery subject</td>
+                    </tr>
+                    <tr>
+                        <td><code>twoFactorMailSubject</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Code for two factor authentication on {app}'</code></td>
+                        <td>2FA email code subject</td>
                     </tr>
                 </tbody>
             </table>
@@ -689,8 +718,34 @@ return [
                     <tr><td><code>redirectUri</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>absolute callback URL</td><td>Override the callback URL</td></tr>
                     <tr><td><code>scope</code></td><td><span class="font-monospace">string</span></td><td>no</td><td>provider default</td><td>Override the OAuth scope string</td></tr>
                     <tr><td><code>enabled</code></td><td><span class="font-monospace">bool</span></td><td>no</td><td><code>true</code></td><td>Disable without removing config</td></tr>
+                    <tr><td><code>authorizationParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params for the authorization request</td></tr>
+                    <tr><td><code>tokenParams</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra fields for the token exchange request body</td></tr>
+                    <tr><td><code>userInfoQuery</code></td><td><span class="font-monospace">array</span></td><td>no</td><td><code>[]</code></td><td>Extra query params merged into the user-info request</td></tr>
                     <tr><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Base URL for Keycloak SSO</td></tr>
                     <tr><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>Keycloak only</td><td>—</td><td>Keycloak realm name</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Built-in defaults by provider (used unless <code>scope</code> or <code>redirectUri</code> is overridden):</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Default scope</th>
+                        <th>Authorization URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td></tr>
+                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td></tr>
+                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/…/auth</code></td></tr>
+                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td></tr>
+                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/auth</code></td></tr>
+                    <tr><td><code>twitter</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td></tr>
+                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td></tr>
+                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td></tr>
                 </tbody>
             </table>
         </div>
