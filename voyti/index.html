@@ -18,6 +18,7 @@ title: Voyti
             <a href="#middleware">Middleware</a> &middot;
             <a href="#rbac">RBAC</a> &middot;
             <a href="#social">Social Auth</a> &middot;
+            <a href="#events">Events</a> &middot;
             <a href="#views">Views</a>
         </nav>
         <p>
@@ -40,7 +41,8 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <p>
             The <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>
-            auto-discovers all package configuration — no manual wiring required.
+            auto-discovers DI bindings, event listeners, console commands, and
+            translations — no manual wiring needed for those.
         </p>
 
         <h4>1. Run migrations</h4>
@@ -54,7 +56,7 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <h4>2. Configure the module (optional)</h4>
         <p>
-            To customize, override the <code>yiirocks/voyti</code> key in
+            To customize, populate the <code>yiirocks/voyti</code> key in your
             <code>config/params.php</code>:
         </p>
         <pre class="mb-3"><code class="php">return [
@@ -70,17 +72,14 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
             <code>ModuleConfig::defaults()</code>.
         </p>
 
-        <h4>3. Register routes</h4>
+        <h4>3. Register routes &amp; verify</h4>
         <p>
             Routes are <strong>not</strong> auto-registered — you must add
             them to your router configuration. See the
             <a href="#routes">Router Setup</a> section below.
-        </p>
-
-        <h4>4. Done</h4>
-        <p>
             DI bindings, event listeners, console commands, and translations
-            are auto-registered via the config plugin. No manual wiring needed.
+            are auto-registered via the config plugin. No manual wiring needed
+            for those.
         </p>
 
         <h3 class="card-title" id="routes">Available Routes</h3>
@@ -181,7 +180,7 @@ return [
                 static fn() => (new RouteCollector())->addRoute(
                     Group::create('/')
                         ->routes(...[
-                            ...$config->get('routes'),
+                            ...$config->get('routes'), // your own routes
                             Group::create('user/')
                                 ->routes(...$config->get('voyti-routes')),
                         ]),
@@ -193,8 +192,6 @@ return [
 ];</code></pre>
         <p>
             Without this configuration, Voyti routes are not registered at all.
-            Set the prefix to <code>''</code> if you want routes at the root
-            (<code>/login</code>, <code>/register</code>, etc.).
         </p>
 
         <p>
@@ -552,34 +549,6 @@ return [
             </table>
         </div>
 
-        <h4>Views</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>viewPath</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/views/bootstrap5'</code></td>
-                        <td>Path to custom web view templates</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailPath</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'.../resources/mail'</code></td>
-                        <td>Path to custom mail templates</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
         <h3 class="card-title" id="commands">Console Commands</h3>
         <table class="table table-sm table-striped">
             <thead>
@@ -609,7 +578,7 @@ return [
         </table>
 
         <h3 class="card-title" id="middleware">Middleware</h3>
-        <p>Three PSR-15 middleware classes for access control:</p>
+        <p>PSR-15 middleware classes for access control:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -655,7 +624,7 @@ return [
 ];</code></pre>
 
         <h3 class="card-title" id="social">Social Authentication</h3>
-        <p>Nine built-in auth clients are bundled:</p>
+        <p>Various built-in auth clients are bundled:</p>
         <ul>
             <li>Facebook, GitHub, Google, Keycloak</li>
             <li>LinkedIn, Microsoft365, Twitter, VKontakte, Yandex</li>
@@ -730,60 +699,19 @@ return [
         the Yii3 event dispatcher configuration.</p>
 
         <h3 class="card-title" id="views">Views</h3>
-
-        <h4>Web Views</h4>
         <p>
-            Web views are in <code>src/resources/views/bootstrap5/</code>. Override
-            them by setting <code>viewPath</code> in <code>config/params.php</code>:
+            Web views are in <code>src/resources/views/bootstrap5/</code>. Mail
+            templates are in <code>src/resources/mail/</code> — separate from
+            web views so they can be overridden independently via
+            <code>mailPath</code>. Override them by setting <code>viewPath</code>
+            in <code>config/params.php</code>:
         </p>
         <pre class="mb-3"><code class="php">return [
     'yiirocks/voyti' => [
         'viewPath' => '/path/to/your/custom/views',
-    ],
-];</code></pre>
-
-        <h4>Mail Views</h4>
-        <p>
-            Mail templates are in <code>src/resources/mail/</code> — separate from
-            web views so they can be overridden independently via
-            <code>mailPath</code>:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
         'mailPath' => '/path/to/your/custom/mail',
     ],
 ];</code></pre>
-
-        <h3 class="card-title" id="structure">Project Structure</h3>
-        <pre class="mb-3"><code>src/
-├── AuthClient/         9 social auth providers
-├── Command/            4 console commands
-├── Controller/         11 web controllers + 1 API controller
-├── Entity/             5 ActiveRecord entities
-├── Event/              11 event classes
-├── Factory/            TokenFactory, MailFactory
-├── Form/               9 form models
-├── Helper/             5 helpers
-├── Listener/           4 event listeners
-├── Middleware/          3 PSR-15 middleware
-├── Migration/          5 table-creation migrations
-├── Repository/         6 repositories
-├── Service/            22 + 5 session-history services
-├── Strategy/           3 email-change strategies
-├── Validator/          5 validators
-├── Widget/             4 widgets
-├── resources/mail/     5 mail templates
-├── resources/messages/ 4 locales
-├── resources/views/    33 Bootstrap 5 templates
-└── ModuleConfig.php    40+ configuration options</code></pre>
-
-        <h3 class="card-title">Testing</h3>
-        <p>264 unit tests with 3,509 assertions, 100% mutation score:</p>
-        <pre class="mb-3"><code class="bash">composer phpunit       # unit tests
-composer infection     # mutation testing
-composer psalm         # static analysis
-composer php-cs-fixer  # code style
-composer phpmd         # mess detection</code></pre>
 
         <h3 class="card-title">Support</h3>
         <p>
