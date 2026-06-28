@@ -6,9 +6,12 @@ title: Voyti
 <div class="card">
     <div class="card-body">
         <h2 class="card-title">YiiRocks/Voyti</h2>
-        <p class="text-muted small mb-3">
-            <em>войти</em> — <em>/vɐjˈtʲi/</em> — <em>verb</em> — "to enter" or "to log in"
-        </p>
+        <blockquote class="text-muted mb-3">
+            <p><strong>войти</strong><br>
+                <em><strong>/vɐjˈtʲi/</strong></em><br>
+                <em>verb</em></p>
+            <p>"to enter" or "to log in"</p>
+        </blockquote>
         <nav class="small mb-4">
             <a href="#install">Installation</a> &middot;
             <a href="#quick-start">Quick Start</a> &middot;
@@ -32,9 +35,11 @@ title: Voyti
 
         <h3 class="card-title" id="install">Installation</h3>
         <pre class="mb-3"><code class="bash">composer require yiirocks/voyti</code></pre>
-        <p>Optional packages:</p>
-        <pre class="mb-3"><code class="bash">composer require yiirocks/recaptcha
-composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
+        <h4>Optional packages</h4>
+        <p>For reCAPTCHA support:</p>
+        <pre class="mb-3"><code class="bash">composer require yiirocks/recaptcha</code></pre>
+        <p>For 2FA TOTP support:</p>
+        <pre class="mb-3"><code class="bash">composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
 
         <h3 class="card-title" id="quick-start">Quick Start</h3>
 
@@ -71,14 +76,52 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
             <code>ModuleConfig::defaults()</code>.
         </p>
 
-        <h4>3. Register routes &amp; verify</h4>
+        <h4>3. Register routes</h4>
         <p>
             Routes are <strong>not</strong> auto-registered — you must add
-            them to your router configuration. See the
-            <a href="#routes">Router Setup</a> section below.
-            DI bindings, event listeners, console commands, and translations
-            are auto-registered via the config plugin. No manual wiring needed
-            for those.
+            them to your router configuration. Pull the
+            <code>voyti-routes</code> config group into your router definition.
+            The example below mounts them under a <code>user/</code> prefix —
+            omit or change the prefix as needed:
+        </p>
+        <pre class="mb-3"><code class="php">use Yiisoft\Config\Config;
+use Yiisoft\Definitions\DynamicReference;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollector;
+
+/** @var Config $config */
+
+return [
+    RouteCollectionInterface::class => [
+        'class' => RouteCollection::class,
+        '__construct()' => [
+            'collector' => DynamicReference::to(
+                static fn() => (new RouteCollector())
+                    ->addRoute(
+                        Group::create('/')
+                            ->routes(...[
+                                ...$config->get('routes'), // your routes
+                                Group::create('user/')
+                                    ->routes(...$config->get('voyti-routes'))
+                            ]),
+                    )
+            ),
+        ],
+    ],
+];</code></pre>
+        <p>
+            When <code>enableRestApi</code> is <code>true</code>, the API routes are
+            mounted under <code>adminRestPrefix</code> and expose user CRUD
+            endpoints.
+        </p>
+
+        <h4>4. Done</h4>
+        <p>
+            DI bindings, event listeners, and console commands are auto-registered
+            via the <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>.
+            No manual wiring needed.
         </p>
 
         <h3 class="card-title" id="routes">Available Routes</h3>
@@ -155,48 +198,10 @@ composer require chillerlan/php-authenticator chillerlan/php-qrcode</code></pre>
                 </tbody>
             </table>
         </div>
-
-        <h4>Router Setup</h4>
-        <p>
-            Pull the <code>voyti-routes</code> config group into your router
-            definition. The example below mounts them under a
-            <code>user/</code> prefix — omit or change the prefix as needed:
-        </p>
-        <pre class="mb-3"><code class="php">use Yiisoft\Config\Config;
-use Yiisoft\Definitions\DynamicReference;
-use Yiisoft\Router\Group;
-use Yiisoft\Router\RouteCollection;
-use Yiisoft\Router\RouteCollectionInterface;
-use Yiisoft\Router\RouteCollector;
-
-/** @var Config $config */
-
-return [
-    RouteCollectionInterface::class => [
-        'class' => RouteCollection::class,
-        '__construct()' => [
-            'collector' => DynamicReference::to(
-                static fn() => (new RouteCollector())->addRoute(
-                    Group::create('/')
-                        ->routes(...[
-                            ...$config->get('routes'), // your own routes
-                            Group::create('user/')
-                                ->routes(...$config->get('voyti-routes')),
-                        ]),
-                    ),
-                ),
-            ),
-        ],
-    ],
-];</code></pre>
-        <p>
-            Without this configuration, Voyti routes are not registered at all.
-        </p>
-
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix</code> and expose user CRUD
-            endpoints.
+            endpoints for list, view, create, update, and delete.
         </p>
 
         <h3 class="card-title" id="config">Configuration</h3>
@@ -290,7 +295,7 @@ return [
                         <td><code>rememberLoginLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
                         <td><code>1209600</code></td>
-                        <td>Remember-me cookie duration (seconds)</td>
+                        <td>Remember-me cookie lifetime and idle auth timeout (seconds)</td>
                     </tr>
                     <tr>
                         <td><code>tokenConfirmationLifespan</code></td>
@@ -303,6 +308,36 @@ return [
                         <td><span class="font-monospace">int</span></td>
                         <td><code>21600</code></td>
                         <td>Password recovery token validity (seconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>loginRoute</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'voyti/login'</code></td>
+                        <td>Route name for the login page</td>
+                    </tr>
+                    <tr>
+                        <td><code>accountSettingsRoute</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'voyti/settings-account'</code></td>
+                        <td>Route name for account settings redirects</td>
+                    </tr>
+                    <tr>
+                        <td><code>enableSwitchIdentities</code></td>
+                        <td><span class="font-monospace">bool</span></td>
+                        <td><code>true</code></td>
+                        <td>Allow admins to impersonate users</td>
+                    </tr>
+                    <tr>
+                        <td><code>switchIdentitySessionKey</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>'voyti_original_user'</code></td>
+                        <td>Session key for storing the original identity</td>
+                    </tr>
+                    <tr>
+                        <td><code>recaptchaVersion</code></td>
+                        <td><span class="font-monospace">?string</span></td>
+                        <td><code>null</code></td>
+                        <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
                     </tr>
                 </tbody>
             </table>
@@ -343,30 +378,6 @@ return [
                         <td><span class="font-monospace">?string</span></td>
                         <td><code>null</code></td>
                         <td>Permission name required for admin panel access</td>
-                    </tr>
-                    <tr>
-                        <td><code>enableSwitchIdentities</code></td>
-                        <td><span class="font-monospace">bool</span></td>
-                        <td><code>true</code></td>
-                        <td>Allow admins to impersonate users</td>
-                    </tr>
-                    <tr>
-                        <td><code>switchIdentitySessionKey</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>'voyti_original_user'</code></td>
-                        <td>Session key for storing the original identity</td>
-                    </tr>
-                    <tr>
-                        <td><code>loginRoute</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'voyti/login'</code></td>
-                        <td>Route name for the login page</td>
-                    </tr>
-                    <tr>
-                        <td><code>accountSettingsRoute</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'voyti/settings-account'</code></td>
-                        <td>Route name for the account settings page</td>
                     </tr>
                     <tr>
                         <td><code>profileVisibility</code></td>
@@ -463,28 +474,6 @@ return [
                         <td><span class="font-monospace">int|false</span></td>
                         <td><code>false</code></td>
                         <td>Max sessions to keep per user (<code>false</code> = unlimited)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4>reCAPTCHA</h4>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Option</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>recaptchaVersion</code></td>
-                        <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable</td>
                     </tr>
                 </tbody>
             </table>
@@ -645,22 +634,24 @@ return [
             <tbody>
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
-                    <td>Redirects guests to <code>loginPath</code>; checks <code>administratorPermissionName</code> for admin access</td>
+                    <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsPath</code> when <code>maxPasswordAge</code> is exceeded</td>
+                    <td>Redirects to <code>accountSettingsRoute</code> when <code>maxPasswordAge</code> is exceeded</td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsPath</code> when required permissions are assigned</td>
+                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned</td>
                 </tr>
             </tbody>
         </table>
         <p>
-            Both redirect targets are configurable in <code>ModuleConfig</code>, so
-            you can map them to your own route structure. Register them in your
-            application's middleware pipeline as needed.
+            The two redirect targets (<code>loginRoute</code> and
+            <code>accountSettingsRoute</code>) are configurable via
+            <code>ModuleConfig</code>, so you can map them to your own route
+            structure. Register them in your application's middleware pipeline
+            as needed.
         </p>
 
         <h3 class="card-title" id="rbac">RBAC Management</h3>
@@ -683,7 +674,7 @@ return [
         <p>Various built-in auth clients are bundled:</p>
         <ul>
             <li>Facebook, GitHub, Google, Keycloak</li>
-            <li>LinkedIn, Microsoft365, Twitter, VKontakte, Yandex</li>
+            <li>LinkedIn, Microsoft365, X (formerly Twitter), VKontakte, Yandex</li>
         </ul>
         <p>
             Register the clients you need via the <code>socialNetworkClients</code>
@@ -733,18 +724,38 @@ return [
                         <th>Provider</th>
                         <th>Default scope</th>
                         <th>Authorization URL</th>
+                        <th>Token URL</th>
+                        <th>User info URL</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td></tr>
-                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td></tr>
-                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td></tr>
-                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/…/auth</code></td></tr>
-                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td></tr>
-                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/auth</code></td></tr>
-                    <tr><td><code>twitter</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td></tr>
-                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td></tr>
-                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td></tr>
+                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td><td><code>https://graph.facebook.com/v19.0/oauth/access_token</code></td><td><code>https://graph.facebook.com/me</code></td></tr>
+                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td><td><code>https://github.com/login/oauth/access_token</code></td><td><code>https://api.github.com/user</code></td></tr>
+                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td><td><code>https://oauth2.googleapis.com/token</code></td><td><code>https://openidconnect.googleapis.com/v1/userinfo</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/auth</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/token</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/userinfo</code></td></tr>
+                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td><td><code>https://www.linkedin.com/oauth/v2/accessToken</code></td><td><code>https://api.linkedin.com/v2/userinfo</code></td></tr>
+                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/authorize</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/token</code></td><td><code>https://graph.microsoft.com/oidc/userinfo</code></td></tr>
+                    <tr><td><code>x</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td><td><code>https://api.twitter.com/2/oauth2/token</code></td><td><code>https://api.twitter.com/2/users/me</code></td></tr>
+                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td><td><code>https://oauth.vk.com/access_token</code></td><td><code>https://api.vk.com/method/users.get</code></td></tr>
+                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td><td><code>https://oauth.yandex.com/token</code></td><td><code>https://login.yandex.ru/info</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Provider-specific built-in request behavior:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Built-in behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td>Sends <code>access_token</code> and <code>fields=id,name,email</code> on the user-info request.</td></tr>
+                    <tr><td><code>github</code></td><td>If <code>/user</code> does not include an email, Voyti also requests <code>https://api.github.com/user/emails</code> and picks the first primary or verified address.</td></tr>
+                    <tr><td><code>vkontakte</code></td><td>Sends <code>access_token</code>, <code>fields=screen_name</code>, and <code>v=5.199</code>; email is read from the token response when present.</td></tr>
+                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email.</td></tr>
+                    <tr><td><code>yandex</code></td><td>Sends <code>format=json</code> on the user-info request.</td></tr>
                 </tbody>
             </table>
         </div>
