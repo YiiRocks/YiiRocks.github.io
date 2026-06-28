@@ -18,8 +18,7 @@ title: Voyti
             <a href="#middleware">Middleware</a> &middot;
             <a href="#rbac">RBAC</a> &middot;
             <a href="#social">Social Auth</a> &middot;
-            <a href="#events">Events</a> &middot;
-            <a href="#views">Views</a>
+            <a href="#events">Events</a>
         </nav>
         <p>
             <a href="https://github.com/YiiRocks/voyti" class="text-nowrap">voyti</a>
@@ -780,21 +779,6 @@ return [
         <code>SocialAccountConnectedEvent</code>,
         <code>SocialAccountDisconnectedEvent</code>. Attach listeners via
         the Yii3 event dispatcher configuration.</p>
-
-        <h3 class="card-title" id="views">Views</h3>
-        <p>
-            Web views are in <code>src/resources/views/bootstrap5/</code>. Mail
-            templates are in <code>src/resources/mail/</code> — separate from
-            web views so they can be overridden independently via
-            <code>mailPath</code>. Override them by setting <code>viewPath</code>
-            in <code>config/params.php</code>:
-        </p>
-        <pre class="mb-3"><code class="php">return [
-    'yiirocks/voyti' => [
-        'viewPath' => '/path/to/your/custom/views',
-        'mailPath' => '/path/to/your/custom/mail',
-    ],
-];</code></pre>
 
         <h3 class="card-title">Support</h3>
         <p>
