@@ -123,6 +123,28 @@ return [
             options.
         </p>
 
+        <h4>General</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>appName</code></td>
+                        <td><span class="font-monospace">string</span></td>
+                        <td><code>'Voyti'</code></td>
+                        <td>Application name — used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <h4>Authentication &amp; Registration</h4>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -204,7 +226,7 @@ return [
                     <tr>
                         <td><code>rememberLoginLifespan</code></td>
                         <td><span class="font-monospace">int</span></td>
-                        <td><code>1209600</code></td>
+                        <td><code>2592000</code></td>
                         <td>Remember-me cookie lifetime and idle auth timeout in seconds</td>
                     </tr>
                     <tr>
@@ -332,13 +354,13 @@ return [
                     <tr>
                         <td><code>enableSessionHistory</code></td>
                         <td><span class="font-monospace">bool</span></td>
-                        <td><code>false</code></td>
+                        <td><code>true</code></td>
                         <td>Track session history</td>
                     </tr>
                     <tr>
                         <td><code>numberSessionHistory</code></td>
                         <td><span class="font-monospace">int|false</span></td>
-                        <td><code>false</code></td>
+                        <td><code>50</code></td>
                         <td>Max sessions to keep per user</td>
                     </tr>
                     <tr>
@@ -362,14 +384,14 @@ return [
                     <tr>
                         <td><code>administratorPermissionName</code></td>
                         <td><span class="font-monospace">?string</span></td>
-                        <td><code>null</code></td>
-                        <td>Permission name for admin access</td>
+                        <td><code>'admin'</code></td>
+                        <td>Permission/role name granting admin access</td>
                     </tr>
                     <tr>
                         <td><code>profileVisibility</code></td>
                         <td><span class="font-monospace">int</span></td>
-                        <td><code>0</code></td>
-                        <td>Profile visibility level</td>
+                        <td><code>2</code></td>
+                        <td>Profile visibility: <code>0</code> = owner only, <code>1</code> = owner + admins, <code>2</code> = any authenticated user, <code>3</code> = public</td>
                     </tr>
                 </tbody>
             </table>
@@ -410,7 +432,6 @@ return [
         </div>
         <p>Mail params defaults:</p>
         <pre class="mb-3"><code class="php">[
-    'fromEmail' => 'no-reply@example.com',
     'welcomeMailSubject' => 'Welcome to {app}',
     'confirmationMailSubject' => 'Confirm account on {app}',
     'reconfirmationMailSubject' => 'Confirm email change on {app}',
@@ -429,12 +450,6 @@ return [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>fromEmail</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'no-reply@example.com'</code></td>
-                        <td>Sender address for Voyti mail</td>
-                    </tr>
                     <tr>
                         <td><code>welcomeMailSubject</code></td>
                         <td><span class="font-monospace">string</span></td>
