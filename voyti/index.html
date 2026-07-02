@@ -119,7 +119,7 @@ return [
 ];</code></pre>
         <p>
             Below are all top-level <code>yiirocks/voyti</code> options, followed by
-            the nested <code>mailParams</code> and <code>socialNetworkClients</code>
+            the nested <code>socialNetworkClients</code>
             options.
         </p>
 
@@ -420,65 +420,6 @@ return [
                         <td><span class="font-monospace">string</span></td>
                         <td><code>__DIR__ . '/resources/mail'</code></td>
                         <td>Base path for mail templates</td>
-                    </tr>
-                    <tr>
-                        <td><code>mailParams</code></td>
-                        <td><span class="font-monospace">array</span></td>
-                        <td><code>see below</code></td>
-                        <td>Mail from address and subjects</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p>Mail params defaults:</p>
-        <pre class="mb-3"><code class="php">[
-    'welcomeMailSubject' => 'Welcome to {app}',
-    'confirmationMailSubject' => 'Confirm account on {app}',
-    'reconfirmationMailSubject' => 'Confirm email change on {app}',
-    'recoveryMailSubject' => 'Complete password reset on {app}',
-    'twoFactorMailSubject' => 'Code for two factor authentication on {app}',
-]</code></pre>
-        <p><code>mailParams</code> accepts the following keys:</p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>welcomeMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Welcome to {app}'</code></td>
-                        <td>Welcome email subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>confirmationMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Confirm account on {app}'</code></td>
-                        <td>Registration confirmation subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>reconfirmationMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Confirm email change on {app}'</code></td>
-                        <td>Email change confirmation subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>recoveryMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Complete password reset on {app}'</code></td>
-                        <td>Password recovery subject</td>
-                    </tr>
-                    <tr>
-                        <td><code>twoFactorMailSubject</code></td>
-                        <td><span class="font-monospace">string</span></td>
-                        <td><code>'Code for two factor authentication on {app}'</code></td>
-                        <td>2FA email code subject</td>
                     </tr>
                 </tbody>
             </table>
