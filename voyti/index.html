@@ -20,7 +20,6 @@ title: Voyti
             <a href="#rbac">RBAC</a> &middot;
             <a href="#routes">Routes</a> &middot;
             <a href="#events">Events</a> &middot;
-            <a href="#testing">Testing</a> &middot;
             <a href="#support">Support</a>
         </nav>
         <p>
@@ -624,13 +623,3 @@ return [
         updated, terminated), <code>UserSocialAuthEvent</code>, and
         <code>UserSocialConnectEvent</code>. Attach listeners via the Yii3
         event dispatcher configuration.</p>
-
-        <h3 class="doc-section-title" id="testing">Testing</h3>
-        <pre class="doc-example mb-3"><code class="language-bash"># Unit tests
-composer phpunit
-
-# Mutation testing
-composer infection
-
-# Static analysis
-composer psalm</code></pre>
