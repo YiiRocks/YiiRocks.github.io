@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: package
+pkgId: recaptcha
 title: reCAPTCHA
 ---
 
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">YiiRocks/reCAPTCHA</h2>
         <nav class="small mb-4">
             <a href="#config">Configuration</a> &middot;
             <a href="#v2-field">v2 Field</a> &middot;
@@ -22,12 +20,12 @@ title: reCAPTCHA
             class="text-nowrap">Yii Framework 3</a> applications.
         </p>
 
-        <h3 class="card-title" id="config">Configuration</h3>
+        <h3 class="doc-section-title" id="config">Configuration</h3>
         <p>
             Set your site keys and secret keys via environment variables
             or directly in <code>config/params.php</code>:
         </p>
-        <pre class="mb-3"><code class="php">'yiirocks/recaptcha' => [
+        <pre class="doc-example mb-3"><code class="language-php">'yiirocks/recaptcha' => [
     'siteKeyV2' => $_ENV['RECAPTCHA_SITE_KEY_V2'] ?? '',
     'secretV2' => $_ENV['RECAPTCHA_SECRET_V2'] ?? '',
     'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'] ?? '',
@@ -42,8 +40,8 @@ title: reCAPTCHA
             <code>withSiteKey()</code> in your view code.
         </p>
 
-        <h3 class="card-title" id="v2-field">reCAPTCHA v2 Field</h3>
-        <pre class="mb-3"><code class="php">use Yiisoft\FormModel\FormModel;
+        <h3 class="doc-section-title" id="v2-field">reCAPTCHA v2 Field</h3>
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\FormModel\FormModel;
 use YiiRocks\Recaptcha\RecaptchaV2Field;
 use YiiRocks\Recaptcha\RecaptchaV2Theme;
 use YiiRocks\Recaptcha\RecaptchaV2Size;
@@ -57,86 +55,90 @@ echo RecaptchaV2Field::field($form, 'captcha')
     ->withCallback('onSuccess')
     ->render();</code></pre>
 
-        <h3 class="card-title" id="v2-options">reCAPTCHA v2 Options</h3>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
-                Explicit site key override. Optional — pulled from config by default
-            </li>
-            <li class="list-group-item">
-                <code>withId(string)</code> <span class="font-monospace">( 'g-recaptcha-{uniqid}' )</span>
-                Widget element ID
-            </li>
-            <li class="list-group-item">
-                <code>withTheme(RecaptchaV2Theme)</code> <span class="font-monospace">( Light )</span>
-                <code>Light</code> or <code>Dark</code>
-            </li>
-            <li class="list-group-item">
-                <code>withType(RecaptchaV2Type)</code> <span class="font-monospace">( Image )</span>
-                <code>Image</code> or <code>Audio</code>
-            </li>
-            <li class="list-group-item">
-                <code>withSize(RecaptchaV2Size)</code> <span class="font-monospace">( Normal )</span>
-                <code>Normal</code>, <code>Compact</code>, or <code>Invisible</code>
-            </li>
-            <li class="list-group-item">
-                <code>withJsApiUrl(string)</code> <span class="font-monospace">( Google CDN )</span>
-                Custom JS API URL
-            </li>
-            <li class="list-group-item">
-                <code>withCallback(string)</code> <span class="font-monospace">( — )</span>
-                JavaScript callback function name on successful verification
-            </li>
-            <li class="list-group-item">
-                <code>withExpiredCallback(string)</code> <span class="font-monospace">( — )</span>
-                JavaScript callback function name when the CAPTCHA expires
-            </li>
-            <li class="list-group-item">
-                <code>withErrorCallback(string)</code> <span class="font-monospace">( — )</span>
-                JavaScript callback function name when an error occurs
-            </li>
-        </ul>
+        <h3 class="doc-section-title" id="v2-options">reCAPTCHA v2 Options</h3>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">withSiteKey<span class="options-type">(string)</span></div>
+                <div class="options-desc">Explicit site key override. Optional — pulled from config by default. Default: <code>from config</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withId<span class="options-type">(string)</span></div>
+                <div class="options-desc">Widget element ID. Default: <code>'g-recaptcha-{uniqid}'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withTheme<span class="options-type">(RecaptchaV2Theme)</span></div>
+                <div class="options-desc"><code>Light</code> or <code>Dark</code>. Default: <code>Light</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withType<span class="options-type">(RecaptchaV2Type)</span></div>
+                <div class="options-desc"><code>Image</code> or <code>Audio</code>. Default: <code>Image</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withSize<span class="options-type">(RecaptchaV2Size)</span></div>
+                <div class="options-desc"><code>Normal</code>, <code>Compact</code>, or <code>Invisible</code>. Default: <code>Normal</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withJsApiUrl<span class="options-type">(string)</span></div>
+                <div class="options-desc">Custom JS API URL. Default: Google CDN.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withCallback<span class="options-type">(string)</span></div>
+                <div class="options-desc">JavaScript callback function name on successful verification.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withExpiredCallback<span class="options-type">(string)</span></div>
+                <div class="options-desc">JavaScript callback function name when the CAPTCHA expires.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withErrorCallback<span class="options-type">(string)</span></div>
+                <div class="options-desc">JavaScript callback function name when an error occurs.</div>
+            </div>
+        </div>
 
-        <p class="mt-3"><strong>Inherited from <code>InputField</code>:</strong></p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>->name(string)</code> — override the hidden input name (default: auto-derived from form model as <code>FormName[attribute]</code>)
-            </li>
-            <li class="list-group-item">
-                <code>->inputId(?string)</code> — override the hidden input ID (default: auto-generated unique ID)
-            </li>
-        </ul>
+        <h4 class="doc-eyebrow">Inherited from InputField</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">-&gt;name<span class="options-type">(string)</span></div>
+                <div class="options-desc">Override the hidden input name. Default: auto-derived from form model as <code>FormName[attribute]</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;inputId<span class="options-type">(?string)</span></div>
+                <div class="options-desc">Override the hidden input ID. Default: auto-generated unique ID.</div>
+            </div>
+        </div>
 
-        <p class="mt-3"><strong>Container (inherited from <code>BaseField</code>):</strong></p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>->containerTag(string)</code> <span class="font-monospace">( 'div' )</span>
-                Wrapper tag
-            </li>
-            <li class="list-group-item">
-                <code>->containerClass(string ...)</code> <span class="font-monospace">( 'mb-3' )</span>
-                Wrapper CSS class(es)
-            </li>
-            <li class="list-group-item">
-                <code>->useContainer(bool)</code> <span class="font-monospace">( true )</span>
-                Enable/disable wrapper
-            </li>
-            <li class="list-group-item">
-                <code>->containerAttributes(array)</code> — set all wrapper attributes
-            </li>
-            <li class="list-group-item">
-                <code>->addContainerAttributes(array)</code> — merge additional wrapper attributes
-            </li>
-        </ul>
+        <h4 class="doc-eyebrow">Container (inherited from BaseField)</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">-&gt;containerTag<span class="options-type">(string)</span></div>
+                <div class="options-desc">Wrapper tag. Default: <code>'div'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;containerClass<span class="options-type">(string ...)</span></div>
+                <div class="options-desc">Wrapper CSS class(es). Default: <code>'mb-3'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;useContainer<span class="options-type">(bool)</span></div>
+                <div class="options-desc">Enable/disable wrapper. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;containerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-desc">Set all wrapper attributes.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;addContainerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-desc">Merge additional wrapper attributes.</div>
+            </div>
+        </div>
 
-        <h3 class="card-title mt-3" id="v3-field">reCAPTCHA v3 Field</h3>
+        <h3 class="doc-section-title mt-3" id="v3-field">reCAPTCHA v3 Field</h3>
         <p>
             The token is fetched on form submit (not on page load),
             preventing unexpected challenge popups. The form is auto-resolved
             via <code>closest("form")</code> — no <code>formId</code> needed
             when the hidden input is inside the form.
         </p>
-        <pre class="mb-3"><code class="php">use Yiisoft\FormModel\FormModel;
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\FormModel\FormModel;
 use YiiRocks\Recaptcha\RecaptchaV3Field;
 use YiiRocks\Recaptcha\RecaptchaV3Badge;
 
@@ -146,69 +148,73 @@ echo RecaptchaV3Field::field($form, 'captcha')
     ->withBadge(RecaptchaV3Badge::Hidden)
     ->render();</code></pre>
 
-        <h3 class="card-title" id="v3-options">reCAPTCHA v3 Options</h3>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>withSiteKey(string)</code> <span class="font-monospace">( from config )</span>
-                Explicit site key override. Optional — pulled from config by default
-            </li>
-            <li class="list-group-item">
-                <code>withAction(string)</code> <span class="font-monospace">( '' )</span>
-                Action name sent to Google (must match the rule's <code>action</code> if set)
-            </li>
-            <li class="list-group-item">
-                <code>withFormId(string)</code> <span class="font-monospace">( — )</span>
-                Explicit form ID. When omitted the form is auto-resolved via <code>closest("form")</code>
-            </li>
-            <li class="list-group-item">
-                <code>withBadge(RecaptchaV3Badge)</code> <span class="font-monospace">( BottomRight )</span>
-                <code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>
-            </li>
-            <li class="list-group-item">
-                <code>withJsApiUrl(string)</code> <span class="font-monospace">( Google CDN )</span>
-                Custom JS API URL
-            </li>
-            <li class="list-group-item">
-                <code>withTranslator(?TranslatorInterface)</code> <span class="font-monospace">( from registry )</span>
-                Translator for the hidden badge legal notice
-            </li>
-            <li class="list-group-item">
-                <code>withExecuteTimeout(?int)</code> <span class="font-monospace">( 15000 ms )</span>
-                Fallback form submission timeout (null = disabled)
-            </li>
-        </ul>
+        <h3 class="doc-section-title" id="v3-options">reCAPTCHA v3 Options</h3>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">withSiteKey<span class="options-type">(string)</span></div>
+                <div class="options-desc">Explicit site key override. Optional — pulled from config by default. Default: <code>from config</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withAction<span class="options-type">(string)</span></div>
+                <div class="options-desc">Action name sent to Google (must match the rule's <code>action</code> if set). Default: <code>''</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withFormId<span class="options-type">(string)</span></div>
+                <div class="options-desc">Explicit form ID. When omitted the form is auto-resolved via <code>closest("form")</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withBadge<span class="options-type">(RecaptchaV3Badge)</span></div>
+                <div class="options-desc"><code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>. Default: <code>BottomRight</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withJsApiUrl<span class="options-type">(string)</span></div>
+                <div class="options-desc">Custom JS API URL. Default: Google CDN.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withTranslator<span class="options-type">(?TranslatorInterface)</span></div>
+                <div class="options-desc">Translator for the hidden badge legal notice. Default: from registry.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">withExecuteTimeout<span class="options-type">(?int)</span></div>
+                <div class="options-desc">Fallback form submission timeout (null = disabled). Default: <code>15000 ms</code>.</div>
+            </div>
+        </div>
 
-        <p class="mt-3"><strong>Inherited from <code>InputField</code>:</strong></p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>->name(string)</code> — override the hidden input name (default: auto-derived from form model as <code>FormName[attribute]</code>)
-            </li>
-            <li class="list-group-item">
-                <code>->inputId(?string)</code> — override the hidden input ID (default: auto-generated unique ID)
-            </li>
-        </ul>
+        <h4 class="doc-eyebrow">Inherited from InputField</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">-&gt;name<span class="options-type">(string)</span></div>
+                <div class="options-desc">Override the hidden input name. Default: auto-derived from form model as <code>FormName[attribute]</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;inputId<span class="options-type">(?string)</span></div>
+                <div class="options-desc">Override the hidden input ID. Default: auto-generated unique ID.</div>
+            </div>
+        </div>
 
-        <p class="mt-3"><strong>Container (inherited from <code>BaseField</code>):</strong></p>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>->containerTag(string)</code> <span class="font-monospace">( 'div' )</span>
-                Wrapper tag
-            </li>
-            <li class="list-group-item">
-                <code>->containerClass(string ...)</code> <span class="font-monospace">( 'mb-3' )</span>
-                Wrapper CSS class(es)
-            </li>
-            <li class="list-group-item">
-                <code>->useContainer(bool)</code> <span class="font-monospace">( true )</span>
-                Enable/disable wrapper
-            </li>
-            <li class="list-group-item">
-                <code>->containerAttributes(array)</code> — set all wrapper attributes
-            </li>
-            <li class="list-group-item">
-                <code>->addContainerAttributes(array)</code> — merge additional wrapper attributes
-            </li>
-        </ul>
+        <h4 class="doc-eyebrow">Container (inherited from BaseField)</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">-&gt;containerTag<span class="options-type">(string)</span></div>
+                <div class="options-desc">Wrapper tag. Default: <code>'div'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;containerClass<span class="options-type">(string ...)</span></div>
+                <div class="options-desc">Wrapper CSS class(es). Default: <code>'mb-3'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;useContainer<span class="options-type">(bool)</span></div>
+                <div class="options-desc">Enable/disable wrapper. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;containerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-desc">Set all wrapper attributes.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">-&gt;addContainerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-desc">Merge additional wrapper attributes.</div>
+            </div>
+        </div>
 
         <p class="mt-3">
             <strong>Hidden badge:</strong> When <code>Badge::Hidden</code> is selected, the legal notice text
@@ -217,9 +223,9 @@ echo RecaptchaV3Field::field($form, 'captcha')
             through <code>RecaptchaRegistry</code>).
         </p>
 
-        <h3 class="card-title mt-3" id="validation">Validation</h3>
+        <h3 class="doc-section-title mt-3" id="validation">Validation</h3>
         <p>Use attributes on your form model properties:</p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
 use YiiRocks\Recaptcha\RecaptchaV3Rule;
 
 final class LoginForm
@@ -238,43 +244,43 @@ final class LoginForm
         you must also set <code>action: '...'</code> on the rule with the same value.
         If neither is set, no action is sent and the check is skipped entirely.</p>
 
-        <h4>v3 rule parameters</h4>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <code>threshold</code> <span class="font-monospace">( 0.5 )</span>
-                Minimum score (0.0 — 1.0)
-            </li>
-            <li class="list-group-item">
-                <code>action</code> <span class="font-monospace">( null )</span>
-                Expected action name (skipped if <code>null</code>)
-            </li>
-            <li class="list-group-item">
-                <code>message</code> <span class="font-monospace">( 'The CAPTCHA verification failed.' )</span>
-                Error message (translatable)
-            </li>
-            <li class="list-group-item">
-                <code>scoreTooLowMessage</code> <span class="font-monospace">( 'The CAPTCHA score is too low.' )</span>
-                Error when score is below threshold
-            </li>
-            <li class="list-group-item">
-                <code>actionMismatchMessage</code> <span class="font-monospace">( 'The CAPTCHA action does not match.' )</span>
-                Error when action doesn't match
-            </li>
-            <li class="list-group-item">
-                <code>secret</code> <span class="font-monospace">( null )</span>
-                Custom secret (uses config default if <code>null</code>)
-            </li>
-            <li class="list-group-item">
-                <code>sendRemoteIp</code> <span class="font-monospace">( false )</span>
-                Whether to include the user's IP in verification
-            </li>
-        </ul>
+        <h4 class="doc-eyebrow">v3 rule parameters</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">threshold</div>
+                <div class="options-desc">Minimum score (0.0 — 1.0). Default: <code>0.5</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">action</div>
+                <div class="options-desc">Expected action name (skipped if <code>null</code>). Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">message</div>
+                <div class="options-desc">Error message (translatable). Default: <code>'The CAPTCHA verification failed.'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">scoreTooLowMessage</div>
+                <div class="options-desc">Error when score is below threshold. Default: <code>'The CAPTCHA score is too low.'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">actionMismatchMessage</div>
+                <div class="options-desc">Error when action doesn't match. Default: <code>'The CAPTCHA action does not match.'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">secret</div>
+                <div class="options-desc">Custom secret (uses config default if <code>null</code>). Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">sendRemoteIp</div>
+                <div class="options-desc">Whether to include the user's IP in verification. Default: <code>false</code>.</div>
+            </div>
+        </div>
 
-        <h3 class="card-title" id="server">Server-Side Verification</h3>
+        <h3 class="doc-section-title" id="server">Server-Side Verification</h3>
         <p>
             Use <code>RecaptchaClient</code> for manual verification:
         </p>
-        <pre class="mb-3"><code class="php">use YiiRocks\Recaptcha\RecaptchaClient;
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaClient;
 
 /** @var RecaptchaClient $client */
 $result = $client->verify($token);
@@ -289,14 +295,3 @@ $result->hostname;    // ?string
 $result->challengeTs; // ?string
 
 $config = $client->getConfig(); // RecaptchaConfig</code></pre>
-
-        <h3 class="card-title">Support</h3>
-        <p>
-            <a href="https://github.com/YiiRocks/recaptcha/issues"><img class="me-1"
-            alt="GitHub issues" src="https://img.shields.io/github/issues/YiiRocks/recaptcha">Create
-            an Issue</a>
-        </p>
-    </div>
-
-    {% include footer.html project="recaptcha" %}
-</div>

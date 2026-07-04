@@ -1,0 +1,58 @@
+---
+layout: default
+---
+{% assign pkg = site.data.projects[page.pkgId] %}
+<div class="doc-page">
+    <div class="doc-header">
+        <span class="doc-header__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+        <div>
+            <h1 class="doc-header__name">{{ pkg.name }}</h1>
+            <div class="doc-header__tagline">{{ pkg.tagline }}</div>
+        </div>
+    </div>
+
+    {{ content }}
+
+{% if pkg.options %}
+    <h2 class="doc-eyebrow">Options</h2>
+    <div class="options-table">
+{% for opt in pkg.options %}
+        <div class="options-row">
+            <div class="options-name">{{ opt.name }}<span class="options-type"> {{ opt.type }}</span></div>
+            <div class="options-desc">{{ opt.desc }}</div>
+        </div>
+{% endfor %}
+    </div>
+{% endif %}
+
+{% if pkg.inheritedFrom %}
+{% assign inherited_pkg = site.data.projects[pkg.inheritedFrom] %}
+    <h2 class="doc-eyebrow">Inherited from <a href="{{ inherited_pkg.docsUrl }}">{{ inherited_pkg.name }}</a></h2>
+    <div class="options-table">
+{% for opt in inherited_pkg.options %}
+        <div class="options-row">
+            <div class="options-name">{{ opt.name }}<span class="options-type"> {{ opt.type }}</span></div>
+            <div class="options-desc">{{ opt.desc }}</div>
+        </div>
+{% endfor %}
+    </div>
+{% endif %}
+
+{% if pkg.exampleHeading %}
+    <h2 class="doc-eyebrow">{{ pkg.exampleHeading }}</h2>
+    <div class="doc-examples">
+{% for ex in pkg.examples %}
+        <pre class="doc-example"><code class="language-php">{{ ex | escape }}</code></pre>
+{% endfor %}
+    </div>
+{% endif %}
+
+    <h2 class="doc-eyebrow" id="support">Support</h2>
+    <div class="doc-support-row">
+        <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
+        <a href="https://github.com/YiiRocks/{{ pkg.repo }}/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+    </div>
+    <div class="docs-entry__badges">
+        {% include package_badges.html project=page.pkgId %}
+    </div>
+</div>

@@ -3,26 +3,84 @@ layout: default
 title: Yii.Rocks
 ---
 
-<p class="lead text-center mb-4">PHP packages for the Yii Framework, crafted by Mr. 42.</p>
+<div class="hero">
+    <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        {{ site.data.projects | size }} open-source packages, actively maintained
+    </div>
+    <h1>The missing pieces for your <span class="accent">Yii&nbsp;Framework</span> projects.</h1>
+    <p>Small, focused libraries that drop straight into your Yii apps.</p>
+    <div class="hero__actions">
+        <a href="#packages" class="btn-hero-primary">Browse packages</a>
+        <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" class="btn-hero-secondary">View on GitHub</a>
+    </div>
+</div>
 
-<div class="accordion bg-transparent" id="accordion">
+<div class="section" id="packages">
+    <h2 class="section-eyebrow">Overview</h2>
+    <div class="pkg-grid">
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
-{% assign p = item[1] %}
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="{{ p.head_id }}">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ p.collapse_id }}" aria-expanded="false" aria-controls="{{ p.collapse_id }}">
-                <span class="d-flex justify-content-between align-items-center flex-grow-1">
-                    <span>{{ p.name }}</span>
-                    {% if p.tagline %}<small class="text-muted fw-normal me-3">{{ p.tagline }}</small>{% endif %}
-                </span>
-            </button>
-        </h2>
-        <div id="{{ p.collapse_id }}" class="accordion-collapse collapse" aria-labelledby="{{ p.head_id }}" data-bs-parent="#accordion">
-            <div class="accordion-body">
-                {{ p.body }}
+{% assign pkg = item[1] %}
+        <a href="#{{ key }}" class="pkg-card">
+            <div class="pkg-card__head">
+                <span class="pkg-card__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+                <div class="pkg-card__name">{{ pkg.name }}</div>
             </div>
-            {% include footer.html project=key %}
+            <div class="pkg-card__tagline">{{ pkg.tagline }}</div>
+            <span class="copy-btn" role="button" tabindex="0" data-clipboard="composer require {{ pkg.package }}" onclick="event.preventDefault()">composer require {{ pkg.package }}</span>
+        </a>
+{% endfor %}
+    </div>
+</div>
+
+<div class="section-divider">
+    <div class="section-divider-line"></div>
+</div>
+
+<div class="section">
+    <h2 class="section-eyebrow">Documentation</h2>
+    <p class="section-sub">Full details, usage examples and links for every package.</p>
+
+{% for item in site.data.projects %}
+{% assign key = item[0] %}
+{% assign pkg = item[1] %}
+    <div class="docs-entry" id="{{ key }}">
+        <div class="docs-entry__top">
+            <div class="docs-entry__title">
+                <span class="docs-entry__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+                <div>
+                    <h3>{{ pkg.name }}</h3>
+                    <div class="docs-entry__tagline">{{ pkg.tagline }}</div>
+                </div>
+            </div>
+            <div class="docs-entry__actions">
+{% if pkg.docsUrl %}
+                <a href="{{ pkg.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
+{% endif %}
+                <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+            </div>
+        </div>
+
+        <p class="docs-entry__desc">{{ pkg.description }}</p>
+
+{% if pkg.features %}
+        <ul class="docs-entry__features">
+{% for feat in pkg.features %}
+            <li><strong>{{ feat.label }}</strong> &mdash; {{ feat.detail }}</li>
+{% endfor %}
+        </ul>
+{% endif %}
+
+{% if pkg.usage %}
+        <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
+{% endif %}
+
+        <div class="docs-entry__footer">
+            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
+            <div class="docs-entry__badges">
+                {% include package_badges.html project=key %}
+            </div>
         </div>
     </div>
 {% endfor %}
