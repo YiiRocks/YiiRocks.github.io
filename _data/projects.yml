@@ -5,7 +5,7 @@ svg-inline:
   tint: "#eef4ff"
   package: yiirocks/svg-inline
   repo: svg-inline
-  workflow: phpunit.yml
+  workflow: build.yml
   qlty_type: uuid
   qlty_id: 4cb2a6ba-29f4-4933-883c-1b1ff0f60825
   codacy: 1a826829576d45668a766abaae2321bb
@@ -57,7 +57,7 @@ svg-inline-bootstrap:
   tint: "#f3edff"
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
-  workflow: phpunit.yml
+  workflow: build.yml
   qlty_type: uuid
   qlty_id: c0c355d2-bfc8-40bf-8611-65e42e856b35
   codacy: 1ac06a8fb1fe4d17ba208399381945e2
@@ -86,7 +86,7 @@ svg-inline-fontawesome:
   tint: "#fff1ee"
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
-  workflow: phpunit.yml
+  workflow: build.yml
   qlty_type: uuid
   qlty_id: a1116206-e5ca-498d-8cbb-8ba8b4ce9191
   codacy: 41c0fc9e1e244d1292f7ba51b6ed1065
