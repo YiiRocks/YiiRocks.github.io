@@ -6,9 +6,6 @@ svg-inline:
   package: yiirocks/svg-inline
   repo: svg-inline
   workflow: build.yml
-  qlty_type: uuid
-  qlty_id: 4cb2a6ba-29f4-4933-883c-1b1ff0f60825
-  codacy: 1a826829576d45668a766abaae2321bb
   cli: true
   docsUrl: /svg-inline/
   description: >
@@ -58,9 +55,6 @@ svg-inline-bootstrap:
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
   workflow: build.yml
-  qlty_type: uuid
-  qlty_id: c0c355d2-bfc8-40bf-8611-65e42e856b35
-  codacy: 1ac06a8fb1fe4d17ba208399381945e2
   docsUrl: /svg-inline/bootstrap/
   description: >
     Provides simple functions for your Yii Framework 3 applications to add
@@ -87,9 +81,6 @@ svg-inline-fontawesome:
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
   workflow: build.yml
-  qlty_type: uuid
-  qlty_id: a1116206-e5ca-498d-8cbb-8ba8b4ce9191
-  codacy: 41c0fc9e1e244d1292f7ba51b6ed1065
   docsUrl: /svg-inline/fontawesome/
   description: >
     Provides simple functions for your Yii Framework 3 applications to add
@@ -119,9 +110,6 @@ yii-bootstrap-icons:
   package: yiirocks/yii-bootstrap-icons
   repo: yii-bootstrap-icons
   workflow: phpunit.yml
-  qlty_type: slug
-  qlty_id: yii-bootstrap-icons
-  codacy: 1a80083546d049dc83a682b93901e4bc
   description: >
     Provides the asset bundle to use Bootstrap Icons in your project. All
     valid icons can be found on the Bootstrap Icons page.
@@ -196,7 +184,6 @@ yii2-fontawesome-inline:
   package: thoulah/yii2-fontawesome-inline
   repo: yii2-fontawesome-inline
   travis: true
-  codacy: 77359b0ae813411895da7d33bb009bf0
   docsUrl: /yii2-fontawesome-inline/
   description: >
     Provides simple functions for your Yii Framework 2.0 applications to add

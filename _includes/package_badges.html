@@ -7,18 +7,6 @@
 {% include badge.html url=downloads_url alt="Packagist Downloads" %}
 {% include badge.html url=php_url alt="PHP Version" %}
 {% include badge.html url=license_url alt="License" %}
-{% if p.qlty_id %}
-    {% if p.qlty_type == "uuid" %}
-        {% capture qlty_url %}https://qlty.sh/badges/{{ p.qlty_id }}/maintainability.svg{% endcapture %}
-    {% else %}
-        {% capture qlty_url %}https://qlty.sh/gh/YiiRocks/projects/{{ p.qlty_id }}/maintainability.svg{% endcapture %}
-    {% endif %}
-    {% include badge.html url=qlty_url alt="Maintainability" %}
-{% endif %}
-{% if p.codacy %}
-    {% capture codacy_url %}https://img.shields.io/codacy/grade/{{ p.codacy }}/master.svg{% endcapture %}
-    {% include badge.html url=codacy_url alt="Codacy branch grade" %}
-{% endif %}
 {% if p.travis %}
     {% capture travis_url %}https://img.shields.io/travis/com/yiirocks/{{ p.repo }}/master.svg{% endcapture %}
     {% include badge.html url=travis_url alt="Travis (.com) branch" %}
