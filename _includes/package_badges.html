@@ -8,7 +8,7 @@
 {% include badge.html url=php_url alt="PHP Version" %}
 {% include badge.html url=license_url alt="License" %}
 {% if p.travis %}
-    {% capture travis_url %}https://img.shields.io/travis/com/yiirocks/{{ p.repo }}/master.svg{% endcapture %}
+    {% capture travis_url %}https://img.shields.io/travis/com/yiirocks/{{ p.repo }}/{{ p.branch }}.svg{% endcapture %}
     {% include badge.html url=travis_url alt="Travis (.com) branch" %}
 {% else %}
     {% capture workflow_url %}https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ p.repo }}/{{ p.workflow }}{% endcapture %}

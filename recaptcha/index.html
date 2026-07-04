@@ -32,7 +32,7 @@ title: reCAPTCHA
     'secretV3' => $_ENV['RECAPTCHA_SECRET_V3'] ?? '',
     'verifyUrl' => 'https://www.google.com/recaptcha/api/siteverify',
     'sendRemoteIp' => false,
-    'translation.category' => 'yii3-recaptcha',
+    'translation.category' => 'recaptcha',
 ],</code></pre>
         <p>
             Once configured, the field pulls the site key from the
@@ -226,18 +226,22 @@ echo RecaptchaV3Field::field($form, 'captcha')
         <h3 class="doc-section-title mt-3" id="validation">Validation</h3>
         <p>Use attributes on your form model properties:</p>
         <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
+
+final class ContactForm
+{
+    #[RecaptchaV2Rule]
+    public string $gRecaptchaResponse = '';
+}
+
 use YiiRocks\Recaptcha\RecaptchaV3Rule;
 
 final class LoginForm
 {
-    #[RecaptchaV2Rule]
-    public string $captcha = '';
-
     #[RecaptchaV3Rule(
         threshold: 0.5,
         action: 'login',
     )]
-    public string $captcha = '';
+    public string $gRecaptchaResponse = '';
 }</code></pre>
 
         <p><strong>Important:</strong> If you set <code>->withAction('...')</code> on the v3 field,

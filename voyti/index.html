@@ -11,6 +11,7 @@ title: Voyti
             <p>"to enter" or "to log in"</p>
         </blockquote>
         <nav class="small mb-4">
+            <a href="#requirements">Requirements</a> &middot;
             <a href="#quick-start">Quick Start</a> &middot;
             <a href="#config">Configuration</a> &middot;
             <a href="#social">Social Auth</a> &middot;
@@ -19,6 +20,7 @@ title: Voyti
             <a href="#rbac">RBAC</a> &middot;
             <a href="#routes">Routes</a> &middot;
             <a href="#events">Events</a> &middot;
+            <a href="#testing">Testing</a> &middot;
             <a href="#support">Support</a>
         </nav>
         <p>
@@ -30,6 +32,12 @@ title: Voyti
             and rebuilt with PSR-15 middleware, PSR-11 DI, ActiveRecord entities,
             FormModel forms, and <code>yiisoft/rbac</code>.
         </p>
+
+        <h3 class="doc-section-title" id="requirements">Requirements</h3>
+        <ul>
+            <li>PHP &gt;= 8.3</li>
+            <li>Yii3 packages (<code>yiisoft/db</code>, <code>yiisoft/rbac</code>, <code>yiisoft/view</code>, <code>yiisoft/validator</code>, etc.)</li>
+        </ul>
 
         <h3 class="doc-section-title" id="quick-start">Quick Start</h3>
 
@@ -591,7 +599,8 @@ return [
 
         <h3 class="doc-section-title" id="events">Events &amp; Listeners</h3>
         <p>Voyti dispatches events at key points in the user lifecycle,
-        allowing your application to react, log, or extend behaviour:</p>
+        allowing your application to react, log, or extend behaviour. The
+        following events ship with default listeners out of the box:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -600,17 +609,28 @@ return [
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>AfterLoginEvent</code></td><td>User logs in (password expiry check, session tracking)</td></tr>
-                <tr><td><code>AfterRegisterEvent</code></td><td>Admin notification on new registration</td></tr>
-                <tr><td><code>EmailChangeEvent</code></td><td>User requests an email change</td></tr>
-                <tr><td><code>AfterLogin</code> (yiisoft/user)</td><td>Session auth is established</td></tr>
-                <tr><td><code>AfterLogout</code> (yiisoft/user)</td><td>Session auth is torn down</td></tr>
+                <tr><td><code>AfterLoginEvent</code></td><td>User logs in — triggers password expiration check and session history tracking</td></tr>
+                <tr><td><code>AfterRegisterEvent</code></td><td>New user registration — sends admin notification email</td></tr>
+                <tr><td><code>EmailChangeEvent</code></td><td>User requests an email change — sends confirmation email</td></tr>
             </tbody>
         </table>
-        <p>Additional events are dispatched but have no default listeners:
-        <code>UserConfirmedEvent</code>, <code>UserUpdatedEvent</code>,
-        <code>UserDeletedEvent</code>, <code>UserProfileUpdatedEvent</code>,
-        <code>UserPasswordChangedEvent</code>, <code>UserSessionsTerminatedEvent</code>,
-        <code>SocialAccountConnectedEvent</code>,
-        <code>SocialAccountDisconnectedEvent</code>. Attach listeners via
-        the Yii3 event dispatcher configuration.</p>
+        <p>Additional events are dispatched but have no default listeners,
+        each carrying a <code>const string</code> name to distinguish
+        before/after variants:
+        <code>UserEvent</code> (create, delete, block/unblock, confirmation,
+        account/profile update, switch identity, logout),
+        <code>UserProfileEvent</code>, <code>GdprEvent</code> (delete),
+        <code>ResetPasswordEvent</code>, <code>SessionEvent</code> (created,
+        updated, terminated), <code>UserSocialAuthEvent</code>, and
+        <code>UserSocialConnectEvent</code>. Attach listeners via the Yii3
+        event dispatcher configuration.</p>
+
+        <h3 class="doc-section-title" id="testing">Testing</h3>
+        <pre class="doc-example mb-3"><code class="language-bash"># Unit tests
+composer phpunit
+
+# Mutation testing
+composer infection
+
+# Static analysis
+composer psalm</code></pre>

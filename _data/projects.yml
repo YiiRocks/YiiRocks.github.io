@@ -5,6 +5,7 @@ svg-inline:
   tint: "#eef4ff"
   package: yiirocks/svg-inline
   repo: svg-inline
+  branch: master
   workflow: build.yml
   cli: true
   docsUrl: /svg-inline/
@@ -54,6 +55,7 @@ svg-inline-bootstrap:
   tint: "#f3edff"
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
+  branch: master
   workflow: build.yml
   docsUrl: /svg-inline/bootstrap/
   description: >
@@ -80,6 +82,7 @@ svg-inline-fontawesome:
   tint: "#fff1ee"
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
+  branch: master
   workflow: build.yml
   docsUrl: /svg-inline/fontawesome/
   description: >
@@ -109,7 +112,8 @@ yii-bootstrap-icons:
   tint: "#eafff2"
   package: yiirocks/yii-bootstrap-icons
   repo: yii-bootstrap-icons
-  workflow: phpunit.yml
+  branch: main
+  workflow: build.yml
   description: >
     Provides the asset bundle to use Bootstrap Icons in your project. All
     valid icons can be found on the Bootstrap Icons page.
@@ -128,6 +132,7 @@ recaptcha:
   tint: "#fff7e0"
   package: yiirocks/recaptcha
   repo: recaptcha
+  branch: main
   workflow: build.yml
   cli: true
   docsUrl: /recaptcha/
@@ -150,6 +155,7 @@ voyti:
   tint: "#eef4ff"
   package: yiirocks/voyti
   repo: voyti
+  branch: main
   workflow: build.yml
   cli: true
   docsUrl: /voyti/
@@ -183,6 +189,7 @@ yii2-fontawesome-inline:
   tint: "#fff1ee"
   package: thoulah/yii2-fontawesome-inline
   repo: yii2-fontawesome-inline
+  branch: master
   travis: true
   docsUrl: /yii2-fontawesome-inline/
   description: >
