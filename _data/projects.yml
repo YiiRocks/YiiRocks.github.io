@@ -170,7 +170,7 @@ voyti:
     - label: Social authentication
       detail: 9 built-in providers
     - label: Two-factor authentication
-      detail: TOTP, email, SMS
+      detail: TOTP & email
     - label: GDPR compliance
       detail: consent management, data export, anonymized deletion
     - label: Session management
