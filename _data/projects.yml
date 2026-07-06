@@ -1,8 +1,69 @@
+recaptcha:
+  name: reCAPTCHA
+  tagline: reCAPTCHA v2 & v3 fields & validation
+  emoji: 🛡️
+  tint: "#fff7e0"
+  logo: /assets/icons/recaptcha.svg
+  featured: true
+  package: yiirocks/recaptcha
+  repo: recaptcha
+  branch: main
+  workflow: build.yml
+  cli: true
+  docsUrl: /recaptcha/
+  description: >
+    Provides Google reCAPTCHA v2 and v3 field and server-side validation for
+    your Yii Framework 3 applications, with various options available to
+    manipulate the result.
+  usage: |-
+    echo RecaptchaV2Field::field($form, 'captcha')
+        ->withSiteKey($siteKey);
+
+    echo RecaptchaV3Field::field($form, 'captcha')
+        ->withAction('login')
+        ->withFormId('login-form');
+
+voyti:
+  name: Voyti
+  tagline: User management, authentication & authorization
+  emoji: 🔐
+  tint: "#eef4ff"
+  featured: true
+  package: yiirocks/voyti
+  repo: voyti
+  branch: main
+  workflow: build.yml
+  cli: true
+  docsUrl: /voyti/
+  description: >
+    Provides highly customizable user management, authentication, and
+    authorization for your Yii Framework 3 applications.
+  features:
+    - label: User management
+      detail: registration, email confirmation, login/logout, password recovery
+    - label: RBAC
+      detail: full admin UI for roles, permissions, and rules
+    - label: Social authentication
+      detail: 9 built-in providers
+    - label: Two-factor authentication
+      detail: TOTP & email
+    - label: GDPR compliance
+      detail: consent management, data export, anonymized deletion
+    - label: Session management
+      detail: history tracking and termination
+    - label: REST API
+      detail: optional JSON API for user CRUD
+    - label: reCAPTCHA
+      detail: optional v2/v3 integration
+    - label: i18n
+      detail: multiple built-in translations
+
 svg-inline:
   name: SvgInline
   tagline: Inline SVG file manipulation
   emoji: 🖼️
   tint: "#eef4ff"
+  logo: /assets/icons/svg.svg
   package: yiirocks/svg-inline
   repo: svg-inline
   branch: master
@@ -53,6 +114,7 @@ svg-inline-bootstrap:
   tagline: Bootstrap Icons inline
   emoji: 🎨
   tint: "#f3edff"
+  logo: /assets/icons/bootstrap.svg
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
   branch: master
@@ -80,6 +142,7 @@ svg-inline-fontawesome:
   tagline: Font Awesome Icons inline
   emoji: ⭐
   tint: "#fff1ee"
+  logo: /assets/icons/fontawesome.svg
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
   branch: master
@@ -110,6 +173,7 @@ yii-bootstrap-icons:
   tagline: Bootstrap Icons asset bundle
   emoji: 📦
   tint: "#eafff2"
+  logo: /assets/icons/bootstrap.svg
   package: yiirocks/yii-bootstrap-icons
   repo: yii-bootstrap-icons
   branch: main
@@ -125,68 +189,12 @@ yii-bootstrap-icons:
     echo '<i class="bi-alarm"></i>';
     echo Html::tag('i', '', ['class' => 'bi-alarm']);
 
-recaptcha:
-  name: reCAPTCHA
-  tagline: reCAPTCHA v2 & v3 fields & validation
-  emoji: 🛡️
-  tint: "#fff7e0"
-  package: yiirocks/recaptcha
-  repo: recaptcha
-  branch: main
-  workflow: build.yml
-  cli: true
-  docsUrl: /recaptcha/
-  description: >
-    Provides Google reCAPTCHA v2 and v3 field and server-side validation for
-    your Yii Framework 3 applications, with various options available to
-    manipulate the result.
-  usage: |-
-    echo RecaptchaV2Field::field($form, 'captcha')
-        ->withSiteKey($siteKey);
-
-    echo RecaptchaV3Field::field($form, 'captcha')
-        ->withAction('login')
-        ->withFormId('login-form');
-
-voyti:
-  name: Voyti
-  tagline: User management, authentication & authorization
-  emoji: 🔐
-  tint: "#eef4ff"
-  package: yiirocks/voyti
-  repo: voyti
-  branch: main
-  workflow: build.yml
-  cli: true
-  docsUrl: /voyti/
-  description: >
-    Provides highly customizable user management, authentication, and
-    authorization for your Yii Framework 3 applications.
-  features:
-    - label: User management
-      detail: registration, email confirmation, login/logout, password recovery
-    - label: RBAC
-      detail: full admin UI for roles, permissions, and rules
-    - label: Social authentication
-      detail: 9 built-in providers
-    - label: Two-factor authentication
-      detail: TOTP & email
-    - label: GDPR compliance
-      detail: consent management, data export, anonymized deletion
-    - label: Session management
-      detail: history tracking and termination
-    - label: REST API
-      detail: optional JSON API for user CRUD
-    - label: reCAPTCHA
-      detail: optional v2/v3 integration
-    - label: i18n
-      detail: multiple built-in translations
-
 yii2-fontawesome-inline:
   name: yii2-fontawesome-inline
   tagline: Font Awesome inline for Yii2
   emoji: ⚡
   tint: "#fff1ee"
+  logo: /assets/icons/fontawesome.svg
   package: thoulah/yii2-fontawesome-inline
   repo: yii2-fontawesome-inline
   branch: master

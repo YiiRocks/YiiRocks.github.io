@@ -10,21 +10,16 @@ title: Yii.Rocks
     </div>
     <h1>The missing pieces for your <span class="accent">Yii&nbsp;Framework</span> projects.</h1>
     <p>Small, focused libraries that drop straight into your Yii apps.</p>
-    <div class="hero__actions">
-        <a href="#packages" class="btn-hero-primary">Browse packages</a>
-        <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" class="btn-hero-secondary">View on GitHub</a>
-    </div>
 </div>
 
-<div class="section" id="packages">
-    <h2 class="section-eyebrow">Overview</h2>
+<div class="section">
     <div class="pkg-grid">
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
-        <a href="#{{ key }}" class="pkg-card">
+        <a href="#{{ key }}" class="pkg-card{% if pkg.featured %} pkg-card--featured{% endif %}">
             <div class="pkg-card__head">
-                <span class="pkg-card__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+                <span class="pkg-card__icon" style="background:{{ pkg.tint }};">{% if pkg.logo %}<img src="{{ pkg.logo | relative_url }}" alt="" class="pkg-icon-img">{% else %}{{ pkg.emoji }}{% endif %}</span>
                 <div class="pkg-card__name">{{ pkg.name }}</div>
             </div>
             <div class="pkg-card__tagline">{{ pkg.tagline }}</div>
@@ -34,21 +29,14 @@ title: Yii.Rocks
     </div>
 </div>
 
-<div class="section-divider">
-    <div class="section-divider-line"></div>
-</div>
-
 <div class="section">
-    <h2 class="section-eyebrow">Documentation</h2>
-    <p class="section-sub">Full details, usage examples and links for every package.</p>
-
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
     <div class="docs-entry" id="{{ key }}">
         <div class="docs-entry__top">
             <div class="docs-entry__title">
-                <span class="docs-entry__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+                <span class="docs-entry__icon" style="background:{{ pkg.tint }};">{% if pkg.logo %}<img src="{{ pkg.logo | relative_url }}" alt="" class="pkg-icon-img">{% else %}{{ pkg.emoji }}{% endif %}</span>
                 <div>
                     <h3>{{ pkg.name }}</h3>
                     <div class="docs-entry__tagline">{{ pkg.tagline }}</div>

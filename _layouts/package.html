@@ -4,7 +4,7 @@ layout: default
 {% assign pkg = site.data.projects[page.pkgId] %}
 <div class="doc-page">
     <div class="doc-header">
-        <span class="doc-header__icon" style="background:{{ pkg.tint }};">{{ pkg.emoji }}</span>
+        <span class="doc-header__icon" style="background:{{ pkg.tint }};">{% if pkg.logo %}<img src="{{ pkg.logo | relative_url }}" alt="" class="pkg-icon-img">{% else %}{{ pkg.emoji }}{% endif %}</span>
         <div>
             <h1 class="doc-header__name">{{ pkg.name }}</h1>
             <div class="doc-header__tagline">{{ pkg.tagline }}</div>
