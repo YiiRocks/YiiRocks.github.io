@@ -19,7 +19,7 @@ title: Yii.Rocks
 {% assign pkg = item[1] %}
         <a href="#{{ key }}" class="pkg-card{% if pkg.featured %} pkg-card--featured{% endif %}">
             <div class="pkg-card__head">
-                <span class="pkg-card__icon" style="background:{{ pkg.tint }};">{% if pkg.logo %}<img src="{{ pkg.logo | relative_url }}" alt="" class="pkg-icon-img">{% else %}{{ pkg.emoji }}{% endif %}</span>
+                <span class="pkg-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
                 <div class="pkg-card__name">{{ pkg.name }}</div>
             </div>
             <div class="pkg-card__tagline">{{ pkg.tagline }}</div>
@@ -36,17 +36,18 @@ title: Yii.Rocks
     <div class="docs-entry" id="{{ key }}">
         <div class="docs-entry__top">
             <div class="docs-entry__title">
-                <span class="docs-entry__icon" style="background:{{ pkg.tint }};">{% if pkg.logo %}<img src="{{ pkg.logo | relative_url }}" alt="" class="pkg-icon-img">{% else %}{{ pkg.emoji }}{% endif %}</span>
+                <span class="docs-entry__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
                 <div>
                     <h3>{{ pkg.name }}</h3>
                     <div class="docs-entry__tagline">{{ pkg.tagline }}</div>
                 </div>
             </div>
             <div class="docs-entry__actions">
+                <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                <a href="https://packagist.org/packages/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
 {% if pkg.docsUrl %}
                 <a href="{{ pkg.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
 {% endif %}
-                <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
             </div>
         </div>
 

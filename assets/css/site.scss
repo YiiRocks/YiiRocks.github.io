@@ -444,7 +444,8 @@ code {
     background: var(--yr-link-bg);
 }
 
-.docs-entry__link--github {
+.docs-entry__link--github,
+.docs-entry__link--packagist {
     color: var(--yr-text);
     border: 1px solid var(--yr-border);
     background: var(--yr-card-bg);
