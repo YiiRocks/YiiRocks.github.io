@@ -103,6 +103,23 @@ return [
             mounted under <code>adminRestPrefix</code> and expose user CRUD
             endpoints.
         </p>
+        <p>
+            The privacy/GDPR routes (<code>settings/privacy</code>,
+            <code>settings/privacy/gdpr-consent</code>,
+            <code>settings/privacy/export</code>,
+            <code>settings/privacy/anonymize</code>,
+            <code>settings/privacy/delete</code>) and the two-factor routes
+            (<code>settings/two-factor</code>,
+            <code>settings/two-factor/enable</code>,
+            <code>settings/two-factor/disable</code>) are likewise only
+            registered when their governing config flag
+            (<code>enableGdprCompliance</code>,
+            <code>allowAccountDelete</code>, and/or
+            <code>enableTwoFactorAuthentication</code>) is <code>true</code> &mdash;
+            see the route table below. When a flag is off, the corresponding
+            route doesn't exist at all, so a request to it falls through to the
+            host application's own router-level not-found handling.
+        </p>
 
         <h4>4. Done</h4>
         <p>
@@ -145,6 +162,11 @@ return [
             <div class="options-row">
                 <div class="options-name">accountSettingsRoute<span class="options-type"> string</span></div>
                 <div class="options-desc">Route for account settings redirects. Default: <code>'voyti/settings-account'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">homeRoute<span class="options-type"> string</span></div>
+                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Default: <code>'home'</code>.<br>
+                <span class="text-muted small">Must be registered by the host app &mdash; an unregistered route name throws a <code>LogicException</code>.</span></div>
             </div>
             <div class="options-row">
                 <div class="options-name">enableRegistration<span class="options-type"> bool</span></div>
@@ -240,7 +262,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
-                <div class="options-desc">Properties included in data export. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio']</code>.</div>
+                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userSessionHistory', 'userSocialAccount']</code>.</div>
             </div>
         </div>
         <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
@@ -556,16 +578,16 @@ return [
                     <tr><td><code>voyti/settings</code></td><td><code>GET, POST</code></td><td><code>settings</code></td><td>Profile settings</td></tr>
                     <tr><td><code>voyti/settings-account</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
                     <tr><td><code>voyti/settings-networks</code></td><td><code>GET</code></td><td><code>settings/networks</code></td><td>Linked social networks</td></tr>
-                    <tr><td><code>voyti/settings-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy</code></td><td>Privacy settings</td></tr>
-                    <tr><td><code>voyti/gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/gdpr-consent</code></td><td>GDPR consent</td></tr>
-                    <tr><td><code>voyti/gdpr-delete</code></td><td><code>GET, POST</code></td><td><code>settings/gdpr-delete</code></td><td>GDPR data removal</td></tr>
-                    <tr><td><code>voyti/settings-delete</code></td><td><code>POST</code></td><td><code>settings/delete</code></td><td>Account deletion</td></tr>
-                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor setup</td></tr>
-                    <tr><td><code>voyti/settings-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-enable</code></td><td>Enable 2FA</td></tr>
-                    <tr><td><code>voyti/settings-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor-disable</code></td><td>Disable 2FA</td></tr>
+                    <tr><td><code>voyti/settings-networks-disconnect</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
+                    <tr><td><code>voyti/settings-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor setup. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/settings-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
-                    <tr><td><code>voyti/settings-disconnect</code></td><td><code>POST</code></td><td><code>settings/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
-                    <tr><td><code>voyti/settings-export</code></td><td><code>GET</code></td><td><code>settings/export</code></td><td>Export user data</td></tr>
                     <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin</code></td><td>Admin dashboard</td></tr>
                     <tr><td><code>voyti/admin-create</code></td><td><code>GET, POST</code></td><td><code>admin/create</code></td><td>Create user</td></tr>
                     <tr><td><code>voyti/admin-update</code></td><td><code>GET, POST</code></td><td><code>admin/update/{id}</code></td><td>Update user</td></tr>
@@ -598,28 +620,34 @@ return [
 
         <h3 class="doc-section-title" id="events">Events &amp; Listeners</h3>
         <p>Voyti dispatches events at key points in the user lifecycle,
-        allowing your application to react, log, or extend behaviour. The
-        following events ship with default listeners out of the box:</p>
+        allowing your application to react, log, or extend behaviour. Each
+        event carries a <code>const string</code> name to distinguish
+        before/after variants. Attach your own listeners through the Yii3
+        event dispatcher configuration.</p>
+
+        <h4>Events with default listeners</h4>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Event</th>
-                    <th>When</th>
+                    <th>Default behavior</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>AfterLoginEvent</code></td><td>User logs in — triggers password expiration check and session history tracking</td></tr>
-                <tr><td><code>AfterRegisterEvent</code></td><td>New user registration — sends admin notification email</td></tr>
-                <tr><td><code>EmailChangeEvent</code></td><td>User requests an email change — sends confirmation email</td></tr>
+                <tr><td><code>AfterLoginEvent</code></td><td>Triggers password expiration check and session history tracking</td></tr>
+                <tr><td><code>AfterRegisterEvent</code></td><td>Sends admin notification email</td></tr>
             </tbody>
         </table>
-        <p>Additional events are dispatched but have no default listeners,
-        each carrying a <code>const string</code> name to distinguish
-        before/after variants:
-        <code>UserEvent</code> (create, delete, block/unblock, confirmation,
-        account/profile update, switch identity, logout),
-        <code>UserProfileEvent</code>, <code>GdprEvent</code> (delete),
-        <code>ResetPasswordEvent</code>, <code>SessionEvent</code> (created,
-        updated, terminated), <code>UserSocialAuthEvent</code>, and
-        <code>UserSocialConnectEvent</code>. Attach listeners via the Yii3
-        event dispatcher configuration.</p>
+
+        <h4>Additional events (no default listeners)</h4>
+        <p>Dispatched by the library, but nothing consumes them by default &mdash;
+        attach your own listener via the event dispatcher configuration if you
+        need to react to them.</p>
+        <ul>
+            <li><strong>UserEvent</strong> &mdash; Variants: create, delete, block/unblock, confirmation, account/profile update, switch identity, logout</li>
+            <li><strong>UserProfileEvent</strong> &mdash; Dispatched when a user updates their profile</li>
+            <li><strong>GdprEvent</strong> &mdash; Specifically: delete operation</li>
+            <li><strong>ResetPasswordEvent</strong> &mdash; Password reset flow</li>
+            <li><strong>SessionEvent</strong> &mdash; Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, GDPR anonymization, or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
+        </ul>
+
