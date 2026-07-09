@@ -262,7 +262,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
-                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userSessionHistory', 'userSocialAccount']</code>.</div>
+                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userSessionHistory', 'userSocialAccount']</code>.</div>
             </div>
         </div>
         <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
@@ -630,12 +630,13 @@ return [
             <thead>
                 <tr>
                     <th>Event</th>
+                    <th>Trigger</th>
                     <th>Default behavior</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>AfterLoginEvent</code></td><td>Triggers password expiration check and session history tracking</td></tr>
-                <tr><td><code>AfterRegisterEvent</code></td><td>Sends admin notification email</td></tr>
+                <tr><td><code>AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session history tracking</td></tr>
+                <tr><td><code>AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
             </tbody>
         </table>
 

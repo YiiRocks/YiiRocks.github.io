@@ -146,13 +146,21 @@ voyti:
     authorization for your Yii Framework 3 applications.
   features:
     - label: User management
-      detail: registration, email confirmation, login/logout, password recovery
+      detail: registration, email confirmation, login/logout, password recovery, password expiration
+    - label: Profile management
+      detail: gravatar, timezone, bio, personal website
+    - label: Identity switching
+      detail: temporarily assume another user's identity
     - label: RBAC
       detail: full admin UI for roles, permissions, and rules
     - label: Social authentication
       detail: 9 built-in providers
     - label: Two-factor authentication
       detail: TOTP & email
+    - label: Password policies
+      detail: complexity requirements, max age enforcement
+    - label: Email change strategies
+      detail: insecure, confirm new, confirm both
     - label: GDPR compliance
       detail: consent management, data export, anonymized deletion
     - label: Session management
@@ -163,6 +171,8 @@ voyti:
       detail: optional v2/v3 integration
     - label: i18n
       detail: multiple built-in translations
+    - label: Themed views
+      detail: Bootstrap 5 with separate mail templates
 
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
