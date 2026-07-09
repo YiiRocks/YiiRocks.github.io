@@ -68,8 +68,9 @@ title: Voyti
         </p>
         <p>
             Pull the <code>voyti-routes</code> config group into your router
-            definition. The example below mounts them under a <code>user/</code>
-            prefix — omit or change the prefix as needed:
+            definition. The example below mounts them under a <code>/user/</code>
+            prefix as their own group, alongside your app's own routes &mdash;
+            change the prefix as needed:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -77,6 +78,9 @@ use Yiisoft\Router\Group;
 use Yiisoft\Router\RouteCollection;
 use Yiisoft\Router\RouteCollectionInterface;
 use Yiisoft\Router\RouteCollector;
+use Yiisoft\Session\SessionMiddleware;
+use YiiRocks\Voyti\Middleware\PasswordAgeEnforceMiddleware;
+use YiiRocks\Voyti\Middleware\TwoFactorAuthenticationEnforceMiddleware;
 
 /** @var Config $config */
 
@@ -88,16 +92,36 @@ return [
                 static fn() => (new RouteCollector())
                     ->addRoute(
                         Group::create('/')
-                            ->routes(...[
-                                ...$config->get("routes"), // your routes
-                                Group::create('user/')
-                                    ->routes(...$config->get("voyti-routes"))
-                            ]),
+                            ->middleware(
+                                SessionMiddleware::class,
+                                // Site-wide enforcement (see "Site-wide enforcement" below).
+                                // Safe to scope to this group only: accountSettingsRoute lives
+                                // in the separate voyti-routes group below, so redirecting there
+                                // takes the request out of this group and can't loop.
+                                PasswordAgeEnforceMiddleware::class,
+                                TwoFactorAuthenticationEnforceMiddleware::class,
+                            )
+                            ->routes(...$config->get('routes')), // your own app routes
+                        Group::create('/user/')
+                            ->routes(...$config->get('voyti-routes')),
                     )
             ),
         ],
     ],
 ];</code></pre>
+        <p>
+            <code>voyti-routes</code> already wraps itself with
+            <code>SessionMiddleware</code> and <code>CsrfMiddleware</code>
+            internally (see <code>config/routes.php</code>), so the second group
+            doesn't need to repeat them. <code>PasswordAgeEnforceMiddleware</code>
+            is also already applied inside <code>voyti-routes</code> automatically
+            when <code>enablePasswordExpiration</code> is <code>true</code>, so
+            adding it to your own group above only extends that protection to
+            your app's own pages &mdash; it isn't duplicating work.
+            <code>TwoFactorAuthenticationEnforceMiddleware</code>, however, is
+            never auto-applied by the extension itself, so add it wherever you
+            want that enforcement.
+        </p>
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix</code> and expose user CRUD
@@ -262,7 +286,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
-                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userSessionHistory', 'userSocialAccount']</code>.</div>
+                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userSessionHistory', 'userSocialAccount']</code>.</div>
             </div>
         </div>
         <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
@@ -291,6 +315,10 @@ return [
             <div class="options-row">
                 <div class="options-name">maxPasswordAge<span class="options-type"> ?int</span></div>
                 <div class="options-desc">Max password age in days. Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enablePasswordComplexity<span class="options-type"> bool</span></div>
+                <div class="options-desc">Require passwords to contain an uppercase letter, a lowercase letter, a digit, and a special character. Default: <code>false</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">administratorPermissionName<span class="options-type"> ?string</span></div>
@@ -509,29 +537,71 @@ return [
                 <tr>
                     <th>Middleware</th>
                     <th>Description</th>
+                    <th>Auto-registered on the extension's own routes?</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
                     <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
+                    <td>Yes &mdash; on <code>admin/*</code>, <code>permissions/*</code>, <code>roles/*</code>, <code>rules/*</code>, and the REST API group</td>
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
                     <td>Redirects to <code>accountSettingsRoute</code> when <code>maxPasswordAge</code> is exceeded</td>
+                    <td>Yes, when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned</td>
+                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned but 2FA isn't enabled</td>
+                    <td>No</td>
                 </tr>
             </tbody>
         </table>
         <p>
-            Register them in your application's middleware pipeline as needed.
-            The two redirect targets (<code>loginRoute</code> and
+            The redirect targets (<code>loginRoute</code> and
             <code>accountSettingsRoute</code>) are configurable via
             <code>ModuleConfig</code>, so you can map them to your own route
             structure.
+        </p>
+
+        <h4>Site-wide enforcement</h4>
+        <p>
+            The auto-registration above only covers routes <em>this extension
+            defines</em> (<code>voyti/login</code>, <code>voyti/settings</code>,
+            <code>voyti/admin</code>, etc.) &mdash; it has no way to reach
+            routes your host application defines itself, since
+            <code>config/routes.php</code> can only attach middleware to the
+            route groups it builds. If a user with an expired password or
+            missing 2FA navigates to your app's own dashboard, home page, or
+            any other route outside this extension, nothing stops them.
+        </p>
+        <p>
+            To actually enforce "the user must fix this before doing anything
+            else" across your own pages too, add
+            <code>PasswordAgeEnforceMiddleware</code> and/or
+            <code>TwoFactorAuthenticationEnforceMiddleware</code> to the
+            <code>Group</code> that wraps your app's own routes &mdash; see
+            the <a href="#3-register-routes">Register routes</a> example above,
+            which applies both alongside <code>SessionMiddleware</code>. Add
+            any other middleware your own routes need (CSRF protection, etc.)
+            &mdash; the example only lists what's required for login/session
+            state to work. Keep the enforcement middlewares scoped to your own
+            route group (as in that example) rather than the
+            <code>voyti-routes</code> group: <code>accountSettingsRoute</code>
+            lives inside <code>voyti-routes</code>, and
+            <code>TwoFactorAuthenticationEnforceMiddleware</code> has no
+            built-in exemption for it, so wrapping <code>voyti-routes</code>
+            with it would redirect a user straight back into a loop the moment
+            they try to reach the settings page to actually fix the problem.
+        </p>
+        <p>
+            If your app instead configures middleware at a level above routing
+            entirely (e.g. a global pipeline in your app skeleton's runner
+            config), the same two classes can go there instead &mdash; just
+            place them after session middleware so <code>CurrentUser</code> is
+            resolvable, and keep the same caveat in mind for whatever route
+            ends up serving <code>accountSettingsRoute</code>.
         </p>
 
         <h3 class="doc-section-title" id="rbac">RBAC Management</h3>
