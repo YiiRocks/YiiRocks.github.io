@@ -124,8 +124,12 @@ return [
         </p>
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
-            mounted under <code>adminRestPrefix</code> and expose user CRUD
-            endpoints.
+            mounted under <code>adminRestPrefix . '/v1/'</code> and expose user
+            CRUD endpoints. The version segment (<code>v1</code>) always matches
+            the shipped <code>Controller\api\v1\AdminController</code> and isn't
+            configurable &mdash; <code>adminRestPrefix</code> only controls the
+            base path in front of it (e.g. <code>api</code> &rarr;
+            <code>api/v1/users</code>).
         </p>
         <p>
             The privacy/GDPR routes (<code>settings/privacy</code>,
@@ -350,9 +354,22 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">adminRestPrefix<span class="options-type"> string</span></div>
-                <div class="options-desc">REST API URL prefix. Default: <code>'api/v1'</code>.</div>
+                <div class="options-desc">REST API base URL prefix. Default: <code>'api'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">apiTokenLifespan<span class="options-type"> int|null</span></div>
+                <div class="options-desc">API token lifetime in seconds; <code>null</code> means tokens never expire. Default: <code>null</code>.</div>
             </div>
         </div>
+        <p>
+            The REST API authenticates via a Bearer token, not the web
+            session/CSRF cookie &mdash; issue one with
+            <code>voyti:api-token:generate</code> (see
+            <a href="#console">Console commands</a>) and send it as
+            <code>Authorization: Bearer &lt;token&gt;</code>.
+            <code>AccessRuleMiddleware</code> still applies afterwards to
+            enforce <code>administratorPermissionName</code>.
+        </p>
 
         <h4>Social Authentication Providers</h4>
         <p>
@@ -527,11 +544,19 @@ return [
                     <td><code>voyti:password</code></td>
                     <td>Change a user's password</td>
                 </tr>
+                <tr>
+                    <td><code>voyti:api-token:generate</code></td>
+                    <td>Generate a REST API access token for a user (printed once)</td>
+                </tr>
+                <tr>
+                    <td><code>voyti:api-token:revoke</code></td>
+                    <td>Revoke all REST API access tokens for a user</td>
+                </tr>
             </tbody>
         </table>
 
         <h3 class="doc-section-title" id="middleware">Middleware</h3>
-        <p>The extension ships three PSR-15 middleware classes for access control:</p>
+        <p>The extension ships four PSR-15 middleware classes for access control:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -545,6 +570,11 @@ return [
                     <td><code>AccessRuleMiddleware</code></td>
                     <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
                     <td>Yes &mdash; on <code>admin/*</code>, <code>permissions/*</code>, <code>roles/*</code>, <code>rules/*</code>, and the REST API group</td>
+                </tr>
+                <tr>
+                    <td><code>ApiTokenAuthenticationMiddleware</code></td>
+                    <td>Resolves the <code>Authorization: Bearer &lt;token&gt;</code> header to a user for that request only (no session); returns <code>401</code> if missing/invalid</td>
+                    <td>Yes &mdash; on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
