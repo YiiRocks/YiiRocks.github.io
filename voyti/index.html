@@ -125,11 +125,7 @@ return [
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix . '/v1/'</code> and expose user
-            CRUD endpoints. The version segment (<code>v1</code>) always matches
-            the shipped <code>Controller\api\v1\AdminController</code> and isn't
-            configurable &mdash; <code>adminRestPrefix</code> only controls the
-            base path in front of it (e.g. <code>api</code> &rarr;
-            <code>api/v1/users</code>).
+            CRUD endpoints.
         </p>
         <p>
             The privacy/GDPR routes (<code>settings/privacy</code>,
@@ -138,7 +134,7 @@ return [
             <code>settings/privacy/anonymize</code>,
             <code>settings/privacy/delete</code>) and the two-factor routes
             (<code>settings/two-factor</code>,
-            <code>settings/two-factor/enable</code>,
+            <code>settings/two-factor-google/enable</code>,
             <code>settings/two-factor/disable</code>) are likewise only
             registered when their governing config flag
             (<code>enableGdprCompliance</code>,
@@ -161,10 +157,12 @@ return [
             Override Voyti params in your app's <code>config/params.php</code> using
             the <code>yiirocks/voyti</code> key:
         </p>
-        <pre class="doc-example mb-3"><code class="language-php">return [
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Helper\RecaptchaVersion;
+
+return [
     'yiirocks/voyti' => [
         'enableTwoFactorAuthentication' => true,
-        'recaptchaVersion' => 'v3',
+        'recaptchaVersion' => RecaptchaVersion::V3,
     ],
 ];</code></pre>
         <p>
@@ -229,8 +227,8 @@ return [
                 <div class="options-desc">Allow users to delete their account. Default: <code>false</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">emailChangeStrategy<span class="options-type"> int</span></div>
-                <div class="options-desc">0=insecure, 1=default, 2=secure. Default: <code>1</code>.</div>
+                <div class="options-name">emailChangeConfirmation<span class="options-type"> EmailChangeConfirmation</span></div>
+                <div class="options-desc"><code>NONE</code> (change immediately), <code>NEW</code> (confirm new address only), or <code>BOTH</code> (confirm both old and new addresses). Default: <code>EmailChangeConfirmation::NEW</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">rememberLoginLifespan<span class="options-type"> int</span></div>
@@ -257,8 +255,8 @@ return [
                 <div class="options-desc">Email notified on new registration. Default: <code>null</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">recaptchaVersion<span class="options-type"> ?string</span></div>
-                <div class="options-desc"><code>'v2'</code>, <code>'v3'</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
+                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
+                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
             </div>
         </div>
 
@@ -329,8 +327,8 @@ return [
                 <div class="options-desc">Permission/role name granting admin access. Default: <code>'admin'</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">profileVisibility<span class="options-type"> int</span></div>
-                <div class="options-desc">Profile visibility: <code>0</code> = owner only, <code>1</code> = owner + admins, <code>2</code> = any authenticated user, <code>3</code> = public. Default: <code>2</code>.</div>
+                <div class="options-name">profileVisibility<span class="options-type"> ProfileVisibility</span></div>
+                <div class="options-desc">Profile visibility: <code>OWNER</code> = owner only, <code>ADMIN</code> = owner + admins, <code>USERS</code> = any authenticated user, <code>PUBLIC</code> = public. Default: <code>ProfileVisibility::USERS</code>.</div>
             </div>
         </div>
 
@@ -684,8 +682,12 @@ return [
                     <tr><td><code>voyti/settings-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/settings-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/settings-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor setup. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor-email</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-email-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor-google</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-google-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/settings-two-factor-google-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/settings-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/settings-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
                     <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin</code></td><td>Admin dashboard</td></tr>

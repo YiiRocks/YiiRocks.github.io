@@ -159,8 +159,8 @@ voyti:
       detail: TOTP & email
     - label: Password policies
       detail: complexity requirements, max age enforcement
-    - label: Email change strategies
-      detail: insecure, confirm new, confirm both
+    - label: Email change confirmation
+      detail: immediate, confirm new, confirm both
     - label: GDPR compliance
       detail: consent management, data export, anonymized deletion
     - label: Session management
