@@ -95,9 +95,10 @@ return [
                             ->middleware(
                                 SessionMiddleware::class,
                                 // Site-wide enforcement (see "Site-wide enforcement" below).
-                                // Safe to scope to this group only: accountSettingsRoute lives
-                                // in the separate voyti-routes group below, so redirecting there
-                                // takes the request out of this group and can't loop.
+                                // Safe to scope to this group only: the account settings route
+                                // (voyti/account-update) lives in the separate voyti-routes group
+                                // below, so redirecting there takes the request out of this group
+                                // and can't loop.
                                 PasswordAgeEnforceMiddleware::class,
                                 TwoFactorAuthenticationEnforceMiddleware::class,
                             )
@@ -157,11 +158,11 @@ return [
             Override Voyti params in your app's <code>config/params.php</code> using
             the <code>yiirocks/voyti</code> key:
         </p>
-        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Helper\RecaptchaVersion;
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Enum\RecaptchaVersion;
 
 return [
     'yiirocks/voyti' => [
-        'enableTwoFactorAuthentication' => true,
+        'appName' => 'My Project',
         'recaptchaVersion' => RecaptchaVersion::V3,
     ],
 ];</code></pre>
@@ -177,23 +178,18 @@ return [
                 <div class="options-name">appName<span class="options-type"> string</span></div>
                 <div class="options-desc">Application name — used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects. Default: <code>'Voyti'</code>.</div>
             </div>
+            <div class="options-row">
+                <div class="options-name">homeRoute<span class="options-type"> string</span></div>
+                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app — an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception. Default: <code>'home'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
+                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
+            </div>
         </div>
 
         <h4 class="doc-eyebrow">Authentication &amp; Registration</h4>
         <div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name">loginRoute<span class="options-type"> string</span></div>
-                <div class="options-desc">Login route name. Default: <code>'voyti/login'</code>.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name">accountSettingsRoute<span class="options-type"> string</span></div>
-                <div class="options-desc">Route for account settings redirects. Default: <code>'voyti/settings-account'</code>.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name">homeRoute<span class="options-type"> string</span></div>
-                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Default: <code>'home'</code>.<br>
-                <span class="text-muted small">Must be registered by the host app &mdash; an unregistered route name throws a <code>LogicException</code>.</span></div>
-            </div>
             <div class="options-row">
                 <div class="options-name">enableRegistration<span class="options-type"> bool</span></div>
                 <div class="options-desc">Allow new user registration. Default: <code>true</code>.</div>
@@ -253,10 +249,6 @@ return [
             <div class="options-row">
                 <div class="options-name">mailAdminOnRegister<span class="options-type"> ?string</span></div>
                 <div class="options-desc">Email notified on new registration. Default: <code>null</code>.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
-                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
             </div>
         </div>
 
@@ -387,7 +379,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">redirectUri<span class="options-type"> string</span></div>
-                <div class="options-desc">Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/auth</code> or <code>voyti/connect</code>. Optional, default: generated callback URL.</div>
+                <div class="options-desc">Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/session-auth</code> or <code>voyti/session-connect</code>. Optional, default: generated callback URL.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">scope<span class="options-type"> string</span></div>
@@ -566,8 +558,8 @@ return [
             <tbody>
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
-                    <td>Redirects guests to <code>loginRoute</code>; checks <code>administratorPermissionName</code> for admin access</td>
-                    <td>Yes &mdash; on <code>admin/*</code>, <code>permissions/*</code>, <code>roles/*</code>, <code>rules/*</code>, and the REST API group</td>
+                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); checks <code>administratorPermissionName</code> for admin access</td>
+                    <td>Yes &mdash; on <code>admin/*</code> (users and RBAC management) and the REST API group</td>
                 </tr>
                 <tr>
                     <td><code>ApiTokenAuthenticationMiddleware</code></td>
@@ -576,28 +568,28 @@ return [
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsRoute</code> when <code>maxPasswordAge</code> is exceeded</td>
+                    <td>Redirects to the account settings page (<code>voyti/account-update</code>) when <code>maxPasswordAge</code> is exceeded</td>
                     <td>Yes, when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to <code>accountSettingsRoute</code> when required permissions are assigned but 2FA isn't enabled</td>
+                    <td>Redirects to the account settings page (<code>voyti/account-update</code>) when required permissions are assigned but 2FA isn't enabled</td>
                     <td>No</td>
                 </tr>
             </tbody>
         </table>
         <p>
-            The redirect targets (<code>loginRoute</code> and
-            <code>accountSettingsRoute</code>) are configurable via
-            <code>ModuleConfig</code>, so you can map them to your own route
-            structure.
+            The redirect targets (<code>voyti/session-login</code> and
+            <code>voyti/account-update</code>) are the extension's own routes
+            and aren't configurable.
         </p>
 
         <h4>Site-wide enforcement</h4>
         <p>
             The auto-registration above only covers routes <em>this extension
-            defines</em> (<code>voyti/login</code>, <code>voyti/settings</code>,
-            <code>voyti/admin</code>, etc.) &mdash; it has no way to reach
+            defines</em> (<code>voyti/session-login</code>,
+            <code>voyti/profile-update</code>,
+            <code>voyti/admin-users</code>, etc.) &mdash; it has no way to reach
             routes your host application defines itself, since
             <code>config/routes.php</code> can only attach middleware to the
             route groups it builds. If a user with an expired password or
@@ -616,8 +608,9 @@ return [
             &mdash; the example only lists what's required for login/session
             state to work. Keep the enforcement middlewares scoped to your own
             route group (as in that example) rather than the
-            <code>voyti-routes</code> group: <code>accountSettingsRoute</code>
-            lives inside <code>voyti-routes</code>, and
+            <code>voyti-routes</code> group: the account settings route
+            (<code>voyti/account-update</code>) lives inside
+            <code>voyti-routes</code>, and
             <code>TwoFactorAuthenticationEnforceMiddleware</code> has no
             built-in exemption for it, so wrapping <code>voyti-routes</code>
             with it would redirect a user straight back into a loop the moment
@@ -628,8 +621,8 @@ return [
             entirely (e.g. a global pipeline in your app skeleton's runner
             config), the same two classes can go there instead &mdash; just
             place them after session middleware so <code>CurrentUser</code> is
-            resolvable, and keep the same caveat in mind for whatever route
-            ends up serving <code>accountSettingsRoute</code>.
+            resolvable, and keep the same caveat in mind for the
+            <code>voyti/account-update</code> route.
         </p>
 
         <h3 class="doc-section-title" id="rbac">RBAC Management</h3>
@@ -661,61 +654,64 @@ return [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>voyti/login</code></td><td><code>GET, POST</code></td><td><code>login</code></td><td>User login</td></tr>
-                    <tr><td><code>voyti/logout</code></td><td><code>GET, POST</code></td><td><code>logout</code></td><td>User logout</td></tr>
-                    <tr><td><code>voyti/confirm</code></td><td><code>GET, POST</code></td><td><code>confirm</code></td><td>Two-factor confirmation step</td></tr>
-                    <tr><td><code>voyti/auth</code></td><td><code>GET</code></td><td><code>auth/{provider}</code></td><td>Social auth callback</td></tr>
-                    <tr><td><code>voyti/connect</code></td><td><code>GET</code></td><td><code>auth/connect/{provider}</code></td><td>Social account connect callback</td></tr>
-                    <tr><td><code>voyti/register</code></td><td><code>GET, POST</code></td><td><code>register</code></td><td>New user registration</td></tr>
+                    <tr><td><code>voyti/session-login</code></td><td><code>GET, POST</code></td><td><code>login</code></td><td>User login</td></tr>
+                    <tr><td><code>voyti/session-logout</code></td><td><code>GET, POST</code></td><td><code>logout</code></td><td>User logout</td></tr>
+                    <tr><td><code>voyti/session-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm</code></td><td>Two-factor confirmation step</td></tr>
+                    <tr><td><code>voyti/session-auth</code></td><td><code>GET</code></td><td><code>auth/{provider}</code></td><td>Social auth callback</td></tr>
+                    <tr><td><code>voyti/session-connect</code></td><td><code>GET</code></td><td><code>auth/connect/{provider}</code></td><td>Social account connect callback</td></tr>
+                    <tr><td><code>voyti/registration-register</code></td><td><code>GET, POST</code></td><td><code>register</code></td><td>New user registration</td></tr>
                     <tr><td><code>voyti/registration-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm/{id}/{code}</code></td><td>Email confirmation link</td></tr>
-                    <tr><td><code>voyti/resend</code></td><td><code>GET, POST</code></td><td><code>resend</code></td><td>Resend confirmation email</td></tr>
+                    <tr><td><code>voyti/registration-resend</code></td><td><code>GET, POST</code></td><td><code>resend</code></td><td>Resend confirmation email</td></tr>
                     <tr><td><code>voyti/registration-connect</code></td><td><code>GET</code></td><td><code>connect/{code}</code></td><td>Social registration link</td></tr>
-                    <tr><td><code>voyti/forgot</code></td><td><code>GET, POST</code></td><td><code>forgot</code></td><td>Password recovery request</td></tr>
-                    <tr><td><code>voyti/recover</code></td><td><code>GET, POST</code></td><td><code>recover/{id}/{code}</code></td><td>Password reset</td></tr>
+                    <tr><td><code>voyti/password-reset-request</code></td><td><code>GET, POST</code></td><td><code>forgot</code></td><td>Password recovery request</td></tr>
+                    <tr><td><code>voyti/password-reset-confirm</code></td><td><code>GET, POST</code></td><td><code>recover/{id}/{code}</code></td><td>Password reset</td></tr>
                     <tr><td><code>voyti/profile</code></td><td><code>GET</code></td><td><code>profile/{id}</code></td><td>Public user profile</td></tr>
-                    <tr><td><code>voyti/settings</code></td><td><code>GET, POST</code></td><td><code>settings</code></td><td>Profile settings</td></tr>
-                    <tr><td><code>voyti/settings-account</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
-                    <tr><td><code>voyti/settings-networks</code></td><td><code>GET</code></td><td><code>settings/networks</code></td><td>Linked social networks</td></tr>
-                    <tr><td><code>voyti/settings-networks-disconnect</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
-                    <tr><td><code>voyti/settings-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor-email</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-email-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor-google</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-google-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-google-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/settings-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
-                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin</code></td><td>Admin dashboard</td></tr>
-                    <tr><td><code>voyti/admin-create</code></td><td><code>GET, POST</code></td><td><code>admin/create</code></td><td>Create user</td></tr>
-                    <tr><td><code>voyti/admin-update</code></td><td><code>GET, POST</code></td><td><code>admin/update/{id}</code></td><td>Update user</td></tr>
-                    <tr><td><code>voyti/admin-update-profile</code></td><td><code>GET, POST</code></td><td><code>admin/update-profile/{id}</code></td><td>Update user profile</td></tr>
-                    <tr><td><code>voyti/admin-info</code></td><td><code>GET</code></td><td><code>admin/info/{id}</code></td><td>User details</td></tr>
-                    <tr><td><code>voyti/admin-confirm</code></td><td><code>POST</code></td><td><code>admin/confirm/{id}</code></td><td>Confirm user</td></tr>
-                    <tr><td><code>voyti/admin-delete</code></td><td><code>POST</code></td><td><code>admin/delete/{id}</code></td><td>Delete user</td></tr>
-                    <tr><td><code>voyti/admin-block</code></td><td><code>POST</code></td><td><code>admin/block/{id}</code></td><td>Block user</td></tr>
-                    <tr><td><code>voyti/admin-switch</code></td><td><code>POST</code></td><td><code>admin/switch-identity/{id}</code></td><td>Switch identity</td></tr>
-                    <tr><td><code>voyti/admin-password-reset</code></td><td><code>POST</code></td><td><code>admin/password-reset/{id}</code></td><td>Send password reset</td></tr>
-                    <tr><td><code>voyti/admin-force-password</code></td><td><code>POST</code></td><td><code>admin/force-password-change/{id}</code></td><td>Force password change</td></tr>
-                    <tr><td><code>voyti/admin-assignments</code></td><td><code>GET, POST</code></td><td><code>admin/assignments/{id}</code></td><td>Manage RBAC assignments</td></tr>
-                    <tr><td><code>voyti/admin-session-history</code></td><td><code>GET</code></td><td><code>admin/session-history/{id}</code></td><td>Session history</td></tr>
-                    <tr><td><code>voyti/admin-terminate-sessions</code></td><td><code>POST</code></td><td><code>admin/terminate-sessions/{id}</code></td><td>Terminate sessions</td></tr>
-                    <tr><td><code>voyti/permissions</code></td><td><code>GET</code></td><td><code>permissions</code></td><td>List permissions</td></tr>
-                    <tr><td><code>voyti/permissions-create</code></td><td><code>GET, POST</code></td><td><code>permissions/create</code></td><td>Create permission</td></tr>
-                    <tr><td><code>voyti/permissions-update</code></td><td><code>GET, POST</code></td><td><code>permissions/update/{name}</code></td><td>Update permission</td></tr>
-                    <tr><td><code>voyti/permissions-delete</code></td><td><code>POST</code></td><td><code>permissions/delete/{name}</code></td><td>Delete permission</td></tr>
-                    <tr><td><code>voyti/roles</code></td><td><code>GET</code></td><td><code>roles</code></td><td>List roles</td></tr>
-                    <tr><td><code>voyti/roles-create</code></td><td><code>GET, POST</code></td><td><code>roles/create</code></td><td>Create role</td></tr>
-                    <tr><td><code>voyti/roles-update</code></td><td><code>GET, POST</code></td><td><code>roles/update/{name}</code></td><td>Update role</td></tr>
-                    <tr><td><code>voyti/roles-delete</code></td><td><code>POST</code></td><td><code>roles/delete/{name}</code></td><td>Delete role</td></tr>
-                    <tr><td><code>voyti/rules</code></td><td><code>GET</code></td><td><code>rules</code></td><td>List rules</td></tr>
-                    <tr><td><code>voyti/rules-create</code></td><td><code>GET, POST</code></td><td><code>rules/create</code></td><td>Create rule</td></tr>
-                    <tr><td><code>voyti/rules-update</code></td><td><code>GET, POST</code></td><td><code>rules/update/{name}</code></td><td>Update rule</td></tr>
-                    <tr><td><code>voyti/rules-delete</code></td><td><code>POST</code></td><td><code>rules/delete/{name}</code></td><td>Delete rule</td></tr>
+                    <tr><td><code>voyti/profile-update</code></td><td><code>GET, POST</code></td><td><code>settings/</code></td><td>Profile settings</td></tr>
+                    <tr><td><code>voyti/account-update</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
+                    <tr><td><code>voyti/account-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
+                    <tr><td><code>voyti/social-network</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Linked social networks</td></tr>
+                    <tr><td><code>voyti/social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
+                    <tr><td><code>voyti/privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor-google/</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor-email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-send-email-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Redirects to the admin user dashboard</td></tr>
+                    <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>User dashboard</td></tr>
+                    <tr><td><code>voyti/admin-users-create</code></td><td><code>GET, POST</code></td><td><code>admin/users/create</code></td><td>Create user</td></tr>
+                    <tr><td><code>voyti/admin-users-update</code></td><td><code>GET, POST</code></td><td><code>admin/users/update/{id}</code></td><td>Update user</td></tr>
+                    <tr><td><code>voyti/admin-users-update-profile</code></td><td><code>GET, POST</code></td><td><code>admin/users/update-profile/{id}</code></td><td>Update user profile</td></tr>
+                    <tr><td><code>voyti/admin-users-show</code></td><td><code>GET</code></td><td><code>admin/users/info/{id}</code></td><td>User details</td></tr>
+                    <tr><td><code>voyti/admin-users-confirm</code></td><td><code>POST</code></td><td><code>admin/users/confirm/{id}</code></td><td>Confirm user</td></tr>
+                    <tr><td><code>voyti/admin-users-delete</code></td><td><code>POST</code></td><td><code>admin/users/delete/{id}</code></td><td>Delete user</td></tr>
+                    <tr><td><code>voyti/admin-users-block</code></td><td><code>POST</code></td><td><code>admin/users/block/{id}</code></td><td>Block user</td></tr>
+                    <tr><td><code>voyti/admin-users-switch-identity</code></td><td><code>POST</code></td><td><code>admin/users/switch-identity/{id}</code></td><td>Switch identity</td></tr>
+                    <tr><td><code>voyti/admin-users-switch-identity-restore</code></td><td><code>POST</code></td><td><code>admin/users/switch-identity/restore</code></td><td>Restore identity after impersonating</td></tr>
+                    <tr><td><code>voyti/admin-users-password-reset</code></td><td><code>POST</code></td><td><code>admin/users/password-reset/{id}</code></td><td>Send password reset</td></tr>
+                    <tr><td><code>voyti/admin-users-force-password-change</code></td><td><code>POST</code></td><td><code>admin/users/force-password-change/{id}</code></td><td>Force password change</td></tr>
+                    <tr><td><code>voyti/admin-users-assignments</code></td><td><code>GET, POST</code></td><td><code>admin/users/assignments/{id}</code></td><td>Manage RBAC assignments</td></tr>
+                    <tr><td><code>voyti/admin-users-session-history</code></td><td><code>GET</code></td><td><code>admin/users/session-history/{id}</code></td><td>Session history</td></tr>
+                    <tr><td><code>voyti/admin-users-terminate-sessions</code></td><td><code>POST</code></td><td><code>admin/users/terminate-sessions/{id}</code></td><td>Terminate sessions</td></tr>
+                    <tr><td><code>voyti/admin-rbac-permissions</code></td><td><code>GET</code></td><td><code>admin/rbac/permissions/</code></td><td>List permissions</td></tr>
+                    <tr><td><code>voyti/admin-rbac-permissions-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/permissions/create</code></td><td>Create permission</td></tr>
+                    <tr><td><code>voyti/admin-rbac-permissions-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/permissions/update/{name}</code></td><td>Update permission</td></tr>
+                    <tr><td><code>voyti/admin-rbac-permissions-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/permissions/delete/{name}</code></td><td>Delete permission</td></tr>
+                    <tr><td><code>voyti/admin-rbac-roles</code></td><td><code>GET</code></td><td><code>admin/rbac/roles/</code></td><td>List roles</td></tr>
+                    <tr><td><code>voyti/admin-rbac-roles-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/roles/create</code></td><td>Create role</td></tr>
+                    <tr><td><code>voyti/admin-rbac-roles-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/roles/update/{name}</code></td><td>Update role</td></tr>
+                    <tr><td><code>voyti/admin-rbac-roles-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/roles/delete/{name}</code></td><td>Delete role</td></tr>
+                    <tr><td><code>voyti/admin-rbac-rules</code></td><td><code>GET</code></td><td><code>admin/rbac/rules/</code></td><td>List rules</td></tr>
+                    <tr><td><code>voyti/admin-rbac-rules-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/create</code></td><td>Create rule</td></tr>
+                    <tr><td><code>voyti/admin-rbac-rules-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/update/{name}</code></td><td>Update rule</td></tr>
+                    <tr><td><code>voyti/admin-rbac-rules-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/rules/delete/{name}</code></td><td>Delete rule</td></tr>
                 </tbody>
             </table>
         </div>
