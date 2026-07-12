@@ -156,7 +156,7 @@ voyti:
     - label: Social authentication
       detail: 9 built-in providers
     - label: Two-factor authentication
-      detail: TOTP & email
+      detail: TOTP, email, and one-time backup codes
     - label: Password policies
       detail: complexity requirements, max age enforcement
     - label: Email change confirmation

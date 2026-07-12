@@ -56,9 +56,11 @@ title: Voyti
         <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="./yii migrate:up">./yii migrate:up</button>
         <p>
             One migration creates the <code>user</code>, <code>user_profile</code>,
-            <code>user_social_account</code>, <code>user_token</code>, and
-            <code>user_session_history</code> tables with all columns (2FA, GDPR,
-            password expiration, last login IP, etc.) included.
+            <code>user_social_account</code>, <code>user_token</code>,
+            <code>user_session_history</code>, <code>user_backup_code</code>,
+            <code>user_password_history</code>, and <code>audit_log</code>
+            tables with all columns (2FA, GDPR, password expiration, last
+            login IP, etc.) included.
         </p>
 
         <h4>3. Register routes</h4>
@@ -315,12 +317,20 @@ return [
                 <div class="options-desc">Require passwords to contain an uppercase letter, a lowercase letter, a digit, and a special character. Default: <code>false</code>.</div>
             </div>
             <div class="options-row">
+                <div class="options-name">passwordHistoryLimit<span class="options-type"> int</span></div>
+                <div class="options-desc">Number of previous passwords remembered per user to prevent reuse. Only enforced when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; there is no separate toggle. Default: <code>10</code>.</div>
+            </div>
+            <div class="options-row">
                 <div class="options-name">administratorPermissionName<span class="options-type"> ?string</span></div>
                 <div class="options-desc">Permission/role name granting admin access. Default: <code>'admin'</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">profileVisibility<span class="options-type"> ProfileVisibility</span></div>
                 <div class="options-desc">Profile visibility: <code>OWNER</code> = owner only, <code>ADMIN</code> = owner + admins, <code>USERS</code> = any authenticated user, <code>PUBLIC</code> = public. Default: <code>ProfileVisibility::USERS</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enableAuditLog<span class="options-type"> bool</span></div>
+                <div class="options-desc">Record admin actions (RBAC and user management changes) to the <code>audit_log</code> table, viewable at <code>admin/audit-log/</code>. Default: <code>true</code>.</div>
             </div>
         </div>
 
@@ -671,6 +681,8 @@ return [
                     <tr><td><code>voyti/account-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
                     <tr><td><code>voyti/social-network</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Linked social networks</td></tr>
                     <tr><td><code>voyti/social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
+                    <tr><td><code>voyti/account-sessions</code></td><td><code>GET</code></td><td><code>settings/sessions/</code></td><td>Self-service session/device list, current device highlighted</td></tr>
+                    <tr><td><code>voyti/account-sessions-terminate</code></td><td><code>POST</code></td><td><code>settings/sessions/terminate/{sessionId}</code></td><td>Terminate one of the current user's own sessions</td></tr>
                     <tr><td><code>voyti/privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
@@ -684,6 +696,7 @@ return [
                     <tr><td><code>voyti/two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/two-factor-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/two-factor-send-email-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current 2FA method). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Redirects to the admin user dashboard</td></tr>
                     <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>User dashboard</td></tr>
                     <tr><td><code>voyti/admin-users-create</code></td><td><code>GET, POST</code></td><td><code>admin/users/create</code></td><td>Create user</td></tr>
@@ -712,6 +725,7 @@ return [
                     <tr><td><code>voyti/admin-rbac-rules-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/create</code></td><td>Create rule</td></tr>
                     <tr><td><code>voyti/admin-rbac-rules-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/update/{name}</code></td><td>Update rule</td></tr>
                     <tr><td><code>voyti/admin-rbac-rules-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/rules/delete/{name}</code></td><td>Delete rule</td></tr>
+                    <tr><td><code>voyti/admin-audit-log</code></td><td><code>GET</code></td><td><code>admin/audit-log/</code></td><td>Audit log of admin actions (RBAC and user management changes). Populated when <code>enableAuditLog</code> is <code>true</code></td></tr>
                 </tbody>
             </table>
         </div>
