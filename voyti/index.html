@@ -63,7 +63,7 @@ title: Voyti
             login IP, etc.) included.
         </p>
 
-        <h4>3. Register routes</h4>
+        <h4 id="3-register-routes">3. Register routes</h4>
         <p>
             Routes are <strong>not</strong> auto-registered — you must add them
             to your router configuration.
@@ -184,10 +184,6 @@ return [
                 <div class="options-name">homeRoute<span class="options-type"> string</span></div>
                 <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app — an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception. Default: <code>'home'</code>.</div>
             </div>
-            <div class="options-row">
-                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
-                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
-            </div>
         </div>
 
         <h4 class="doc-eyebrow">Authentication &amp; Registration</h4>
@@ -251,6 +247,10 @@ return [
             <div class="options-row">
                 <div class="options-name">mailAdminOnRegister<span class="options-type"> ?string</span></div>
                 <div class="options-desc">Email notified on new registration. Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
+                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
             </div>
         </div>
 

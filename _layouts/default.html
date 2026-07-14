@@ -60,45 +60,10 @@
                 </div>
             </div>
         </footer>
+        <button type="button" class="scroll-top" id="scrollTop" title="Scroll to top" aria-label="Scroll to top">↑</button>
         <script src="//cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
-        <script>
-            hljs.initHighlightingOnLoad();
-            lozad().observe();
-            for (var links=document.links, i=0, a; a=links[i]; i++) {
-                if (a.host !== location.host) {
-                    a.target = '_blank';
-                }
-            }
-            document.addEventListener('click', function (e) {
-                var el = e.target.closest('[data-clipboard]');
-                if (!el) return;
-                var text = el.getAttribute('data-clipboard');
-                var orig = el.textContent;
-                navigator.clipboard.writeText(text).then(function () {
-                    el.textContent = 'Copied!';
-                    setTimeout(function () { el.textContent = orig; }, 1500);
-                });
-            });
-            document.addEventListener('keydown', function (e) {
-                if (e.key !== 'Enter' && e.key !== ' ') return;
-                var el = e.target.closest('[data-clipboard]');
-                if (!el) return;
-                e.preventDefault();
-                el.click();
-            });
-            var themeToggle = document.getElementById('themeToggle');
-            function updateThemeIcon() {
-                themeToggle.textContent = document.documentElement.dataset.bsTheme === 'dark' ? '☀️' : '🌙';
-            }
-            updateThemeIcon();
-            themeToggle.addEventListener('click', function () {
-                var next = document.documentElement.dataset.bsTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.dataset.bsTheme = next;
-                localStorage.theme = next;
-                updateThemeIcon();
-            });
-        </script>
+        <script src="/assets/js/site.js"></script>
     </body>
 </html>
