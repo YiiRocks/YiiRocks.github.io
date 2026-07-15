@@ -94,10 +94,8 @@ return [
                     ->addRoute(
                         Group::create('/')
                             ->middleware(
-                                SessionMiddleware::class,
-                                // Site-wide enforcement (see "Site-wide enforcement" below). Safe here
-                                // since voyti/account-update lives in the voyti-routes group below, not this one.
-                                VoytiMiddleware::class,
+                                SessionMiddleware::class,    // required for site-wide session support
+                                VoytiMiddleware::class,      // see "Site-wide enforcement" below
                             )
                             ->routes(...$config->get('routes')), // your own app routes
                         Group::create('/user/')
@@ -108,19 +106,10 @@ return [
     ],
 ];</code></pre>
         <p>
-            <code>voyti-routes</code> already wraps itself with
-            <code>SessionMiddleware</code> and <code>CsrfMiddleware</code>
-            internally (see <code>config/routes.php</code>), so the second group
-            doesn't need to repeat them. <code>SessionRevocationEnforceMiddleware</code>
-            and <code>PasswordAgeEnforceMiddleware</code> are also already applied
-            inside <code>voyti-routes</code> automatically &mdash; the former when
-            <code>enableSessionHistory</code> is <code>true</code>, the latter when
-            <code>enablePasswordExpiration</code> is <code>true</code> &mdash; so
-            adding <code>VoytiMiddleware</code> to your own group above only extends
-            that protection to your app's own pages, it isn't duplicating work.
-            <code>TwoFactorAuthenticationEnforceMiddleware</code>, however, is
-            never auto-applied by the extension itself, so <code>VoytiMiddleware</code>
-            picks it up for you in a single entry.
+            <code>voyti-routes</code> already wraps itself with its own required
+            middleware (see <code>config/routes.php</code>), so the second group
+            above doesn't repeat any of it, and adding <code>VoytiMiddleware</code>
+            to your own group only extends that same coverage to your app's pages.
         </p>
         <p>
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
