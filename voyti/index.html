@@ -94,10 +94,10 @@ return [
                     ->addRoute(
                         Group::create('/')
                             ->middleware(
-                                SessionMiddleware::class,    // required for site-wide session support
-                                VoytiMiddleware::class,      // see "Site-wide enforcement" below
+                                SessionMiddleware::class,                 // required for site-wide session support
+                                VoytiMiddleware::class,                   // see "Site-wide enforcement" below
                             )
-                            ->routes(...$config->get('routes')), // your own app routes
+                            ->routes(...$config->get('routes')),          // your own app routes
                         Group::create('/user/')
                             ->routes(...$config->get('voyti-routes')),
                     )
@@ -304,7 +304,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">passwordHistoryLimit<span class="options-type"> int</span></div>
-                <div class="options-desc">Number of previous passwords remembered per user to prevent reuse. Only enforced when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; there is no separate toggle. Default: <code>10</code>.</div>
+                <div class="options-desc">Number of previous passwords remembered per user to prevent reuse. Only enforced when <code>enablePasswordExpiration</code> is <code>true</code>. Default: <code>10</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">administratorPermissionName<span class="options-type"> ?string</span></div>
@@ -375,7 +375,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">redirectUri<span class="options-type"> string</span></div>
-                <div class="options-desc">Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/session-auth</code> or <code>voyti/session-connect</code>. Optional, default: generated callback URL.</div>
+                <div class="options-desc">Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/session-auth</code>. Optional, default: generated callback URL.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">scope<span class="options-type"> string</span></div>

@@ -154,7 +154,7 @@ voyti:
     - label: RBAC
       detail: full admin UI for roles, permissions, and rules
     - label: Social authentication
-      detail: 9 built-in providers
+      detail: Various built-in providers
     - label: Two-factor authentication
       detail: TOTP, email, and one-time backup codes
     - label: Password policies
