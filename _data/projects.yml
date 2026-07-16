@@ -164,7 +164,7 @@ voyti:
     - label: GDPR compliance
       detail: consent management, data export, anonymized deletion
     - label: Session management
-      detail: history tracking and termination
+      detail: tracking and termination
     - label: REST API
       detail: optional JSON API for user CRUD
     - label: reCAPTCHA

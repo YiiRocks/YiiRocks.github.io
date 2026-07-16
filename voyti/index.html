@@ -57,7 +57,7 @@ title: Voyti
         <p>
             One migration creates the <code>user</code>, <code>user_profile</code>,
             <code>user_social_account</code>, <code>user_token</code>,
-            <code>user_session_history</code>, <code>user_backup_code</code>,
+            <code>user_sessions</code>, <code>user_backup_code</code>,
             <code>user_password_history</code>, and <code>audit_log</code>
             tables with all columns (2FA, GDPR, password expiration, last
             login IP, etc.) included.
@@ -268,7 +268,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
-                <div class="options-desc">Properties included in the data export (JSON). <code>userSessionHistory</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessionHistory', 'userSocialAccount']</code>.</div>
+                <div class="options-desc">Properties included in the data export (JSON). <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code>.</div>
             </div>
         </div>
         <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
@@ -278,14 +278,6 @@ return [
 
         <h4 class="doc-eyebrow">Session &amp; Security</h4>
         <div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name">enableSessionHistory<span class="options-type"> bool</span></div>
-                <div class="options-desc">Track session history. Default: <code>true</code>.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name">numberSessionHistory<span class="options-type"> int|false</span></div>
-                <div class="options-desc">Max sessions to keep per user. Default: <code>50</code>.</div>
-            </div>
             <div class="options-row">
                 <div class="options-name">disableIpLogging<span class="options-type"> bool</span></div>
                 <div class="options-desc">Disable IP address logging. Default: <code>false</code>.</div>
@@ -564,8 +556,8 @@ return [
                 </tr>
                 <tr>
                     <td><code>SessionRevocationEnforceMiddleware</code></td>
-                    <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_session_history</code> row is gone &mdash; i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the audit row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
-                    <td>Yes, when <code>enableSessionHistory</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
+                    <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone &mdash; i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
+                    <td>Yes</td>
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
@@ -692,7 +684,7 @@ return [
                     <tr><td><code>voyti/admin-users-password-reset</code></td><td><code>POST</code></td><td><code>admin/users/password-reset/{id}</code></td><td>Send password reset</td></tr>
                     <tr><td><code>voyti/admin-users-force-password-change</code></td><td><code>POST</code></td><td><code>admin/users/force-password-change/{id}</code></td><td>Force password change</td></tr>
                     <tr><td><code>voyti/admin-users-assignments</code></td><td><code>GET, POST</code></td><td><code>admin/users/assignments/{id}</code></td><td>Manage RBAC assignments</td></tr>
-                    <tr><td><code>voyti/admin-users-session-history</code></td><td><code>GET</code></td><td><code>admin/users/session-history/{id}</code></td><td>Session history</td></tr>
+                    <tr><td><code>voyti/admin-users-sessions</code></td><td><code>GET</code></td><td><code>admin/users/sessions/{id}</code></td><td>Session management</td></tr>
                     <tr><td><code>voyti/admin-users-terminate-sessions</code></td><td><code>POST</code></td><td><code>admin/users/terminate-sessions/{id}</code></td><td>Terminate sessions</td></tr>
                     <tr><td><code>voyti/admin-rbac-permissions</code></td><td><code>GET</code></td><td><code>admin/rbac/permissions/</code></td><td>List permissions</td></tr>
                     <tr><td><code>voyti/admin-rbac-permissions-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/permissions/create</code></td><td>Create permission</td></tr>
@@ -728,7 +720,7 @@ return [
                 </tr>
             </thead>
             <tbody>
-                <tr><td><code>AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session history tracking</td></tr>
+                <tr><td><code>AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session tracking</td></tr>
                 <tr><td><code>AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
             </tbody>
         </table>
