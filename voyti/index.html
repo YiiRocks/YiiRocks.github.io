@@ -35,6 +35,7 @@ title: Voyti
         <h3 class="doc-section-title" id="requirements">Requirements</h3>
         <ul>
             <li>PHP &gt;= 8.3</li>
+            <li><code>ext-intl</code></li>
             <li>Yii3 packages (<code>yiisoft/db</code>, <code>yiisoft/rbac</code>, <code>yiisoft/view</code>, <code>yiisoft/validator</code>, etc.)</li>
         </ul>
 
@@ -534,7 +535,7 @@ return [
         </table>
 
         <h3 class="doc-section-title" id="middleware">Middleware</h3>
-        <p>The extension ships six PSR-15 middleware classes for access control:</p>
+        <p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -555,6 +556,11 @@ return [
                     <td>Yes &mdash; on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
                 </tr>
                 <tr>
+                    <td><code>RememberMeMiddleware</code></td>
+                    <td>Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response &mdash; either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
                     <td><code>SessionRevocationEnforceMiddleware</code></td>
                     <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone &mdash; i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
                     <td>Yes</td>
@@ -571,7 +577,7 @@ return [
                 </tr>
                 <tr>
                     <td><code>VoytiMiddleware</code></td>
-                    <td>Convenience wrapper that chains <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry &mdash; add this to your app's route group instead of the three individual ones (see <a href="#site-wide-enforcement">Site-wide enforcement</a>)</td>
+                    <td>Convenience wrapper that chains <code>RememberMeMiddleware</code>, <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry &mdash; add this to your app's route group instead of the four individual ones (see <a href="#site-wide-enforcement">Site-wide enforcement</a>)</td>
                     <td>No</td>
                 </tr>
             </tbody>
@@ -589,23 +595,18 @@ return [
             middleware to routes your host app defines itself. Without it, a user
             with an expired password, missing 2FA, or a revoked session can still
             browse your app's own dashboard, home page, or any other route outside
-            this extension.
+            this extension &mdash; and a guest with a valid remember-me cookie
+            won't be logged back in there either.
         </p>
         <p>
-            Add <code>VoytiMiddleware</code> (or the individual middlewares, if
-            you only need a subset) to the <code>Group</code> wrapping your app's
-            own routes &mdash; see the <a href="#3-register-routes">Register
-            routes</a> example above &mdash; or to a global middleware pipeline
-            above routing if your app has one; just place it after session
-            middleware so <code>CurrentUser</code> is resolvable. Each
-            sub-middleware checks its own feature flag, so disabled features are
-            no-ops. Keep it scoped to your own routes, not the
-            <code>voyti-routes</code> group: <code>voyti/account-update</code>
-            lives inside <code>voyti-routes</code>, and
-            <code>TwoFactorAuthenticationEnforceMiddleware</code> has no exemption
-            for it, so wrapping <code>voyti-routes</code> too would redirect a
-            user into a loop the moment they try to reach settings to fix the
-            problem.
+            Add <code>VoytiMiddleware</code> to the <code>Group</code> wrapping
+            your app's own routes &mdash; see the
+            <a href="#3-register-routes">Register routes</a> example above &mdash;
+            or to a global middleware pipeline above routing if your app has one;
+            make sure to place it after <code>SessionMiddleware</code> so
+            <code>CurrentUser</code> is resolvable. Each sub-middleware checks its
+            own feature flag, so disabled features are no-ops. Keep it scoped to
+            your own routes, not the <code>voyti-routes</code> group.
         </p>
 
         <h3 class="doc-section-title" id="rbac">RBAC Management</h3>
@@ -703,6 +704,33 @@ return [
             </table>
         </div>
 
+        <p>
+            The REST API routes below live in a separate route group mounted at
+            <code>adminRestPrefix</code> and are only registered when
+            <code>enableRestApi</code> is <code>true</code> &mdash; see
+            <a href="#rest-api">REST API</a>.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Route name</th>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>voyti/api-openapi</code></td><td><code>GET</code></td><td><code>openapi.json</code></td><td>OpenAPI 3.1 spec (JSON). Public, so tooling (Swagger UI, codegen) can fetch it without a Bearer token.</td></tr>
+                    <tr><td><code>voyti/api-v1-users-index</code></td><td><code>GET</code></td><td><code>v1/users</code></td><td>List users</td></tr>
+                    <tr><td><code>voyti/api-v1-users-view</code></td><td><code>GET</code></td><td><code>v1/users/{id}</code></td><td>View a user</td></tr>
+                    <tr><td><code>voyti/api-v1-users-create</code></td><td><code>POST</code></td><td><code>v1/users</code></td><td>Create a user</td></tr>
+                    <tr><td><code>voyti/api-v1-users-update</code></td><td><code>PATCH</code></td><td><code>v1/users/{id}</code></td><td>Update a user</td></tr>
+                    <tr><td><code>voyti/api-v1-users-delete</code></td><td><code>DELETE</code></td><td><code>v1/users/{id}</code></td><td>Delete a user</td></tr>
+                </tbody>
+            </table>
+        </div>
+
         <h3 class="doc-section-title" id="events">Events &amp; Listeners</h3>
         <p>Voyti dispatches events at key points in the user lifecycle,
         allowing your application to react, log, or extend behaviour. Each
@@ -730,9 +758,9 @@ return [
         attach your own listener via the event dispatcher configuration if you
         need to react to them.</p>
         <ul>
-            <li><strong>UserEvent</strong> &mdash; Variants: create, delete, block/unblock, confirmation, account/profile update, switch identity, logout</li>
+            <li><strong>UserEvent</strong> &mdash; Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
             <li><strong>UserProfileEvent</strong> &mdash; Dispatched when a user updates their profile</li>
-            <li><strong>GdprEvent</strong> &mdash; Specifically: delete operation</li>
+            <li><strong>GdprEvent</strong> &mdash; Dispatched after a user's account is anonymized (not on hard delete, which fires <code>UserEvent</code> with type <code>UserEvent::DELETE</code>)</li>
             <li><strong>ResetPasswordEvent</strong> &mdash; Password reset flow</li>
             <li><strong>SessionEvent</strong> &mdash; Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, GDPR anonymization, or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
         </ul>
