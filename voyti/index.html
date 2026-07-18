@@ -61,7 +61,24 @@ title: Voyti
             <code>user_sessions</code>, <code>user_backup_code</code>,
             <code>user_password_history</code>, and <code>audit_log</code>
             tables with all columns (2FA, GDPR, password expiration, last
-            login IP, etc.) included.
+            login IP, etc.) included. <code>config/params-console.php</code> also
+            registers <code>yiisoft/rbac-db</code>'s own item/assignment
+            migrations, so <code>./yii migrate:up</code> creates the RBAC tables
+            too &mdash; no separate step needed.
+        </p>
+        <p>
+            If the <code>user</code> table is still empty after these migrations
+            run, a default admin account is seeded automatically: username
+            <code>admin</code>, email <code>admin@example.com</code>, and a random
+            20-character password printed to the console &mdash; copy it
+            immediately, it isn't stored anywhere else. The account is assigned
+            the <code>administrator</code> role, which is granted the
+            <code>administratorPermissionName</code> permission
+            (<code>voyti-admin-dashboard</code> by default) needed to reach the
+            admin dashboard. <strong>Change this password immediately after first
+            login.</strong> If the <code>user</code> table already has rows (e.g.
+            re-running migrations on an existing database), seeding is skipped
+            entirely.
         </p>
 
         <h4 id="3-register-routes">3. Register routes</h4>
@@ -300,8 +317,8 @@ return [
                 <div class="options-desc">Number of previous passwords remembered per user to prevent reuse. Only enforced when <code>enablePasswordExpiration</code> is <code>true</code>. Default: <code>10</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">administratorPermissionName<span class="options-type"> ?string</span></div>
-                <div class="options-desc">Permission/role name granting admin access. Default: <code>'admin'</code>.</div>
+                <div class="options-name">administratorPermissionName<span class="options-type"> string</span></div>
+                <div class="options-desc">Permission name granting admin access. Default: <code>'voyti-admin-dashboard'</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">profileVisibility<span class="options-type"> ProfileVisibility</span></div>
