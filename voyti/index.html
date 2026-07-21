@@ -544,7 +544,7 @@ return [
         </table>
 
         <h3 class="doc-section-title" id="middleware">Middleware</h3>
-        <p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
+        <p>The extension ships eight PSR-15 middleware classes for session handling and access control:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -565,6 +565,11 @@ return [
                     <td>Yes &mdash; on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
                 </tr>
                 <tr>
+                    <td><code>RequireLoginMiddleware</code></td>
+                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead of a redirect for the one AJAX-only route, <code>voyti/user-two-factor-renew</code></td>
+                    <td>Yes &mdash; on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
+                </tr>
+                <tr>
                     <td><code>RememberMeMiddleware</code></td>
                     <td>Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response &mdash; either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved</td>
                     <td>Yes</td>
@@ -576,12 +581,12 @@ return [
                 </tr>
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to the account settings page (<code>voyti/account-update</code>) when <code>maxPasswordAge</code> is exceeded</td>
+                    <td>Redirects to the account settings page (<code>voyti/user-account</code>) when <code>maxPasswordAge</code> is exceeded</td>
                     <td>Yes, when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to the account settings page (<code>voyti/account-update</code>) when required permissions are assigned but 2FA isn't enabled</td>
+                    <td>Redirects to the account settings page (<code>voyti/user-account</code>) when required permissions are assigned but 2FA isn't enabled</td>
                     <td>No</td>
                 </tr>
                 <tr>
@@ -593,7 +598,7 @@ return [
         </table>
         <p>
             The redirect targets (<code>voyti/session-login</code> and
-            <code>voyti/account-update</code>) are the extension's own routes
+            <code>voyti/user-account</code>) are the extension's own routes
             and aren't configurable.
         </p>
 
@@ -636,6 +641,14 @@ return [
             It only exposes named routes that the host application can use in its
             own menu, sidebar, or access rules.
         </p>
+        <p>
+            Every <code>settings/*</code> route below requires an authenticated
+            user &mdash; <code>RequireLoginMiddleware</code> redirects a guest to
+            <code>voyti/session-login</code> (or returns a JSON <code>401</code>
+            for the AJAX-only <code>voyti/user-two-factor-renew</code>) before
+            the request reaches the controller; see
+            <a href="#middleware">Middleware</a>.
+        </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -658,28 +671,28 @@ return [
                     <tr><td><code>voyti/password-reset-request</code></td><td><code>GET, POST</code></td><td><code>forgot</code></td><td>Password recovery request</td></tr>
                     <tr><td><code>voyti/password-reset-confirm</code></td><td><code>GET, POST</code></td><td><code>recover/{id}/{code}</code></td><td>Password reset</td></tr>
                     <tr><td><code>voyti/profile</code></td><td><code>GET</code></td><td><code>profile/{id}</code></td><td>Public user profile</td></tr>
-                    <tr><td><code>voyti/profile-update</code></td><td><code>GET, POST</code></td><td><code>settings/</code></td><td>Profile settings</td></tr>
-                    <tr><td><code>voyti/account-update</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
-                    <tr><td><code>voyti/account-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
-                    <tr><td><code>voyti/social-network</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Linked social networks</td></tr>
-                    <tr><td><code>voyti/social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
-                    <tr><td><code>voyti/account-sessions</code></td><td><code>GET</code></td><td><code>settings/sessions/</code></td><td>Self-service session/device list, current device highlighted</td></tr>
-                    <tr><td><code>voyti/account-sessions-terminate</code></td><td><code>POST</code></td><td><code>settings/sessions/terminate/{sessionId}</code></td><td>Terminate one of the current user's own sessions</td></tr>
-                    <tr><td><code>voyti/privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor-google/</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor-email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-send-email-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current 2FA method). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Redirects to the admin user dashboard</td></tr>
+                    <tr><td><code>voyti/user-profile</code></td><td><code>GET, POST</code></td><td><code>settings/</code></td><td>Profile settings</td></tr>
+                    <tr><td><code>voyti/user-account</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
+                    <tr><td><code>voyti/user-confirm</code></td><td><code>GET</code></td><td><code>settings/confirm/{code}</code></td><td>Confirm account changes</td></tr>
+                    <tr><td><code>voyti/user-social-networks</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Linked social networks</td></tr>
+                    <tr><td><code>voyti/user-social-networks-disconnect</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
+                    <tr><td><code>voyti/user-sessions</code></td><td><code>GET</code></td><td><code>settings/sessions/</code></td><td>Self-service session/device list, current device highlighted</td></tr>
+                    <tr><td><code>voyti/user-sessions-terminate</code></td><td><code>POST</code></td><td><code>settings/sessions/terminate/{sessionId}</code></td><td>Terminate one of the current user's own sessions</td></tr>
+                    <tr><td><code>voyti/user-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor-google/</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor-email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor-google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-send-email-code</code></td><td><code>POST</code></td><td><code>settings/two-factor-email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current 2FA method). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Admin dashboard</td></tr>
                     <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>User dashboard</td></tr>
                     <tr><td><code>voyti/admin-users-create</code></td><td><code>GET, POST</code></td><td><code>admin/users/create</code></td><td>Create user</td></tr>
                     <tr><td><code>voyti/admin-users-update</code></td><td><code>GET, POST</code></td><td><code>admin/users/update/{id}</code></td><td>Update user</td></tr>
