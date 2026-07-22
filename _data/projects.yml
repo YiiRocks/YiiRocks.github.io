@@ -146,33 +146,33 @@ voyti:
     authorization for your Yii Framework 3 applications.
   features:
     - label: User management
-      detail: registration, email confirmation, login/logout, password recovery, password expiration
+      detail: Registration, email confirmation, login/logout with remember-me, password recovery, password expiration
     - label: Profile management
-      detail: gravatar, timezone, bio, personal website
+      detail: User profiles with gravatar, timezone, bio, and a personal website link
     - label: Identity switching
-      detail: temporarily assume another user's identity
+      detail: Admins can temporarily switch into another user's identity for support or debugging, then restore their own session with one click
     - label: RBAC
-      detail: full admin UI for roles, permissions, and rules
+      detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
     - label: Social authentication
-      detail: Various built-in providers
+      detail: Various built-in auth clients
     - label: Two-factor authentication
-      detail: TOTP, email, and one-time backup codes
+      detail: TOTP (authenticator app) and email 2FA with enforced-per-permission support, plus one-time backup codes for account recovery
     - label: Password policies
-      detail: complexity requirements, max age enforcement
+      detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation
-      detail: immediate, confirm new, confirm both
+      detail: Three modes: immediate, confirm new address, confirm both old and new
     - label: GDPR compliance
-      detail: consent management, data export, anonymized deletion
+      detail: Consent management, data export, anonymized deletion with admin notification
     - label: Session management
-      detail: tracking and termination
+      detail: Session tracking and termination
     - label: REST API
-      detail: optional JSON API for user CRUD
+      detail: Optional JSON API for user CRUD
     - label: reCAPTCHA
-      detail: optional v2/v3 integration
+      detail: Optional reCAPTCHA v2/v3 integration via yiirocks/recaptcha
     - label: i18n
-      detail: multiple built-in translations
+      detail: Built-in translations for multiple languages
     - label: Themed views
-      detail: Bootstrap 5 with separate mail templates
+      detail: Bootstrap 5 views shipped by default; mail templates separate and independently overridable
 
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
