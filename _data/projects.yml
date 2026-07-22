@@ -160,7 +160,7 @@ voyti:
     - label: Password policies
       detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation
-      detail: Three modes: immediate, confirm new address, confirm both old and new
+      detail: "Three modes: immediate, confirm new address, confirm both old and new"
     - label: GDPR compliance
       detail: Consent management, data export, anonymized deletion with admin notification
     - label: Session management
