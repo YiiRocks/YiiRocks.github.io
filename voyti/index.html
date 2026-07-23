@@ -59,7 +59,7 @@ title: Voyti
             One migration creates the <code>user</code>, <code>user_profile</code>,
             <code>user_social_account</code>, <code>user_token</code>,
             <code>user_sessions</code>, <code>user_backup_code</code>,
-            <code>user_password_history</code>, and <code>audit_log</code>
+            <code>user_password_history</code>, and <code>user_audit_log</code>
             tables with all columns (2FA, GDPR, password expiration, last
             login IP, etc.) included. <code>config/params-console.php</code> also
             registers <code>yiisoft/rbac-db</code>'s own item/assignment
@@ -74,7 +74,7 @@ title: Voyti
             immediately, it isn't stored anywhere else. The account is assigned
             the <code>administrator</code> role, which is granted the
             <code>administratorPermissionName</code> permission
-            (<code>voyti-admin-dashboard</code> by default) needed to reach the
+            (<code>voyti-admin</code> by default) needed to reach the
             admin dashboard. <strong>Change this password immediately after first
             login.</strong> If the <code>user</code> table already has rows (e.g.
             re-running migrations on an existing database), seeding is skipped
@@ -267,10 +267,6 @@ return [
                 <div class="options-desc">Permissions that require 2FA. Default: <code>[]</code>.</div>
             </div>
         </div>
-        <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
-    'enableTwoFactorAuthentication' => true,
-    'twoFactorAuthenticationForcedPermissions' => ['admin'],
-],</code></pre>
 
         <h4 class="doc-eyebrow">GDPR</h4>
         <div class="options-table mb-3">
@@ -287,17 +283,9 @@ return [
                 <div class="options-desc">Properties included in the data export (JSON). <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code>.</div>
             </div>
         </div>
-        <pre class="doc-example mb-3"><code class="language-php">'yiirocks/voyti' => [
-    'enableGdprCompliance' => true,
-    'gdprAnonymizePrefix' => 'ANON-',
-],</code></pre>
 
         <h4 class="doc-eyebrow">Session &amp; Security</h4>
         <div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name">disableIpLogging<span class="options-type"> bool</span></div>
-                <div class="options-desc">Disable IP address logging. Default: <code>false</code>.</div>
-            </div>
             <div class="options-row">
                 <div class="options-name">enablePasswordExpiration<span class="options-type"> bool</span></div>
                 <div class="options-desc">Enable password expiration. Default: <code>false</code>.</div>
@@ -316,7 +304,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">administratorPermissionName<span class="options-type"> string</span></div>
-                <div class="options-desc">Permission name granting admin access. Default: <code>'voyti-admin-dashboard'</code>.</div>
+                <div class="options-desc">Permission name granting admin access. Default: <code>'voyti-admin'</code>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name">profileVisibility<span class="options-type"> ProfileVisibility</span></div>
@@ -324,7 +312,7 @@ return [
             </div>
             <div class="options-row">
                 <div class="options-name">enableAuditLog<span class="options-type"> bool</span></div>
-                <div class="options-desc">Record admin actions (RBAC and user management changes) to the <code>audit_log</code> table, viewable at <code>admin/audit-log/</code>. Default: <code>true</code>.</div>
+                <div class="options-desc">Record admin actions (RBAC and user management changes) to the <code>user_audit_log</code> table, viewable at <code>admin/audit-log/</code>. Default: <code>true</code>.</div>
             </div>
         </div>
 
@@ -509,7 +497,7 @@ return [
         <p>With credentials configured:</p>
         <ol>
             <li>The login page shows social login buttons for configured providers.</li>
-            <li><code>settings/networks</code> lists connected providers and renders connect buttons for the remaining configured providers.</li>
+            <li><code>settings/networks/</code> lists connected providers and renders connect buttons for the remaining configured providers.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
         </ol>
 
@@ -567,7 +555,7 @@ return [
                 </tr>
                 <tr>
                     <td><code>RequireLoginMiddleware</code></td>
-                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead of a redirect for the one AJAX-only route, <code>voyti/user-two-factor-renew</code></td>
+                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead of a redirect when the request's <code>Accept</code> header includes <code>application/json</code> (e.g. AJAX calls like <code>voyti/user-two-factor-google-renew</code>)</td>
                     <td>Yes &mdash; on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
                 </tr>
                 <tr>
@@ -592,8 +580,8 @@ return [
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to the account settings page (<code>voyti/user-account</code>) when required permissions are assigned but 2FA isn't enabled</td>
-                    <td>No</td>
+                    <td>Redirects to the two-factor settings page (<code>voyti/user-two-factor</code>), with an explanatory flash message, when required permissions are assigned but 2FA isn't enabled. Two-factor routes and the logout route stay reachable so the user can actually complete setup</td>
+                    <td>Yes, when <code>enableTwoFactorAuthentication</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
                 </tr>
                 <tr>
                     <td><code>VoytiMiddleware</code></td>
@@ -642,14 +630,6 @@ return [
             It only exposes named routes that the host application can use in its
             own menu, sidebar, or access rules.
         </p>
-        <p>
-            Every <code>settings/*</code> route below requires an authenticated
-            user &mdash; <code>RequireLoginMiddleware</code> redirects a guest to
-            <code>voyti/session-login</code> (or returns a JSON <code>401</code>
-            for the AJAX-only <code>voyti/user-two-factor-renew</code>) before
-            the request reaches the controller; see
-            <a href="#middleware">Middleware</a>.
-        </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -686,13 +666,13 @@ return [
                     <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor/google/</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor/email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-two-factor-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor/google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-two-factor-send-email-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor/email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-email-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/email/send-code</code></td><td>Send the email 2FA one-time code after explicit confirmation. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-google</code></td><td><code>GET</code></td><td><code>settings/two-factor/google/</code></td><td>Google Authenticator setup page (method-selector buttons + QR/secret). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code> and both optional <code>chillerlan/php-authenticator</code>/<code>chillerlan/php-qrcode</code> packages are installed</td></tr>
+                    <tr><td><code>voyti/user-two-factor-google-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor/google/renew</code></td><td>Regenerate the Google Authenticator secret/QR code via AJAX. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code> and both optional <code>chillerlan/php-authenticator</code>/<code>chillerlan/php-qrcode</code> packages are installed</td></tr>
                     <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current 2FA method). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Admin dashboard</td></tr>
                     <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>Users</td></tr>
