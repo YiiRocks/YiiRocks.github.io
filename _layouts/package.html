@@ -11,6 +11,15 @@ layout: default
         </div>
     </div>
 
+{% if pkg.sections %}
+    <div class="doc-section-layout">
+{% include doc_sidebar.html pkgId=page.pkgId %}
+        <div class="doc-section-content">
+            {{ content }}
+            {% include doc_support.html pkgId=page.pkgId %}
+        </div>
+    </div>
+{% else %}
     {{ content }}
 
 {% if pkg.options %}
@@ -47,12 +56,6 @@ layout: default
     </div>
 {% endif %}
 
-    <h2 class="doc-eyebrow" id="support">Support</h2>
-    <div class="doc-support-row">
-        <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
-        <a href="https://github.com/YiiRocks/{{ pkg.repo }}/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-    </div>
-    <div class="docs-entry__badges">
-        {% include package_badges.html project=page.pkgId %}
-    </div>
+    {% include doc_support.html pkgId=page.pkgId %}
+{% endif %}
 </div>

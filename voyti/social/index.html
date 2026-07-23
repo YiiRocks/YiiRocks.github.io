@@ -1,0 +1,90 @@
+---
+layout: package-section
+pkgId: voyti
+section: social
+title: "Voyti — Social Authentication"
+---
+
+        <p>
+            Various auth clients are included (see the table below for the full list).
+            Each implements the auth client interface and maps provider attributes to
+            the <code>SocialNetworkAccount</code> entity.
+        </p>
+        <p>
+            The <code>SocialAuthProviderService</code> handles the OAuth redirect/callback
+            flow. The <code>UserSocialAuthenticateService</code> handles account lookup,
+            creation, and user login. The <code>UserSocialAccountConnectService</code>
+            links a social account to an existing user.
+        </p>
+
+        <h4>Built-in defaults by provider</h4>
+        <p>
+            The following table shows Voyti's built-in endpoints and scopes. These are
+            used unless you override <code>scope</code> or <code>redirectUri</code>.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider key</th>
+                        <th>Default scope</th>
+                        <th>Authorization URL</th>
+                        <th>Token URL</th>
+                        <th>User info URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td><code>email</code></td><td><code>https://www.facebook.com/v19.0/dialog/oauth</code></td><td><code>https://graph.facebook.com/v19.0/oauth/access_token</code></td><td><code>https://graph.facebook.com/me</code></td></tr>
+                    <tr><td><code>github</code></td><td><code>user:email</code></td><td><code>https://github.com/login/oauth/authorize</code></td><td><code>https://github.com/login/oauth/access_token</code></td><td><code>https://api.github.com/user</code></td></tr>
+                    <tr><td><code>google</code></td><td><code>openid email profile</code></td><td><code>https://accounts.google.com/o/oauth2/v2/auth</code></td><td><code>https://oauth2.googleapis.com/token</code></td><td><code>https://openidconnect.googleapis.com/v1/userinfo</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>openid email profile</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/auth</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/token</code></td><td><code>{baseUrl}/realms/{realm}/protocol/openid-connect/userinfo</code></td></tr>
+                    <tr><td><code>linkedin</code></td><td><code>openid profile email</code></td><td><code>https://www.linkedin.com/oauth/v2/authorization</code></td><td><code>https://www.linkedin.com/oauth/v2/accessToken</code></td><td><code>https://api.linkedin.com/v2/userinfo</code></td></tr>
+                    <tr><td><code>microsoft365</code></td><td><code>openid profile email User.Read</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/authorize</code></td><td><code>https://login.microsoftonline.com/common/oauth2/v2.0/token</code></td><td><code>https://graph.microsoft.com/oidc/userinfo</code></td></tr>
+                    <tr><td><code>vkontakte</code></td><td><code>email</code></td><td><code>https://oauth.vk.com/authorize</code></td><td><code>https://oauth.vk.com/access_token</code></td><td><code>https://api.vk.com/method/users.get</code></td></tr>
+                    <tr><td><code>x</code></td><td><code>tweet.read users.read offline.access</code></td><td><code>https://twitter.com/i/oauth2/authorize</code></td><td><code>https://api.twitter.com/2/oauth2/token</code></td><td><code>https://api.twitter.com/2/users/me</code></td></tr>
+                    <tr><td><code>yandex</code></td><td><code>login:email login:info</code></td><td><code>https://oauth.yandex.com/authorize</code></td><td><code>https://oauth.yandex.com/token</code></td><td><code>https://login.yandex.ru/info</code></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Provider-specific built-in request behavior</h4>
+        <p>Voyti also applies a few provider-specific defaults during the user-info step:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider key</th>
+                        <th>Built-in behavior</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>facebook</code></td><td>Sends <code>access_token</code> and <code>fields=id,name,email</code> on the user-info request.</td></tr>
+                    <tr><td><code>github</code></td><td>If <code>/user</code> does not include an email, Voyti also requests <code>https://api.github.com/user/emails</code> and picks the first primary or verified address.</td></tr>
+                    <tr><td><code>vkontakte</code></td><td>Sends <code>access_token</code>, <code>fields=screen_name</code>, and <code>v=5.199</code>; email is read from the token response when present.</td></tr>
+                    <tr><td><code>x</code></td><td>Sends <code>user.fields=id,name,username,profile_image_url</code>; normalized social identity does <strong>not</strong> include email (X API v2 does not expose the user's email address without elevated access).</td></tr>
+                    <tr><td><code>yandex</code></td><td>Sends <code>format=json</code> on the user-info request.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>Example</h4>
+        <pre class="doc-example mb-3"><code class="language-php">return [
+    'yiirocks/voyti' => [
+        'socialNetworkClients' => [
+            'github' => [
+                'clientId' => $_ENV['GITHUB_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'] ?? '',
+            ],
+            'google' => [
+                'clientId' => $_ENV['GOOGLE_CLIENT_ID'] ?? '',
+                'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'] ?? '',
+            ],
+        ],
+    ],
+];</code></pre>
+        <p>With credentials configured:</p>
+        <ol>
+            <li>The login page shows social login buttons for configured providers.</li>
+            <li><code>settings/networks/</code> lists connected providers and renders connect buttons for the remaining configured providers.</li>
+            <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
+        </ol>

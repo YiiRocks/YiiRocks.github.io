@@ -1,0 +1,137 @@
+---
+layout: package-section
+pkgId: voyti
+section: quick-start
+title: "Voyti — Quick Start"
+---
+
+        <h4>1. Install</h4>
+        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require yiirocks/voyti">composer require yiirocks/voyti</button>
+        <p>For reCAPTCHA support (optional):</p>
+        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require yiirocks/recaptcha">composer require yiirocks/recaptcha</button>
+        <p>For 2FA TOTP support (optional):</p>
+        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require chillerlan/php-authenticator chillerlan/php-qrcode">composer require chillerlan/php-authenticator chillerlan/php-qrcode</button>
+
+        <h4 id="cookie-secret">2. Set the cookie secret</h4>
+        <p>
+            <span class="badge rounded-pill text-bg-danger">Required</span> Voyti encrypts the remember-me cookie using
+            <code>yiisoft/cookies</code>' secret key. Leaving it unset throws a
+            <code>LogicException</code> &mdash; the app won't run without it. Generate a
+            strong, random string and set it in <code>config/params.php</code>:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">return [
+    'yiisoft/cookies' => [
+        'secretKey' => $_ENV['COOKIES_SECRET'],
+    ],
+];</code></pre>
+
+        <h4>3. Run migrations</h4>
+        <p>
+            Voyti provides its migration path through <code>config/params-console.php</code>
+            using the standard <code>yiisoft/db-migration</code> configuration keys.
+            With <code>yiisoft/db-migration</code> enabled in your console app, run:
+        </p>
+        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="./yii migrate:up">./yii migrate:up</button>
+        <p>
+            One migration creates the <code>user</code>, <code>user_profile</code>,
+            <code>user_social_account</code>, <code>user_token</code>,
+            <code>user_sessions</code>, <code>user_backup_code</code>,
+            <code>user_password_history</code>, and <code>user_audit_log</code>
+            tables with all columns (2FA, GDPR, password expiration, last
+            login IP, etc.) included. <code>config/params-console.php</code> also
+            registers <code>yiisoft/rbac-db</code>'s own item/assignment
+            migrations, so <code>./yii migrate:up</code> creates the RBAC tables
+            too &mdash; no separate step needed.
+        </p>
+        <p>
+            If the <code>user</code> table is still empty after these migrations
+            run, a default admin account is seeded automatically: username
+            <code>admin</code>, email <code>admin@example.com</code>, and a random
+            20-character password printed to the console &mdash; copy it
+            immediately, it isn't stored anywhere else. The account is assigned
+            the <code>administrator</code> role, which is granted the
+            <code>administratorPermissionName</code> permission
+            (<code>voyti-admin</code> by default) needed to reach the
+            admin dashboard. <strong>Change this password immediately after first
+            login.</strong> If the <code>user</code> table already has rows (e.g.
+            re-running migrations on an existing database), seeding is skipped
+            entirely.
+        </p>
+
+        <h4 id="4-register-routes">4. Register routes</h4>
+        <p>
+            Routes are <strong>not</strong> auto-registered — you must add them
+            to your router configuration.
+        </p>
+        <p>
+            Pull the <code>voyti-routes</code> config group into your router
+            definition. The example below mounts them under a <code>/user/</code>
+            prefix as their own group, alongside your app's own routes &mdash;
+            change the prefix as needed:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
+use Yiisoft\Definitions\DynamicReference;
+use Yiisoft\Router\Group;
+use Yiisoft\Router\RouteCollection;
+use Yiisoft\Router\RouteCollectionInterface;
+use Yiisoft\Router\RouteCollector;
+use Yiisoft\Session\SessionMiddleware;
+use YiiRocks\Voyti\Middleware\VoytiMiddleware;
+
+/** @var Config $config */
+
+return [
+    RouteCollectionInterface::class => [
+        'class' => RouteCollection::class,
+        '__construct()' => [
+            'collector' => DynamicReference::to(
+                static fn() => (new RouteCollector())
+                    ->addRoute(
+                        Group::create('/')
+                            ->middleware(
+                                SessionMiddleware::class,                 // required for site-wide session support
+                                VoytiMiddleware::class,                   // see "Site-wide enforcement" on the Middleware page
+                            )
+                            ->routes(...$config->get('routes')),          // your own app routes
+                        Group::create('/user/')
+                            ->routes(...$config->get('voyti-routes')),
+                    )
+            ),
+        ],
+    ],
+];</code></pre>
+        <p>
+            <code>voyti-routes</code> already wraps itself with its own required
+            middleware (see <code>config/routes.php</code>), so the second group
+            above doesn't repeat any of it, and adding <code>VoytiMiddleware</code>
+            to your own group only extends that same coverage to your app's pages.
+        </p>
+        <p>
+            When <code>enableRestApi</code> is <code>true</code>, the API routes are
+            mounted under <code>adminRestPrefix . '/v1/'</code> and expose user
+            CRUD endpoints.
+        </p>
+        <p>
+            The privacy/GDPR routes (<code>settings/privacy/</code>,
+            <code>settings/privacy/gdpr-consent</code>,
+            <code>settings/privacy/export</code>,
+            <code>settings/privacy/anonymize</code>,
+            <code>settings/privacy/delete</code>) and the two-factor routes
+            (<code>settings/two-factor/</code>,
+            <code>settings/two-factor/enable</code>,
+            <code>settings/two-factor/disable/</code>) are likewise only
+            registered when their governing config flag
+            (<code>enableGdprCompliance</code>,
+            <code>allowAccountDelete</code>, and/or
+            <code>enableTwoFactorAuthentication</code>) is <code>true</code> &mdash;
+            see the <a href="/voyti/routes/">route table</a>. When a flag is off, the corresponding
+            route doesn't exist at all, so a request to it falls through to the
+            host application's own router-level not-found handling.
+        </p>
+
+        <h4>5. Done</h4>
+        <p>
+            DI bindings, event listeners, and console commands are auto-registered
+            via the <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>.
+            No manual wiring needed.
+        </p>

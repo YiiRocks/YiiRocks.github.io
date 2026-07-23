@@ -14,6 +14,15 @@ recaptcha:
     Provides Google reCAPTCHA v2 and v3 field and server-side validation for
     your Yii Framework 3 applications, with various options available to
     manipulate the result.
+  sections:
+    - slug: config
+      title: Configuration
+    - slug: v2
+      title: v2
+    - slug: v3
+      title: v3
+    - slug: server
+      title: Server-Side Verification
   usage: |-
     echo RecaptchaV2Field::field($form, 'captcha')
         ->withSiteKey($siteKey);
@@ -144,6 +153,25 @@ voyti:
   description: >
     Provides highly customizable user management, authentication, and
     authorization for your Yii Framework 3 applications.
+  sections:
+    - slug: requirements
+      title: Requirements
+    - slug: quick-start
+      title: Quick Start
+    - slug: config
+      title: Configuration
+    - slug: social
+      title: Social Auth
+    - slug: console
+      title: Console
+    - slug: middleware
+      title: Middleware
+    - slug: rbac
+      title: RBAC
+    - slug: routes
+      title: Routes
+    - slug: events
+      title: Events
   features:
     - label: User management
       detail: Registration, email confirmation, login/logout with remember-me, password recovery, password expiration

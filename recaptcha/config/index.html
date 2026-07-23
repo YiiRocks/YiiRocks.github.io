@@ -1,0 +1,25 @@
+---
+layout: package-section
+pkgId: recaptcha
+section: config
+title: "reCAPTCHA — Configuration"
+---
+
+        <p>
+            Set your site keys and secret keys via environment variables
+            or directly in <code>config/params.php</code>:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">'yiirocks/recaptcha' => [
+    'siteKeyV2' => $_ENV['RECAPTCHA_SITE_KEY_V2'] ?? '',
+    'secretV2' => $_ENV['RECAPTCHA_SECRET_V2'] ?? '',
+    'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'] ?? '',
+    'secretV3' => $_ENV['RECAPTCHA_SECRET_V3'] ?? '',
+    'verifyUrl' => 'https://www.google.com/recaptcha/api/siteverify',
+    'sendRemoteIp' => false,
+    'translation.category' => 'recaptcha',
+],</code></pre>
+        <p>
+            Once configured, the field pulls the site key from the
+            registry automatically — no need to call
+            <code>withSiteKey()</code> in your view code.
+        </p>

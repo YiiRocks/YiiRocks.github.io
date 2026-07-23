@@ -1,0 +1,258 @@
+---
+layout: package-section
+pkgId: voyti
+section: config
+title: "Voyti — Configuration"
+---
+
+        <p>
+            Override Voyti params in your app's <code>config/params.php</code> using
+            the <code>yiirocks/voyti</code> key:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Enum\RecaptchaVersion;
+
+return [
+    'yiirocks/voyti' => [
+        'appName' => 'My Project',
+        'recaptchaVersion' => RecaptchaVersion::V3,
+    ],
+];</code></pre>
+        <p>
+            The required <code>yiisoft/cookies</code> secret key is covered in
+            <a href="/voyti/quick-start/#cookie-secret">Quick Start</a> &mdash;
+            without it, the app throws a <code>LogicException</code> at runtime.
+        </p>
+        <p>
+            Below are all top-level <code>yiirocks/voyti</code> options, followed by
+            the nested <code>socialNetworkClients</code>
+            options.
+        </p>
+
+        <h4 class="doc-eyebrow">General</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">appName<span class="options-type"> string</span></div>
+                <div class="options-desc">Application name — used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects. Default: <code>'Voyti'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">homeRoute<span class="options-type"> string</span></div>
+                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app — an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception. Default: <code>'home'</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow">Authentication &amp; Registration</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">enableRegistration<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow new user registration. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enableSocialNetworkRegistration<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow social network registration. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">socialNetworkClients<span class="options-type"> array</span></div>
+                <div class="options-desc">OAuth client IDs, secrets, and provider-specific options. Default: <code>[]</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enableEmailConfirmation<span class="options-type"> bool</span></div>
+                <div class="options-desc">Require email confirmation. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">allowPasswordRecovery<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow password recovery. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">allowAdminPasswordRecovery<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow admin-initiated password recovery. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">allowAccountDelete<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow users to delete their account. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">emailChangeConfirmation<span class="options-type"> EmailChangeConfirmation</span></div>
+                <div class="options-desc"><code>NONE</code> (change immediately), <code>NEW</code> (confirm new address only), or <code>BOTH</code> (confirm both old and new addresses). Default: <code>EmailChangeConfirmation::NEW</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">rememberLoginLifespan<span class="options-type"> int</span></div>
+                <div class="options-desc">Remember-me cookie lifetime and idle auth timeout in seconds. Default: <code>2592000</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">tokenConfirmationLifespan<span class="options-type"> int</span></div>
+                <div class="options-desc">Confirmation token validity. Default: <code>86400</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">tokenRecoveryLifespan<span class="options-type"> int</span></div>
+                <div class="options-desc">Recovery token validity. Default: <code>21600</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enableSwitchIdentities<span class="options-type"> bool</span></div>
+                <div class="options-desc">Allow admin to switch user identities. Default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">mailAdminOnRegister<span class="options-type"> ?string</span></div>
+                <div class="options-desc">Email notified on new registration. Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">recaptchaVersion<span class="options-type"> ?RecaptchaVersion</span></div>
+                <div class="options-desc"><code>RecaptchaVersion::V2</code>, <code>RecaptchaVersion::V3</code>, or <code>null</code> to disable. Default: <code>null</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow">Two-Factor Authentication</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">enableTwoFactorAuthentication<span class="options-type"> bool</span></div>
+                <div class="options-desc">Enable 2FA. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">twoFactorAuthenticationForcedPermissions<span class="options-type"> array</span></div>
+                <div class="options-desc">Permissions that require 2FA. Default: <code>[]</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow">GDPR</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">enableGdprCompliance<span class="options-type"> bool</span></div>
+                <div class="options-desc">Enable GDPR features. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">gdprAnonymizePrefix<span class="options-type"> string</span></div>
+                <div class="options-desc">Prefix for anonymized usernames. Default: <code>'GDPR'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
+                <div class="options-desc">Properties included in the data export (JSON). <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code> (the internal <code>session_id</code> is excluded); <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload). The OAuth <code>code</code> field is excluded &mdash; it's a one-time linking secret, not user data. Default: <code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow">Session &amp; Security</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">enablePasswordExpiration<span class="options-type"> bool</span></div>
+                <div class="options-desc">Enable password expiration. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">maxPasswordAge<span class="options-type"> ?int</span></div>
+                <div class="options-desc">Max password age in days. Default: <code>null</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enablePasswordComplexity<span class="options-type"> bool</span></div>
+                <div class="options-desc">Require passwords to contain an uppercase letter, a lowercase letter, a digit, and a special character. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">passwordHistoryLimit<span class="options-type"> int</span></div>
+                <div class="options-desc">Number of previous passwords remembered per user to prevent reuse. Only enforced when <code>enablePasswordExpiration</code> is <code>true</code>. Default: <code>10</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">administratorPermissionName<span class="options-type"> string</span></div>
+                <div class="options-desc">Permission name granting admin access. Default: <code>'voyti-admin'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">profileVisibility<span class="options-type"> ProfileVisibility</span></div>
+                <div class="options-desc">Profile visibility: <code>OWNER</code> = owner only, <code>ADMIN</code> = owner + admins, <code>USERS</code> = any authenticated user, <code>PUBLIC</code> = public. Default: <code>ProfileVisibility::USERS</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enableAuditLog<span class="options-type"> bool</span></div>
+                <div class="options-desc">Record admin actions (RBAC and user management changes) to the <code>user_audit_log</code> table, viewable at <code>admin/audit-log/</code>. Default: <code>true</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow">Views &amp; Mail</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">viewPath<span class="options-type"> string</span></div>
+                <div class="options-desc">Base path for web templates. Default: <code>__DIR__ . '/../resources/views/bootstrap5'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">mailPath<span class="options-type"> string</span></div>
+                <div class="options-desc">Base path for mail templates. Default: <code>__DIR__ . '/../resources/mail'</code>.</div>
+            </div>
+        </div>
+
+        <h4 class="doc-eyebrow" id="rest-api">REST API</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">enableRestApi<span class="options-type"> bool</span></div>
+                <div class="options-desc">Enable REST API. Default: <code>false</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">adminRestPrefix<span class="options-type"> string</span></div>
+                <div class="options-desc">REST API base URL prefix. Default: <code>'api'</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">apiTokenLifespan<span class="options-type"> int|null</span></div>
+                <div class="options-desc">API token lifetime in seconds; <code>null</code> means tokens never expire. Default: <code>null</code>.</div>
+            </div>
+        </div>
+        <p>
+            The REST API authenticates via a Bearer token, not the web
+            session/CSRF cookie &mdash; issue one with
+            <code>voyti:api-token:generate</code> (see
+            <a href="/voyti/console/">Console commands</a>) and send it as
+            <code>Authorization: Bearer &lt;token&gt;</code>.
+            <code>AccessRuleMiddleware</code> still applies afterwards to
+            enforce <code>administratorPermissionName</code>.
+        </p>
+
+        <h4>Social Authentication Providers</h4>
+        <p>
+            <code>socialNetworkClients</code> is a keyed array where each key is a
+            provider name such as <code>github</code>, <code>google</code>, or
+            <code>keycloak</code>.
+        </p>
+        <p>Every provider accepts these options unless noted otherwise:</p>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name">clientId<span class="options-type"> string</span></div>
+                <div class="options-desc">OAuth client/application ID issued by the provider. Required.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">clientSecret<span class="options-type"> string</span></div>
+                <div class="options-desc">OAuth client secret issued by the provider. Required.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">redirectUri<span class="options-type"> string</span></div>
+                <div class="options-desc">Overrides the callback URL; otherwise Voyti uses the absolute route URL for <code>voyti/session-auth</code>. Optional, default: generated callback URL.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">scope<span class="options-type"> string</span></div>
+                <div class="options-desc">Replaces the built-in default scope string. Optional, default: provider default.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">enabled<span class="options-type"> bool</span></div>
+                <div class="options-desc">If <code>false</code>, the provider is not registered and no button is rendered. Optional, default: <code>true</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">authorizationParams<span class="options-type"> array&lt;string, scalar&gt;</span></div>
+                <div class="options-desc">Extra query parameters appended to the authorization request. Optional, default: <code>[]</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">tokenParams<span class="options-type"> array&lt;string, scalar&gt;</span></div>
+                <div class="options-desc">Extra fields merged into the token exchange request body. Optional, default: <code>[]</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name">userInfoQuery<span class="options-type"> array&lt;string, scalar&gt;</span></div>
+                <div class="options-desc">Extra query parameters merged into the user-info request. Optional, default: <code>[]</code>.</div>
+            </div>
+        </div>
+        <p>Only Keycloak adds recognized extra options:</p>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Provider key</th>
+                        <th>Extra option</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>keycloak</code></td><td><code>baseUrl</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>Base Keycloak URL, for example <code>https://sso.example.com</code></td></tr>
+                    <tr><td><code>keycloak</code></td><td><code>realm</code></td><td><span class="font-monospace">string</span></td><td>yes</td><td>Keycloak realm name used to build auth, token, and userinfo endpoints</td></tr>
+                </tbody>
+            </table>
+        </div>
