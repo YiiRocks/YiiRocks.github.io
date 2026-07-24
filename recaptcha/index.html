@@ -11,9 +11,15 @@ title: reCAPTCHA
             class="text-nowrap">Yii Framework 3</a> applications.
         </p>
 
-        <div class="doc-section-cards">
-            <a href="/recaptcha/config/" class="doc-section-card">Configuration</a>
-            <a href="/recaptcha/v2/" class="doc-section-card">v2</a>
-            <a href="/recaptcha/v3/" class="doc-section-card">v3</a>
-            <a href="/recaptcha/server/" class="doc-section-card">Server-Side Verification</a>
+{% assign pkg = site.data.projects[page.pkgId] %}
+{% if pkg.features %}
+        <h2 class="doc-eyebrow">Features</h2>
+        <div class="features-grid mb-4">
+{% for feat in pkg.features %}
+            <div class="feature-card">
+                <div class="feature-card__label">{{ feat.label }}</div>
+                <div class="feature-card__detail">{{ feat.detail }}</div>
+            </div>
+{% endfor %}
         </div>
+{% endif %}

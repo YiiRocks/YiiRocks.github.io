@@ -23,6 +23,19 @@ recaptcha:
       title: v3
     - slug: server
       title: Server-Side Verification
+  features:
+    - label: v2 challenge
+      detail: Image or audio challenge field with Light/Dark themes, Normal/Compact/Invisible sizes, and JS success/expiry/error callbacks
+    - label: v3 score-based
+      detail: Invisible, score-based field with per-action validation and a configurable badge (bottom-right, bottom-left, or hidden with legal notice)
+    - label: Server-side validation
+      detail: "PHP attributes — #[RecaptchaV2Rule] and #[RecaptchaV3Rule] — integrate directly into Yii3 form validation"
+    - label: Zero-config wiring
+      detail: Site keys and secrets read from config or environment variables and auto-registered via the config-plugin, no manual client setup needed
+    - label: PSR-18/17 based
+      detail: Works with any PSR-18 HTTP client and PSR-17 request/stream factories already in your app
+    - label: i18n
+      detail: Translatable validation and legal-notice messages via yiisoft/translator
   usage: |-
     echo RecaptchaV2Field::field($form, 'captcha')
         ->withSiteKey($siteKey);

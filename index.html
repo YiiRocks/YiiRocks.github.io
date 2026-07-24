@@ -54,11 +54,14 @@ title: Yii.Rocks
         <p class="docs-entry__desc">{{ pkg.description }}</p>
 
 {% if pkg.features %}
-        <ul class="docs-entry__features">
+        <div class="features-grid">
 {% for feat in pkg.features %}
-            <li><strong>{{ feat.label }}</strong> &mdash; {{ feat.detail }}</li>
+            <div class="feature-card">
+                <div class="feature-card__label">{{ feat.label }}</div>
+                <div class="feature-card__detail">{{ feat.detail }}</div>
+            </div>
 {% endfor %}
-        </ul>
+        </div>
 {% endif %}
 
 {% if pkg.usage %}
