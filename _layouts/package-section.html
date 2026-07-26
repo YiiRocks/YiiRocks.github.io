@@ -10,8 +10,8 @@ layout: default
 {% endif %}
 {% endfor %}
 <div class="doc-page">
-    <div class="doc-header">
-        <a href="{{ pkg.docsUrl }}" class="doc-header__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></a>
+    <div class="doc-header d-flex align-items-center gap-4">
+        <a href="{{ pkg.docsUrl }}" class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></a>
         <div>
             <a href="{{ pkg.docsUrl }}" class="doc-header__name-link"><h1 class="doc-header__name">{{ pkg.name }}</h1></a>
             <div class="doc-header__tagline">{{ pkg.tagline }}</div>
@@ -24,11 +24,11 @@ layout: default
             <h2 class="doc-section-title">{{ current_title }}</h2>
             {{ content }}
 
-            <div class="doc-section-prevnext">
+            <div class="doc-section-prevnext d-flex justify-content-between gap-4">
 {% if current_index > 0 %}
 {% assign prev_index = current_index | minus: 1 %}
 {% assign prev = pkg.sections[prev_index] %}
-                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/" class="doc-section-prevnext__prev">&larr; {{ prev.title }}</a>
+                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/">&larr; {{ prev.title }}</a>
 {% else %}
                 <span></span>
 {% endif %}

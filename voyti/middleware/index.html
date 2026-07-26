@@ -22,7 +22,7 @@ title: "Voyti — Middleware"
                 </tr>
                 <tr>
                     <td><code>RequireLoginMiddleware</code></td>
-                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead of a redirect when the request's <code>Accept</code> header includes <code>application/json</code> (e.g. AJAX calls like <code>voyti/user-two-factor-google-renew</code>)</td>
+                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code></td>
                     <td>Yes &mdash; on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
                 </tr>
                 <tr>
@@ -43,17 +43,17 @@ title: "Voyti — Middleware"
                 <tr>
                     <td><code>PasswordAgeEnforceMiddleware</code></td>
                     <td>Redirects to the account settings page (<code>voyti/user-account</code>) when <code>maxPasswordAge</code> is exceeded</td>
-                    <td>Yes, when <code>enablePasswordExpiration</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
+                    <td>Yes, when <code>maxPasswordAge</code> is greater than <code>0</code></td>
                 </tr>
                 <tr>
                     <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to the two-factor settings page (<code>voyti/user-two-factor</code>), with an explanatory flash message, when required permissions are assigned but 2FA isn't enabled. Two-factor routes and the logout route stay reachable so the user can actually complete setup</td>
-                    <td>Yes, when <code>enableTwoFactorAuthentication</code> is <code>true</code> &mdash; on the extension's whole web route group</td>
+                    <td>Redirects to the two-factor settings page (<code>voyti/user-two-factor</code>), with an explanatory flash message, when required permissions <code>twoFactorAuthenticationForcedPermissions</code> are assigned for that user, but 2FA isn't enabled. Two-factor routes and the logout route stay reachable so the user can actually complete setup</td>
+                    <td>Yes, when <code>enableTwoFactorAuthentication</code> is <code>true</code></td>
                 </tr>
                 <tr>
                     <td><code>VoytiMiddleware</code></td>
-                    <td>Convenience wrapper that chains <code>RememberMeMiddleware</code>, <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry &mdash; add this to your app's route group instead of the four individual ones (see <a href="#site-wide-enforcement">Site-wide enforcement</a>)</td>
-                    <td>No</td>
+                    <td>Convenience wrapper that chains <code>RememberMeMiddleware</code>, <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry</td>
+                    <td>No, add it to the <code>Group</code> wrapping your app's own routes &mdash; see the <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
                 </tr>
             </tbody>
         </table>
@@ -61,20 +61,9 @@ title: "Voyti — Middleware"
         <h4 id="site-wide-enforcement">Site-wide enforcement</h4>
         <p>
             The auto-registration above only covers routes <em>this extension
-            defines</em> &mdash; <code>config/routes.php</code> can't attach
-            middleware to routes your host app defines itself. Without it, a user
-            with an expired password, missing 2FA, or a revoked session can still
-            browse your app's own dashboard, home page, or any other route outside
-            this extension &mdash; and a guest with a valid remember-me cookie
-            won't be logged back in there either.
-        </p>
-        <p>
-            Add <code>VoytiMiddleware</code> to the <code>Group</code> wrapping
-            your app's own routes &mdash; see the
-            <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example &mdash;
-            or to a global middleware pipeline above routing if your app has one;
-            make sure to place it after <code>SessionMiddleware</code> so
-            <code>CurrentUser</code> is resolvable. Each sub-middleware checks its
-            own feature flag, so disabled features are no-ops. Keep it scoped to
-            your own routes, not the <code>voyti-routes</code> group.
+            defines</em>. Without <code>VoytiMiddleware</code> wrapping your
+            routes, a user with an expired password, missing 2FA, or a revoked
+            session can still browse your app's own dashboard, home page, or
+            any other route outside this extension &mdash; and a visitor with
+            a valid remember-me cookie won't be logged back in either.
         </p>

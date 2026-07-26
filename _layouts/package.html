@@ -3,8 +3,8 @@ layout: default
 ---
 {% assign pkg = site.data.projects[page.pkgId] %}
 <div class="doc-page">
-    <div class="doc-header">
-        <span class="doc-header__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
+    <div class="doc-header d-flex align-items-center gap-4">
+        <span class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
         <div>
             <h1 class="doc-header__name">{{ pkg.name }}</h1>
             <div class="doc-header__tagline">{{ pkg.tagline }}</div>

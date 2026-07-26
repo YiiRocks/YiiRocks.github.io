@@ -7,18 +7,32 @@ title: "Voyti — Quick Start"
 
         <h4>1. Install</h4>
         <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require yiirocks/voyti">composer require yiirocks/voyti</button>
-        <p>For reCAPTCHA support (optional):</p>
-        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require yiirocks/recaptcha">composer require yiirocks/recaptcha</button>
-        <p>For 2FA TOTP support (optional):</p>
-        <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require chillerlan/php-authenticator chillerlan/php-qrcode">composer require chillerlan/php-authenticator chillerlan/php-qrcode</button>
+        <p class="mb-3">Optional packages to extend functionality:</p>
+        <div class="optional-grid mb-4">
+            <div class="feature-card">
+                <div class="feature-card__label">Bot Protection</div>
+                <div class="feature-card__detail">Google reCAPTCHA v2/v3 for registration and login forms</div>
+                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiirocks/recaptcha">composer require yiirocks/recaptcha</button>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__label">Two-Factor Authentication (TOTP)</div>
+                <div class="feature-card__detail">Authenticator app enrollment with QR code provisioning</div>
+                <button type="button" class="copy-btn mb-0" data-clipboard="composer require chillerlan/php-authenticator chillerlan/php-qrcode">composer require chillerlan/php-authenticator chillerlan/php-qrcode</button>
+            </div>
+            <div class="feature-card">
+                <div class="feature-card__label">Social Authentication</div>
+                <div class="feature-card__detail">OAuth2 login via Google, GitHub, Facebook, and more</div>
+                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiisoft/yii-auth-client">composer require yiisoft/yii-auth-client</button>
+            </div>
+        </div>
 
         <h4 id="cookie-secret">2. Set the cookie secret</h4>
-        <p>
-            <span class="badge rounded-pill text-bg-danger">Required</span> Voyti encrypts the remember-me cookie using
-            <code>yiisoft/cookies</code>' secret key. Leaving it unset throws a
-            <code>LogicException</code> &mdash; the app won't run without it. Generate a
-            strong, random string and set it in <code>config/params.php</code>:
-        </p>
+        <div class="alert alert-danger" role="alert">
+            Voyti encrypts the remember-me cookie using <code>yiisoft/cookies</code>'
+            secret key. Leaving it unset throws a <code>LogicException</code>.
+            Generate a strong, random string and set it in <code>config/params.php</code>.
+        </div>
+
         <pre class="doc-example mb-3"><code class="language-php">return [
     'yiisoft/cookies' => [
         'secretKey' => $_ENV['COOKIES_SECRET'],
@@ -89,12 +103,12 @@ return [
                     ->addRoute(
                         Group::create('/')
                             ->middleware(
-                                SessionMiddleware::class,                 // required for site-wide session support
-                                VoytiMiddleware::class,                   // see "Site-wide enforcement" on the Middleware page
+                                SessionMiddleware::class,              # required for site-wide session support
+                                VoytiMiddleware::class,                # Site-wide enforcement
                             )
-                            ->routes(...$config->get('routes')),          // your own app routes
-                        Group::create('/user/')
-                            ->routes(...$config->get('voyti-routes')),
+                            ->routes(...$config->get('routes')),       # Your routes
+                        Group::create('/user/')                        # Voyti URL prefix
+                            ->routes(...$config->get('voyti-routes')), # Voyti routes
                     )
             ),
         ],
@@ -110,23 +124,6 @@ return [
             When <code>enableRestApi</code> is <code>true</code>, the API routes are
             mounted under <code>adminRestPrefix . '/v1/'</code> and expose user
             CRUD endpoints.
-        </p>
-        <p>
-            The privacy/GDPR routes (<code>settings/privacy/</code>,
-            <code>settings/privacy/gdpr-consent</code>,
-            <code>settings/privacy/export</code>,
-            <code>settings/privacy/anonymize</code>,
-            <code>settings/privacy/delete</code>) and the two-factor routes
-            (<code>settings/two-factor/</code>,
-            <code>settings/two-factor/enable</code>,
-            <code>settings/two-factor/disable/</code>) are likewise only
-            registered when their governing config flag
-            (<code>enableGdprCompliance</code>,
-            <code>allowAccountDelete</code>, and/or
-            <code>enableTwoFactorAuthentication</code>) is <code>true</code> &mdash;
-            see the <a href="/voyti/routes/">route table</a>. When a flag is off, the corresponding
-            route doesn't exist at all, so a request to it falls through to the
-            host application's own router-level not-found handling.
         </p>
 
         <h4>5. Done</h4>

@@ -195,9 +195,9 @@ voyti:
     - label: RBAC
       detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
     - label: Social authentication
-      detail: Various built-in auth clients
-    - label: Two-factor authentication
-      detail: TOTP (authenticator app) and email 2FA with enforced-per-permission support, plus one-time backup codes for account recovery
+      detail: OAuth2 login via Google, GitHub, Facebook, and more
+    - label: Two-factor authentication (TOTP)
+      detail: Authenticator app enrollment with QR code provisioning and enforced-per-permission support, plus one-time backup codes for account recovery
     - label: Password policies
       detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation
@@ -208,8 +208,8 @@ voyti:
       detail: Session tracking and termination
     - label: REST API
       detail: Optional JSON API for user CRUD
-    - label: reCAPTCHA
-      detail: Optional reCAPTCHA v2/v3 integration via yiirocks/recaptcha
+    - label: Bot Protection
+      detail: Optional Google reCAPTCHA v2/v3 for registration and login forms
     - label: i18n
       detail: Built-in translations for multiple languages
     - label: Themed views

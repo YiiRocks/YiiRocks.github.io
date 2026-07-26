@@ -15,6 +15,7 @@
         <link rel="alternate icon" href="/assets/images/favicon.ico">
         <link rel="apple-touch-icon" href="/assets/images/logo-180.png">
         <link href="//cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.jsdelivr.net/npm/bootstrap-icons@1/font/bootstrap-icons.min.css" rel="stylesheet">
         <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/atom-one-dark.min.css">
         <link rel="stylesheet" href="/assets/css/site.css">
         <script>
@@ -23,12 +24,12 @@
     </head>
     <body class="d-flex flex-column h-100">
         <div class="site-nav">
-            <div class="site-nav__inner">
-                {% if page.url != "/" %}<a href="/" class="site-nav__brand">{% else %}<span class="site-nav__brand">{% endif %}
-                    <span class="site-nav__logo"><img src="/assets/images/logo.svg" alt="Yii.Rocks"></span>
+            <div class="site-nav__inner d-flex align-items-center justify-content-between gap-4">
+                {% if page.url != "/" %}<a href="/" class="site-nav__brand d-flex align-items-center gap-2">{% else %}<span class="site-nav__brand d-flex align-items-center gap-2">{% endif %}
+                    <span class="site-nav__logo d-flex align-items-center justify-content-center flex-shrink-0"><img src="/assets/images/logo.svg" alt="Yii.Rocks"></span>
                     <span class="site-nav__wordmark">Yii<span class="site-nav__wordmark-accent">.Rocks</span></span>
                 {% if page.url != "/" %}</a>{% else %}</span>{% endif %}
-                <div class="site-nav__links">
+                <div class="site-nav__links d-flex align-items-center gap-4 flex-wrap">
 {% if page.pkgId %}
                     <a href="/#packages">All packages</a>
                     <a href="https://github.com/YiiRocks/{{ site.data.projects[page.pkgId].repo }}" target="_blank" rel="noopener">GitHub</a>
@@ -37,7 +38,7 @@
                     <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener">GitHub</a>
 {% endif %}
                     <a href="https://www.mr42.me/" target="_blank" rel="noopener">Mr. 42</a>
-                    <button type="button" class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+                    <button type="button" class="theme-toggle d-flex align-items-center justify-content-center" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
                 </div>
             </div>
         </div>
@@ -45,9 +46,9 @@
             {{ content }}
         </main>
         <footer class="site-footer mt-auto">
-            <div class="site-footer__inner">
-                <span class="site-footer__copy">&copy; Yii.Rocks &mdash; crafted by Mr. 42.</span>
-                <div class="site-footer__links">
+            <div class="site-footer__inner d-flex align-items-center justify-content-between flex-wrap gap-4">
+                <span class="site-footer__copy">Yii.Rocks &mdash; crafted by Mr. 42</span>
+                <div class="site-footer__links d-flex align-items-center gap-4">
                     <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" title="YiiRocks on GitHub">GitHub</a>
                     <a href="https://www.mr42.me/" target="_blank" rel="noopener" title="Visit Mr.42">mr42.me</a>
                 </div>
