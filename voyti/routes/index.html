@@ -88,10 +88,12 @@ title: "Voyti — Available Routes"
         </div>
 
         <p>
-            The REST API routes below live in a separate route group mounted at
-            <code>adminRestPrefix</code> and are only registered when
-            <code>enableRestApi</code> is <code>true</code> &mdash; see
-            <a href="/voyti/config/#rest-api">REST API</a>.
+            The REST API routes below live in their own <code>voyti-routes-api</code>
+            config group (see <a href="/voyti/quick-start/#4-register-routes">Quick
+            Start</a>), separate from <code>voyti-routes</code> above &mdash; pull
+            that group into your router too if you want the API exposed, and mount
+            it at whatever prefix you like. See <a href="/voyti/config/#rest-api">REST
+            API</a> for the remaining config options.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">

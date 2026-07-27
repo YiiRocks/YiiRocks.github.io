@@ -81,7 +81,9 @@ title: "Voyti — Quick Start"
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
             prefix as their own group, alongside your app's own routes &mdash;
-            change the prefix as needed:
+            change the prefix as needed. It also shows the optional REST API
+            group, mounted as its own sibling group; skip it if you don't need
+            the API (see below):
         </p>
         <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -103,27 +105,36 @@ return [
                     ->addRoute(
                         Group::create('/')
                             ->middleware(
-                                SessionMiddleware::class,              # required for site-wide session support
-                                VoytiMiddleware::class,                # Site-wide enforcement
+                                SessionMiddleware::class,                  # required for site-wide session support
+                                VoytiMiddleware::class,                    # Site-wide enforcement
                             )
-                            ->routes(...$config->get('routes')),       # Your routes
-                        Group::create('/user/')                        # Voyti URL prefix
-                            ->routes(...$config->get('voyti-routes')), # Voyti routes
+                            ->routes(...$config->get('routes')),           # Your routes
+                        Group::create('/user/')                            # Voyti web URL prefix
+                            ->routes(...$config->get('voyti-routes')),     # Voyti web routes
+                        Group::create('/user/api/')                        # REST API URL prefix — optional
+                            ->routes(...$config->get('voyti-routes-api')), # delete this group when unneeded
                     )
             ),
         ],
     ],
 ];</code></pre>
         <p>
-            <code>voyti-routes</code> already wraps itself with its own required
-            middleware (see <code>config/routes.php</code>), so the second group
-            above doesn't repeat any of it, and adding <code>VoytiMiddleware</code>
-            to your own group only extends that same coverage to your app's pages.
+            <code>voyti-routes</code> and <code>voyti-routes-api</code> each already
+            wrap themselves with their own required middleware (see
+            <code>config/routes.php</code> and <code>config/routes-api.php</code>), so
+            neither group above repeats any of it, and adding
+            <code>VoytiMiddleware</code> to your own group only extends that same
+            coverage to your app's pages.
         </p>
         <p>
-            When <code>enableRestApi</code> is <code>true</code>, the API routes are
-            mounted under <code>adminRestPrefix . '/v1/'</code> and expose user
-            CRUD endpoints.
+            The REST API routes are <strong>entirely optional</strong> and not part
+            of <code>voyti-routes</code> &mdash; they live in their own
+            <code>voyti-routes-api</code> config group, which nothing else depends
+            on. If you don't need the API, skip pulling that group in and none of
+            it is registered; there's no config flag to enable it or prefix option
+            to set, the group's own registration is the switch. When you do want
+            it, mount it wherever you like &mdash; the <code>/api/</code> sibling
+            group shown above is just one option.
         </p>
 
         <h4>5. Done</h4>
