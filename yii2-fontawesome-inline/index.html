@@ -4,13 +4,15 @@ pkgId: yii2-fontawesome-inline
 title: yii2-fontawesome-inline
 ---
 
-        <div class="alert alert-secondary" role="alert">
-            <strong>inline</strong><br>
-            <strong><em>/ˈɪnlʌɪn/</em></strong><br>
-            <em>adjective</em>
-            <hr>
-            included as part of the main text on a page, rather than in a separate section
-        </div>
+        <blockquote class="text-muted text-center mb-5">
+            <div class="display-5 fw-normal">inline</div>
+            <div class="fs-4 fst-italic text-body-secondary">/ˈɪnlʌɪn/</div>
+            <div class="fst-italic small fw-semibold">adjective</div>
+
+            <p class="lead fst-italic mt-3 mb-0">
+                included as part of the main text on a page, rather than in a separate section
+            </p>
+        </blockquote>
 
         <p>
             This extension provides simple functions for <a href="http://www.yiiframework.com/">Yii
@@ -19,7 +21,7 @@ title: yii2-fontawesome-inline
             <strong><em>without the use of JavaScript</em></strong>.
         </p>
 
-        <h3 class="doc-section-title">Options</h3>
+        <h3 class="fw-bolder mb-2">Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <code>bootstrap</code> <span class="font-monospace">( string = 'bootstrap4' )</span>
@@ -56,7 +58,7 @@ title: yii2-fontawesome-inline
             </li>
         </ul>
 
-        <h3 class="doc-section-title">ActiveForm Specific Global Options</h3>
+        <h3 class="fw-bolder mb-2">ActiveForm Specific Global Options</h3>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <code>ActiveFormFixedWidth</code> <span class="font-monospace">( bool = true )</span>
@@ -72,13 +74,13 @@ title: yii2-fontawesome-inline
             </li>
         </ul>
 
-        <h3 class="doc-section-title">Usage as a Class</h3>
+        <h3 class="fw-bolder mb-2">Usage as a Class</h3>
         <pre class="doc-example mb-3"><code class="language-php">$icon = new \thoulah\fontawesome\Icon();
 echo $icon-&gt;show('at');
 echo $icon-&gt;show('github', ['style' =&gt; 'brands', 'fill' =&gt; '#003865']);
 echo $icon-&gt;show('font-awesome', ['class' =&gt; 'yourClass', 'style' =&gt; 'brands']);</code></pre>
 
-        <h3 class="doc-section-title">Usage as a Widget</h3>
+        <h3 class="fw-bolder mb-2">Usage as a Widget</h3>
         <pre class="doc-example mb-3"><code class="language-php">use thoulah\fontawesome\IconWidget4 as IconWidget;
 echo IconWidget::widget(['name' =&gt; 'at']);
 echo IconWidget::widget(['name' =&gt; 'github', 'options' =&gt; ['style' =&gt; 'brands', 'fill' =&gt; '#003865']]);
@@ -91,7 +93,7 @@ echo IconWidget::widget([
     ],
 ]);</code></pre>
 
-        <h3 class="doc-section-title">Usage as a Component</h3>
+        <h3 class="fw-bolder mb-2">Usage as a Component</h3>
         <p>
             This is the preferred method if you need to override any of the
             default options throughout your application.
@@ -109,7 +111,7 @@ echo IconWidget::widget([
 echo Yii::$app-&gt;fontawesome-&gt;name('github', 'brands')-&gt;fill-&gt;('#003865');
 echo Yii::$app-&gt;fontawesome-&gt;name('font-awesome', 'brands')-&gt;class('yourClass');</code></pre>
 
-        <h3 class="doc-section-title">Usage from ActiveForm (automatic)</h3>
+        <h3 class="fw-bolder mb-2">Usage from ActiveForm (automatic)</h3>
         <pre class="doc-example mb-3"><code class="language-php">use thoulah\fontawesome\bootstrap4\ActiveForm;
 
 $form = ActiveForm::begin();
@@ -135,7 +137,7 @@ echo $form-&gt;field($model, 'field3', [
 
 ActiveForm::end();</code></pre>
 
-        <h3 class="doc-section-title">Usage from ActiveForm (manual)</h3>
+        <h3 class="fw-bolder mb-2">Usage from ActiveForm (manual)</h3>
         For <code>$icon</code> you can use any earlier described usage method.
         <pre class="doc-example mb-3"><code class="language-php">$form = ActiveForm::begin();
 

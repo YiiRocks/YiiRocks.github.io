@@ -13,11 +13,11 @@ title: reCAPTCHA
 
 {% assign pkg = site.data.projects[page.pkgId] %}
 {% if pkg.features %}
-        <h2 class="doc-eyebrow">Features</h2>
+        <h2 class="doc-section-heading">Features</h2>
         <div class="features-grid mb-4">
 {% for feat in pkg.features %}
             <div class="feature-card">
-                <div class="feature-card__label">{{ feat.label }}</div>
+                <div class="fw-bold mb-1">{{ feat.label }}</div>
                 <div class="feature-card__detail">{{ feat.detail }}</div>
             </div>
 {% endfor %}

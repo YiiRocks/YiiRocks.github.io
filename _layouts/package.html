@@ -7,7 +7,7 @@ layout: default
         <span class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
         <div>
             <h1 class="doc-header__name">{{ pkg.name }}</h1>
-            <div class="doc-header__tagline">{{ pkg.tagline }}</div>
+            <div class="doc-header__tagline fw-semibold">{{ pkg.tagline }}</div>
         </div>
     </div>
 
@@ -23,11 +23,11 @@ layout: default
     {{ content }}
 
 {% if pkg.options %}
-    <h2 class="doc-eyebrow">Options</h2>
+    <h2 class="doc-section-heading">Options</h2>
     <div class="options-table">
 {% for opt in pkg.options %}
         <div class="options-row">
-            <div class="options-name">{{ opt.name }}<span class="options-type"> {{ opt.type }}</span></div>
+            <div class="options-name">{{ opt.name }}<span class="options-type fw-normal"> {{ opt.type }}</span></div>
             <div class="options-desc">{{ opt.desc }}</div>
         </div>
 {% endfor %}
@@ -36,11 +36,11 @@ layout: default
 
 {% if pkg.inheritedFrom %}
 {% assign inherited_pkg = site.data.projects[pkg.inheritedFrom] %}
-    <h2 class="doc-eyebrow">Inherited from <a href="{{ inherited_pkg.docsUrl }}">{{ inherited_pkg.name }}</a></h2>
+    <h2 class="doc-section-heading">Inherited from <a href="{{ inherited_pkg.docsUrl }}">{{ inherited_pkg.name }}</a></h2>
     <div class="options-table">
 {% for opt in inherited_pkg.options %}
         <div class="options-row">
-            <div class="options-name">{{ opt.name }}<span class="options-type"> {{ opt.type }}</span></div>
+            <div class="options-name">{{ opt.name }}<span class="options-type fw-normal"> {{ opt.type }}</span></div>
             <div class="options-desc">{{ opt.desc }}</div>
         </div>
 {% endfor %}
@@ -48,7 +48,7 @@ layout: default
 {% endif %}
 
 {% if pkg.exampleHeading %}
-    <h2 class="doc-eyebrow">{{ pkg.exampleHeading }}</h2>
+    <h2 class="doc-section-heading">{{ pkg.exampleHeading }}</h2>
     <div class="doc-examples">
 {% for ex in pkg.examples %}
         <pre class="doc-example"><code class="language-php">{{ ex | escape }}</code></pre>

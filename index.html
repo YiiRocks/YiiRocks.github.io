@@ -3,7 +3,7 @@ layout: default
 title: Yii.Rocks
 ---
 
-<div class="hero">
+<div class="hero mb-3">
     <div class="hero__badge d-inline-flex align-items-center gap-2">
         <span class="hero__badge-dot"></span>
         {{ site.data.projects | size }} open-source packages, actively maintained
@@ -12,68 +12,71 @@ title: Yii.Rocks
     <p>Small, focused libraries that drop straight into your Yii apps.</p>
 </div>
 
-<div class="section">
-    <div class="pkg-grid">
-{% for item in site.data.projects %}
-{% assign key = item[0] %}
-{% assign pkg = item[1] %}
-        <a href="#{{ key }}" class="pkg-card{% if pkg.featured %} pkg-card--featured{% endif %}">
-            <div class="d-flex align-items-center gap-2">
-                <span class="pkg-card__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
-                <div class="pkg-card__name">{{ pkg.name }}</div>
-            </div>
-            <div class="pkg-card__tagline">{{ pkg.tagline }}</div>
-            <span class="copy-btn" role="button" tabindex="0" data-clipboard="composer require {{ pkg.package }}" onclick="event.preventDefault()">composer require {{ pkg.package }}</span>
-        </a>
-{% endfor %}
-    </div>
-</div>
-
 <div class="section" id="packages">
+    <div class="homepage-layout">
+        <nav class="homepage-sidebar" aria-label="Package navigation">
+            <div class="homepage-sidebar__heading fw-bold fs-sm text-body-secondary mb-2">Packages</div>
+            <ul class="homepage-sidebar__list">
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
-    <div class="docs-entry" id="{{ key }}">
-        <div class="docs-entry__top d-flex align-items-start justify-content-between flex-wrap">
-            <div class="docs-entry__title d-flex align-items-center gap-3">
-                <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
-                <div>
-                    <h3>{{ pkg.name }}</h3>
-                    <div class="docs-entry__tagline">{{ pkg.tagline }}</div>
-                </div>
-            </div>
-            <div class="d-flex gap-2 flex-wrap">
-                <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/{{ pkg.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-{% if pkg.docsUrl %}
-                <a href="{{ pkg.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
-{% endif %}
-            </div>
-        </div>
+                <li>
+                    <a href="#{{ key }}" class="homepage-sidebar__item">
+                        <span class="homepage-sidebar__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
+                        <span>{{ pkg.name }}</span>
+                    </a>
+                </li>
+{% endfor %}
+            </ul>
+        </nav>
 
-        <p class="docs-entry__desc">{{ pkg.description }}</p>
+        <div class="homepage-content">
+{% for item in site.data.projects %}
+{% assign key = item[0] %}
+{% assign pkg = item[1] %}
+            <div class="docs-entry" id="{{ key }}">
+                <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
+                    <div class="docs-entry__title d-flex align-items-center gap-3">
+                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
+                        <div>
+                            <h3>{{ pkg.name }}</h3>
+                            <div class="docs-entry__tagline fw-semibold">{{ pkg.tagline }}</div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                        <a href="https://packagist.org/packages/{{ pkg.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+{% if pkg.docsUrl %}
+                        <a href="{{ pkg.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
+{% endif %}
+                    </div>
+                </div>
+
+                <p class="docs-entry__desc">{{ pkg.description }}</p>
 
 {% if pkg.features %}
-        <div class="features-grid">
+                <div class="features-grid">
 {% for feat in pkg.features %}
-            <div class="feature-card">
-                <div class="feature-card__label">{{ feat.label }}</div>
-                <div class="feature-card__detail">{{ feat.detail }}</div>
-            </div>
+                    <div class="feature-card">
+                        <div class="fw-bold mb-1">{{ feat.label }}</div>
+                        <div class="feature-card__detail">{{ feat.detail }}</div>
+                    </div>
 {% endfor %}
-        </div>
+                </div>
 {% endif %}
 
 {% if pkg.usage %}
-        <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
+                <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
 {% endif %}
 
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
-            <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end">
-                {% include package_badges.html project=key %}
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
+                    <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end">
+                        {% include package_badges.html project=key %}
+                    </div>
+                </div>
             </div>
+{% endfor %}
         </div>
     </div>
-{% endfor %}
 </div>

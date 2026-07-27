@@ -13,15 +13,15 @@ layout: default
     <div class="doc-header d-flex align-items-center gap-4">
         <a href="{{ pkg.docsUrl }}" class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></a>
         <div>
-            <a href="{{ pkg.docsUrl }}" class="doc-header__name-link"><h1 class="doc-header__name">{{ pkg.name }}</h1></a>
-            <div class="doc-header__tagline">{{ pkg.tagline }}</div>
+            <a href="{{ pkg.docsUrl }}" class="link-body-emphasis link-underline-opacity-0"><h1 class="doc-header__name">{{ pkg.name }}</h1></a>
+            <div class="doc-header__tagline fw-semibold">{{ pkg.tagline }}</div>
         </div>
     </div>
 
     <div class="doc-section-layout">
 {% include doc_sidebar.html pkgId=page.pkgId section=page.section %}
         <div class="doc-section-content">
-            <h2 class="doc-section-title">{{ current_title }}</h2>
+            <h2 class="h3 fw-bolder mb-2">{{ current_title }}</h2>
             {{ content }}
 
             <div class="doc-section-prevnext d-flex justify-content-between gap-4">
