@@ -137,7 +137,65 @@ return [
             group shown above is just one option.
         </p>
 
-        <h4>5. Done</h4>
+        <h4 id="configure-the-form-theme">5. Configure the form theme</h4>
+        <p>
+            Voyti's forms (login, registration, profile, etc.) and its
+            button-styled links (e.g. &quot;Create user&quot;) render through
+            <code>yiisoft/form</code>'s <code>ThemeContainer</code>. Voyti ships
+            no theme of its own, so until your app configures one, every field
+            and button renders with no CSS classes at all &mdash; no
+            <code>form-control</code>, no <code>btn</code>, nothing.
+        </p>
+        <div class="alert alert-warning" role="alert">
+            This doesn't throw &mdash; it just silently renders unstyled forms
+            and buttons, so it's easy to miss until you actually look at the
+            page.
+        </div>
+        <p>
+            Set a theme in <code>config/params.php</code>. <code>yiisoft/form</code>
+            ships ready-made Bootstrap 5 configs you can use as-is:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Form\Theme\ThemePath;
+use Yiisoft\FormModel\ValidationRulesEnricher;
+
+return [
+    'yiisoft/form' => [
+        'themes' => [
+            'default' => [
+                ...require ThemePath::BOOTSTRAP5_VERTICAL,
+                'enrichFromValidationRules' => true,
+                'validationRulesEnricher' => new ValidationRulesEnricher(),
+            ],
+        ],
+        'defaultTheme' => 'default',
+    ],
+];</code></pre>
+        <p>
+            Swap in <code>ThemePath::BOOTSTRAP5_HORIZONTAL</code> for a
+            horizontal label/input layout, or write your own array of
+            <code>Theme::__construct()</code> options if you're not using
+            Bootstrap. The key doesn't have to be named <code>bootstrap5</code>
+            &mdash; <code>ThemeContainer</code> resolves a single named config
+            per <code>Theme</code> instance, so <code>enrichFromValidationRules</code>
+            and <code>validationRulesEnricher()</code> below have to live in
+            whichever config your <code>defaultTheme</code> points at, not in
+            a separate Bootstrap-only entry. Naming it <code>default</code>
+            (matching <code>yiisoft/form</code>'s own <code>config/params.php</code>
+            stub) keeps that clear.
+        </p>
+        <p>
+            <code>enrichFromValidationRules</code> and
+            <code>validationRulesEnricher</code> are worth setting alongside
+            the theme: they translate the <code>yiisoft/validator</code> rules
+            already on your form models (<code>Required</code>,
+            <code>Length</code>, <code>Regex</code>, etc.) into matching HTML5
+            input attributes (<code>required</code>, <code>minlength</code>/
+            <code>maxlength</code>, <code>pattern</code>, and so on), giving
+            you client-side validation for free instead of relying on a
+            server round-trip alone.
+        </p>
+
+        <h4>6. Done</h4>
         <p>
             DI bindings, event listeners, and console commands are auto-registered
             via the <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>.
