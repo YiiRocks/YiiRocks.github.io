@@ -190,26 +190,26 @@ voyti:
       detail: Registration, email confirmation, login/logout with remember-me, password recovery, password expiration
     - label: Profile management
       detail: User profiles with gravatar, timezone, bio, and a personal website link
-    - label: Identity switching
-      detail: Admins can temporarily switch into another user's identity for support or debugging, then restore their own session with one click
-    - label: RBAC
-      detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
     - label: Social authentication
       detail: OAuth2 login via Google, GitHub, Facebook, and more
-    - label: Two-factor authentication (TOTP)
-      detail: Authenticator app enrollment with QR code provisioning and enforced-per-permission support, plus one-time backup codes for account recovery
+    - label: Two-factor authentication
+      detail: TOTP (authenticator app) with QR code provisioning and email 2FA, with enforced-per-permission support, plus one-time backup codes for account recovery
+    - label: RBAC Management
+      detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
+    - label: Identity switching
+      detail: Admins can temporarily switch into another user's identity for support or debugging, then restore their own session with one click
+    - label: Session management
+      detail: Session tracking and termination
+    - label: GDPR compliance
+      detail: Consent management, data export, anonymized deletion with admin notification
     - label: Password policies
       detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation
       detail: "Three modes: immediate, confirm new address, confirm both old and new"
-    - label: GDPR compliance
-      detail: Consent management, data export, anonymized deletion with admin notification
-    - label: Session management
-      detail: Session tracking and termination
     - label: REST API
       detail: Optional JSON API for user CRUD
     - label: Bot Protection
-      detail: Optional Google reCAPTCHA v2/v3 for registration and login forms
+      detail: Google reCAPTCHA v2/v3 for registration and login forms
     - label: i18n
       detail: Built-in translations for multiple languages
     - label: Themed views

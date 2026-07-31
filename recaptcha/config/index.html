@@ -21,28 +21,46 @@ title: "reCAPTCHA — Configuration"
         <h4 class="doc-section-heading">General</h4>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">siteKeyV2<span class="options-type"> string</span></div>
-                <div class="options-desc">Public site key for <code>RecaptchaV2Field</code>, used as the fallback when a field doesn't call <code>withSiteKey()</code>. Default: <code>$_ENV['RECAPTCHA_SITE_KEY_V2']</code>, or <code>''</code> if unset.</div>
+                <div class="options-name-col">
+                    <div class="options-name">siteKeyV2<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>$_ENV['RECAPTCHA_SITE_KEY_V2']</code>, or <code>''</code> if unset</div>
+                </div>
+                <div class="options-desc">Public site key for <code>RecaptchaV2Field</code>, used as the fallback when a field doesn't call <code>withSiteKey()</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">secretV2<span class="options-type"> string</span></div>
-                <div class="options-desc">Secret key used to verify v2 tokens server-side, unless a rule overrides it with its own <code>secret</code>. Default: <code>$_ENV['RECAPTCHA_SECRET_V2']</code>, or <code>''</code> if unset.</div>
+                <div class="options-name-col">
+                    <div class="options-name">secretV2<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>$_ENV['RECAPTCHA_SECRET_V2']</code>, or <code>''</code> if unset</div>
+                </div>
+                <div class="options-desc">Secret key used to verify v2 tokens server-side, unless a rule overrides it with its own <code>secret</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">siteKeyV3<span class="options-type"> string</span></div>
-                <div class="options-desc">Public site key for <code>RecaptchaV3Field</code>, used as the fallback when a field doesn't call <code>withSiteKey()</code>. Default: <code>$_ENV['RECAPTCHA_SITE_KEY_V3']</code>, or <code>''</code> if unset.</div>
+                <div class="options-name-col">
+                    <div class="options-name">siteKeyV3<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>$_ENV['RECAPTCHA_SITE_KEY_V3']</code>, or <code>''</code> if unset</div>
+                </div>
+                <div class="options-desc">Public site key for <code>RecaptchaV3Field</code>, used as the fallback when a field doesn't call <code>withSiteKey()</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">secretV3<span class="options-type"> string</span></div>
-                <div class="options-desc">Secret key used to verify v3 tokens server-side, unless a rule overrides it with its own <code>secret</code>. Default: <code>$_ENV['RECAPTCHA_SECRET_V3']</code>, or <code>''</code> if unset.</div>
+                <div class="options-name-col">
+                    <div class="options-name">secretV3<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>$_ENV['RECAPTCHA_SECRET_V3']</code>, or <code>''</code> if unset</div>
+                </div>
+                <div class="options-desc">Secret key used to verify v3 tokens server-side, unless a rule overrides it with its own <code>secret</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">verifyUrl<span class="options-type"> string</span></div>
-                <div class="options-desc">Google's siteverify endpoint used by <code>RecaptchaClient</code>. Default: <code>'https://www.google.com/recaptcha/api/siteverify'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">verifyUrl<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>'https://www.google.com/recaptcha/api/siteverify'</code></div>
+                </div>
+                <div class="options-desc">Google's siteverify endpoint used by <code>RecaptchaClient</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">sendRemoteIp<span class="options-type"> bool</span></div>
-                <div class="options-desc">Include the visitor's IP address in verification requests, unless a rule overrides it with its own <code>sendRemoteIp</code>. Default: <code>false</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">sendRemoteIp<span class="options-type"> bool</span></div>
+                    <div class="options-default"><code>false</code></div>
+                </div>
+                <div class="options-desc">Include the visitor's IP address in verification requests, unless a rule overrides it with its own <code>sendRemoteIp</code>.</div>
             </div>
         </div>
 
@@ -55,15 +73,24 @@ title: "reCAPTCHA — Configuration"
         </p>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">container.useContainer<span class="options-type"> bool</span></div>
-                <div class="options-desc">Enable/disable the wrapper element. Default: <code>true</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">container.useContainer<span class="options-type"> bool</span></div>
+                    <div class="options-default"><code>true</code></div>
+                </div>
+                <div class="options-desc">Enable/disable the wrapper element.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">container.tag<span class="options-type"> string</span></div>
-                <div class="options-desc">Wrapper tag. Default: <code>'div'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">container.tag<span class="options-type"> string</span></div>
+                    <div class="options-default"><code>'div'</code></div>
+                </div>
+                <div class="options-desc">Wrapper tag.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">container.attributes<span class="options-type"> array</span></div>
-                <div class="options-desc">Wrapper HTML attributes. Default: <code>['class' => 'mb-3']</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">container.attributes<span class="options-type"> array</span></div>
+                    <div class="options-default"><code>['class' => 'mb-3']</code></div>
+                </div>
+                <div class="options-desc">Wrapper HTML attributes.</div>
             </div>
         </div>

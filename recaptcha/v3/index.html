@@ -25,67 +25,106 @@ echo RecaptchaV3Field::field($form, 'captcha')
         <h4>Options</h4>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">withSiteKey<span class="options-type">(string)</span></div>
-                <div class="options-desc">Explicit site key override. Optional — pulled from config by default. Default: <code>from config</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withSiteKey<span class="options-type">(string)</span></div>
+                    <div class="options-default"><code>from config</code></div>
+                </div>
+                <div class="options-desc">Explicit site key override. Optional — pulled from config by default.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withAction<span class="options-type">(string)</span></div>
-                <div class="options-desc">Action name sent to Google (must match the rule's <code>action</code> if set). Default: <code>''</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withAction<span class="options-type">(string)</span></div>
+                    <div class="options-default"><code>''</code></div>
+                </div>
+                <div class="options-desc">Action name sent to Google (must match the rule's <code>action</code> if set).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withFormId<span class="options-type">(string)</span></div>
+                <div class="options-name-col">
+                    <div class="options-name">withFormId<span class="options-type">(string)</span></div>
+                </div>
                 <div class="options-desc">Explicit form ID. When omitted the form is auto-resolved via <code>closest("form")</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withBadge<span class="options-type">(RecaptchaV3Badge)</span></div>
-                <div class="options-desc"><code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>. Default: <code>BottomRight</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withBadge<span class="options-type">(RecaptchaV3Badge)</span></div>
+                    <div class="options-default"><code>BottomRight</code></div>
+                </div>
+                <div class="options-desc"><code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withJsApiUrl<span class="options-type">(string)</span></div>
-                <div class="options-desc">Custom JS API URL. Default: Google CDN.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withJsApiUrl<span class="options-type">(string)</span></div>
+                    <div class="options-default">Google CDN</div>
+                </div>
+                <div class="options-desc">Custom JS API URL.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withTranslator<span class="options-type">(?TranslatorInterface)</span></div>
-                <div class="options-desc">Translator for the hidden badge legal notice. Default: from registry.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withTranslator<span class="options-type">(?TranslatorInterface)</span></div>
+                    <div class="options-default">from registry</div>
+                </div>
+                <div class="options-desc">Translator for the hidden badge legal notice.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">withExecuteTimeout<span class="options-type">(?int)</span></div>
-                <div class="options-desc">Fallback form submission timeout (null = disabled). Default: <code>5000 ms</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">withExecuteTimeout<span class="options-type">(?int)</span></div>
+                    <div class="options-default"><code>5000 ms</code></div>
+                </div>
+                <div class="options-desc">Fallback form submission timeout (null = disabled).</div>
             </div>
         </div>
 
         <h4 class="doc-section-heading">Inherited from InputField</h4>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">-&gt;name<span class="options-type">(string)</span></div>
-                <div class="options-desc">Override the hidden input name. Default: auto-derived from form model as <code>FormName[attribute]</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;name<span class="options-type">(string)</span></div>
+                    <div class="options-default">auto-derived from form model as <code>FormName[attribute]</code></div>
+                </div>
+                <div class="options-desc">Override the hidden input name.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">-&gt;inputId<span class="options-type">(?string)</span></div>
-                <div class="options-desc">Override the hidden input ID. Default: auto-generated unique ID.</div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;inputId<span class="options-type">(?string)</span></div>
+                    <div class="options-default">auto-generated unique ID</div>
+                </div>
+                <div class="options-desc">Override the hidden input ID.</div>
             </div>
         </div>
 
         <h4 class="doc-section-heading">Container (inherited from BaseField)</h4>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">-&gt;containerTag<span class="options-type">(string)</span></div>
-                <div class="options-desc">Wrapper tag. Default: <code>'div'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;containerTag<span class="options-type">(string)</span></div>
+                    <div class="options-default"><code>'div'</code></div>
+                </div>
+                <div class="options-desc">Wrapper tag.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">-&gt;containerClass<span class="options-type">(string ...)</span></div>
-                <div class="options-desc">Wrapper CSS class(es). Default: <code>'mb-3'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;containerClass<span class="options-type">(string ...)</span></div>
+                    <div class="options-default"><code>'mb-3'</code></div>
+                </div>
+                <div class="options-desc">Wrapper CSS class(es).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">-&gt;useContainer<span class="options-type">(bool)</span></div>
-                <div class="options-desc">Enable/disable wrapper. Default: <code>true</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;useContainer<span class="options-type">(bool)</span></div>
+                    <div class="options-default"><code>true</code></div>
+                </div>
+                <div class="options-desc">Enable/disable wrapper.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">-&gt;containerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;containerAttributes<span class="options-type">(array)</span></div>
+                </div>
                 <div class="options-desc">Set all wrapper attributes.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">-&gt;addContainerAttributes<span class="options-type">(array)</span></div>
+                <div class="options-name-col">
+                    <div class="options-name">-&gt;addContainerAttributes<span class="options-type">(array)</span></div>
+                </div>
                 <div class="options-desc">Merge additional wrapper attributes.</div>
             </div>
         </div>
@@ -118,31 +157,52 @@ final class LoginForm
         <h4 class="doc-section-heading">Rule parameters</h4>
         <div class="options-table mb-3">
             <div class="options-row">
-                <div class="options-name">threshold</div>
-                <div class="options-desc">Minimum score (0.0 — 1.0). Default: <code>0.5</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">threshold</div>
+                    <div class="options-default"><code>0.5</code></div>
+                </div>
+                <div class="options-desc">Minimum score (0.0 — 1.0).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">action</div>
-                <div class="options-desc">Expected action name (skipped if <code>null</code>). Default: <code>null</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">action</div>
+                    <div class="options-default"><code>null</code></div>
+                </div>
+                <div class="options-desc">Expected action name (skipped if <code>null</code>).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">message</div>
-                <div class="options-desc">Error message (translatable). Default: <code>'The CAPTCHA verification failed.'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">message</div>
+                    <div class="options-default"><code>'The CAPTCHA verification failed.'</code></div>
+                </div>
+                <div class="options-desc">Error message (translatable).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">scoreTooLowMessage</div>
-                <div class="options-desc">Error when score is below threshold. Default: <code>'The CAPTCHA score is too low.'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">scoreTooLowMessage</div>
+                    <div class="options-default"><code>'The CAPTCHA score is too low.'</code></div>
+                </div>
+                <div class="options-desc">Error when score is below threshold.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">actionMismatchMessage</div>
-                <div class="options-desc">Error when action doesn't match. Default: <code>'The CAPTCHA action does not match.'</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">actionMismatchMessage</div>
+                    <div class="options-default"><code>'The CAPTCHA action does not match.'</code></div>
+                </div>
+                <div class="options-desc">Error when action doesn't match.</div>
             </div>
             <div class="options-row">
-                <div class="options-name">secret</div>
-                <div class="options-desc">Custom secret (uses config default if <code>null</code>). Default: <code>null</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">secret</div>
+                    <div class="options-default"><code>null</code></div>
+                </div>
+                <div class="options-desc">Custom secret (uses config default if <code>null</code>).</div>
             </div>
             <div class="options-row">
-                <div class="options-name">sendRemoteIp</div>
-                <div class="options-desc">Whether to include the user's IP in verification. Default: <code>false</code>.</div>
+                <div class="options-name-col">
+                    <div class="options-name">sendRemoteIp</div>
+                    <div class="options-default"><code>false</code></div>
+                </div>
+                <div class="options-desc">Whether to include the user's IP in verification.</div>
             </div>
         </div>

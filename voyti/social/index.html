@@ -18,18 +18,15 @@ title: "Voyti — Social Authentication"
         </p>
 
         <h4>Configuring providers</h4>
-        <p>Two pieces are needed in the host application:</p>
-        <ol>
-            <li>
-                A <code>clients</code> map under the <code>yiisoft/yii-auth-client</code>
-                params key, listing which provider client classes are active.
-            </li>
-            <li>
-                A DI definition for each listed client class, calling
-                <code>setClientId()</code>/<code>setClientSecret()</code> (and any other
-                setters that client exposes — scope, tenant, etc.) with real credentials.
-            </li>
-        </ol>
+        <p>
+            One piece is needed in the host application: a <code>clients</code> map under
+            the <code>yiisoft/yii-auth-client</code> params key. Each entry is an array with
+            a <code>class</code> key plus any setter-backed option that client exposes —
+            <code>clientId</code>, <code>clientSecret</code>, <code>scope</code>,
+            <code>tenant</code>, etc. — each config key is mapped automatically to a
+            <code>set&lt;Ucfirst(key)&gt;()</code> call on the client. No separate
+            <code>config/di.php</code> definition is read for this.
+        </p>
         <p>
             Voyti configures each client's OAuth2 return URL for you automatically, keyed to
             match its own <code>clients</code> entry.
@@ -38,23 +35,17 @@ title: "Voyti — Social Authentication"
 return [
     'yiisoft/yii-auth-client' => [
         'clients' => [
-            'github' => \Yiisoft\Yii\AuthClient\Client\GitHub::class,
-            'google' => \Yiisoft\Yii\AuthClient\Client\Google::class,
+            'github' => [
+                'class' => \Yiisoft\Yii\AuthClient\Client\GitHub::class,
+                'clientId' => $_ENV['GITHUB_CLIENT_ID'],
+                'clientSecret' => $_ENV['GITHUB_CLIENT_SECRET'],
+            ],
+            'google' => [
+                'class' => \Yiisoft\Yii\AuthClient\Client\Google::class,
+                'clientId' => $_ENV['GOOGLE_CLIENT_ID'],
+                'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'],
+            ],
         ],
-    ],
-];</code></pre>
-        <pre class="doc-example mb-3"><code class="language-php">// config/di.php
-use Yiisoft\Yii\AuthClient\Client\GitHub;
-use Yiisoft\Yii\AuthClient\Client\Google;
-
-return [
-    GitHub::class => [
-        'setClientId()' => [$_ENV['GITHUB_CLIENT_ID']],
-        'setClientSecret()' => [$_ENV['GITHUB_CLIENT_SECRET']],
-    ],
-    Google::class => [
-        'setClientId()' => [$_ENV['GOOGLE_CLIENT_ID']],
-        'setClientSecret()' => [$_ENV['GOOGLE_CLIENT_SECRET']],
     ],
 ];</code></pre>
         <p>
@@ -63,8 +54,8 @@ return [
             is merged in automatically once it's <code>composer require</code>d. See
             yii-auth-client's own
             <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">Quick Start</a>
-            guide for the full option set each client supports (custom scope via
-            <code>setScope()</code>, extra auth-URL parameters, etc.).
+            guide for the full option set each client supports (custom scope via the
+            <code>scope</code> key, extra auth-URL parameters, etc.).
         </p>
 
         <div class="alert alert-warning" role="alert">
@@ -102,7 +93,7 @@ return [
                     <tr><td><code>Client\Google</code></td><td><code>google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>
                     <tr><td><code>Client\GitHub</code></td><td><code>github</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), Voyti leaves <code>email</code> null rather than issuing a secondary request — the user supplies one manually during the registration-connect flow.</td></tr>
                     <tr><td><code>Client\LinkedIn</code></td><td><code>linkedin</code></td><td>Identity comes from the OIDC-style <code>sub</code> claim rather than <code>id</code>.</td></tr>
-                    <tr><td><code>Client\MicrosoftOnline</code></td><td><code>microsoftonline</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps need the host's own DI wiring to also call <code>setTenant()</code> plus <code>setAuthUrl($client-&gt;getAuthUrlWithTenantInserted($tenant))</code>/<code>setTokenUrl($client-&gt;getTokenUrlWithTenantInserted($tenant))</code> — the vendor client's own <code>$authUrl</code>/<code>$tokenUrl</code> defaults are literal strings containing an un-interpolated <code>{$tenant}</code> placeholder otherwise.</td></tr>
+                    <tr><td><code>Client\Microsoft</code></td><td><code>microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry — the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
                     <tr><td><code>Client\Facebook</code></td><td><code>facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, Voyti leaves it null rather than issuing a secondary Graph API call.</td></tr>
                     <tr><td><code>Client\VKontakte</code></td><td><code>vkontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all — Voyti falls back to the email's local part.</td></tr>
                     <tr><td><code>Client\X</code></td><td><code>x</code></td><td>Response is unwrapped from its <code>data</code> envelope. Never returns email (X API v2 doesn't expose it without elevated access).</td></tr>

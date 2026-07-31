@@ -139,7 +139,7 @@ main { min-height: 60vh; }
 code {
     font-family: $mono;
     color: var(--yr-accent-muted);
-    font-size: .9em;
+    font-size: 1em;
 }
 
 ::selection {
@@ -689,9 +689,11 @@ code {
 
     &:hover { background: var(--yr-link-bg); }
 
+    .options-name-col { display: flex; flex-direction: column; gap: 6px; }
     .options-name { font-family: $mono; font-size: 14px; font-weight: 600; }
     .options-type { color: var(--yr-muted); }
     .options-desc { font-size: 14.5px; line-height: 1.6; color: var(--yr-text-soft); }
+    .options-default { font-family: $mono; font-size: 13px; line-height: 1.4; color: var(--yr-muted); }
 }
 
 .doc-examples {
