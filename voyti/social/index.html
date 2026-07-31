@@ -22,7 +22,9 @@ title: "Voyti — Social Authentication"
             Configure providers via a <code>clients</code> map under the
             <code>yiisoft/yii-auth-client</code> params key. Voyti configures each
             client's OAuth2 return URL for you automatically, keyed to match its
-            own <code>clients</code> entry.
+            own <code>clients</code> entry. Alternatively you can set a callback URL
+            manually by adding an <code>oauth2ReturnUrl</code> key to that client's
+            config — Voyti only fills it in when it's left unset.
         </p>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
