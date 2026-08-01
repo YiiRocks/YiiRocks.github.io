@@ -12,10 +12,12 @@ title: "Voyti — Configuration"
         <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Enum\EmailChangeConfirmation;
 use YiiRocks\Voyti\Enum\ProfileVisibility;
 use YiiRocks\Voyti\Enum\RecaptchaVersion;
+use YiiRocks\Voyti\Enum\WebTheme;
 
 return [
     'yiirocks/voyti' => [
         'appName' => 'My Project',
+        'webTheme' => WebTheme::BOOTSTRAP5,
         'emailChangeConfirmation' => EmailChangeConfirmation::BOTH,
         'recaptchaVersion' => RecaptchaVersion::V2,
         'profileVisibility' => ProfileVisibility::PUBLIC,
@@ -227,17 +229,24 @@ return [
         <div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
-                    <div class="options-name">viewPath<span class="options-type"> string</span></div>
-                    <div class="options-default"><code>VoytiConfig::DEFAULT_VIEW_PATH</code></div>
+                    <div class="options-name">webTheme<span class="options-type"> WebTheme</span></div>
+                    <div class="options-default"><code>WebTheme::BOOTSTRAP5</code></div>
                 </div>
-                <div class="options-desc">Base path for web templates.</div>
+                <div class="options-desc">Shipped theme to use as the base for web templates. Custom <code>viewPath</code> overrides are checked first; missing templates fall back to this selected theme, ensuring consistent styling across partial customizations.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">viewPath<span class="options-type"> ?string</span></div>
+                    <div class="options-default"><code>null</code></div>
+                </div>
+                <div class="options-desc">Optional custom directory for web template overrides. When a template is not found here, falls back to the selected <code>webTheme</code>. Leave <code>null</code> to use only shipped templates.</div>
             </div>
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">mailPath<span class="options-type"> string</span></div>
                     <div class="options-default"><code>VoytiConfig::DEFAULT_MAIL_PATH</code></div>
                 </div>
-                <div class="options-desc">Base path for mail templates.</div>
+                <div class="options-desc">Base path for mail templates. If a template is not found here, falls back to the default mail templates.</div>
             </div>
         </div>
 
