@@ -185,6 +185,8 @@ voyti:
       title: Routes
     - slug: events
       title: Events
+    - slug: cookbook
+      title: Cookbook
   features:
     - label: User management
       detail: Registration, email confirmation, login/logout with remember-me, password recovery, password expiration

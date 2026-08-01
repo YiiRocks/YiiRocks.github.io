@@ -1,0 +1,64 @@
+---
+layout: package-section
+pkgId: voyti
+section: cookbook
+title: "Voyti — Cookbook"
+---
+
+        <h4>Building a nav menu from voyti's routes</h4>
+        <p>
+            Voyti does not provide a menu model or navigation contract (see
+            <a href="/voyti/routes/">Routes</a>) &mdash; it only exposes named routes that the
+            host application wires into its own menu, sidebar, or access rules. For example, a
+            <a href="https://github.com/yiisoft/yii-bootstrap5"><code>yiisoft/yii-bootstrap5</code></a>
+            nav built from those routes might look like:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Yii\Bootstrap5\Nav;
+use Yiisoft\Yii\Bootstrap5\NavLink;
+
+echo Nav::widget()->items(
+    NavLink::to($this->translator->translate('voyti.view.login.title', category: 'voyti'), $this->url->generate('voyti/session-login'))
+        ->visible($this->currentUser->isGuest()),
+    NavLink::to('User', $this->url->generate('voyti/user'))
+        ->active(str_starts_with($this->currentRoute->getName() ?? '', 'voyti/user'))
+        ->visible(!$this->currentUser->isGuest()),
+    NavLink::to('Admin', $this->url->generate('voyti/admin'))
+        ->active(str_starts_with($this->currentRoute->getName() ?? '', 'voyti/admin'))
+        ->visible($this->authManager->userHasPermission($this->currentUser->getId(), 'voyti-admin')),
+);</code></pre>
+        <p>
+            <code>voyti/session-logout</code> only accepts <code>POST</code>, so it can't be a
+            plain <code>NavLink</code>. Render it as its own small form instead, styled to match
+            the nav:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Html\Html;
+
+if (!$this->currentUser->isGuest()) {
+    echo Html::li()->class('nav-item')->open();
+    echo Html::form()->post($this->url->generate('voyti/session-logout'))->csrf($csrf)->open();
+    echo Html::submitButton($this->translator->translate('voyti.menu.logout', category: 'voyti'))
+        ->class('nav-link', 'btn', 'btn-link');
+    echo Html::form()->close();
+    echo Html::li()->close();
+}</code></pre>
+        <p>
+            <code>$csrf</code> here is the <code>Csrf</code> value object that
+            <a href="https://github.com/yiisoft/yii-view-renderer"><code>Yiisoft\Yii\View\Renderer\CsrfViewInjection</code></a>
+            makes available to views when it's registered as a common parameter injection.
+        </p>
+
+        <h4>Showing the impersonation banner in your own layout</h4>
+        <p>
+            When an admin uses <a href="/voyti/routes/#admin"><code>voyti/admin-users-switch-identity</code></a>
+            to temporarily assume another user's identity, drop in
+            <code>YiiRocks\Voyti\Widget\SwitchIdentityWidget</code> anywhere in your layout to show
+            the "you're logged in as this user" banner with a restore button:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Voyti\Widget\SwitchIdentityWidget;
+
+echo SwitchIdentityWidget::widget();</code></pre>
+        <p>
+            Its dependencies resolve through the DI container, so this needs no wiring beyond
+            having voyti installed, and it renders an empty string when nobody is impersonating
+            anyone.
+        </p>
