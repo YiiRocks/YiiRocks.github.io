@@ -2,7 +2,7 @@
 layout: package-section
 pkgId: voyti
 section: quick-start
-title: "Voyti — Quick Start"
+title: "Voyti - Quick Start"
 ---
 
         <h4>1. Install</h4>
@@ -55,13 +55,13 @@ title: "Voyti — Quick Start"
             login IP, etc.) included. <code>config/params-console.php</code> also
             registers <code>yiisoft/rbac-db</code>'s own item/assignment
             migrations, so <code>./yii migrate:up</code> creates the RBAC tables
-            too &mdash; no separate step needed.
+            too - no separate step needed.
         </p>
         <p>
             If the <code>user</code> table is still empty after these migrations
             run, a default admin account is seeded automatically: username
             <code>admin</code>, email <code>admin@example.com</code>, and a random
-            20-character password printed to the console &mdash; copy it
+            20-character password printed to the console - copy it
             immediately, it isn't stored anywhere else. The account is assigned
             the <code>administrator</code> role, which is granted the
             <code>administratorPermissionName</code> permission
@@ -74,13 +74,13 @@ title: "Voyti — Quick Start"
 
         <h4 id="4-register-routes">4. Register routes</h4>
         <p>
-            Routes are <strong>not</strong> auto-registered — you must add them
+            Routes are <strong>not</strong> auto-registered - you must add them
             to your router configuration.
         </p>
         <p>
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
-            prefix as their own group, alongside your app's own routes &mdash;
+            prefix as their own group, alongside your app's own routes -
             change the prefix as needed. It also shows the optional REST API
             group, mounted as its own sibling group; skip it if you don't need
             the API (see below):
@@ -111,7 +111,7 @@ return [
                             ->routes(...$config->get('routes')),           # Your routes
                         Group::create('/user/')                            # Voyti web URL prefix
                             ->routes(...$config->get('voyti-routes')),     # Voyti web routes
-                        Group::create('/user/api/')                        # REST API URL prefix — optional
+                        Group::create('/user/api/')                        # REST API URL prefix - optional
                             ->routes(...$config->get('voyti-routes-api')), # delete this group when unneeded
                     )
             ),
@@ -128,12 +128,12 @@ return [
         </p>
         <p>
             The REST API routes are <strong>entirely optional</strong> and not part
-            of <code>voyti-routes</code> &mdash; they live in their own
+            of <code>voyti-routes</code> - they live in their own
             <code>voyti-routes-api</code> config group, which nothing else depends
             on. If you don't need the API, skip pulling that group in and none of
             it is registered; there's no config flag to enable it or prefix option
             to set, the group's own registration is the switch. When you do want
-            it, mount it wherever you like &mdash; the <code>/api/</code> sibling
+            it, mount it wherever you like - the <code>/api/</code> sibling
             group shown above is just one option.
         </p>
 
@@ -143,11 +143,11 @@ return [
             button-styled links (e.g. &quot;Create user&quot;) render through
             <code>yiisoft/form</code>'s <code>ThemeContainer</code>. Voyti ships
             no theme of its own, so until your app configures one, every field
-            and button renders with no CSS classes at all &mdash; no
+            and button renders with no CSS classes at all - no
             <code>form-control</code>, no <code>btn</code>, nothing.
         </p>
         <div class="alert alert-warning" role="alert">
-            This doesn't throw &mdash; it just silently renders unstyled forms
+            This doesn't throw - it just silently renders unstyled forms
             and buttons, so it's easy to miss until you actually look at the
             page.
         </div>
@@ -175,7 +175,7 @@ return [
             horizontal label/input layout, or write your own array of
             <code>Theme::__construct()</code> options if you're not using
             Bootstrap. The key doesn't have to be named <code>bootstrap5</code>
-            &mdash; <code>ThemeContainer</code> resolves a single named config
+            - <code>ThemeContainer</code> resolves a single named config
             per <code>Theme</code> instance, so <code>enrichFromValidationRules</code>
             and <code>validationRulesEnricher()</code> below have to live in
             whichever config your <code>defaultTheme</code> points at, not in

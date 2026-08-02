@@ -2,7 +2,7 @@
 layout: package-section
 pkgId: voyti
 section: config
-title: "Voyti — Configuration"
+title: "Voyti - Configuration"
 ---
 
         <p>
@@ -30,14 +30,14 @@ return [
                     <div class="options-name">appName<span class="options-type"> string</span></div>
                     <div class="options-default"><code>'Voyti'</code></div>
                 </div>
-                <div class="options-desc">Application name — used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects.</div>
+                <div class="options-desc">Application name - used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects.</div>
             </div>
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">homeRoute<span class="options-type"> string</span></div>
                     <div class="options-default"><code>'home'</code></div>
                 </div>
-                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app — an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception.</div>
+                <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app - an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception.</div>
             </div>
         </div>
 
@@ -55,7 +55,7 @@ return [
                     <div class="options-name">enableSocialNetworkRegistration<span class="options-type"> bool</span></div>
                     <div class="options-default"><code>true</code></div>
                 </div>
-                <div class="options-desc">Allow social network registration. Has no effect until at least one provider is configured — see <a href="/voyti/social/">Social Authentication</a>.</div>
+                <div class="options-desc">Allow social network registration. Has no effect until at least one provider is configured - see <a href="/voyti/social/">Social Authentication</a>.</div>
             </div>
             <div class="options-row">
                 <div class="options-name-col">
@@ -132,7 +132,7 @@ return [
                     <div class="options-name">recaptchaVersion<span class="options-type"> RecaptchaVersion</span></div>
                     <div class="options-default"><code>RecaptchaVersion::V3</code></div>
                 </div>
-                <div class="options-desc"><code>RecaptchaVersion::V2</code> or <code>RecaptchaVersion::V3</code>. Requires the optional <code>yiirocks/recaptcha</code> package plus a site key and secret configured for the selected version via that package's own <code>RecaptchaRegistry::configure()</code> — without it, forms silently render and validate without reCAPTCHA.</div>
+                <div class="options-desc"><code>RecaptchaVersion::V2</code> or <code>RecaptchaVersion::V3</code>. Requires the optional <code>yiirocks/recaptcha</code> package plus a site key and secret configured for the selected version via that package's own <code>RecaptchaRegistry::configure()</code> - without it, forms silently render and validate without reCAPTCHA.</div>
             </div>
         </div>
 
@@ -265,7 +265,7 @@ return [
             config group into your router (see
             <a href="/voyti/quick-start/#4-register-routes">Quick Start</a>). It
             authenticates via a Bearer token, not the web session/CSRF cookie
-            &mdash; issue one with <code>voyti:api-token:generate</code> (see
+            - issue one with <code>voyti:api-token:generate</code> (see
             <a href="/voyti/console/">Console commands</a>) and send it as
             <code>Authorization: Bearer &lt;token&gt;</code>.
             <code>AccessRuleMiddleware</code> still applies afterwards to

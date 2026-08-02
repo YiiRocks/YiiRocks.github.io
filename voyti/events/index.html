@@ -2,7 +2,7 @@
 layout: package-section
 pkgId: voyti
 section: events
-title: "Voyti — Events & Listeners"
+title: "Voyti - Events & Listeners"
 ---
 
         <p>Voyti dispatches events at key points in the user lifecycle,
@@ -27,13 +27,13 @@ title: "Voyti — Events & Listeners"
         </table>
 
         <h4>Additional events (no default listeners)</h4>
-        <p>Dispatched by the library, but nothing consumes them by default &mdash;
+        <p>Dispatched by the library, but nothing consumes them by default -
         attach your own listener via the event dispatcher configuration if you
         need to react to them.</p>
         <ul>
-            <li><strong>UserEvent</strong> &mdash; Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
-            <li><strong>UserProfileEvent</strong> &mdash; Dispatched when a user updates their profile</li>
-            <li><strong>GdprEvent</strong> &mdash; Dispatched after a user's account is anonymized (not on hard delete, which fires <code>UserEvent</code> with type <code>UserEvent::DELETE</code>)</li>
-            <li><strong>ResetPasswordEvent</strong> &mdash; Password reset flow</li>
-            <li><strong>SessionEvent</strong> &mdash; Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, GDPR anonymization, or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
+            <li><strong>UserEvent</strong> - Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
+            <li><strong>UserProfileEvent</strong> - Dispatched when a user updates their profile</li>
+            <li><strong>GdprEvent</strong> - Dispatched after a user's account is anonymized (not on hard delete, which fires <code>UserEvent</code> with type <code>UserEvent::DELETE</code>)</li>
+            <li><strong>ResetPasswordEvent</strong> - Password reset flow</li>
+            <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, GDPR anonymization, or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
         </ul>

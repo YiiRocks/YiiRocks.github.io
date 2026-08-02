@@ -2,7 +2,7 @@
 layout: package-section
 pkgId: voyti
 section: middleware
-title: "Voyti — Middleware"
+title: "Voyti - Middleware"
 ---
 
         <p>The extension ships eight PSR-15 middleware classes for session handling and access control:</p>
@@ -18,26 +18,26 @@ title: "Voyti — Middleware"
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
                     <td>Redirects guests to the login page (<code>voyti/session-login</code>); checks <code>administratorPermissionName</code> for admin access</td>
-                    <td>Yes &mdash; on <code>admin/*</code> (users and RBAC management) and the REST API group</td>
+                    <td>Yes - on <code>admin/*</code> (users and RBAC management) and the REST API group</td>
                 </tr>
                 <tr>
                     <td><code>RequireLoginMiddleware</code></td>
                     <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code></td>
-                    <td>Yes &mdash; on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
+                    <td>Yes - on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
                 </tr>
                 <tr>
                     <td><code>ApiTokenAuthenticationMiddleware</code></td>
                     <td>Resolves the <code>Authorization: Bearer &lt;token&gt;</code> header to a user for that request only (no session); returns <code>401</code> if missing/invalid</td>
-                    <td>Yes &mdash; on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
+                    <td>Yes - on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
                 </tr>
                 <tr>
                     <td><code>RememberMeMiddleware</code></td>
-                    <td>Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response &mdash; either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved</td>
+                    <td>Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response - either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved</td>
                     <td>Yes</td>
                 </tr>
                 <tr>
                     <td><code>SessionRevocationEnforceMiddleware</code></td>
-                    <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone &mdash; i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
+                    <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone - i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
                     <td>Yes</td>
                 </tr>
                 <tr>
@@ -53,7 +53,7 @@ title: "Voyti — Middleware"
                 <tr>
                     <td><code>VoytiMiddleware</code></td>
                     <td>Convenience wrapper that chains <code>RememberMeMiddleware</code>, <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry</td>
-                    <td>No, add it to the <code>Group</code> wrapping your app's own routes &mdash; see the <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
+                    <td>No, add it to the <code>Group</code> wrapping your app's own routes - see the <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
                 </tr>
             </tbody>
         </table>
@@ -64,6 +64,6 @@ title: "Voyti — Middleware"
             defines</em>. Without <code>VoytiMiddleware</code> wrapping your
             routes, a user with an expired password, missing 2FA, or a revoked
             session can still browse your app's own dashboard, home page, or
-            any other route outside this extension &mdash; and a visitor with
+            any other route outside this extension - and a visitor with
             a valid remember-me cookie won't be logged back in either.
         </p>

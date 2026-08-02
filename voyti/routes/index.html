@@ -2,7 +2,7 @@
 layout: package-section
 pkgId: voyti
 section: routes
-title: "Voyti — Available Routes"
+title: "Voyti - Available Routes"
 ---
 
         <p>
@@ -46,7 +46,7 @@ title: "Voyti — Available Routes"
                     <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA &mdash; shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA - shared by both the Google Authenticator and email code-entry forms. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code. Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor/email/</code></td><td>Email 2FA setup page (method-selector buttons + confirm/send screen). Only registered when <code>enableTwoFactorAuthentication</code> is <code>true</code></td></tr>
@@ -90,7 +90,7 @@ title: "Voyti — Available Routes"
         <p>
             The REST API routes below live in their own <code>voyti-routes-api</code>
             config group (see <a href="/voyti/quick-start/#4-register-routes">Quick
-            Start</a>), separate from <code>voyti-routes</code> above &mdash; pull
+            Start</a>), separate from <code>voyti-routes</code> above - pull
             that group into your router too if you want the API exposed, and mount
             it at whatever prefix you like. See <a href="/voyti/config/#rest-api">REST
             API</a> for the remaining config options.

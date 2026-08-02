@@ -2,14 +2,14 @@
 layout: package-section
 pkgId: voyti
 section: social
-title: "Voyti — Social Authentication"
+title: "Voyti - Social Authentication"
 ---
 
         <p>
             Social login is built on
             <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>'s
             OAuth2 clients rather than a hand-rolled implementation. Voyti carries no
-            OAuth2 protocol code, and no provider configuration, of its own — providers
+            OAuth2 protocol code, and no provider configuration, of its own - providers
             are configured entirely through that package's own params/DI, not through
             any Voyti-owned option. The redirect/callback flow is handled directly by
             the vendor's <code>AuthAction</code> PSR-15 middleware, wired in Voyti's
@@ -24,7 +24,7 @@ title: "Voyti — Social Authentication"
             client's OAuth2 return URL for you automatically, keyed to match its
             own <code>clients</code> entry. Alternatively you can set a callback URL
             manually by adding an <code>oauth2ReturnUrl</code> key to that client's
-            config — Voyti only fills it in when it's left unset.
+            config - Voyti only fills it in when it's left unset.
         </p>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
@@ -45,7 +45,7 @@ return [
 ];</code></pre>
         <p>
             With <code>yiisoft/config</code> installed (the standard way to run a Yii3
-            app), this is all that's needed — the package's own <code>config/di.php</code>
+            app), this is all that's needed - the package's own <code>config/di.php</code>
             is merged in automatically once it's <code>composer require</code>d. See
             yii-auth-client's own
             <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">Quick Start</a>
@@ -57,7 +57,7 @@ return [
             register with the provider itself, as a full absolute URL:
             <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>. Most
             providers' developer consoles require an exact match, so settle on your keys
-            before registering each provider's OAuth app — changing a key later means
+            before registering each provider's OAuth app - changing a key later means
             updating that provider's redirect URI too.
         </p>
 
@@ -65,9 +65,9 @@ return [
         <p>
             Nine branded provider classes ship in <code>yiisoft/yii-auth-client</code>,
             each backed by its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
-            (plus a generic <code>Client\OpenIdConnect</code> client — see below).
+            (plus a generic <code>Client\OpenIdConnect</code> client - see below).
             Defaults (scope, endpoints) come entirely from the vendor client and its own
-            DI wiring — see yii-auth-client's own docs for the full per-client option set.
+            DI wiring - see yii-auth-client's own docs for the full per-client option set.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -79,12 +79,12 @@ return [
                 </thead>
                 <tbody>
                     <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, Voyti leaves it null rather than issuing a secondary Graph API call.</td></tr>
-                    <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), Voyti leaves <code>email</code> null rather than issuing a secondary request — the user supplies one manually during the registration-connect flow.</td></tr>
+                    <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), Voyti leaves <code>email</code> null rather than issuing a secondary request - the user supplies one manually during the registration-connect flow.</td></tr>
                     <tr><td><code>Client\Google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>
                     <tr><td><code>Client\LinkedIn</code></td><td>Identity comes from the OIDC-style <code>sub</code> claim rather than <code>id</code>.</td></tr>
-                    <tr><td><code>Client\Microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry — the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
+                    <tr><td><code>Client\Microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry - the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
                     <tr><td><code>Client\TikTok</code></td><td>Identity comes from <code>open_id</code> rather than <code>id</code>. Never returns email.</td></tr>
-                    <tr><td><code>Client\VKontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all — Voyti falls back to the email's local part.</td></tr>
+                    <tr><td><code>Client\VKontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all - Voyti falls back to the email's local part.</td></tr>
                     <tr><td><code>Client\X</code></td><td>Response is unwrapped from its <code>data</code> envelope. Never returns email (X API v2 doesn't expose it without elevated access).</td></tr>
                     <tr><td><code>Client\Yandex</code></td><td>Email read from <code>default_email</code>.</td></tr>
                 </tbody>
@@ -109,6 +109,6 @@ return [
             Generic self-hosted OpenID Connect identity providers aren't part of
             Voyti's built-in provider list. yii-auth-client ships a generic
             <code>Client\OpenIdConnect</code> class capable of real OIDC discovery and
-            token validation — wiring one up is entirely the host application's own
+            token validation - wiring one up is entirely the host application's own
             responsibility, configured the same way as any other client above.
         </p>
