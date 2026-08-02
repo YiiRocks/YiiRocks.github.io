@@ -151,6 +151,53 @@ svg-inline-fontawesome:
     - "echo $svg->fai('hands-wash')->title('Wash your hands');"
     - "echo $svg->fai('github', 'brands')->title('GitHub');"
 
+toast-bootstrap5:
+  name: Toast Bootstrap5
+  tagline: Bootstrap 5 toast notifications from flash messages
+  tint: "#fff1e0"
+  logo: /assets/icons/toast.svg
+  package: yiirocks/toast-bootstrap5
+  repo: toast-bootstrap5
+  branch: main
+  workflow: build.yml
+  docsUrl: /toast-bootstrap5/
+  description: >
+    Renders Bootstrap 5 toast notifications from your Yii Framework 3
+    application's session flash messages. Queue a message from a
+    controller, echo $toast in your layout - no manual partials, no
+    bundled JS asset.
+  features:
+    - label: Flash-backed queue
+      detail: FlashToastInterface queues success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
+    - label: Zero-config rendering
+      detail: $toast is injected into every view via the config-plugin, and renders nothing at all when no messages are pending
+    - label: Per-type styling
+      detail: Each type maps to a Bootstrap 5 text-bg-* color with the correct alert role/aria-live and close-button contrast
+    - label: Configurable auto-dismiss
+      detail: Per-type delay in milliseconds, or null to require manual dismissal - the default for error, so it isn't lost to a timer
+    - label: Optional icons
+      detail: Bootstrap Icon per type via the optional yiirocks/svg-inline-bootstrap sibling, rendering silently without one when it isn't installed
+    - label: Bootstrap's own JS
+      detail: Calls bootstrap.Toast's own show/hide API instead of reimplementing it - the only script this package ships
+  usage: |-
+    $this->toast->success('Changes saved.');
+
+    // in the layout
+    echo $toast;
+  options:
+    - name: delay
+      type: array
+      desc: Milliseconds before a toast auto-hides, keyed by type; null leaves it up until dismissed manually (the default for error).
+    - name: icons
+      type: array
+      desc: Bootstrap Icon name keyed by type (requires yiirocks/svg-inline-bootstrap); null disables that type's icon.
+    - name: position
+      type: string
+      desc: "Space-separated Bootstrap position utility classes for the toast container (default: top-0 end-0)."
+  exampleHeading: Example
+  examples:
+    - "$this->toast->error('Something went wrong.');"
+
 voyti:
   name: Voyti
   tagline: User management, authentication & authorization
