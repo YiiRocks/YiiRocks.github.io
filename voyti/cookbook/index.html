@@ -47,6 +47,17 @@ if (!$this->currentUser->isGuest()) {
             makes available to views when it's registered as a common parameter injection.
         </p>
 
+        <h4>Styling required field indicators with CSS</h4>
+        <p>
+            First, enable <code>enrichFromValidationRules</code> in your field theme config
+            (see <a href="/voyti/quick-start/">Quick Start</a>) so that validation rules are
+            translated to HTML5 attributes like <code>required</code>. Then add this to your stylesheet:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-css">label[required]::after {
+    content: " *";
+    color: red;
+}</code></pre>
+
         <h4>Showing the impersonation banner in your own layout</h4>
         <p>
             When an admin uses <a href="/voyti/routes/#admin"><code>voyti/admin-users-switch-identity</code></a>
