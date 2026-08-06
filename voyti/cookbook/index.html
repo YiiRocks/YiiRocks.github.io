@@ -65,7 +65,9 @@ if (!$this->currentUser->isGuest()) {
             <code>YiiRocks\Voyti\Widget\SwitchIdentityWidget</code> anywhere in your layout to show
             the "you're logged in as this user" banner with a restore button:
         </p>
-        <pre class="doc-example mb-3"><code class="language-php">echo YiiRocks\Voyti\Widget\SwitchIdentityWidget::widget();</code></pre>
+        <pre class="doc-example mb-3"><code class="language-php">if (!str_starts_with($this->currentRoute->getName() ?? '', 'voyti/')) {
+    echo YiiRocks\Voyti\Widget\SwitchIdentityWidget::widget();
+}</code></pre>
         <p>
             Its dependencies resolve through the DI container, so this needs no wiring beyond
             having voyti installed, and it renders an empty string when nobody is impersonating
