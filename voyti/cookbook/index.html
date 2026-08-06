@@ -53,8 +53,8 @@ if (!$this->currentUser->isGuest()) {
             (see <a href="/voyti/quick-start/">Quick Start</a>) so that validation rules are
             translated to HTML5 attributes like <code>required</code>. Then add this to your stylesheet:
         </p>
-        <pre class="doc-example mb-3"><code class="language-css">label[required]::after {
-    content: " *";
+        <pre class="doc-example mb-3"><code class="language-css">div:has([required]) > label::after {
+    content: '\a0*';
     color: red;
 }</code></pre>
 
