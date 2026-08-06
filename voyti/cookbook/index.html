@@ -62,11 +62,11 @@ if (!$this->currentUser->isGuest()) {
         <p>
             When an admin uses <a href="/voyti/routes/#admin"><code>voyti/admin-users-switch-identity</code></a>
             to temporarily assume another user's identity, drop in
-            <code>YiiRocks\Voyti\Widget\SwitchIdentityWidget</code> anywhere in your layout to show
+            <code>YiiRocks\Voyti\Widget\SwitchIdentity</code> anywhere in your layout to show
             the "you're logged in as this user" banner with a restore button:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">if (!str_starts_with($this->currentRoute->getName() ?? '', 'voyti/')) {
-    echo YiiRocks\Voyti\Widget\SwitchIdentityWidget::widget();
+    echo YiiRocks\Voyti\Widget\SwitchIdentity::widget();
 }</code></pre>
         <p>
             Its dependencies resolve through the DI container, so this needs no wiring beyond
