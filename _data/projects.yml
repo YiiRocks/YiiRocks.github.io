@@ -61,95 +61,11 @@ svg-inline:
     Bootstrap Icons and Font Awesome Icons, with various options available
     to manipulate the result.
   usage: "$svg->file('@vendor/path/icon.svg');"
-  options:
-    - name: file
-      type: string
-      desc: Valid path to a custom file.
-    - name: class
-      type: string
-      desc: Additional custom classes.
-    - name: css
-      type: array
-      desc: Additional CSS attributes.
-    - name: fill
-      type: string
-      desc: Color of the icon.
-    - name: height
-      type: int
-      desc: >-
-        The height of the icon. If height is given without width, the
-        latter will be calculated from the SVG size.
-    - name: id
-      type: string
-      desc: Id for the SVG tag.
-    - name: title
-      type: string
-      desc: Sets a title to the SVG output.
-    - name: width
-      type: int
-      desc: >-
-        The width of the icon. If width is given without height, the
-        latter will be calculated from the SVG size.
-  exampleHeading: Example
-  examples:
-    - "echo $svg->file('@vendor/path/icon.svg')->height(42)->title('Yii Rocks');"
-
-svg-inline-bootstrap:
-  name: SvgInline / Bootstrap
-  tagline: Bootstrap Icons inline
-  tint: "#f3edff"
-  logo: /assets/icons/bootstrap.svg
-  package: yiirocks/svg-inline-bootstrap
-  repo: svg-inline-bootstrap
-  branch: master
-  workflow: build.yml
-  docsUrl: /svg-inline/bootstrap/
-  description: >
-    Provides simple functions for your Yii Framework 3 applications to add
-    Bootstrap Icons inline. Depends on SvgInline, with various options
-    available to manipulate the result.
-  usage: "$svg->bootstrap($iconName);"
-  options:
-    - name: bootstrap
-      type: string
-      desc: Valid name of a Bootstrap Icon.
-    - name: fixedWidth
-      type: bool
-      desc: Set to true to have a fixed width icon.
-  inheritedFrom: svg-inline
-  exampleHeading: Example
-  examples:
-    - "echo $svg->bootstrap('alarm')->title('Wake Up');"
-
-svg-inline-fontawesome:
-  name: SvgInline / FontAwesome
-  tagline: Font Awesome Icons inline
-  tint: "#fff1ee"
-  logo: /assets/icons/fontawesome.svg
-  package: yiirocks/svg-inline-fontawesome
-  repo: svg-inline-fontawesome
-  branch: master
-  workflow: build.yml
-  docsUrl: /svg-inline/fontawesome/
-  description: >
-    Provides simple functions for your Yii Framework 3 applications to add
-    Font Awesome Icons inline. Depends on SvgInline, with various options
-    available to manipulate the result.
-  usage: |-
-    $svg->fai($iconName);
-    $svg->fai($iconName, $iconStyle);
-  options:
-    - name: fai
-      type: "string [, string]"
-      desc: Valid name and style (optional) of a Font Awesome Icon.
-    - name: fixedWidth
-      type: bool
-      desc: Set to true to have a fixed width icon.
-  inheritedFrom: svg-inline
-  exampleHeading: Examples
-  examples:
-    - "echo $svg->fai('hands-wash')->title('Wash your hands');"
-    - "echo $svg->fai('github', 'brands')->title('GitHub');"
+  sections:
+    - slug: bootstrap
+      title: Bootstrap Icons
+    - slug: fontawesome
+      title: Font Awesome Icons
 
 toast-bootstrap5:
   name: Toast Bootstrap5

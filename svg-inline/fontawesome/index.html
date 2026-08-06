@@ -1,7 +1,48 @@
 ---
-layout: package
-pkgId: svg-inline-fontawesome
-title: SvgInlineFontAwesome
+layout: package-section
+pkgId: svg-inline
+section: fontawesome
+title: "SvgInline - Font Awesome Icons"
 ---
 
-<p class="doc-description">Provides simple functions for your Yii Framework 3 applications to add Font Awesome Icons inline and manipulate its properties.</p>
+<p>
+    Provides simple functions to add <a href="https://fontawesome.com/icons" target="_blank" rel="noopener">Font Awesome Icons</a> inline. Depends on <a href="/svg-inline/">SvgInline</a>.
+</p>
+
+<pre class="docs-entry__usage mb-4"><code class="language-php">$svg->fai($iconName);
+$svg->fai($iconName, $iconStyle);</code></pre>
+
+<h2 class="doc-section-heading">Options</h2>
+<div class="options-table mb-4">
+    <div class="options-row">
+        <div class="options-name">fai<span class="options-type fw-normal"> string [, string]</span></div>
+        <div class="options-desc">Valid name and style (optional) of a Font Awesome Icon.</div>
+    </div>
+    <div class="options-row">
+        <div class="options-name">fixedWidth<span class="options-type fw-normal"> bool</span></div>
+        <div class="options-desc">Set to true to have a fixed width icon.</div>
+    </div>
+</div>
+
+<h2 class="doc-section-heading">Examples</h2>
+<div class="doc-examples">
+    <pre class="doc-example"><code class="language-php">echo $svg->fai('hands-wash')->title('Wash your hands');</code></pre>
+    <pre class="doc-example"><code class="language-php">echo $svg->fai('github', 'brands')->title('GitHub');</code></pre>
+</div>
+
+<h2 class="doc-section-heading">Support</h2>
+<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+    <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/svg-inline-fontawesome">composer require yiirocks/svg-inline-fontawesome</button>
+    <a href="https://github.com/YiiRocks/svg-inline-fontawesome/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+    <div class="d-flex gap-2 flex-wrap ms-auto">
+        <a href="https://github.com/YiiRocks/svg-inline-fontawesome" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+        <a href="https://packagist.org/packages/yiirocks/svg-inline-fontawesome" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+    </div>
+</div>
+<div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end">
+    {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/svg-inline-fontawesome?style=flat-square" alt="Packagist Version" %}
+    {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/svg-inline-fontawesome?style=flat-square" alt="PHP Version" %}
+    {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/svg-inline-fontawesome?style=flat-square" alt="Downloads" %}
+    {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/svg-inline-fontawesome?style=flat-square" alt="Last Commit" %}
+    {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline-fontawesome/build.yml" alt="GitHub Workflow Status" %}
+</div>

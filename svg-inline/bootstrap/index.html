@@ -1,7 +1,46 @@
 ---
-layout: package
-pkgId: svg-inline-bootstrap
-title: SvgInlineBootstrap
+layout: package-section
+pkgId: svg-inline
+section: bootstrap
+title: "SvgInline - Bootstrap Icons"
 ---
 
-<p class="doc-description">Provides simple functions for your Yii Framework 3 applications to add Bootstrap Icons inline and manipulate its properties. Lacking its own style, this extension currently adds width-classes based on Font Awesome calculations.</p>
+<p>
+    Provides simple functions to add <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener">Bootstrap Icons</a> inline. Depends on <a href="/svg-inline/">SvgInline</a>.
+</p>
+
+<pre class="docs-entry__usage mb-4"><code class="language-php">$svg->bootstrap($iconName);</code></pre>
+
+<h2 class="doc-section-heading">Options</h2>
+<div class="options-table mb-4">
+    <div class="options-row">
+        <div class="options-name">bootstrap<span class="options-type fw-normal"> string</span></div>
+        <div class="options-desc">Valid name of a Bootstrap Icon.</div>
+    </div>
+    <div class="options-row">
+        <div class="options-name">fixedWidth<span class="options-type fw-normal"> bool</span></div>
+        <div class="options-desc">Set to true to have a fixed width icon.</div>
+    </div>
+</div>
+
+<h2 class="doc-section-heading">Example</h2>
+<div class="doc-examples">
+    <pre class="doc-example"><code class="language-php">echo $svg->bootstrap('alarm')->title('Wake Up');</code></pre>
+</div>
+
+<h2 class="doc-section-heading">Support</h2>
+<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+    <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/svg-inline-bootstrap">composer require yiirocks/svg-inline-bootstrap</button>
+    <a href="https://github.com/YiiRocks/svg-inline-bootstrap/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+    <div class="d-flex gap-2 flex-wrap ms-auto">
+        <a href="https://github.com/YiiRocks/svg-inline-bootstrap" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+        <a href="https://packagist.org/packages/yiirocks/svg-inline-bootstrap" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+    </div>
+</div>
+<div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end">
+    {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/svg-inline-bootstrap?style=flat-square" alt="Packagist Version" %}
+    {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/svg-inline-bootstrap?style=flat-square" alt="PHP Version" %}
+    {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/svg-inline-bootstrap?style=flat-square" alt="Downloads" %}
+    {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/svg-inline-bootstrap?style=flat-square" alt="Last Commit" %}
+    {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/svg-inline-bootstrap/build.yml" alt="GitHub Workflow Status" %}
+</div>
