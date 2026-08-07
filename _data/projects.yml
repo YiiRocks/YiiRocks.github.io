@@ -80,13 +80,13 @@ toast-bootstrap5:
   description: >
     Renders Bootstrap 5 toast notifications from your Yii Framework 3
     application's session flash messages. Queue a message from a
-    controller, echo $toast in your layout - no manual partials, no
+    controller, render $toast in your layout - no manual partials, no
     bundled JS asset.
   features:
     - label: Flash-backed queue
       detail: FlashToastInterface queues success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
     - label: Zero-config rendering
-      detail: $toast is injected into every view via the config-plugin, and renders nothing at all when no messages are pending
+      detail: $toast is injected into every web view via the config-plugin, and its render() returns nothing at all when no messages are pending
     - label: Per-type styling
       detail: Each type maps to a Bootstrap 5 text-bg-* color with the correct alert role/aria-live and close-button contrast
     - label: Configurable auto-dismiss
@@ -94,19 +94,20 @@ toast-bootstrap5:
     - label: Optional icons
       detail: Bootstrap Icon per type via the optional yiirocks/svg-inline-bootstrap sibling, rendering silently without one when it isn't installed
     - label: Bootstrap's own JS
-      detail: Calls bootstrap.Toast's own show/hide API instead of reimplementing it - the only script this package ships
+      detail: Registers a small show-script through the view (at end of body, after Bootstrap's bundle regardless of load order) that calls bootstrap.Toast's own API - the only JS this package ships
   usage: |-
+    // queue from a controller (inject FlashToastInterface)
     $this->toast->success('Changes saved.');
 
-    // in the layout
-    echo $toast;
+    // render once in your layout, passing the current view
+    echo $toast->render($this);
   options:
     - name: delay
       type: array
-      desc: Milliseconds before a toast auto-hides, keyed by type; null leaves it up until dismissed manually (the default for error).
+      desc: "Milliseconds before a toast auto-hides, keyed by type (defaults: success and info 4000, warning 6000); null leaves it up until dismissed manually, the default for error."
     - name: icons
       type: array
-      desc: Bootstrap Icon name keyed by type (requires yiirocks/svg-inline-bootstrap); null disables that type's icon.
+      desc: Bootstrap Icon name keyed by type (requires yiirocks/svg-inline-bootstrap; renders without an icon if it is not installed); null disables that type's icon.
     - name: position
       type: string
       desc: "Space-separated Bootstrap position utility classes for the toast container (default: top-0 end-0)."
