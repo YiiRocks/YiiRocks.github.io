@@ -104,13 +104,16 @@ toast-bootstrap5:
   options:
     - name: delay
       type: array
-      desc: "Milliseconds before a toast auto-hides, keyed by type (defaults: success and info 4000, warning 6000); null leaves it up until dismissed manually, the default for error."
+      default: "<code>['success' =&gt; 4000, 'error' =&gt; null, 'warning' =&gt; 6000, 'info' =&gt; 4000]</code>"
+      desc: Milliseconds before a toast auto-hides, keyed by type; null leaves it up until dismissed manually, the default for error.
     - name: icons
       type: array
+      default: "<code>['success' =&gt; 'check-circle-fill', 'error' =&gt; 'exclamation-octagon-fill', 'warning' =&gt; 'exclamation-triangle-fill', 'info' =&gt; 'info-circle-fill']</code>"
       desc: Bootstrap Icon name keyed by type (requires yiirocks/svg-inline-bootstrap; renders without an icon if it is not installed); null disables that type's icon.
     - name: position
       type: string
-      desc: "Space-separated Bootstrap position utility classes for the toast container (default: top-0 end-0)."
+      default: "<code>'top-0 end-0'</code>"
+      desc: Space-separated Bootstrap position utility classes for the toast container.
   exampleHeading: Example
   examples:
     - "$this->toast->error('Something went wrong.');"
