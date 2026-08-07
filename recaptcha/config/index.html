@@ -13,6 +13,8 @@ title: "reCAPTCHA - Configuration"
     'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'],
     'secretV3' => $_ENV['RECAPTCHA_SECRET_V3'],
     'sendRemoteIp' => true,
+    'themeV2' => RecaptchaV2Theme::Dark,
+    'badgeV3' => RecaptchaV3Badge::Hidden,
     'container' => [
         'useContainer' => false,
     ],
@@ -61,6 +63,34 @@ title: "reCAPTCHA - Configuration"
                     <div class="options-default"><code>false</code></div>
                 </div>
                 <div class="options-desc">Include the visitor's IP address in verification requests, unless a rule overrides it with its own <code>sendRemoteIp</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">themeV2<span class="options-type"> RecaptchaV2Theme</span></div>
+                    <div class="options-default"><code>RecaptchaV2Theme::Light</code></div>
+                </div>
+                <div class="options-desc">App-wide default theme for every <code>RecaptchaV2Field</code> (<code>Light</code> or <code>Dark</code>), unless a field overrides it with <code>-&gt;withTheme()</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">sizeV2<span class="options-type"> RecaptchaV2Size</span></div>
+                    <div class="options-default"><code>RecaptchaV2Size::Normal</code></div>
+                </div>
+                <div class="options-desc">App-wide default size for every <code>RecaptchaV2Field</code> (<code>Normal</code>, <code>Compact</code>, or <code>Invisible</code>), unless a field overrides it with <code>-&gt;withSize()</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">typeV2<span class="options-type"> RecaptchaV2Type</span></div>
+                    <div class="options-default"><code>RecaptchaV2Type::Image</code></div>
+                </div>
+                <div class="options-desc">App-wide default challenge type for every <code>RecaptchaV2Field</code> (<code>Image</code> or <code>Audio</code>), unless a field overrides it with <code>-&gt;withType()</code>.</div>
+            </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">badgeV3<span class="options-type"> RecaptchaV3Badge</span></div>
+                    <div class="options-default"><code>RecaptchaV3Badge::BottomRight</code></div>
+                </div>
+                <div class="options-desc">App-wide default badge for every <code>RecaptchaV3Field</code> (<code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>), unless a field overrides it with <code>-&gt;withBadge()</code>.</div>
             </div>
         </div>
 
