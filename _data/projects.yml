@@ -84,7 +84,7 @@ toast-bootstrap5:
     bundled JS asset.
   features:
     - label: Flash-backed queue
-      detail: FlashToastInterface queues success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
+      detail: FlashToastInterface::add(ToastType, string) queues success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
     - label: Zero-config rendering
       detail: $toast is injected into every web view via the config-plugin, and its render() returns nothing at all when no messages are pending
     - label: Per-type styling
@@ -96,8 +96,10 @@ toast-bootstrap5:
     - label: Bootstrap's own JS
       detail: Registers a small show-script through the view (at end of body, after Bootstrap's bundle regardless of load order) that calls bootstrap.Toast's own API - the only JS this package ships
   usage: |-
+    use YiiRocks\ToastBootstrap5\ToastType;
+
     // queue from a controller (inject FlashToastInterface)
-    $this->toast->success('Changes saved.');
+    $this->toast->add(ToastType::SUCCESS, 'Changes saved.');
 
     // render once in your layout, passing the current view
     echo $toast->render($this);
@@ -116,7 +118,10 @@ toast-bootstrap5:
       desc: Space-separated Bootstrap position utility classes for the toast container.
   exampleHeading: Example
   examples:
-    - "$this->toast->error('Something went wrong.');"
+    - |-
+      use YiiRocks\ToastBootstrap5\ToastType;
+
+      $this->toast->add(ToastType::ERROR, 'Something went wrong.');
 
 voyti:
   name: Voyti
