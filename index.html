@@ -58,7 +58,12 @@ title: Yii.Rocks
                 <div class="features-grid">
 {% for feat in pkg.features %}
                     <div class="feature-card">
-                        <div class="fw-bold mb-1">{{ feat.label }}</div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+{% if feat.icon %}
+                            <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="feature-card__icon">
+{% endif %}
+                            <div class="fw-bold">{{ feat.label }}</div>
+                        </div>
                         <div class="feature-card__detail">{{ feat.detail }}</div>
                     </div>
 {% endfor %}

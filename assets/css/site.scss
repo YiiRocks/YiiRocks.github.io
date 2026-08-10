@@ -578,6 +578,13 @@ code {
         line-height: 1.55;
         color: var(--yr-text-soft);
     }
+
+    &__icon {
+        width: 24px; height: 24px;
+        object-fit: contain;
+        opacity: .7;
+        flex-shrink: 0;
+    }
 }
 
 // ─── Doc page ───────────────────────────────────────────────────────────────
