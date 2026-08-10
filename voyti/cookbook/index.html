@@ -58,6 +58,18 @@ if (!$this->currentUser->isGuest()) {
     color: red;
 }</code></pre>
 
+        <h4>Rendering flash messages as Bootstrap toasts</h4>
+        <p>
+            Voyti reports action outcomes - login, logout, password recovery, a saved profile -
+            as session flash messages, and its own pages render them for you: as Bootstrap 5
+            toasts when the optional <a href="/voyti/quick-start/">yiirocks/toast-bootstrap5</a>
+            package is installed, or plain alerts otherwise. To surface them on your own pages too
+            - such as the home page, where
+            <a href="/voyti/routes/"><code>voyti/session-logout</code></a> redirects after logout
+            - render the toast container in your layout:
+        </p>
+        <pre class="doc-example mb-3"><code class="language-php">&lt;?= $toast->render($this) ?&gt;</code></pre>
+
         <h4>Showing the impersonation banner in your own layout</h4>
         <p>
             When an admin uses <a href="/voyti/routes/#admin"><code>voyti/admin-users-switch-identity</code></a>

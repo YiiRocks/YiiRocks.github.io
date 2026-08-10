@@ -188,6 +188,8 @@ voyti:
       detail: Built-in translations for multiple languages
     - label: Themed views
       detail: Bootstrap 5 views shipped by default; mail templates separate and independently overridable
+    - label: Toast notifications
+      detail: Native Bootstrap toast support with automatic fallback to flash messages
 
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
