@@ -225,6 +225,7 @@ return [
                     <tr><td><code>verify($user, $data)</code></td><td>Validate the attempt. <code>$data</code> is <code>['code' =&gt; ...]</code> for code-based methods, <code>['payload' =&gt; ...]</code> for client-collected ones.</td></tr>
                     <tr><td><code>getSettingsUrl($url)</code></td><td>GET route for the method's settings screen; the settings page also fetches it to lazy-load the setup fragment.</td></tr>
                     <tr><td><code>getConfirmFragmentUrl($url)</code></td><td>GET route for the login-confirmation fragment, or <code>null</code> for code-based methods (their code form is rendered inline).</td></tr>
+                    <tr><td><code>getReauthFragmentUrl($url)</code></td><td>GET route for the re-authentication fragment used by sensitive actions (disable 2FA, regenerate backup codes), or <code>null</code> for code-based methods (their code is rendered inline). For client-collected methods like WebAuthn, this fragment runs the assertion ceremony.</td></tr>
                     <tr><td><code>getButtonLabel($translator)</code></td><td>Short label for the method-switch button.</td></tr>
                     <tr><td><code>getEnabledWithMethodName($translator)</code></td><td>Name shown in the "2FA is enabled with {method}" message.</td></tr>
                     <tr><td><code>getErrorMessage()</code></td><td>Translated error from the last failed <code>verify()</code>; empty on success.</td></tr>
