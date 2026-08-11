@@ -162,6 +162,8 @@ voyti:
       title: Configuration
     - slug: social
       title: Social Auth
+    - slug: two-factor
+      title: Two-Factor Auth
     - slug: console
       title: Console
     - slug: middleware
@@ -182,7 +184,7 @@ voyti:
     - label: Social authentication
       detail: OAuth2 login via Google, GitHub, Facebook, and more
     - label: Two-factor authentication
-      detail: TOTP (authenticator app) with QR code provisioning and email 2FA, with enforced-per-permission support, plus one-time backup codes for account recovery
+      detail: Pluggable via the yiirocks/voyti-2fa packages - email codes, TOTP (authenticator app) with QR provisioning, or WebAuthn/passkeys - with enforced-per-permission support and one-time backup codes for account recovery
     - label: RBAC Management
       detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
     - label: Identity switching

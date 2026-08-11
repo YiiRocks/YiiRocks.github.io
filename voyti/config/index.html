@@ -30,7 +30,7 @@ return [
                     <div class="options-name">appName<span class="options-type"> string</span></div>
                     <div class="options-default"><code>'Voyti'</code></div>
                 </div>
-                <div class="options-desc">Application name - used as TOTP issuer in 2FA QR codes and <code>{app}</code> placeholder in mail subjects.</div>
+                <div class="options-desc">Application name - used as the <code>{app}</code> placeholder in mail subjects and as the TOTP issuer by the optional TOTP method package (<code>yiirocks/voyti-2fa-totp</code>).</div>
             </div>
             <div class="options-row">
                 <div class="options-name-col">
@@ -133,24 +133,6 @@ return [
                     <div class="options-default"><code>RecaptchaVersion::V3</code></div>
                 </div>
                 <div class="options-desc"><code>RecaptchaVersion::V2</code> or <code>RecaptchaVersion::V3</code>. Requires the optional <code>yiirocks/recaptcha</code> package plus a site key and secret configured for the selected version via that package's own <code>RecaptchaRegistry::configure()</code> - without it, forms silently render and validate without reCAPTCHA.</div>
-            </div>
-        </div>
-
-        <h4 class="doc-section-heading">Two-Factor Authentication</h4>
-        <div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">enableTwoFactorAuthentication<span class="options-type"> bool</span></div>
-                    <div class="options-default"><code>false</code></div>
-                </div>
-                <div class="options-desc">Enable 2FA.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">twoFactorAuthenticationForcedPermissions<span class="options-type"> array</span></div>
-                    <div class="options-default"><code>[]</code></div>
-                </div>
-                <div class="options-desc">Permissions that require 2FA.</div>
             </div>
         </div>
 

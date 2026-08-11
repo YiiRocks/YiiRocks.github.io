@@ -46,19 +46,32 @@ title: "Voyti - Middleware"
                     <td>Yes, when <code>maxPasswordAge</code> is greater than <code>0</code></td>
                 </tr>
                 <tr>
-                    <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Redirects to the two-factor settings page (<code>voyti/user-two-factor</code>), with an explanatory flash message, when required permissions <code>twoFactorAuthenticationForcedPermissions</code> are assigned for that user, but 2FA isn't enabled. Two-factor routes and the logout route stay reachable so the user can actually complete setup</td>
-                    <td>Yes, when <code>enableTwoFactorAuthentication</code> is <code>true</code></td>
-                </tr>
-                <tr>
                     <td><code>VoytiMiddleware</code></td>
-                    <td>Convenience wrapper that chains <code>RememberMeMiddleware</code>, <code>SessionRevocationEnforceMiddleware</code>, <code>PasswordAgeEnforceMiddleware</code>, and <code>TwoFactorAuthenticationEnforceMiddleware</code> in a single middleware entry</td>
+                    <td>Convenience wrapper that runs <code>RememberMeMiddleware</code> first, then every middleware tagged <code>voyti.enforce-middleware</code> - core contributes <code>SessionRevocationEnforceMiddleware</code> and <code>PasswordAgeEnforceMiddleware</code>, and installed packages (e.g. <code>yiirocks/voyti-2fa</code>) contribute their own with no host wiring</td>
                     <td>No, add it to the <code>Group</code> wrapping your app's own routes - see the <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
                 </tr>
             </tbody>
         </table>
 
-        <h4 id="site-wide-enforcement">Site-wide enforcement</h4>
+        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Middleware</th>
+                    <th>Description</th>
+                    <th>Auto-registered on the extension's own routes?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
+                    <td>Enforces 2FA for users with <code>forcedPermissions</code> by redirecting to the settings page (<code>voyti/user-two-factor</code>) with an explanatory message. Two-factor and logout routes remain accessible during setup</td>
+                    <td>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4 class="doc-section-heading" id="site-wide-enforcement">Site-wide enforcement</h4>
         <p>
             The auto-registration above only covers routes <em>this extension
             defines</em>. Without <code>VoytiMiddleware</code> wrapping your
