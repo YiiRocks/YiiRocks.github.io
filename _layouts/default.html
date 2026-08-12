@@ -26,15 +26,8 @@
                     <span class="site-nav__wordmark">Yii<span class="site-nav__wordmark-accent">.Rocks</span></span>
                 {% if page.url != "/" %}</a>{% else %}</span>{% endif %}
                 <div class="site-nav__links d-flex align-items-center gap-4 flex-wrap">
-{% if page.pkgId %}
-                    <a href="/" class="link-body-emphasis link-underline-opacity-0">Home</a>
-                    <a href="/status/" class="link-body-emphasis link-underline-opacity-0">Build Status</a>
-                    <a href="https://github.com/YiiRocks/{{ site.data.projects[page.pkgId].repo }}" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">GitHub</a>
-{% else %}
                     <a href="/status/" class="link-body-emphasis link-underline-opacity-0">Build Status</a>
                     <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">GitHub</a>
-{% endif %}
-                    <a href="https://www.mr42.me/" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">Mr. 42</a>
                     <button type="button" class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">
                         <i class="bi-moon-fill theme-toggle__dark"></i>
                         <i class="bi-sun-fill theme-toggle__light"></i>
@@ -46,12 +39,8 @@
             {{ content }}
         </main>
         <footer class="site-footer mt-auto">
-            <div class="site-footer__inner d-flex align-items-center justify-content-between flex-wrap gap-4">
-                <span class="text-body-secondary fs-sm">Yii.Rocks - crafted by Mr. 42</span>
-                <div class="d-flex align-items-center gap-4">
-                    <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" title="YiiRocks on GitHub" class="link-body-emphasis link-underline-opacity-0 fs-sm">GitHub</a>
-                    <a href="https://www.mr42.me/" target="_blank" rel="noopener" title="Visit Mr.42" class="link-body-emphasis link-underline-opacity-0 fs-sm">mr42.me</a>
-                </div>
+            <div class="site-footer__inner d-flex align-items-center justify-content-end gap-4">
+                <span class="text-body-secondary fs-sm">Yii.Rocks - crafted by <a href="https://www.mr42.me/" target="_blank" rel="noopener" title="Visit Mr.42" class="link-body-emphasis link-underline-opacity-0 fs-sm">Mr. 42</a></span>
             </div>
         </footer>
         <button type="button" class="scroll-top" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><i class="bi-arrow-up"></i></button>

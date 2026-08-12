@@ -6,6 +6,7 @@ recaptcha:
   repo: recaptcha
   branch: main
   workflow: build.yml
+  docPage: /recaptcha/
 
 svg-inline:
   name: SvgInline
@@ -15,6 +16,7 @@ svg-inline:
   repo: svg-inline
   branch: master
   workflow: build.yml
+  docPage: /svg-inline/
 
 svg-inline-bootstrap:
   name: SvgInline / Bootstrap
@@ -24,6 +26,7 @@ svg-inline-bootstrap:
   repo: svg-inline-bootstrap
   branch: main
   workflow: build.yml
+  docPage: /svg-inline/bootstrap/
 
 svg-inline-fontawesome:
   name: SvgInline / Font Awesome
@@ -33,6 +36,7 @@ svg-inline-fontawesome:
   repo: svg-inline-fontawesome
   branch: main
   workflow: build.yml
+  docPage: /svg-inline/fontawesome/
 
 toast-bootstrap5:
   name: Toast Bootstrap5
@@ -42,6 +46,7 @@ toast-bootstrap5:
   repo: toast-bootstrap5
   branch: main
   workflow: build.yml
+  docPage: /toast-bootstrap5/
 
 voyti:
   name: Voyti
@@ -51,6 +56,7 @@ voyti:
   repo: voyti
   branch: main
   workflow: build.yml
+  docPage: /voyti/
 
 voyti-2fa:
   name: Voyti / 2FA
@@ -60,6 +66,7 @@ voyti-2fa:
   repo: voyti-2fa
   branch: main
   workflow: build.yml
+  docPage: /voyti/two-factor/
 
 voyti-2fa-email:
   name: Voyti / 2FA Email
@@ -69,6 +76,7 @@ voyti-2fa-email:
   repo: voyti-2fa-email
   branch: main
   workflow: build.yml
+  docPage: /voyti/two-factor/
 
 voyti-2fa-totp:
   name: Voyti / 2FA TOTP
@@ -78,6 +86,7 @@ voyti-2fa-totp:
   repo: voyti-2fa-totp
   branch: main
   workflow: build.yml
+  docPage: /voyti/two-factor/
 
 voyti-2fa-webauthn:
   name: Voyti / 2FA WebAuthn
@@ -87,6 +96,7 @@ voyti-2fa-webauthn:
   repo: voyti-2fa-webauthn
   branch: main
   workflow: build.yml
+  docPage: /voyti/two-factor/
 
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
@@ -96,4 +106,5 @@ yii-bootstrap-icons:
   repo: yii-bootstrap-icons
   branch: main
   workflow: build.yml
+  docPage: /yii2-fontawesome-inline/
 
