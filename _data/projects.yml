@@ -184,7 +184,7 @@ voyti:
     - label: Social authentication
       detail: OAuth2 login via Google, GitHub, Facebook, and more
     - label: Two-factor authentication
-      detail: Pluggable via the yiirocks/voyti-2fa packages - email codes, TOTP (authenticator app) with QR provisioning, or WebAuthn/passkeys - with enforced-per-permission support and one-time backup codes for account recovery
+      detail: Email codes, TOTP (authenticator app) with QR provisioning, or WebAuthn/passkeys - with enforced-per-permission support and one-time backup codes for account recovery
     - label: RBAC Management
       detail: Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering
     - label: Identity switching
@@ -198,7 +198,7 @@ voyti:
     - label: Email change confirmation
       detail: "Three modes: immediate, confirm new address, confirm both old and new"
     - label: REST API
-      detail: Optional JSON API for user CRUD
+      detail: JSON API for user CRUD
     - label: Bot Protection
       detail: Google reCAPTCHA v2/v3 for registration and login forms
     - label: i18n
@@ -227,21 +227,3 @@ yii-bootstrap-icons:
 
     echo '<i class="bi-alarm"></i>';
     echo Html::i()->class('bi-alarm');
-
-yii2-fontawesome-inline:
-  name: Yii2 / FontAwesome / inline
-  tagline: Font Awesome inline for Yii2
-  tint: "#fff1ee"
-  logo: /assets/icons/fontawesome.svg
-  package: thoulah/yii2-fontawesome-inline
-  repo: yii2-fontawesome-inline
-  branch: master
-  travis: true
-  docsUrl: /yii2-fontawesome-inline/
-  description: >
-    Provides simple functions for your Yii Framework 2.0 applications to add
-    Font Awesome Icons inline, with various options available to manipulate
-    the result.
-  usage: |-
-    $icon = new \thoulah\fontawesome\Icon();
-    echo $icon->show('github', ['style' => 'brands', 'fill' => '#003865']);

@@ -63,7 +63,7 @@ return [
 
         <h4>Supported providers</h4>
         <p>
-            Nine branded provider classes ship in <code>yiisoft/yii-auth-client</code>,
+            Ten branded provider classes ship in <code>yiisoft/yii-auth-client</code>,
             each backed by its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
             (plus a generic <code>Client\OpenIdConnect</code> client - see below).
             Defaults (scope, endpoints) come entirely from the vendor client and its own
@@ -78,6 +78,7 @@ return [
                     </tr>
                 </thead>
                 <tbody>
+                    <tr><td><code>Client\Discord</code></td><td>Requests <code>identify email</code> scopes by default - <code>identify</code> provides basic user info, <code>email</code> provides email access.</td></tr>
                     <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, Voyti leaves it null rather than issuing a secondary Graph API call.</td></tr>
                     <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), Voyti leaves <code>email</code> null rather than issuing a secondary request - the user supplies one manually during the registration-connect flow.</td></tr>
                     <tr><td><code>Client\Google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>

@@ -37,13 +37,6 @@ title: "Voyti - Two-Factor Authentication"
                 <a href="https://packagist.org/packages/yiirocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
         </div>
-        <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end mb-5">
-            {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/voyti-2fa-email?style=flat-square" alt="Packagist Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/voyti-2fa-email?style=flat-square" alt="PHP Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/voyti-2fa-email?style=flat-square" alt="Downloads" %}
-            {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/voyti-2fa-email?style=flat-square" alt="Last Commit" %}
-            {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/voyti-2fa-email/build.yml" alt="GitHub Workflow Status" %}
-        </div>
 
         <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">TOTP</h5>
         <p>
@@ -72,13 +65,6 @@ title: "Voyti - Two-Factor Authentication"
                 <a href="https://github.com/YiiRocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
                 <a href="https://packagist.org/packages/yiirocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
-        </div>
-        <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end mb-5">
-            {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/voyti-2fa-totp?style=flat-square" alt="Packagist Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/voyti-2fa-totp?style=flat-square" alt="PHP Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/voyti-2fa-totp?style=flat-square" alt="Downloads" %}
-            {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/voyti-2fa-totp?style=flat-square" alt="Last Commit" %}
-            {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/voyti-2fa-totp/build.yml" alt="GitHub Workflow Status" %}
         </div>
 
         <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">WebAuthn</h5>
@@ -110,13 +96,6 @@ title: "Voyti - Two-Factor Authentication"
                 <a href="https://packagist.org/packages/yiirocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
         </div>
-        <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end mb-5">
-            {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/voyti-2fa-webauthn?style=flat-square" alt="Packagist Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/voyti-2fa-webauthn?style=flat-square" alt="PHP Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/voyti-2fa-webauthn?style=flat-square" alt="Downloads" %}
-            {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/voyti-2fa-webauthn?style=flat-square" alt="Last Commit" %}
-            {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/voyti-2fa-webauthn/build.yml" alt="GitHub Workflow Status" %}
-        </div>
 
         <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">Base 2FA package</h5>
         <p>
@@ -141,13 +120,6 @@ title: "Voyti - Two-Factor Authentication"
                     <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)</td></tr>
                 </tbody>
             </table>
-        </div>
-        <div class="docs-entry__badges d-flex gap-2 flex-wrap ms-auto justify-content-end mb-5">
-            {% include badge.html url="https://img.shields.io/packagist/v/yiirocks/voyti-2fa?style=flat-square" alt="Packagist Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/php-v/yiirocks/voyti-2fa?style=flat-square" alt="PHP Version" %}
-            {% include badge.html url="https://img.shields.io/packagist/dt/yiirocks/voyti-2fa?style=flat-square" alt="Downloads" %}
-            {% include badge.html url="https://img.shields.io/github/last-commit/yiirocks/voyti-2fa?style=flat-square" alt="Last Commit" %}
-            {% include badge.html url="https://img.shields.io/github/actions/workflow/status/YiiRocks/voyti-2fa/build.yml" alt="GitHub Workflow Status" %}
         </div>
 
         <h4 class="doc-section-heading">How it works</h4>
@@ -235,4 +207,5 @@ return [
             </table>
         </div>
 
-        <p><strong>Enrollment and storage.</strong> Setup routes persist method secrets to <code>UserTwoFactor</code> and render the setup fragment. Finalization goes through <code>voyti/user-two-factor-enable</code>, which verifies and issues backup codes. Disable, re-verification, and resolution are all generic in the base package—plugins don't touch them. Methods needing their own table (WebAuthn's credentials) ship their own model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>
+        <h4 class="doc-section-heading">Enrollment and storage</h4>
+        <p>Setup routes persist method secrets to <code>UserTwoFactor</code> and render the setup fragment. Finalization goes through <code>voyti/user-two-factor-enable</code>, which verifies and issues backup codes. Disable, re-verification, and resolution are all generic in the base package—plugins don't touch them. Methods needing their own table (WebAuthn's credentials) ship their own model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>

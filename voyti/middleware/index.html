@@ -47,8 +47,8 @@ title: "Voyti - Middleware"
                 </tr>
                 <tr>
                     <td><code>VoytiMiddleware</code></td>
-                    <td>Convenience wrapper that runs <code>RememberMeMiddleware</code> first, then every middleware tagged <code>voyti.enforce-middleware</code> - core contributes <code>SessionRevocationEnforceMiddleware</code> and <code>PasswordAgeEnforceMiddleware</code>, and installed packages (e.g. <code>yiirocks/voyti-2fa</code>) contribute their own with no host wiring</td>
-                    <td>No, add it to the <code>Group</code> wrapping your app's own routes - see the <a href="/voyti/quick-start/#4-register-routes">Register routes</a> example. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
+                    <td>Convenience wrapper that runs <code>RememberMeMiddleware</code> first, then every middleware tagged <code>voyti.enforce-middleware</code> - core contributes <code>SessionRevocationEnforceMiddleware</code> and <code>PasswordAgeEnforceMiddleware</code>, and installed packages contribute their own</td>
+                    <td>No, add it to the <code>Group</code> wrapping your app's own routes. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
                 </tr>
             </tbody>
         </table>

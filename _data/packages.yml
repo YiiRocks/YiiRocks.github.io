@@ -1,0 +1,99 @@
+recaptcha:
+  name: reCAPTCHA
+  tint: "#fff7e0"
+  logo: /assets/icons/recaptcha.svg
+  package: yiirocks/recaptcha
+  repo: recaptcha
+  branch: main
+  workflow: build.yml
+
+svg-inline:
+  name: SvgInline
+  tint: "#eef4ff"
+  logo: /assets/icons/svg.svg
+  package: yiirocks/svg-inline
+  repo: svg-inline
+  branch: master
+  workflow: build.yml
+
+svg-inline-bootstrap:
+  name: SvgInline / Bootstrap
+  tint: "#eef4ff"
+  logo: /assets/icons/bootstrap.svg
+  package: yiirocks/svg-inline-bootstrap
+  repo: svg-inline-bootstrap
+  branch: main
+  workflow: build.yml
+
+svg-inline-fontawesome:
+  name: SvgInline / Font Awesome
+  tint: "#eef4ff"
+  logo: /assets/icons/fontawesome.svg
+  package: yiirocks/svg-inline-fontawesome
+  repo: svg-inline-fontawesome
+  branch: main
+  workflow: build.yml
+
+toast-bootstrap5:
+  name: Toast Bootstrap5
+  tint: "#fff1e0"
+  logo: /assets/icons/toast.svg
+  package: yiirocks/toast-bootstrap5
+  repo: toast-bootstrap5
+  branch: main
+  workflow: build.yml
+
+voyti:
+  name: Voyti
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti
+  repo: voyti
+  branch: main
+  workflow: build.yml
+
+voyti-2fa:
+  name: Voyti / 2FA
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-2fa
+  repo: voyti-2fa
+  branch: main
+  workflow: build.yml
+
+voyti-2fa-email:
+  name: Voyti / 2FA Email
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-2fa-email
+  repo: voyti-2fa-email
+  branch: main
+  workflow: build.yml
+
+voyti-2fa-totp:
+  name: Voyti / 2FA TOTP
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-2fa-totp
+  repo: voyti-2fa-totp
+  branch: main
+  workflow: build.yml
+
+voyti-2fa-webauthn:
+  name: Voyti / 2FA WebAuthn
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-2fa-webauthn
+  repo: voyti-2fa-webauthn
+  branch: main
+  workflow: build.yml
+
+yii-bootstrap-icons:
+  name: Yii / Bootstrap / Icons
+  tint: "#eafff2"
+  logo: /assets/icons/bootstrap.svg
+  package: yiirocks/yii-bootstrap-icons
+  repo: yii-bootstrap-icons
+  branch: main
+  workflow: build.yml
+

@@ -12,22 +12,24 @@ title: "Voyti - Quick Start"
             <div class="feature-card">
                 <div class="fw-bold mb-1">Bot Protection</div>
                 <div class="feature-card__detail">Google reCAPTCHA v2/v3 for registration and login forms</div>
-                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiirocks/recaptcha">composer require yiirocks/recaptcha</button>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiirocks/recaptcha">composer require yiirocks/recaptcha</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Two-Factor Authentication</div>
-                <div class="feature-card__detail">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP (authenticator app), or WebAuthn/passkeys. See <a href="/voyti/two-factor/">Two-Factor Authentication</a></div>
-                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiirocks/voyti-2fa yiirocks/voyti-2fa-email">composer require yiirocks/voyti-2fa yiirocks/voyti-2fa-email</button>
+                <div class="feature-card__detail">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP, or WebAuthn/passkeys</div>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiirocks/voyti-2fa-email">composer require yiirocks/voyti-2fa-email</button>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiirocks/voyti-2fa-totp">composer require yiirocks/voyti-2fa-totp</button>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiirocks/voyti-2fa-webauthn">composer require yiirocks/voyti-2fa-webauthn</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Social Authentication</div>
                 <div class="feature-card__detail">OAuth2 login via Google, GitHub, Facebook, and more</div>
-                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiisoft/yii-auth-client">composer require yiisoft/yii-auth-client</button>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiisoft/yii-auth-client">composer require yiisoft/yii-auth-client</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Toast Notifications</div>
                 <div class="feature-card__detail">Renders voyti's flash messages as Bootstrap 5 toasts</div>
-                <button type="button" class="copy-btn mb-0" data-clipboard="composer require yiirocks/toast-bootstrap5">composer require yiirocks/toast-bootstrap5</button>
+                <button type="button" class="copy-btn" data-clipboard="composer require yiirocks/toast-bootstrap5">composer require yiirocks/toast-bootstrap5</button>
             </div>
         </div>
 
@@ -52,15 +54,9 @@ title: "Voyti - Quick Start"
         </p>
         <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="./yii migrate:up">./yii migrate:up</button>
         <p>
-            One migration creates the <code>user</code>, <code>user_profile</code>,
-            <code>user_social_account</code>, <code>user_token</code>,
-            <code>user_sessions</code>, <code>user_backup_code</code>,
-            <code>user_password_history</code>, and <code>user_audit_log</code>
-            tables with all columns (2FA, GDPR, password expiration, last
-            login IP, etc.) included. <code>config/params-console.php</code> also
-            registers <code>yiisoft/rbac-db</code>'s own item/assignment
-            migrations, so <code>./yii migrate:up</code> creates the RBAC tables
-            too - no separate step needed.
+            One migration creates all user-related tables. <code>config/params-console.php</code> also
+            registers <code>yiisoft/rbac-db</code>'s own migrations, so <code>./yii migrate:up</code>
+            creates the RBAC tables.
         </p>
         <p>
             If the <code>user</code> table is still empty after these migrations
@@ -70,7 +66,7 @@ title: "Voyti - Quick Start"
             immediately, it isn't stored anywhere else. The account is assigned
             the <code>administrator</code> role, which is granted the
             <code>administratorPermissionName</code> permission
-            (<code>voyti-admin</code> by default) needed to reach the
+            (<code>voyti-admin</code>) needed to reach the
             admin dashboard. <strong>Change this password immediately after first
             login.</strong> If the <code>user</code> table already has rows (e.g.
             re-running migrations on an existing database), seeding is skipped
@@ -86,9 +82,8 @@ title: "Voyti - Quick Start"
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
             prefix as their own group, alongside your app's own routes -
-            change the prefix as needed. It also shows the optional REST API
-            group, mounted as its own sibling group; skip it if you don't need
-            the API (see below):
+            change the prefix as needed. It includes a REST API group mounted
+            as its own sibling:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -116,8 +111,8 @@ return [
                             ->routes(...$config->get('routes')),           # Your routes
                         Group::create('/user/')                            # Voyti web URL prefix
                             ->routes(...$config->get('voyti-routes')),     # Voyti web routes
-                        Group::create('/user/api/')                        # REST API URL prefix - optional
-                            ->routes(...$config->get('voyti-routes-api')), # delete this group when unneeded
+                        Group::create('/user/api/')                        # REST API
+                            ->routes(...$config->get('voyti-routes-api')),
                     )
             ),
         ],
@@ -132,14 +127,8 @@ return [
             coverage to your app's pages.
         </p>
         <p>
-            The REST API routes are <strong>entirely optional</strong> and not part
-            of <code>voyti-routes</code> - they live in their own
-            <code>voyti-routes-api</code> config group, which nothing else depends
-            on. If you don't need the API, skip pulling that group in and none of
-            it is registered; there's no config flag to enable it or prefix option
-            to set, the group's own registration is the switch. When you do want
-            it, mount it wherever you like - the <code>/api/</code> sibling
-            group shown above is just one option.
+            The REST API routes live in their own <code>voyti-routes-api</code> config group.
+            Include the REST API group above if you need it, or omit it to skip the API entirely.
         </p>
 
         <h4 id="configure-the-form-theme">5. Configure the form theme</h4>
@@ -179,25 +168,16 @@ return [
             Swap in <code>ThemePath::BOOTSTRAP5_HORIZONTAL</code> for a
             horizontal label/input layout, or write your own array of
             <code>Theme::__construct()</code> options if you're not using
-            Bootstrap. The key doesn't have to be named <code>bootstrap5</code>
-            - <code>ThemeContainer</code> resolves a single named config
-            per <code>Theme</code> instance, so <code>enrichFromValidationRules</code>
-            and <code>validationRulesEnricher()</code> below have to live in
-            whichever config your <code>defaultTheme</code> points at, not in
-            a separate Bootstrap-only entry. Naming it <code>default</code>
-            (matching <code>yiisoft/form</code>'s own <code>config/params.php</code>
-            stub) keeps that clear.
+            Bootstrap.
         </p>
         <p>
             <code>enrichFromValidationRules</code> and
-            <code>validationRulesEnricher</code> are worth setting alongside
-            the theme: they translate the <code>yiisoft/validator</code> rules
-            already on your form models (<code>Required</code>,
+            <code>validationRulesEnricher</code> translate the <code>yiisoft/validator</code> rules
+            on your form models (<code>Required</code>,
             <code>Length</code>, <code>Regex</code>, etc.) into matching HTML5
             input attributes (<code>required</code>, <code>minlength</code>/
             <code>maxlength</code>, <code>pattern</code>, and so on), giving
-            you client-side validation for free instead of relying on a
-            server round-trip alone.
+            you client-side validation automatically.
         </p>
 
         <h4>6. Done</h4>

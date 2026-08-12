@@ -27,10 +27,11 @@
                 {% if page.url != "/" %}</a>{% else %}</span>{% endif %}
                 <div class="site-nav__links d-flex align-items-center gap-4 flex-wrap">
 {% if page.pkgId %}
-                    <a href="/#packages" class="link-body-emphasis link-underline-opacity-0">All packages</a>
+                    <a href="/" class="link-body-emphasis link-underline-opacity-0">Home</a>
+                    <a href="/status/" class="link-body-emphasis link-underline-opacity-0">Build Status</a>
                     <a href="https://github.com/YiiRocks/{{ site.data.projects[page.pkgId].repo }}" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">GitHub</a>
 {% else %}
-                    <a href="/#packages" class="link-body-emphasis link-underline-opacity-0">Packages</a>
+                    <a href="/status/" class="link-body-emphasis link-underline-opacity-0">Build Status</a>
                     <a href="https://github.com/YiiRocks/" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">GitHub</a>
 {% endif %}
                     <a href="https://www.mr42.me/" target="_blank" rel="noopener" class="link-body-emphasis link-underline-opacity-0">Mr. 42</a>
@@ -56,7 +57,6 @@
         <button type="button" class="scroll-top" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><i class="bi-arrow-up"></i></button>
         <script src="//cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
-        <script src="//cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
         <script src="/assets/js/site.js"></script>
     </body>
 </html>
