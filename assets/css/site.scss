@@ -1033,3 +1033,7 @@ pre {
         transform: translateY(0);
     }
 }
+
+ol li::marker {
+    font-size: 1.5em;
+}

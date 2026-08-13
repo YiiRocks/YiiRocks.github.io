@@ -5,7 +5,9 @@ section: quick-start
 title: "Voyti - Quick Start"
 ---
 
-        <h4>1. Install</h4>
+        <ol>
+            <li>
+                <h4>Install</h4>
         <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="composer require yiirocks/voyti">composer require yiirocks/voyti</button>
         <p class="mb-3">Optional packages to extend functionality:</p>
         <div class="optional-grid mb-4">
@@ -33,7 +35,9 @@ title: "Voyti - Quick Start"
             </div>
         </div>
 
-        <h4 id="cookie-secret">2. Set the cookie secret</h4>
+            </li>
+            <li>
+                <h4 id="cookie-secret">Set the cookie secret</h4>
         <div class="alert alert-danger" role="alert">
             Voyti encrypts the remember-me cookie using <code>yiisoft/cookies</code>'
             secret key. Leaving it unset throws a <code>LogicException</code>.
@@ -46,44 +50,50 @@ title: "Voyti - Quick Start"
     ],
 ];</code></pre>
 
-        <h4>3. Run migrations</h4>
+            </li>
+            <li>
+                <h4>Run migrations</h4>
         <p>
-            Voyti provides its migration path through <code>config/params-console.php</code>
-            using the standard <code>yiisoft/db-migration</code> configuration keys.
-            With <code>yiisoft/db-migration</code> enabled in your console app, run:
+            Voyti provides its migration path through
+            <code>config/params-console.php</code> using the standard
+            <code>yiisoft/db-migration</code> configuration keys. With
+            <code>yiisoft/db-migration</code> enabled in your console app, run:
         </p>
         <button type="button" class="copy-btn copy-btn--inline mb-3" data-clipboard="./yii migrate:up">./yii migrate:up</button>
         <p>
-            One migration creates all user-related tables. <code>config/params-console.php</code> also
-            registers <code>yiisoft/rbac-db</code>'s own migrations, so <code>./yii migrate:up</code>
-            creates the RBAC tables.
+            Voyti's migration creates all 7 user-related tables (user, user_profile,
+            user_social_account, user_token, user_sessions, user_password_history,
+            user_audit_log) and seeds default roles and permissions into the RBAC
+            tables created by <code>yiisoft/rbac-db</code>.
         </p>
         <p>
-            If the <code>user</code> table is still empty after these migrations
-            run, a default admin account is seeded automatically: username
-            <code>admin</code>, email <code>admin@example.com</code>, and a random
-            20-character password printed to the console - copy it
-            immediately, it isn't stored anywhere else. The account is assigned
-            the <code>administrator</code> role, which is granted the
-            <code>administratorPermissionName</code> permission
-            (<code>voyti-admin</code>) needed to reach the
-            admin dashboard. <strong>Change this password immediately after first
-            login.</strong> If the <code>user</code> table already has rows (e.g.
-            re-running migrations on an existing database), seeding is skipped
-            entirely.
+            If the <code>user</code> table is empty after these migrations run, a
+            default admin account is seeded automatically: username <code>admin</code>,
+            email <code>admin@example.com</code>, and a random password printed to
+            the console. <strong class="text-danger">Change this password
+            immediately after first login.</strong>
+        </p>
+        <p>
+            The account is assigned the <code>administrator</code> role, which is
+            granted the <code>administratorPermissionName</code> permission needed to
+            reach the admin dashboard. If the <code>user</code> table already has
+            rows (e.g. re-running migrations on an existing database), seeding is
+            skipped entirely.
         </p>
 
-        <h4 id="4-register-routes">4. Register routes</h4>
+            </li>
+            <li>
+                <h4 id="register-routes">Register routes</h4>
         <p>
-            Routes are <strong>not</strong> auto-registered - you must add them
-            to your router configuration.
+            Routes are <strong>not</strong> auto-registered - you must add them to
+            your router configuration.
         </p>
         <p>
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
-            prefix as their own group, alongside your app's own routes -
-            change the prefix as needed. It includes a REST API group mounted
-            as its own sibling:
+            prefix as their own group, alongside your app's own routes - change
+            the prefix as needed. It includes a REST API group mounted as its own
+            sibling:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -127,24 +137,21 @@ return [
             coverage to your app's pages.
         </p>
         <p>
-            The REST API routes live in their own <code>voyti-routes-api</code> config group.
-            Include the REST API group above if you need it, or omit it to skip the API entirely.
+            The REST API routes live in their own <code>voyti-routes-api</code>
+            config group. Include the REST API group above if you need it, or omit it
+            to skip the API entirely.
         </p>
 
-        <h4 id="configure-the-form-theme">5. Configure the form theme</h4>
-        <p>
-            Voyti's forms (login, registration, profile, etc.) and its
-            button-styled links (e.g. &quot;Create user&quot;) render through
-            <code>yiisoft/form</code>'s <code>ThemeContainer</code>. Voyti ships
-            no theme of its own, so until your app configures one, every field
-            and button renders with no CSS classes at all - no
-            <code>form-control</code>, no <code>btn</code>, nothing.
-        </p>
+            </li>
+            <li>
+                <h4 id="configure-the-form-theme">Configure the form theme</h4>
         <div class="alert alert-warning" role="alert">
-            This doesn't throw - it just silently renders unstyled forms
-            and buttons, so it's easy to miss until you actually look at the
-            page.
+            This step is optional but highly recommended. Without it, forms and buttons will render without any styling.
         </div>
+        <p>
+            Voyti's forms (login, registration, profile, etc.) and button-styled links render through
+            <code>yiisoft/form</code>'s <code>ThemeContainer</code>.
+        </p>
         <p>
             Set a theme in <code>config/params.php</code>. <code>yiisoft/form</code>
             ships ready-made Bootstrap 5 configs you can use as-is:
@@ -165,24 +172,30 @@ return [
     ],
 ];</code></pre>
         <p>
-            Swap in <code>ThemePath::BOOTSTRAP5_HORIZONTAL</code> for a
-            horizontal label/input layout, or write your own array of
-            <code>Theme::__construct()</code> options if you're not using
-            Bootstrap.
+            Swap in <code>ThemePath::BOOTSTRAP5_HORIZONTAL</code> for a horizontal
+            label/input layout, or write your own array of
+            <code>Theme::__construct()</code> options if you're not using Bootstrap.
         </p>
         <p>
             <code>enrichFromValidationRules</code> and
-            <code>validationRulesEnricher</code> translate the <code>yiisoft/validator</code> rules
-            on your form models (<code>Required</code>,
-            <code>Length</code>, <code>Regex</code>, etc.) into matching HTML5
-            input attributes (<code>required</code>, <code>minlength</code>/
-            <code>maxlength</code>, <code>pattern</code>, and so on), giving
-            you client-side validation automatically.
+            <code>validationRulesEnricher</code> translate the
+            <code>yiisoft/validator</code> rules on your form models
+            (<code>Required</code>, <code>Length</code>, <code>Regex</code>, etc.)
+            into matching HTML5 input attributes (<code>required</code>,
+            <code>minlength</code>/<code>maxlength</code>, <code>pattern</code>, and
+            so on), giving you client-side validation automatically.
         </p>
+        <div class="mb-4">
+            <img src="/img/voyti/quick-start-form-theme-comparison.png" alt="Before and after comparison - form styling without and with Bootstrap 5 theme" class="img-fluid rounded">
+        </div>
 
-        <h4>6. Done</h4>
-        <p>
-            DI bindings, event listeners, and console commands are auto-registered
-            via the <a href="https://github.com/yiisoft/config">Yii3 config plugin</a>.
-            No manual wiring needed.
-        </p>
+            </li>
+            <li>
+                <h4>Done</h4>
+                <p>
+                    DI bindings, event listeners, and console commands are auto-registered
+                    via the <a href="https://github.com/yiisoft/config">Yii3 config
+                    plugin</a>. No manual wiring needed.
+                </p>
+            </li>
+        </ol>
