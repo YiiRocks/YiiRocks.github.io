@@ -44,6 +44,9 @@ title: Yii.Rocks
                         </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
+{% if pkg.features or pkg.usage %}
+                        <button type="button" class="docs-entry__toggle" aria-expanded="false" title="Show summary">Summary ▼</button>
+{% endif %}
                         <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
                         <a href="https://packagist.org/packages/{{ pkg.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
 {% if pkg.docsUrl %}
@@ -54,24 +57,28 @@ title: Yii.Rocks
 
                 <p class="docs-entry__desc">{{ pkg.description }}</p>
 
+{% if pkg.features or pkg.usage %}
+                <div class="docs-entry__details" hidden>
 {% if pkg.features %}
-                <div class="features-grid">
+                    <div class="features-grid">
 {% for feat in pkg.features %}
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center gap-2 mb-1">
+                        <div class="feature-card">
+                            <div class="d-flex align-items-center gap-2 mb-1">
 {% if feat.icon %}
-                            <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="feature-card__icon">
+                                <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="feature-card__icon">
 {% endif %}
-                            <div class="fw-bold">{{ feat.label }}</div>
+                                <div class="fw-bold">{{ feat.label }}</div>
+                            </div>
+                            <div class="feature-card__detail">{{ feat.detail }}</div>
                         </div>
-                        <div class="feature-card__detail">{{ feat.detail }}</div>
-                    </div>
 {% endfor %}
-                </div>
+                    </div>
 {% endif %}
 
 {% if pkg.usage %}
-                <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
+                    <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
+{% endif %}
+                </div>
 {% endif %}
 
                 <div class="d-flex align-items-center gap-3 flex-wrap">

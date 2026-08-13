@@ -3,53 +3,26 @@ layout: default
 title: Build Status
 ---
 
-<div class="container py-4">
+<div class="doc-page">
     <h1 class="mb-4">Build Status</h1>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col" style="width: 30%;">Package</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-{% for item in site.data.packages %}
-{% assign key = item[0] %}
-{% assign pkg = item[1] %}
-            <tr>
-                <td>
-                    <a href="{{ pkg.docPage }}" class="d-flex align-items-center gap-2 text-decoration-none link-body-emphasis">
-                        <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded" style="background:{{ pkg.tint }}; width: 40px; height: 40px;">
-                            <img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" style="max-width: 28px; max-height: 28px;">
-                        </div>
-                        <div>
-                            <div class="fw-semibold">{{ pkg.name }}</div>
-                            <div class="text-body-secondary fs-sm">{{ pkg.package }}</div>
-                        </div>
-                    </a>
-                </td>
-                <td>
-                    <div class="d-flex gap-2 flex-wrap align-items-center">
-{% if pkg.travis %}
-                        <img src="https://img.shields.io/travis/com/YiiRocks/{{ pkg.repo }}/{{ pkg.branch }}?style=flat-square" alt="Travis (.com) branch">
-{% else %}
-                        <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version">
-                        <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version">
-                        <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads">
-                        <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}?style=flat-square" alt="Last Commit">
-                        <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="GitHub Workflow Status">
-{% endif %}
-                    </div>
-                    <div class="d-flex gap-2 flex-wrap align-items-center mt-2">
-                        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage" style="max-height: 20px;">
-                        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI" style="max-height: 20px;">
-                        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" style="max-height: 20px;">
-                        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions" style="max-height: 20px;">
-                    </div>
-                </td>
-            </tr>
-{% endfor %}
-        </tbody>
-    </table>
+    {% assign pkg_data = site.data.packages %}
+    {% assign core_keys = "recaptcha,svg-inline,toast-bootstrap5,voyti,yii-bootstrap-icons" | split: "," %}
+    {% assign twofa_keys = "voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn" | split: "," %}
+    {% assign svg_keys = "svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}
+
+    <h2 class="doc-section-heading mb-4">Core Packages</h2>
+    <div class="status-grid mb-5">
+{% include status_cards.html pkg_data=pkg_data filter_keys=core_keys %}
+    </div>
+
+    <h2 class="doc-section-heading mb-4">2FA Packages</h2>
+    <div class="status-grid mb-5">
+{% include status_cards.html pkg_data=pkg_data filter_keys=twofa_keys %}
+    </div>
+
+    <h2 class="doc-section-heading mb-4">SVG Inline Extensions</h2>
+    <div class="status-grid">
+{% include status_cards.html pkg_data=pkg_data filter_keys=svg_keys %}
+    </div>
 </div>

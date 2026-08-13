@@ -7,24 +7,19 @@ title: "Voyti - Social Authentication"
 
         <p>
             Social login is built on
-            <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>'s
-            OAuth2 clients rather than a hand-rolled implementation. Voyti carries no
-            OAuth2 protocol code, and no provider configuration, of its own - providers
-            are configured entirely through that package's own params/DI, not through
-            any Voyti-owned option. The redirect/callback flow is handled directly by
-            the vendor's <code>AuthAction</code> PSR-15 middleware, wired in Voyti's
-            <code>config/di.php</code> as the <code>voyti/session-auth</code> route
-            action with Voyti's own success/cancel callbacks.
+            <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>,
+            which handles all OAuth2 protocol logic. Provider configuration is entirely managed by that package's params/DI - Voyti adds only the callback routing and user flow.
+            The redirect/callback flow uses the vendor's <code>AuthAction</code> PSR-15 middleware,
+            wired in Voyti's <code>config/di.php</code> as the <code>voyti/session-auth</code> route
+            with Voyti's own success/cancel callbacks.
         </p>
 
         <h4>Configuring providers</h4>
         <p>
             Configure providers via a <code>clients</code> map under the
-            <code>yiisoft/yii-auth-client</code> params key. Voyti configures each
-            client's OAuth2 return URL for you automatically, keyed to match its
-            own <code>clients</code> entry. Alternatively you can set a callback URL
-            manually by adding an <code>oauth2ReturnUrl</code> key to that client's
-            config - Voyti only fills it in when it's left unset.
+            <code>yiisoft/yii-auth-client</code> params key. Voyti automatically sets each
+            client's OAuth2 return URL to match its config key. To use a different callback URL,
+            add an <code>oauth2ReturnUrl</code> key to the client config.
         </p>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
@@ -44,30 +39,21 @@ return [
     ],
 ];</code></pre>
         <p>
-            With <code>yiisoft/config</code> installed (the standard way to run a Yii3
-            app), this is all that's needed - the package's own <code>config/di.php</code>
-            is merged in automatically once it's <code>composer require</code>d. See
-            yii-auth-client's own
-            <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">Quick Start</a>
-            guide for the full option set each client supports (custom scope via the
-            <code>scope</code> key, extra auth-URL parameters, etc.).
+            With <code>yiisoft/config</code> installed, the package's <code>config/di.php</code>
+            is merged automatically. See the
+            <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
+            for per-client options (custom scope, extra auth-URL parameters, etc.).
         </p>
         <p>
-            Whatever key you pick also becomes part of the callback URL you'll need to
-            register with the provider itself, as a full absolute URL:
-            <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>. Most
-            providers' developer consoles require an exact match, so settle on your keys
-            before registering each provider's OAuth app - changing a key later means
-            updating that provider's redirect URI too.
+            Your config key becomes the callback URL: <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>.
+            Provider developer consoles require an exact match, so finalize your keys before registering the OAuth app.
         </p>
 
         <h4>Supported providers</h4>
         <p>
-            Ten branded provider classes ship in <code>yiisoft/yii-auth-client</code>,
-            each backed by its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
-            (plus a generic <code>Client\OpenIdConnect</code> client - see below).
-            Defaults (scope, endpoints) come entirely from the vendor client and its own
-            DI wiring - see yii-auth-client's own docs for the full per-client option set.
+            yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
+            (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
+            Defaults (scope, endpoints) come from the vendor client's DI configuration - see yii-auth-client's docs for per-client options.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -80,7 +66,7 @@ return [
                 <tbody>
                     <tr><td><code>Client\Discord</code></td><td>Requests <code>identify email</code> scopes by default - <code>identify</code> provides basic user info, <code>email</code> provides email access.</td></tr>
                     <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, Voyti leaves it null rather than issuing a secondary Graph API call.</td></tr>
-                    <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), Voyti leaves <code>email</code> null rather than issuing a secondary request - the user supplies one manually during the registration-connect flow.</td></tr>
+                    <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), <code>email</code> is left null - the user supplies it during registration.</td></tr>
                     <tr><td><code>Client\Google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>
                     <tr><td><code>Client\LinkedIn</code></td><td>Identity comes from the OIDC-style <code>sub</code> claim rather than <code>id</code>.</td></tr>
                     <tr><td><code>Client\Microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry - the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
@@ -100,16 +86,10 @@ return [
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
         </ol>
         <p>
-            When <code>yiisoft/yii-auth-client</code> isn't installed, every controller/view that touches social login
-            (<code>SessionController</code>, <code>SocialNetworkController</code>,
-            <code>RegistrationController</code>, and the login page's connect-button list)
-            degrades gracefully: no providers are listed, and the
-            <code>voyti/session-auth</code> route itself is never registered.
+            If <code>yiisoft/yii-auth-client</code> isn't installed, all social login features degrade gracefully:
+            no providers are shown, and the <code>voyti/session-auth</code> route is never registered.
         </p>
         <p>
-            Generic self-hosted OpenID Connect identity providers aren't part of
-            Voyti's built-in provider list. yii-auth-client ships a generic
-            <code>Client\OpenIdConnect</code> class capable of real OIDC discovery and
-            token validation - wiring one up is entirely the host application's own
-            responsibility, configured the same way as any other client above.
+            Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
+            <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.
         </p>

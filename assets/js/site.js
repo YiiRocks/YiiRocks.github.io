@@ -1,4 +1,4 @@
-hljs.initHighlightingOnLoad();
+hljs.highlightAll();
 for (var links=document.links, i=0, a; a=links[i]; i++) {
     if (a.host !== location.host) {
         a.target = '_blank';
@@ -64,3 +64,39 @@ if (sidebarItems.length) {
     }, { threshold: 0, rootMargin: '-20% 0px -70% 0px' });
     entries.forEach(function (el) { navObserver.observe(el); });
 }
+var docSidebarLinks = document.querySelectorAll('.doc-sidebar a');
+if (docSidebarLinks.length) {
+    var sections = document.querySelectorAll('[id^="section-"]');
+    var sectionObserver = new IntersectionObserver(function (observed) {
+        observed.forEach(function (entry) {
+            var sectionId = entry.target.getAttribute('id');
+            var linkHref = sectionId.replace('section-', '');
+            docSidebarLinks.forEach(function (link) {
+                var linkTarget = link.getAttribute('href');
+                var isActive = linkTarget === '#' + sectionId ||
+                              (linkTarget.endsWith('/' + linkHref + '/') || linkTarget.endsWith('#' + linkHref));
+                link.classList.toggle('active', entry.isIntersecting && isActive);
+            });
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -70% 0px' });
+    sections.forEach(function (el) { sectionObserver.observe(el); });
+}
+var toggleButtons = document.querySelectorAll('.docs-entry__toggle');
+var currentlyOpen = null;
+toggleButtons.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var entry = btn.closest('.docs-entry');
+        var details = entry.querySelector('.docs-entry__details');
+        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        if (!isExpanded && currentlyOpen && currentlyOpen !== btn) {
+            var prevEntry = currentlyOpen.closest('.docs-entry');
+            var prevDetails = prevEntry.querySelector('.docs-entry__details');
+            currentlyOpen.setAttribute('aria-expanded', 'false');
+            prevDetails.hidden = true;
+        }
+        btn.setAttribute('aria-expanded', !isExpanded);
+        details.hidden = isExpanded;
+        currentlyOpen = isExpanded ? null : btn;
+    });
+});

@@ -3,6 +3,7 @@ layout: default
 ---
 {% assign pkg = site.data.projects[page.pkgId] %}
 <div class="doc-page">
+{% if pkg %}
     <div class="doc-header d-flex align-items-center gap-4">
         <span class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
         <div>
@@ -10,11 +11,13 @@ layout: default
             <div class="doc-header__tagline fw-semibold">{{ pkg.tagline }}</div>
         </div>
     </div>
+{% endif %}
 
 {% if pkg.sections %}
     <div class="doc-section-layout">
 {% include doc_sidebar.html pkgId=page.pkgId %}
         <div class="doc-section-content">
+            <h2 class="h3 fw-bolder mb-2" id="section-overview">Overview</h2>
             {{ content }}
             {% include doc_support.html pkgId=page.pkgId %}
         </div>
@@ -24,37 +27,13 @@ layout: default
 
 {% if pkg.options %}
     <h2 class="doc-section-heading">Options</h2>
-    <div class="options-table">
-{% for opt in pkg.options %}
-        <div class="options-row">
-            <div class="options-name-col">
-                <div class="options-name">{{ opt.name }}<span class="options-type fw-normal"> {{ opt.type }}</span></div>
-{% if opt.default %}
-                <div class="options-default">{{ opt.default }}</div>
-{% endif %}
-            </div>
-            <div class="options-desc">{{ opt.desc }}</div>
-        </div>
-{% endfor %}
-    </div>
+    {% include options_table.html options=pkg.options %}
 {% endif %}
 
 {% if pkg.inheritedFrom %}
 {% assign inherited_pkg = site.data.projects[pkg.inheritedFrom] %}
     <h2 class="doc-section-heading">Inherited from <a href="{{ inherited_pkg.docsUrl }}">{{ inherited_pkg.name }}</a></h2>
-    <div class="options-table">
-{% for opt in inherited_pkg.options %}
-        <div class="options-row">
-            <div class="options-name-col">
-                <div class="options-name">{{ opt.name }}<span class="options-type fw-normal"> {{ opt.type }}</span></div>
-{% if opt.default %}
-                <div class="options-default">{{ opt.default }}</div>
-{% endif %}
-            </div>
-            <div class="options-desc">{{ opt.desc }}</div>
-        </div>
-{% endfor %}
-    </div>
+    {% include options_table.html options=inherited_pkg.options %}
 {% endif %}
 
 {% if pkg.exampleHeading %}

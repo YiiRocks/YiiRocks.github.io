@@ -3,6 +3,7 @@
 $max-w: 1380px;
 $pad: 28px;
 $mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+$indigo: #6366f1;
 $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
 $radius: 14px;
 
@@ -227,7 +228,7 @@ code {
 
     &:hover {
         border-color: var(--yr-accent-soft);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, .1);
+        box-shadow: 0 0 0 3px rgba($indigo, .1);
     }
 
     [data-bs-theme="dark"] & {
@@ -241,7 +242,7 @@ code {
 .hero {
     max-width: $max-w;
     margin: 0 auto;
-    padding: 48px $pad 40px;
+    padding: 36px $pad 4px;
     position: relative;
     overflow: hidden;
 
@@ -320,14 +321,14 @@ code {
     font-size: 15px;
     padding: 14px 28px;
     border-radius: 12px;
-    box-shadow: 0 4px 14px -3px rgba(99, 102, 241, .5), 0 8px 24px -8px rgba(139, 92, 246, .3);
+    box-shadow: 0 4px 14px -3px rgba($indigo, .5), 0 8px 24px -8px rgba(139, 92, 246, .3);
     transition: transform .2s, box-shadow .2s;
     display: inline-block;
     text-decoration: none;
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px -3px rgba(99, 102, 241, .6), 0 12px 32px -8px rgba(139, 92, 246, .4);
+        box-shadow: 0 6px 20px -3px rgba($indigo, .6), 0 12px 32px -8px rgba(139, 92, 246, .4);
     }
 }
 
@@ -348,7 +349,7 @@ code {
     transform: translateY(12px);
     pointer-events: none;
     transition: opacity .3s, transform .3s, box-shadow .2s;
-    box-shadow: 0 4px 14px -3px rgba(99, 102, 241, .4);
+    box-shadow: 0 4px 14px -3px rgba($indigo, .4);
     z-index: 50;
 
     &.visible {
@@ -358,7 +359,7 @@ code {
     }
 
     &:hover {
-        box-shadow: 0 6px 20px -3px rgba(99, 102, 241, .6);
+        box-shadow: 0 6px 20px -3px rgba($indigo, .6);
         transform: translateY(-2px);
     }
 }
@@ -463,7 +464,7 @@ code {
 
     &:hover {
         border-color: var(--yr-accent-soft);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, .08);
+        box-shadow: 0 0 0 3px rgba($indigo, .08);
     }
 
     &--inline {
@@ -490,8 +491,6 @@ code {
         border-top: 0;
         padding-top: 0;
     }
-
-    &:first-child { border-top: 0; padding-top: 0; }
 
     &__icon {
         width: 48px; height: 48px;
@@ -523,7 +522,7 @@ code {
         &--docs {
             color: #fff;
             background: $gradient;
-            box-shadow: 0 2px 8px -2px rgba(99, 102, 241, .4);
+            box-shadow: 0 2px 8px -2px rgba($indigo, .4);
         }
 
         &--github, &--packagist {
@@ -543,11 +542,131 @@ code {
 
     &__usage {
         @include code-block;
-        font-size: 13.5px;
-        line-height: 1.65;
+        font-size: 14px;
+        line-height: 1.7;
         padding: 20px 22px;
         max-width: 720px;
     }
+
+    &__toggle {
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--yr-border);
+        background: var(--yr-card);
+        color: var(--yr-accent-muted);
+        cursor: pointer;
+        transition: border-color .2s, box-shadow .2s, transform .2s;
+
+        &:hover {
+            border-color: var(--yr-accent-soft);
+            box-shadow: 0 0 0 3px rgba($indigo, .08);
+        }
+
+        &[aria-expanded="true"] {
+            transform: scaleY(-1);
+        }
+    }
+
+    &__details {
+        display: grid;
+        gap: 16px;
+        margin-top: 16px;
+        animation: expandIn .3s ease-out;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+}
+
+// ─── Status cards ───────────────────────────────────────────────────────────
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.status-card {
+    background: var(--yr-card);
+    border: 1px solid var(--yr-border);
+    border-radius: $radius;
+    padding: 20px;
+    transition: transform .15s, box-shadow .2s;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px -6px rgba(0, 0, 0, .1);
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    &__icon {
+        width: 48px;
+        height: 48px;
+        border-radius: $radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+    }
+
+    &__info {
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 2px;
+        line-height: 1.2;
+    }
+
+    &__package {
+        font-size: 12px;
+        font-family: $mono;
+        color: var(--yr-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    &__metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        border-top: 1px solid var(--yr-border);
+        padding-top: 12px;
+    }
+}
+
+.status-badge {
+    max-height: 20px;
 }
 
 // ─── Feature cards ──────────────────────────────────────────────────────────
@@ -708,10 +827,7 @@ code {
 }
 
 .doc-example {
-    @include code-block;
-    font-size: 14px;
-    line-height: 1.7;
-    padding: 20px 22px;
+    @extend .docs-entry__usage;
 }
 
 .doc-description {
@@ -745,8 +861,16 @@ code {
 .doc-sidebar {
     position: sticky;
     top: 24px;
+    z-index: 40;
 
     @media (max-width: 768px) { position: static; }
+
+    &__heading {
+        font-size: 12px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        padding: 0 0 8px 14px;
+    }
 
     &__list {
         list-style: none;
@@ -758,8 +882,15 @@ code {
 
         a {
             @include sidebar-item;
-            display: block;
             padding: 8px 16px;
+            transition: color .15s, background .15s, font-weight .15s;
+
+            &.active {
+                font-weight: 600;
+                color: var(--yr-accent);
+                border-left-color: var(--yr-accent);
+                background: var(--yr-link-bg);
+            }
         }
     }
 }
@@ -885,4 +1016,15 @@ pre {
     0%, 100% { transform: translate(0, 0); }
     33% { transform: translate(10px, -10px); }
     66% { transform: translate(-5px, 5px); }
+}
+
+@keyframes expandIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

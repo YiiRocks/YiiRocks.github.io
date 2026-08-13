@@ -1,5 +1,6 @@
 {% assign pkg = site.data.projects[include.pkgId] %}
         <nav class="doc-sidebar">
+            <div class="doc-sidebar__heading fw-bold fs-sm text-body-secondary mb-2">On this page</div>
             <ul class="doc-sidebar__list">
                 <li><a href="{{ pkg.docsUrl }}"{% unless include.section %} class="active"{% endunless %}>Overview</a></li>
 {% for s in pkg.sections %}
