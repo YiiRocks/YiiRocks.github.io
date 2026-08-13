@@ -595,11 +595,14 @@ code {
 }
 
 .status-card {
+    display: block;
     background: var(--yr-card);
     border: 1px solid var(--yr-border);
     border-radius: $radius;
     padding: 20px;
     transition: transform .15s, box-shadow .2s;
+    color: inherit;
+    text-decoration: none;
 
     &:hover {
         transform: translateY(-2px);
@@ -720,6 +723,7 @@ code {
         border-radius: $radius;
         border-collapse: separate;
         border-spacing: 0;
+        table-layout: fixed;
         overflow: hidden;
         font-size: 14.5px;
         color: var(--yr-text-soft);
@@ -828,6 +832,7 @@ code {
 
 .doc-example {
     @extend .docs-entry__usage;
+    max-width: 100%;
 }
 
 .doc-description {

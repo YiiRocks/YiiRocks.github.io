@@ -2,7 +2,7 @@
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
 {% if include.filter_keys contains key %}
-        <div class="status-card">
+        <a href="{{ pkg.docPage }}" class="status-card">
             <div class="status-card__header">
                 <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
                 <div class="status-card__info">
@@ -27,6 +27,6 @@
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertion.json" alt="Assertions" class="status-badge">
             </div>
-        </div>
+        </a>
 {% endif %}
 {% endfor %}
