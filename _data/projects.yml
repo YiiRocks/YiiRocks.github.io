@@ -174,6 +174,8 @@ voyti:
       title: Routes
     - slug: api
       title: REST API
+    - slug: gdpr
+      title: GDPR
     - slug: events
       title: Events
     - slug: cookbook
@@ -193,8 +195,8 @@ voyti:
       detail: Admins can temporarily switch into another user's identity for support or debugging, then restore their own session with one click
     - label: Session management
       detail: Session tracking and termination
-    - label: GDPR compliance
-      detail: Consent management, data export, anonymized deletion with admin notification
+    - label: GDPR data handling
+      detail: Personal-data-processing consent collected at signup; data export and account anonymization via the optional yiirocks/voyti-gdpr package
     - label: Password policies
       detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation

@@ -13,8 +13,10 @@ title: "Voyti - Available Routes"
         <p>
             The routes below are the core distribution's. Two-factor routes are <em>not</em> among
             them - they are contributed by the separate <code>yiirocks/voyti-2fa</code> packages and
-            are listed in their own table further down. See
-            <a href="/voyti/two-factor/">Two-Factor Authentication</a> for the mechanism.
+            are listed on their own page, <a href="/voyti/two-factor/">Two-Factor Authentication</a>.
+            Likewise, GDPR data export/anonymization routes are contributed by the separate
+            <code>yiirocks/voyti-gdpr</code> package and listed on
+            <a href="/voyti/gdpr/">GDPR</a>.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -45,10 +47,7 @@ title: "Voyti - Available Routes"
                     <tr><td><code>voyti/user-social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect social account</td></tr>
                     <tr><td><code>voyti/user-account-sessions</code></td><td><code>GET</code></td><td><code>settings/sessions/</code></td><td>Self-service session/device list, current device highlighted</td></tr>
                     <tr><td><code>voyti/user-account-sessions-terminate</code></td><td><code>POST</code></td><td><code>settings/sessions/terminate/{sessionId}</code></td><td>Terminate one of the current user's own sessions</td></tr>
-                    <tr><td><code>voyti/user-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings. Only registered when <code>enableGdprCompliance</code> or <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-privacy-gdpr-consent</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/gdpr-consent</code></td><td>GDPR consent. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Export user data. Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (blanks email/username, blocks login; row is kept). Only registered when <code>enableGdprCompliance</code> is <code>true</code></td></tr>
+                    <tr><td><code>voyti/user-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings hub. Registered when <code>privacyMenuItems</code> is non-empty or <code>allowAccountDelete</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/user-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Only registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
                     <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Admin dashboard</td></tr>
                     <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>Users</td></tr>

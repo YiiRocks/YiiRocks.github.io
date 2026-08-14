@@ -33,7 +33,11 @@ title: "Voyti - Events & Listeners"
         <ul>
             <li><strong>UserEvent</strong> - Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
             <li><strong>UserProfileEvent</strong> - Dispatched when a user updates their profile</li>
-            <li><strong>GdprEvent</strong> - Dispatched after a user's account is anonymized (not on hard delete, which fires <code>UserEvent</code> with type <code>UserEvent::DELETE</code>)</li>
             <li><strong>ResetPasswordEvent</strong> - Password reset flow</li>
-            <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, GDPR anonymization, or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
+            <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
         </ul>
+        <p>
+            The optional <a href="/voyti/gdpr/"><code>yiirocks/voyti-gdpr</code></a> package
+            dispatches its own <code>GdprEvent</code> after anonymizing an account - see that
+            page for details.
+        </p>
