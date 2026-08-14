@@ -36,7 +36,7 @@ title: "Voyti - GDPR"
         </p>
 
         <h4 class="doc-section-heading">Configuration</h4>
-        <p>Override under the <code>yiirocks/voyti</code> key, same as core options:</p>
+        <p>Override under this package's own <code>yiirocks/voyti-gdpr</code> key:</p>
         <div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
@@ -55,7 +55,7 @@ title: "Voyti - GDPR"
         </div>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
-    'yiirocks/voyti' =&gt; [
+    'yiirocks/voyti-gdpr' =&gt; [
         'gdprExportProperties' =&gt; ['email', 'username'],
         'gdprAnonymizePrefix' =&gt; 'ANON',
     ],
