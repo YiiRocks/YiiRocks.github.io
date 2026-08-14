@@ -35,6 +35,18 @@ scrollTop.addEventListener('click', function () {
     history.replaceState(null, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+var docSidebar = document.querySelector('.doc-sidebar');
+if (docSidebar) {
+    var siteNav = document.querySelector('.site-nav');
+    var navHeight = siteNav ? siteNav.offsetHeight : 60;
+    var updateSidebarPosition = function () {
+        var scrollY = window.scrollY;
+        var sidebarTop = Math.max(navHeight, navHeight + 24 - scrollY);
+        docSidebar.style.top = sidebarTop + 'px';
+    };
+    updateSidebarPosition();
+    window.addEventListener('scroll', updateSidebarPosition);
+}
 if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -67,19 +79,34 @@ if (sidebarItems.length) {
 var docSidebarLinks = document.querySelectorAll('.doc-sidebar a');
 if (docSidebarLinks.length) {
     var sections = document.querySelectorAll('[id^="section-"]');
-    var sectionObserver = new IntersectionObserver(function (observed) {
-        observed.forEach(function (entry) {
-            var sectionId = entry.target.getAttribute('id');
-            var linkHref = sectionId.replace('section-', '');
-            docSidebarLinks.forEach(function (link) {
-                var linkTarget = link.getAttribute('href');
-                var isActive = linkTarget === '#' + sectionId ||
-                              (linkTarget.endsWith('/' + linkHref + '/') || linkTarget.endsWith('#' + linkHref));
-                link.classList.toggle('active', entry.isIntersecting && isActive);
+    var currentPath = window.location.pathname;
+
+    // Initialize: mark the link matching the current page as active
+    docSidebarLinks.forEach(function (link) {
+        var linkTarget = link.getAttribute('href');
+        var pathWithoutSlash = currentPath.replace(/\/$/, '');
+        var isCurrentPage = linkTarget === currentPath || linkTarget === pathWithoutSlash || linkTarget === pathWithoutSlash + '/';
+        link.classList.toggle('active', isCurrentPage);
+    });
+
+    // Update on scroll: keep the currently viewed section highlighted
+    if (sections.length) {
+        var sectionObserver = new IntersectionObserver(function (observed) {
+            observed.forEach(function (entry) {
+                var sectionId = entry.target.getAttribute('id');
+                var linkHref = sectionId.replace('section-', '');
+                docSidebarLinks.forEach(function (link) {
+                    var linkTarget = link.getAttribute('href');
+                    var pathWithoutSlash = currentPath.replace(/\/$/, '');
+                    var isCurrentPage = linkTarget === currentPath || linkTarget === pathWithoutSlash || linkTarget === pathWithoutSlash + '/';
+                    var isSectionMatch = linkTarget === '#' + sectionId ||
+                                        (linkTarget.endsWith('/' + linkHref + '/') || linkTarget.endsWith('#' + linkHref));
+                    link.classList.toggle('active', (entry.isIntersecting || isCurrentPage) && isSectionMatch);
+                });
             });
-        });
-    }, { threshold: 0.3, rootMargin: '0px 0px -70% 0px' });
-    sections.forEach(function (el) { sectionObserver.observe(el); });
+        }, { threshold: 0.3, rootMargin: '0px 0px -70% 0px' });
+        sections.forEach(function (el) { sectionObserver.observe(el); });
+    }
 }
 var toggleButtons = document.querySelectorAll('.docs-entry__toggle');
 var currentlyOpen = null;
