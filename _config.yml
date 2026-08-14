@@ -1,8 +1,8 @@
 title: Yii.Rocks
-description: The missing pieces for your Yii Framework projects, crafted by Mr. 42.
+description: The missing pieces for your Yii 3 projects.
 url: "https://www.yii.rocks"
 logo: /assets/images/logo-180.png
-author: Mister 42
+author: Mr. 42
 
 plugins:
     - jekyll-seo-tag
