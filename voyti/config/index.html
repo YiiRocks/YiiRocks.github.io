@@ -39,20 +39,6 @@ return [
                 </div>
                 <div class="options-desc">Route to redirect to after a successful login (password, 2FA, or social) or logout. Must be a route registered by the host app - an unregistered route name throws a <code>LogicException</code> naming the misconfigured option, rather than a bare router exception.</div>
             </div>
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">accountMenuItems<span class="options-type"> array</span></div>
-                    <div class="options-default"><code>[]</code></div>
-                </div>
-                <div class="options-desc">Extra links contributed to the account-settings nav bar - list of <code>['label' =&gt; ..., 'category' =&gt; ..., 'route' =&gt; ...]</code>. Not meant to be set directly; packages such as <code>yiirocks/voyti-2fa</code> append to this so core needs no knowledge of them, and values from multiple installed packages merge and append rather than overwrite.</div>
-            </div>
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">privacyMenuItems<span class="options-type"> array</span></div>
-                    <div class="options-default"><code>[]</code></div>
-                </div>
-                <div class="options-desc">Same shape as <code>accountMenuItems</code>, but rendered on the Privacy settings hub instead of the main nav - contributed by <a href="/voyti/gdpr/"><code>yiirocks/voyti-gdpr</code></a>. The Privacy hub (and its nav link) is shown whenever this is non-empty or <code>allowAccountDelete</code> is <code>true</code>.</div>
-            </div>
         </div>
 
         <h4 class="doc-section-heading">Authentication &amp; Registration</h4>

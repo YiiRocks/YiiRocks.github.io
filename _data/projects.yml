@@ -196,7 +196,7 @@ voyti:
     - label: Session management
       detail: Session tracking and termination
     - label: GDPR data handling
-      detail: Personal-data-processing consent collected at signup; data export and account anonymization via the optional yiirocks/voyti-gdpr package
+      detail: Data export and account anonymization
     - label: Password policies
       detail: Minimum complexity requirements, max age enforcement via middleware
     - label: Email change confirmation

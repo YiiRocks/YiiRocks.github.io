@@ -25,13 +25,6 @@ title: "Voyti - GDPR"
                 <a href="https://packagist.org/packages/yiirocks/voyti-gdpr" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
         </div>
-        <p>
-            Routes are registered automatically - they merge into core's own
-            <code>voyti-routes</code> config group. Installing the package also contributes two
-            links to core's Privacy settings hub via <code>privacyMenuItems</code>, and makes that
-            hub (and its nav link) reachable even if <code>allowAccountDelete</code> is disabled -
-            see <a href="/voyti/config/">Configuration</a>.
-        </p>
 
         <h4 class="doc-section-heading">Configuration</h4>
         <p>Override under this package's own <code>yiirocks/voyti-gdpr</code> key:</p>
@@ -83,12 +76,4 @@ return [
             <code>User</code>) after it's saved. Nothing consumes it by default - attach your own
             listener via the event dispatcher configuration for things like admin notification or
             downstream data-retention cleanup.
-        </p>
-
-        <h4 class="doc-section-heading">Translations</h4>
-        <p>
-            Message keys are registered under their own <code>voyti-gdpr</code> translator
-            category (not core's <code>voyti</code> category), sourced from this package's
-            <code>resources/messages</code>. English and French are complete; other locales are
-            present as stubs pending translation.
         </p>

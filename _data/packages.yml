@@ -108,6 +108,16 @@ voyti-2fa-webauthn:
   workflow: build.yml
   docPage: /voyti/two-factor/
 
+voyti-gdpr:
+  name: Voyti / GDPR
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-gdpr
+  repo: voyti-gdpr
+  branch: main
+  workflow: build.yml
+  docPage: /voyti/gdpr/
+
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
   tint: "#eafff2"
