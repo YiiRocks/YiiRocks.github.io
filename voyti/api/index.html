@@ -51,11 +51,6 @@ return [
         ],
     ],
 ];</code></pre>
-        <p>
-            The group wraps itself with its own middleware (<code>JsonDataResponseMiddleware</code>,
-            plus <code>ApiTokenAuthenticationMiddleware</code> and <code>AccessRuleMiddleware</code>
-            on the <code>v1/</code> routes), so nothing else needs wiring.
-        </p>
 
         <h4 class="doc-section-heading">Configuration</h4>
         <div class="options-table mb-3">
@@ -77,12 +72,11 @@ return [
         <h4 class="doc-section-heading">Authentication</h4>
         <p>
             Requests authenticate with an <code>Authorization: Bearer &lt;token&gt;</code>
-            header, not the web session/CSRF cookie.
-            <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a user
-            for that request only and returns <code>401</code> when the header is missing
-            or the token is invalid or expired. <code>AccessRuleMiddleware</code> then
-            enforces <code>administratorPermissionName</code> as usual, so API tokens only
-            grant what that permission grants.
+            header. <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a
+            user for that request only and returns <code>401</code> when the header is
+            missing or the token is invalid or expired. <code>AccessRuleMiddleware</code>
+            then enforces <code>administratorPermissionName</code> as usual, so API tokens
+            only grant what that permission grants.
         </p>
 
         <h4 class="doc-section-heading">Managing tokens</h4>
