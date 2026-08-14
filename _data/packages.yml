@@ -58,6 +58,16 @@ voyti:
   workflow: build.yml
   docPage: /voyti/
 
+voyti-api:
+  name: Voyti / API
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti.svg
+  package: yiirocks/voyti-api
+  repo: voyti-api
+  branch: main
+  workflow: build.yml
+  docPage: /voyti/api/
+
 voyti-2fa:
   name: Voyti / 2FA
   tint: "#eef4ff"

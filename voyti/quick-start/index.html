@@ -91,9 +91,7 @@ title: "Voyti - Quick Start"
         <p>
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
-            prefix as their own group, alongside your app's own routes - change
-            the prefix as needed. It includes a REST API group mounted as its own
-            sibling:
+            prefix as their own group, alongside your app's own routes:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -121,25 +119,16 @@ return [
                             ->routes(...$config->get('routes')),           # Your routes
                         Group::create('/user/')                            # Voyti web URL prefix
                             ->routes(...$config->get('voyti-routes')),     # Voyti web routes
-                        Group::create('/user/api/')                        # REST API
-                            ->routes(...$config->get('voyti-routes-api')),
                     )
             ),
         ],
     ],
 ];</code></pre>
         <p>
-            <code>voyti-routes</code> and <code>voyti-routes-api</code> each already
-            wrap themselves with their own required middleware (see
-            <code>config/routes.php</code> and <code>config/routes-api.php</code>), so
-            neither group above repeats any of it, and adding
-            <code>VoytiMiddleware</code> to your own group only extends that same
-            coverage to your app's pages.
-        </p>
-        <p>
-            The REST API routes live in their own <code>voyti-routes-api</code>
-            config group. Include the REST API group above if you need it, or omit it
-            to skip the API entirely.
+            <code>voyti-routes</code> already wraps itself with its own required
+            middleware (see <code>config/routes.php</code>), so the group above
+            doesn't repeat any of it, and adding <code>VoytiMiddleware</code> to
+            your own group only extends that same coverage to your app's pages.
         </p>
 
             </li>

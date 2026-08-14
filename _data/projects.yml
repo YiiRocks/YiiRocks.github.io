@@ -172,6 +172,8 @@ voyti:
       title: RBAC
     - slug: routes
       title: Routes
+    - slug: api
+      title: REST API
     - slug: events
       title: Events
     - slug: cookbook
@@ -198,7 +200,7 @@ voyti:
     - label: Email change confirmation
       detail: "Three modes: immediate, confirm new address, confirm both old and new"
     - label: REST API
-      detail: JSON API for user CRUD
+      detail: JSON user CRUD (Bearer-token auth)
     - label: Bot Protection
       detail: Google reCAPTCHA v2/v3 for registration and login forms
     - label: i18n

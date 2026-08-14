@@ -231,25 +231,3 @@ return [
                 <div class="options-desc">Base path for mail templates. If a template is not found here, falls back to the default mail templates.</div>
             </div>
         </div>
-
-        <h4 class="doc-section-heading" id="rest-api">REST API</h4>
-        <div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">apiTokenLifespan<span class="options-type"> int</span></div>
-                    <div class="options-default"><code>0</code></div>
-                </div>
-                <div class="options-desc">API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire).</div>
-            </div>
-        </div>
-        <p>
-            The REST API is enabled by pulling the <code>voyti-routes-api</code>
-            config group into your router (see
-            <a href="/voyti/quick-start/#4-register-routes">Quick Start</a>). It
-            authenticates via a Bearer token, not the web session/CSRF cookie
-            - issue one with <code>voyti:api-token:generate</code> (see
-            <a href="/voyti/console/">Console commands</a>) and send it as
-            <code>Authorization: Bearer &lt;token&gt;</code>.
-            <code>AccessRuleMiddleware</code> still applies afterwards to
-            enforce <code>administratorPermissionName</code>.
-        </p>

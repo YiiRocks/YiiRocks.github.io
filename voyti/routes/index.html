@@ -82,33 +82,3 @@ title: "Voyti - Available Routes"
                 </tbody>
             </table>
         </div>
-
-        <h4 class="doc-section-heading">REST API</h4>
-        <p>
-            The REST API routes below live in their own <code>voyti-routes-api</code>
-            config group (see <a href="/voyti/quick-start/#4-register-routes">Quick
-            Start</a>), separate from <code>voyti-routes</code> above - pull
-            that group into your router too if you want the API exposed, and mount
-            it at whatever prefix you like. See <a href="/voyti/config/#rest-api">REST
-            API</a> for the remaining config options.
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/api-openapi</code></td><td><code>GET</code></td><td><code>openapi.json</code></td><td>OpenAPI 3.1 spec (JSON). Public, so tooling (Swagger UI, codegen) can fetch it without a Bearer token.</td></tr>
-                    <tr><td><code>voyti/api-v1-users-index</code></td><td><code>GET</code></td><td><code>v1/users</code></td><td>List users</td></tr>
-                    <tr><td><code>voyti/api-v1-users-view</code></td><td><code>GET</code></td><td><code>v1/users/{id}</code></td><td>View a user</td></tr>
-                    <tr><td><code>voyti/api-v1-users-create</code></td><td><code>POST</code></td><td><code>v1/users</code></td><td>Create a user</td></tr>
-                    <tr><td><code>voyti/api-v1-users-update</code></td><td><code>PATCH</code></td><td><code>v1/users/{id}</code></td><td>Update a user</td></tr>
-                    <tr><td><code>voyti/api-v1-users-delete</code></td><td><code>DELETE</code></td><td><code>v1/users/{id}</code></td><td>Delete a user</td></tr>
-                </tbody>
-            </table>
-        </div>

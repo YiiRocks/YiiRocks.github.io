@@ -5,7 +5,7 @@ section: middleware
 title: "Voyti - Middleware"
 ---
 
-        <p>The extension ships eight PSR-15 middleware classes for session handling and access control:</p>
+        <p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
         <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -18,17 +18,12 @@ title: "Voyti - Middleware"
                 <tr>
                     <td><code>AccessRuleMiddleware</code></td>
                     <td>Redirects guests to the login page (<code>voyti/session-login</code>); checks <code>administratorPermissionName</code> for admin access</td>
-                    <td>Yes - on <code>admin/*</code> (users and RBAC management) and the REST API group</td>
+                    <td>Yes - on <code>admin/*</code> (users and RBAC management)</td>
                 </tr>
                 <tr>
                     <td><code>RequireLoginMiddleware</code></td>
                     <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code></td>
                     <td>Yes - on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
-                </tr>
-                <tr>
-                    <td><code>ApiTokenAuthenticationMiddleware</code></td>
-                    <td>Resolves the <code>Authorization: Bearer &lt;token&gt;</code> header to a user for that request only (no session); returns <code>401</code> if missing/invalid</td>
-                    <td>Yes - on the REST API group, ahead of <code>AccessRuleMiddleware</code>, in place of the session cookie</td>
                 </tr>
                 <tr>
                     <td><code>RememberMeMiddleware</code></td>
