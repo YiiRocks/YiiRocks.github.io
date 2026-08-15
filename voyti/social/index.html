@@ -79,6 +79,26 @@ return [
             Provider developer consoles require an exact match, so finalize your keys before registering the OAuth app.
         </p>
 
+        <h4 class="doc-section-heading">Routes</h4>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Route name</th>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>voyti/session-auth</code></td><td><code>GET</code></td><td><code>auth/{authclient}</code></td><td>OAuth2 callback - the provider redirects here after authorization</td></tr>
+                    <tr><td><code>voyti/registration-connect</code></td><td><code>GET</code></td><td><code>connect/{code}</code></td><td>Registration connect screen - link the pending social identity to an existing account or register a new one</td></tr>
+                    <tr><td><code>voyti/user-social-network</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Networks settings page - list connected accounts and connect more. Login required</td></tr>
+                    <tr><td><code>voyti/user-social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect a linked social account. Login required</td></tr>
+                </tbody>
+            </table>
+        </div>
+
         <h4>Supported providers</h4>
         <p>
             yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
@@ -112,9 +132,14 @@ return [
         <p>With providers configured:</p>
         <ul>
             <li>The login page shows social login buttons for configured providers.</li>
-            <li><code>settings/networks/</code> lists connected providers and renders connect buttons.</li>
+            <li>The Networks page lists every connected account and renders connect buttons. Multiple accounts from the same provider can be linked.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
         </ul>
+        <p>
+            Every OAuth2 flow requests the provider's account-selection screen, so when linking
+            another account the user can pick a different one instead of silently re-confirming
+            an already-connected identity. Providers that don't support the parameter ignore it.
+        </p>
         <p>
             Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
             <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.
