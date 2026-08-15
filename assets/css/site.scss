@@ -16,7 +16,6 @@ $radius: 14px;
 
 @mixin glass {
     backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 @mixin card {
@@ -45,8 +44,7 @@ $radius: 14px;
         border-radius: inherit;
         padding: $w;
         background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         mask-composite: exclude;
         pointer-events: none;
         opacity: 0;
@@ -397,7 +395,6 @@ code {
     @media (max-width: 900px) {
         position: static;
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
         margin-bottom: 8px;
 
         &__heading { display: none; }
@@ -987,7 +984,6 @@ main a[target="_blank"]:not(.docs-entry__link) {
         margin: 0 1px -1px 3px;
         background-color: currentColor;
         opacity: .5;
-        -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M8.636%203.5a.5.5%200%200%200-.5-.5H1.5A1.5%201.5%200%200%200%200%204.5v10A1.5%201.5%200%200%200%201.5%2016h10a1.5%201.5%200%200%200%201.5-1.5V7.864a.5.5%200%200%200-1%200V14.5a.5.5%200%200%201-.5.5h-10a.5.5%200%200%201-.5-.5v-10a.5.5%200%200%201%20.5-.5h6.636a.5.5%200%200%200%20.5-.5%22%2F%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M16%20.5a.5.5%200%200%200-.5-.5h-5a.5.5%200%200%200%200%201h3.793L6.146%209.146a.5.5%200%201%200%20.708.708L15%201.707V5.5a.5.5%200%200%200%201%200z%22%2F%3E%3C%2Fsvg%3E");
         mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M8.636%203.5a.5.5%200%200%200-.5-.5H1.5A1.5%201.5%200%200%200%200%204.5v10A1.5%201.5%200%200%200%201.5%2016h10a1.5%201.5%200%200%200%201.5-1.5V7.864a.5.5%200%200%200-1%200V14.5a.5.5%200%200%201-.5.5h-10a.5.5%200%200%201-.5-.5v-10a.5.5%200%200%201%20.5-.5h6.636a.5.5%200%200%200%20.5-.5%22%2F%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M16%20.5a.5.5%200%200%200-.5-.5h-5a.5.5%200%200%200%200%201h3.793L6.146%209.146a.5.5%200%201%200%20.708.708L15%201.707V5.5a.5.5%200%200%200%201%200z%22%2F%3E%3C%2Fsvg%3E");
         mask-size: contain;
         mask-repeat: no-repeat;

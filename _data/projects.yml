@@ -177,10 +177,6 @@ voyti:
       title: Quick Start
     - slug: config
       title: Configuration
-    - slug: social
-      title: Social Auth
-    - slug: two-factor
-      title: Two-Factor Auth
     - slug: console
       title: Console
     - slug: middleware
@@ -189,14 +185,22 @@ voyti:
       title: RBAC
     - slug: routes
       title: Routes
-    - slug: api
-      title: REST API
-    - slug: gdpr
-      title: GDPR
     - slug: events
       title: Events
     - slug: cookbook
       title: Cookbook
+    - slug: social
+      title: Social Auth
+      group: addon
+    - slug: two-factor
+      title: Two-Factor Auth
+      group: addon
+    - slug: api
+      title: REST API
+      group: addon
+    - slug: gdpr
+      title: GDPR
+      group: addon
   features:
     - label: User management
       detail: Registration, email confirmation, login/logout with remember-me, password recovery, password expiration
@@ -293,6 +297,17 @@ voyti-gdpr:
   branch: main
   workflow: build.yml
   docsUrl: /voyti/gdpr/
+  listed: false
+
+voyti-social-auth:
+  name: Voyti / Social Auth
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-social-auth.svg
+  package: yiirocks/voyti-social-auth
+  repo: voyti-social-auth
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/social/
   listed: false
 
 yii-bootstrap-icons:

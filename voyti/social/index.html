@@ -6,18 +6,49 @@ title: "Voyti - Social Authentication"
 ---
 
         <p>
-            Social login is built on
+            Social/OAuth2 login ships as a separate package,
+            <code>yiirocks/voyti-social-auth</code>. It builds on
             <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>,
-            which handles all OAuth2 protocol logic. Provider configuration is entirely managed by that package's params/DI - Voyti adds only the callback routing and user flow.
-            The redirect/callback flow uses the vendor's <code>AuthAction</code> PSR-15 middleware,
-            wired in Voyti's <code>config/di.php</code> as the <code>voyti/session-auth</code> route
-            with Voyti's own success/cancel callbacks.
+            which handles all OAuth2 protocol logic - Voyti adds the callback
+            routing, account linking, and registration flow, plus the
+            <code>user_social_account</code> table.
         </p>
 
-        <h4>Configuring providers</h4>
+        <h4 class="doc-section-heading">Installation</h4>
+        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-social-auth">composer require yiirocks/voyti-social-auth</button>
+            <a href="https://github.com/YiiRocks/voyti-social-auth/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+            <div class="d-flex gap-2 flex-wrap ms-auto">
+                <a href="https://github.com/YiiRocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                <a href="https://packagist.org/packages/yiirocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+            </div>
+        </div>
+        <p>
+            Run your migration command to create the <code>user_social_account</code>
+            table after installation.
+        </p>
+
+        <h4 class="doc-section-heading">Configuration</h4>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">enableSocialNetworkRegistration<span class="options-type"> bool</span></div>
+                    <div class="options-default"><code>true</code></div>
+                </div>
+                <div class="options-desc">Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration.</div>
+            </div>
+        </div>
+        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+return [
+    'yiirocks/voyti-social-auth' =&gt; [
+        'enableSocialNetworkRegistration' =&gt; true,
+    ],
+];</code></pre>
+
+        <h4 class="doc-section-heading">Configuring providers</h4>
         <p>
             Configure providers via a <code>clients</code> map under the
-            <code>yiisoft/yii-auth-client</code> params key. Voyti automatically sets each
+            <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
             client's OAuth2 return URL to match its config key. To use a different callback URL,
             add an <code>oauth2ReturnUrl</code> key to the client config.
         </p>
@@ -39,8 +70,7 @@ return [
     ],
 ];</code></pre>
         <p>
-            With <code>yiisoft/config</code> installed, the package's <code>config/di.php</code>
-            is merged automatically. See the
+            See the
             <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
             for per-client options (custom scope, extra auth-URL parameters, etc.).
         </p>
@@ -53,7 +83,7 @@ return [
         <p>
             yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
             (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
-            Defaults (scope, endpoints) come from the vendor client's DI configuration - see yii-auth-client's docs for per-client options.
+            Defaults (scope, endpoints) come from the vendor client's DI configuration.
         </p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
@@ -65,13 +95,13 @@ return [
                 </thead>
                 <tbody>
                     <tr><td><code>Client\Discord</code></td><td>Requests <code>identify email</code> scopes by default - <code>identify</code> provides basic user info, <code>email</code> provides email access.</td></tr>
-                    <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, Voyti leaves it null rather than issuing a secondary Graph API call.</td></tr>
+                    <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, the package leaves it null rather than issuing a secondary Graph API call.</td></tr>
                     <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), <code>email</code> is left null - the user supplies it during registration.</td></tr>
                     <tr><td><code>Client\Google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>
                     <tr><td><code>Client\LinkedIn</code></td><td>Identity comes from the OIDC-style <code>sub</code> claim rather than <code>id</code>.</td></tr>
                     <tr><td><code>Client\Microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry - the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
                     <tr><td><code>Client\TikTok</code></td><td>Identity comes from <code>open_id</code> rather than <code>id</code>. Never returns email.</td></tr>
-                    <tr><td><code>Client\VKontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all - Voyti falls back to the email's local part.</td></tr>
+                    <tr><td><code>Client\VKontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all - falls back to the email's local part.</td></tr>
                     <tr><td><code>Client\X</code></td><td>Response is unwrapped from its <code>data</code> envelope. Never returns email (X API v2 doesn't expose it without elevated access).</td></tr>
                     <tr><td><code>Client\Yandex</code></td><td>Email read from <code>default_email</code>.</td></tr>
                 </tbody>
@@ -80,15 +110,11 @@ return [
 
         <h4>How it works</h4>
         <p>With providers configured:</p>
-        <ol>
+        <ul>
             <li>The login page shows social login buttons for configured providers.</li>
-            <li><code>settings/networks/</code> lists connected providers and renders connect buttons for the remaining configured providers.</li>
+            <li><code>settings/networks/</code> lists connected providers and renders connect buttons.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
-        </ol>
-        <p>
-            If <code>yiisoft/yii-auth-client</code> isn't installed, all social login features degrade gracefully:
-            no providers are shown, and the <code>voyti/session-auth</code> route is never registered.
-        </p>
+        </ul>
         <p>
             Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
             <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.

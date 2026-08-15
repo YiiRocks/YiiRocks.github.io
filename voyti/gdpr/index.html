@@ -12,8 +12,9 @@ title: "Voyti - GDPR"
             deletion (<code>allowAccountDelete</code>) - export and anonymization are
             optional, and this package is where they live. It reuses core's
             <code>ConsentForm</code> for password re-confirmation, and core's <code>User</code>,
-            <code>UserProfile</code>, <code>UserSessions</code>, and <code>UserSocialAccount</code>
-            models to build the export.
+            <code>UserProfile</code>, and <code>UserSessions</code> models to build the export.
+            When <a href="/voyti/social/"><code>yiirocks/voyti-social-auth</code></a> is also
+            installed, connected social accounts are included in the export too.
         </p>
 
         <h4 class="doc-section-heading">Installation</h4>
