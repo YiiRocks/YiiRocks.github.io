@@ -3,12 +3,10 @@ recaptcha:
   tagline: Google reCAPTCHA v2 & v3 fields & validation
   tint: "#fff7e0"
   logo: /assets/icons/recaptcha.svg
-  featured: true
   package: yiirocks/recaptcha
   repo: recaptcha
   branch: main
   workflow: build.yml
-  cli: true
   docsUrl: /recaptcha/
   description: >
     Provides Google reCAPTCHA v2 and v3 field and server-side validation for
@@ -53,7 +51,6 @@ svg-inline:
   repo: svg-inline
   branch: master
   workflow: build.yml
-  cli: true
   docsUrl: /svg-inline/
   description: >
     Provides simple functions for your Yii Framework 3 applications to inline
@@ -81,6 +78,28 @@ svg-inline:
       title: Bootstrap Icons
     - slug: fontawesome
       title: Font Awesome Icons
+
+svg-inline-bootstrap:
+  name: SvgInline / Bootstrap
+  tint: "#eef4ff"
+  logo: /assets/icons/bootstrap.svg
+  package: yiirocks/svg-inline-bootstrap
+  repo: svg-inline-bootstrap
+  branch: main
+  workflow: build.yml
+  docsUrl: /svg-inline/bootstrap/
+  listed: false
+
+svg-inline-fontawesome:
+  name: SvgInline / Font Awesome
+  tint: "#eef4ff"
+  logo: /assets/icons/fontawesome.svg
+  package: yiirocks/svg-inline-fontawesome
+  repo: svg-inline-fontawesome
+  branch: main
+  workflow: build.yml
+  docsUrl: /svg-inline/fontawesome/
+  listed: false
 
 toast-bootstrap5:
   name: Toast Bootstrap5
@@ -143,12 +162,10 @@ voyti:
   tagline: User management, authentication & authorization
   tint: "#eef4ff"
   logo: /assets/icons/voyti.svg
-  featured: true
   package: yiirocks/voyti
   repo: voyti
   branch: main
   workflow: build.yml
-  cli: true
   docsUrl: /voyti/
   description: >
     Provides highly customizable user management, authentication, and
@@ -211,6 +228,72 @@ voyti:
       detail: Bootstrap 5 views shipped by default; mail templates separate and independently overridable
     - label: Toast notifications
       detail: Native Bootstrap toast support with automatic fallback to flash messages
+
+voyti-api:
+  name: Voyti / API
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-api.svg
+  package: yiirocks/voyti-api
+  repo: voyti-api
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/api/
+  listed: false
+
+voyti-2fa:
+  name: Voyti / 2FA
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-2fa.svg
+  package: yiirocks/voyti-2fa
+  repo: voyti-2fa
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/two-factor/
+  listed: false
+
+voyti-2fa-email:
+  name: Voyti / 2FA Email
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-2fa-email.svg
+  package: yiirocks/voyti-2fa-email
+  repo: voyti-2fa-email
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/two-factor/
+  listed: false
+
+voyti-2fa-totp:
+  name: Voyti / 2FA TOTP
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-2fa-totp.svg
+  package: yiirocks/voyti-2fa-totp
+  repo: voyti-2fa-totp
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/two-factor/
+  listed: false
+
+voyti-2fa-webauthn:
+  name: Voyti / 2FA WebAuthn
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-2fa-webauthn.svg
+  package: yiirocks/voyti-2fa-webauthn
+  repo: voyti-2fa-webauthn
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/two-factor/
+  listed: false
+
+voyti-gdpr:
+  name: Voyti / GDPR
+  tint: "#eef4ff"
+  logo: /assets/icons/voyti-gdpr.svg
+  package: yiirocks/voyti-gdpr
+  repo: voyti-gdpr
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/gdpr/
+  listed: false
 
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons

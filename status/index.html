@@ -2,12 +2,14 @@
 layout: default
 title: Build Status
 description: Real-time build status and CI metrics for all Yii.Rocks packages including test coverage, mutation score, and download statistics.
+preconnect:
+    - "https://img.shields.io"
 ---
 
 <div class="doc-page">
     <h1 class="mb-4">Build Status</h1>
 
-    {% assign pkg_data = site.data.packages %}
+    {% assign pkg_data = site.data.projects %}
     {% assign core_keys = "recaptcha,svg-inline,toast-bootstrap5,voyti,yii-bootstrap-icons" | split: "," %}
     {% assign voyti_ext_keys = "voyti-api,voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn,voyti-gdpr" | split: "," %}
     {% assign svg_keys = "svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}

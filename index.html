@@ -3,11 +3,18 @@ layout: default
 title: Yii.Rocks
 description: Small, focused open-source libraries for Yii 3 projects. Explore our collection of actively maintained packages designed to extend and enhance your Yii applications.
 ---
+{% assign project_count = 0 %}
+{% for item in site.data.projects %}
+{% assign pkg = item[1] %}
+{% unless pkg.listed == false %}
+{% assign project_count = project_count | plus: 1 %}
+{% endunless %}
+{% endfor %}
 
 <div class="hero mb-3">
     <div class="hero__badge d-inline-flex align-items-center gap-2">
         <span class="hero__badge-dot"></span>
-        {{ site.data.projects | size }} open-source projects, actively maintained
+        {{ project_count }} open-source projects, actively maintained
     </div>
     <h1>The missing pieces for your <span class="accent">Yii&nbsp;3</span> projects.</h1>
     <p>Small, focused libraries that drop straight into your Yii apps.</p>
@@ -21,12 +28,14 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
+{% unless pkg.listed == false %}
                 <li>
                     <a href="#{{ key }}" class="homepage-sidebar__item">
                         <span class="homepage-sidebar__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
                         <span>{{ pkg.name }}</span>
                     </a>
                 </li>
+{% endunless %}
 {% endfor %}
             </ul>
         </nav>
@@ -35,6 +44,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
+{% unless pkg.listed == false %}
             <div class="docs-entry" id="{{ key }}">
                 <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
                     <div class="docs-entry__title d-flex align-items-center gap-3">
@@ -86,6 +96,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                     <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require {{ pkg.package }}">composer require {{ pkg.package }}</button>
                 </div>
             </div>
+{% endunless %}
 {% endfor %}
         </div>
     </div>

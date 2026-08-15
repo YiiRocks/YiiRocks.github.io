@@ -10,9 +10,13 @@
         <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
         <link rel="alternate icon" href="/assets/images/favicon.ico">
         <link rel="apple-touch-icon" href="/assets/images/logo-180.png">
-        <link href="//cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="//cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark-dimmed.min.css">
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+{% for url in page.preconnect %}
+        <link rel="preconnect" href="{{ url }}" crossorigin>
+{% endfor %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark-dimmed.min.css">
         <link rel="stylesheet" href="/assets/css/site.css">
         <script>
             document.documentElement.dataset.bsTheme=localStorage.theme||(window.matchMedia?.("(prefers-color-scheme:light)")?.matches?"light":"dark");
@@ -45,8 +49,7 @@
             </div>
         </footer>
         <button type="button" class="scroll-top" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><i class="bi-arrow-up"></i></button>
-        <script src="//cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
-        <script src="/assets/js/site.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js" defer></script>
+        <script src="/assets/js/site.js" defer></script>
     </body>
 </html>
