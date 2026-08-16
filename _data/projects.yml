@@ -118,9 +118,9 @@ toast-bootstrap5:
     bundled JS asset.
   features:
     - label: Flash-backed queue
-      detail: FlashToastInterface::add(ToastType, string) queues success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
+      detail: Queue success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts
     - label: Zero-config rendering
-      detail: $toast is injected into every web view via the config-plugin, and its render() returns nothing at all when no messages are pending
+      detail: $toast is injected into every web view via the config-plugin, and its render() returns empty when no messages are pending
     - label: Per-type styling
       detail: Each type maps to a Bootstrap 5 text-bg-* color with the correct alert role/aria-live and close-button contrast
     - label: Configurable auto-dismiss
