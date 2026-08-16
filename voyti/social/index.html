@@ -37,13 +37,14 @@ title: "Voyti - Social Authentication"
                 </div>
                 <div class="options-desc">Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration.</div>
             </div>
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">allowMultipleAccountsPerProvider<span class="options-type"> bool</span></div>
+                    <div class="options-default"><code>false</code></div>
+                </div>
+                <div class="options-desc">Whether a single user may link more than one account from the same provider.</div>
+            </div>
         </div>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
-return [
-    'yiirocks/voyti-social-auth' =&gt; [
-        'enableSocialNetworkRegistration' =&gt; true,
-    ],
-];</code></pre>
 
         <h4 class="doc-section-heading">Configuring providers</h4>
         <p>
@@ -132,14 +133,9 @@ return [
         <p>With providers configured:</p>
         <ul>
             <li>The login page shows social login buttons for configured providers.</li>
-            <li>The Networks page lists every connected account and renders connect buttons. Multiple accounts from the same provider can be linked.</li>
+            <li>The Networks page lists every connected account and renders connect buttons for providers.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
         </ul>
-        <p>
-            Every OAuth2 flow requests the provider's account-selection screen, so when linking
-            another account the user can pick a different one instead of silently re-confirming
-            an already-connected identity. Providers that don't support the parameter ignore it.
-        </p>
         <p>
             Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
             <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.
