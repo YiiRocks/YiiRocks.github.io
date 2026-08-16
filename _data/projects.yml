@@ -52,6 +52,7 @@ svg-inline:
   branch: master
   workflow: build.yml
   docsUrl: /svg-inline/
+  featured: true
   description: >
     Provides simple functions for your Yii Framework 3 applications to inline
     SVG files and manipulate their properties.
@@ -167,6 +168,7 @@ voyti:
   branch: main
   workflow: build.yml
   docsUrl: /voyti/
+  featured: true
   description: >
     Provides highly customizable user management, authentication, and
     authorization for your Yii Framework 3 applications.

@@ -10,22 +10,21 @@ preconnect:
     <h1 class="mb-4">Build Status</h1>
 
     {% assign pkg_data = site.data.projects %}
-    {% assign core_keys = "recaptcha,svg-inline,toast-bootstrap5,voyti,yii-bootstrap-icons" | split: "," %}
-    {% assign voyti_ext_keys = "voyti-api,voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn,voyti-gdpr,voyti-social-auth" | split: "," %}
-    {% assign svg_keys = "svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}
+    {% assign general_keys = "recaptcha,toast-bootstrap5,yii-bootstrap-icons" | split: "," %}
+    {% assign voyti_keys = "voyti,voyti-api,voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn,voyti-gdpr,voyti-social-auth" | split: "," %}
+    {% assign svginline_keys = "svg-inline,svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}
 
-    <h2 class="doc-section-heading mb-4">Core Packages</h2>
     <div class="status-grid mb-5">
-{% include status_cards.html pkg_data=pkg_data filter_keys=core_keys %}
+{% include status_cards.html pkg_data=pkg_data filter_keys=general_keys %}
     </div>
 
-    <h2 class="doc-section-heading mb-4">Voyti Extensions</h2>
+    <h2 class="doc-section-heading mb-4">Voyti</h2>
     <div class="status-grid mb-5">
-{% include status_cards.html pkg_data=pkg_data filter_keys=voyti_ext_keys %}
+{% include status_cards.html pkg_data=pkg_data filter_keys=voyti_keys %}
     </div>
 
-    <h2 class="doc-section-heading mb-4">SVG Inline Extensions</h2>
+    <h2 class="doc-section-heading mb-4">SVG Inline</h2>
     <div class="status-grid">
-{% include status_cards.html pkg_data=pkg_data filter_keys=svg_keys %}
+{% include status_cards.html pkg_data=pkg_data filter_keys=svginline_keys %}
     </div>
 </div>

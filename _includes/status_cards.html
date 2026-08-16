@@ -7,6 +7,9 @@
 {% else %}
         <div class="status-card">
 {% endif %}
+{% if pkg.featured %}
+            <div class="status-card__star"></div>
+{% endif %}
             <div class="status-card__header">
                 <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
                 <div class="status-card__info">
