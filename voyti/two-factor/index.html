@@ -6,133 +6,173 @@ title: "Voyti - Two-Factor Authentication"
 ---
 
         <p>
-            Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only the seams that let method packages hook into login. Install any method package to activate 2FA—there is no separate on/off flag, and multiple methods can coexist. Each user's active method is remembered per account.
+            Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only the seams that let method packages hook into login. Install one or more method packages to activate 2FA.
         </p>
 
-        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">Email</h5>
-        <p>
-            Mails a fresh six-digit code at the start of the confirmation step; needs only a configured mailer.
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor/email/</code></td><td>Email setup fragment</td></tr>
-                    <tr><td><code>voyti/user-two-factor-email-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/email/send-code</code></td><td>Send the email one-time code</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-email">composer require yiirocks/voyti-2fa-email</button>
-            <a href="https://github.com/YiiRocks/voyti-2fa-email/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center"><div class="card-header__icon me-2" style="background: #eef4ff;"><img src="/assets/icons/voyti-2fa-email.svg" alt="Email"></div>Email</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Mails a random six-digit code at the start of the confirmation step; needs only a configured mailer.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Route name</th>
+                                        <th>Method</th>
+                                        <th>Path</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>voyti/user-two-factor-email</code></td><td><code>GET</code></td><td><code>settings/two-factor/email/</code></td><td>Email setup fragment</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-email-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/email/send-code</code></td><td>Send the email one-time code</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-email">composer require yiirocks/voyti-2fa-email</button>
+                            <a href="https://github.com/YiiRocks/voyti-2fa-email/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+                            <div class="d-flex gap-2 flex-wrap ms-auto">
+                                <a href="https://github.com/YiiRocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center"><div class="card-header__icon me-2" style="background: #eef4ff;"><img src="/assets/icons/voyti-2fa-totp.svg" alt="TOTP"></div>TOTP</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Time-based One-Time Password (TOTP) using an authenticator app like Google Authenticator, Authy, or Microsoft Authenticator. Users scan a QR code during setup to register the account, then enter time-based codes generated by their app during login.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Route name</th>
+                                        <th>Method</th>
+                                        <th>Path</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>voyti/user-two-factor-totp</code></td><td><code>GET</code></td><td><code>settings/two-factor/totp/</code></td><td>TOTP setup (QR code)</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-totp-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor/totp/renew</code></td><td>Issue a new TOTP secret/QR</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-totp">composer require yiirocks/voyti-2fa-totp</button>
+                            <a href="https://github.com/YiiRocks/voyti-2fa-totp/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+                            <div class="d-flex gap-2 flex-wrap ms-auto">
+                                <a href="https://github.com/YiiRocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center"><div class="card-header__icon me-2" style="background: #eef4ff;"><img src="/assets/icons/voyti-2fa-webauthn.svg" alt="WebAuthn"></div>WebAuthn</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Passwordless authentication using biometrics (fingerprint, face recognition) or hardware security keys. The credential is registered on the user's device and verified during login without requiring a typed code.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Route name</th>
+                                        <th>Method</th>
+                                        <th>Path</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>voyti/user-two-factor-webauthn</code></td><td><code>GET</code></td><td><code>settings/two-factor/webauthn/</code></td><td>WebAuthn setup (registration ceremony)</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-webauthn-register</code></td><td><code>POST</code></td><td><code>settings/two-factor/webauthn/register</code></td><td>Complete WebAuthn registration</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-webauthn-confirm</code></td><td><code>GET</code></td><td><code>confirm/webauthn</code></td><td>WebAuthn login-confirmation fragment (guest-accessible)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-webauthn">composer require yiirocks/voyti-2fa-webauthn</button>
+                            <a href="https://github.com/YiiRocks/voyti-2fa-webauthn/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+                            <div class="d-flex gap-2 flex-wrap ms-auto">
+                                <a href="https://github.com/YiiRocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header d-flex align-items-center"><div class="card-header__icon me-2" style="background: #eef4ff;"><img src="/assets/icons/voyti-2fa.svg" alt="2FA Base Package"></div>2FA Base Package</div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Pulled in automatically as a dependency by method packages, the base package supplies shared routes, backup codes, and database tables.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Route name</th>
+                                        <th>Method</th>
+                                        <th>Path</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>voyti/session-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm</code></td><td>Two-factor login-confirmation step (guest-accessible mid-login)</td></tr>
+                                    <tr><td><code>voyti/user-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA - shared by every code-based method's code-entry form</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code (for methods that deliver a code)</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="mb-2">
+                            Method packages can contribute their own tables and migrations, registered for <code>yiisoft/db-migration</code>.
+                        </p>
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            After installing any 2FA package, run:
+                            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="./yii migrate:up">./yii migrate:up</button>
+                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+                            <div class="d-flex gap-2 flex-wrap ms-auto">
+                                <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">TOTP</h5>
+        <!--<h4 class="doc-section-heading">How it works</h4>-->
         <p>
-            Time-based One-Time Password (TOTP) using an authenticator app like Google Authenticator, Authy, or Microsoft Authenticator. Users scan a QR code during setup to register the account, then enter time-based codes generated by their app during login.
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/user-two-factor-totp</code></td><td><code>GET</code></td><td><code>settings/two-factor/totp/</code></td><td>TOTP setup (QR code)</td></tr>
-                    <tr><td><code>voyti/user-two-factor-totp-renew</code></td><td><code>POST</code></td><td><code>settings/two-factor/totp/renew</code></td><td>Issue a fresh TOTP secret/QR</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-totp">composer require yiirocks/voyti-2fa-totp</button>
-            <a href="https://github.com/YiiRocks/voyti-2fa-totp/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-            </div>
-        </div>
-
-        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">WebAuthn</h5>
-        <p>
-            Passwordless authentication using biometrics (fingerprint, face recognition) or hardware security keys. The credential is registered on the user's device and verified during login without requiring a typed code.
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/user-two-factor-webauthn</code></td><td><code>GET</code></td><td><code>settings/two-factor/webauthn/</code></td><td>WebAuthn setup (registration ceremony)</td></tr>
-                    <tr><td><code>voyti/user-two-factor-webauthn-register</code></td><td><code>POST</code></td><td><code>settings/two-factor/webauthn/register</code></td><td>Complete WebAuthn registration</td></tr>
-                    <tr><td><code>voyti/user-two-factor-webauthn-confirm</code></td><td><code>GET</code></td><td><code>confirm/webauthn</code></td><td>WebAuthn login-confirmation fragment (guest-accessible)</td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-2fa-webauthn">composer require yiirocks/voyti-2fa-webauthn</button>
-            <a href="https://github.com/YiiRocks/voyti-2fa-webauthn/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-            </div>
-        </div>
-
-        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">Base 2FA package</h5>
-        <p>
-            Pulled in automatically as a dependency by method packages, the base package supplies shared routes, backup codes, and a migration for its <code>user_two_factor</code> and <code>user_backup_code</code> tables. Method packages contribute their own tables (e.g., WebAuthn's <code>user_webauthn_credential</code>) and migrations, all registered automatically for <code>yiisoft/db-migration</code>.
-        </p>
-        <div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/session-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm</code></td><td>Two-factor login-confirmation step (guest-accessible mid-login)</td></tr>
-                    <tr><td><code>voyti/user-two-factor</code></td><td><code>GET, POST</code></td><td><code>settings/two-factor/</code></td><td>Two-factor status/entry point</td></tr>
-                    <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA - shared by every code-based method's code-entry form</td></tr>
-                    <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA</td></tr>
-                    <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code (for methods that deliver a code)</td></tr>
-                    <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h4 class="doc-section-heading">How it works</h4>
-        <p>
-            After a password login succeeds, Voyti consults every service tagged <code>voyti.login-challenge</code> in turn. The 2FA package contributes one: if the user has an enabled method registered, it stashes credentials, runs the method's confirmation step, and renders <code>voyti/session-confirm</code>. The first challenge to return a response short-circuits login.
-        </p>
-        <p>
-            A user's 2FA state (enabled, active method, secret) lives in <code>UserTwoFactor</code>, separate from the core <code>user</code> table. Enabling a method generates ten hashed backup codes; users can regenerate them anytime by re-verifying their current method.
+            After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP entry), and verifies the result. On success, the login completes. Backup codes are auto-generated when enabling 2FA, allowing account recovery if the primary method is unavailable.
         </p>
 
         <h4 class="doc-section-heading">Enforcing 2FA for a permission</h4>
         <p>
-            List permissions that require 2FA in the base package's <code>forcedPermissions</code> param:
+            List RBAC permissions that require 2FA in the base package's <code>forcedPermissions</code> param:
         </p>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
@@ -141,46 +181,47 @@ return [
     ],
 ];</code></pre>
         <p>
-            The enforcement middleware redirects such users to the setup screen until they enable 2FA. It's tagged <code>voyti.enforce-middleware</code> and joins <code>VoytiMiddleware</code> automatically—no extra wiring needed. See <a href="/voyti/middleware/">Middleware</a>.
+            The enforcement middleware redirects such users to the setup screen until they enable 2FA. It's tagged <code>voyti.enforce-middleware</code> and joins <code>VoytiMiddleware</code> automatically.
         </p>
 
         <h4 class="doc-section-heading">Writing a method plugin</h4>
-        <p>
-            A method plugin is a Composer package that implements <code>TwoFactorMethodInterface</code> and registers its routes, all via <code>yiisoft/config</code>—no host wiring needed.
-        </p>
-
-        <p><strong>1. Register the method.</strong> Tag the provider class with <code>voyti.two-factor-method</code> in <code>config/di.php</code>. The registry collects tagged providers, keyed by <code>getName()</code>:</p>
+        <ol>
+            <li>
+                <h4>Register the method</h4>
+        <p>Tag the provider class with <code>voyti.two-factor-method</code> in <code>config/di.php</code>. The registry collects tagged providers, keyed by <code>getName()</code>:</p>
         <pre class="doc-example mb-3"><code class="language-php">// config/di.php
-use YiiRocks\Voyti\TwoFactor\Totp\TotpTwoFactorMethod;
+use MyNamespace\MyTwoFactorMethod;
 
 return [
-    TotpTwoFactorMethod::class =&gt; [
-        'class' =&gt; TotpTwoFactorMethod::class,
+    MyTwoFactorMethod::class =&gt; [
+        'class' =&gt; MyTwoFactorMethod::class,
         'tags' =&gt; ['voyti.two-factor-method'],
     ],
 ];</code></pre>
-
-        <p><strong>2. Contribute setup routes.</strong> Append routes to <code>yiirocks/voyti</code> → <code>twoFactorMethodRoutes</code> in <code>config/params.php</code>. They're spliced into the base package's <code>settings/</code> group, inheriting login guards and CSRF middleware:</p>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
-use YiiRocks\Voyti\TwoFactor\Totp\Controller\TotpController;
+            </li>
+            <li>
+                <h4>Contribute setup routes</h4>
+        <p>Append routes to <code>yiirocks/voyti</code> → <code>twoFactorMethodRoutes</code> in <code>config/params.php</code>. They're spliced into the base package's <code>settings/</code> group, inheriting login guards and CSRF middleware:</p>
+                <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+use MyNamespace\MyMethodController;
 use Yiisoft\Router\Route;
 
 return [
     'yiirocks/voyti' =&gt; [
         'twoFactorMethodRoutes' =&gt; [
-            Route::get('two-factor/totp/')
-                -&gt;name('voyti/user-two-factor-totp')
-                -&gt;action([TotpController::class, 'settings']),
+            Route::get('two-factor/my-method/')
+                -&gt;name('voyti/user-two-factor-my-method')
+                -&gt;action([MyMethodController::class, 'settings']),
         ],
     ],
 ];</code></pre>
-        <p>
-            Route lists merge and append, so multiple method packages coexist without collision. Use the <code>voyti/user-two-factor-&lt;name&gt;</code> convention; that's what <code>getSettingsUrl()</code> generates. Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a top-level route group using <code>VoytiRoutes::webMiddleware()</code>.
-        </p>
-
-        <p><strong>The interface.</strong> <code>TwoFactorMethodInterface</code>
-            (namespace <code>YiiRocks\Voyti\TwoFactor</code>, provided by the base package) is the
-            whole contract:</p>
+                <p>
+                    Route lists merge and append, so multiple method packages coexist without collision. Use the <code>voyti/user-two-factor-&lt;name&gt;</code> convention; that's what <code>getSettingsUrl()</code> generates. Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a top-level route group using <code>VoytiRoutes::webMiddleware()</code>.
+                </p>
+            </li>
+            <li>
+                <h4>Implement the interface</h4>
+        <p><code>TwoFactorMethodInterface</code> (namespace <code>YiiRocks\Voyti\TwoFactor</code>, provided by the base package) is the contract you must implement:</p>
         <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -190,9 +231,9 @@ return [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>getName()</code></td><td>The exclusive name the method is stored under in <code>UserTwoFactor</code> (e.g. <code>'totp'</code>); also the registry key.</td></tr>
+                    <tr><td><code>getName()</code></td><td>The exclusive name the method is stored under; also the registry key.</td></tr>
                     <tr><td><code>isAvailable()</code></td><td>Whether the backing library is installed. Unavailable methods are hidden and never chosen as the default - the graceful self-disable hook.</td></tr>
-                    <tr><td><code>isCodeBased()</code></td><td><code>true</code> for a user-typed code (TOTP, email), <code>false</code> for a client-collected payload (WebAuthn).</td></tr>
+                    <tr><td><code>isCodeBased()</code></td><td><code>true</code> for a user-typed code (TOTP, email), <code>false</code> for a client-collected payload.</td></tr>
                     <tr><td><code>requiresCodeDelivery()</code></td><td>Whether a code must be delivered before the user can enter it (email) versus available on demand (TOTP, WebAuthn). Drives the disable flow's "send a code first" pre-step generically.</td></tr>
                     <tr><td><code>verify($user, $data)</code></td><td>Validate the attempt. <code>$data</code> is <code>['code' =&gt; ...]</code> for code-based methods, <code>['payload' =&gt; ...]</code> for client-collected ones.</td></tr>
                     <tr><td><code>getSettingsUrl($url)</code></td><td>GET route for the method's settings screen; the settings page also fetches it to lazy-load the setup fragment.</td></tr>
@@ -206,6 +247,8 @@ return [
                 </tbody>
             </table>
         </div>
+            </li>
+        </ol>
 
         <h4 class="doc-section-heading">Enrollment and storage</h4>
-        <p>Setup routes persist method secrets to <code>UserTwoFactor</code> and render the setup fragment. Finalization goes through <code>voyti/user-two-factor-enable</code>, which verifies and issues backup codes. Disable, re-verification, and resolution are all generic in the base package—plugins don't touch them. Methods needing their own table (WebAuthn's credentials) ship their own model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>
+        <p>Your setup routes persist secrets and render the enrollment UI. The base package handles finalization (verification, backup code generation) and teardown (disable, re-verify) generically - your plugin doesn't need to touch those. If your method needs a custom table, ship a model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>
