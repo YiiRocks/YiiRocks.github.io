@@ -49,12 +49,14 @@ title: "Voyti - Social Authentication"
             </div>
         </div>
 
-        <h4 class="doc-section-heading">Configuring providers</h4>
+        <h4 class="doc-section-heading">Provider configuration</h4>
         <p>
             Configure providers via a <code>clients</code> map under the
             <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
-            client's OAuth2 return URL to match its config key. To use a different callback URL,
-            add an <code>oauth2ReturnUrl</code> key to the client config.
+            client's OAuth2 return URL to match its config key.
+        </p>
+        <p>
+            To customize OAuth2 request parameters, add an <code>authParams</code> key to your client config.
         </p>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
@@ -69,18 +71,21 @@ return [
                 'class' => \Yiisoft\Yii\AuthClient\Client\Google::class,
                 'clientId' => $_ENV['GOOGLE_CLIENT_ID'],
                 'clientSecret' => $_ENV['GOOGLE_CLIENT_SECRET'],
+                'authParams' => [
+                    'prompt' => 'select_account',  // Request account-selection screen (optional)
+                ],
             ],
         ],
     ],
 ];</code></pre>
         <p>
-            See the
-            <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
-            for per-client options (custom scope, extra auth-URL parameters, etc.).
-        </p>
-        <p>
             Your config key becomes the callback URL: <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>.
             Provider developer consoles require an exact match, so finalize your keys before registering the OAuth app.
+        </p>
+        <p>
+            See the
+            <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
+            for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's OAuth2 documentation for available <code>authParams</code>.
         </p>
 
         <h4 class="doc-section-heading">Routes</h4>
