@@ -9,17 +9,18 @@ title: "Voyti - GDPR"
             Data export and account anonymization ship as a separate package,
             <code>yiirocks/voyti-gdpr</code>. Core only ever collects mandatory
             personal-data-processing consent at signup and offers hard account
-            deletion (<code>allowAccountDelete</code>) - export and anonymization are
-            optional, and this package is where they live. It reuses core's
-            <code>ConsentForm</code> for password re-confirmation, and core's <code>User</code>,
-            <code>UserProfile</code>, and <code>UserSessions</code> models to build the export.
-            When <a href="/voyti/social/"><code>yiirocks/voyti-social-auth</code></a> is also
-            installed, connected social accounts are included in the export too.
+            deletion. Export and anonymization are optional, and this package
+           provides this. It reuses core's <code>ConsentForm</code> for password
+           re-confirmation, and core's <code>User</code>, <code>UserProfile</code>,
+           and <code>UserSessions</code> models to build the export. When
+           <a href="/voyti/social/"><code>yiirocks/voyti-social-auth</code></a>
+           is also installed, connected social accounts are included in the
+           export too.
         </p>
 
         <h4 class="doc-section-heading">Installation</h4>
         <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline" data-clipboard="composer require yiirocks/voyti-gdpr">composer require yiirocks/voyti-gdpr</button>
+            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-gdpr</button>
             <a href="https://github.com/YiiRocks/voyti-gdpr/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-gdpr" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -59,7 +60,7 @@ title: "Voyti - GDPR"
                 </thead>
                 <tbody>
                     <tr><td><code>voyti/user-privacy-export</code></td><td><code>GET</code></td><td><code>settings/privacy/export</code></td><td>Download personal data as a JSON attachment</td></tr>
-                    <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (password-confirmed) - masks email/username, blocks login, rotates the auth key; the row itself is kept</td></tr>
+                    <tr><td><code>voyti/user-privacy-anonymize</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/anonymize</code></td><td>Anonymize account (password-confirmed). Masks email/username, blocks login, rotates the auth key; the row itself is kept</td></tr>
                 </tbody>
             </table>
         </div>
@@ -67,7 +68,7 @@ title: "Voyti - GDPR"
         <h4 class="doc-section-heading">Events</h4>
         <p>
             Anonymizing an account dispatches <code>GdprEvent</code> (carrying the now-anonymized
-            <code>User</code>) after it's saved. Nothing consumes it by default - attach your own
+            <code>User</code>) after it's saved. Nothing consumes it by default. Attach your own
             listener via the event dispatcher configuration for things like admin notification or
             downstream data-retention cleanup.
         </p>

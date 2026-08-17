@@ -2,13 +2,13 @@
 layout: package
 pkgId: toast-bootstrap5
 title: Toast Bootstrap5
-description: Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller, render $toast in your layout - no manual partials, no bundled JS asset.
+description: Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller, render $toast in your layout. No manual partials, no bundled JS asset.
 ---
 
-<p class="doc-description">Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller with <code>FlashToastInterface</code>, render it in your layout with <code>$toast->render($this)</code> - no manual partials, no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and auto-hide behavior.</p>
+<p class="doc-description">Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller with <code>FlashToastInterface</code>, render it in your layout with <code>$toast->render($this)</code>. No manual partials, no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and auto-hide behavior.</p>
 
 <h2 class="doc-section-heading">Types</h2>
-<p>The first argument to <code>add()</code> is a <code>ToastType</code> case. Each maps to a Bootstrap 5 <code>text-bg-*</code> color and an ARIA live-region role - urgent types interrupt with <code>role="alert"</code>, the rest announce politely with <code>role="status"</code>.</p>
+<p>The first argument to <code>add()</code> is a <code>ToastType</code> case. Each maps to a Bootstrap 5 <code>text-bg-*</code> color and an ARIA live-region role. Urgent types interrupt with <code>role="alert"</code>, the rest announce politely with <code>role="status"</code>.</p>
 <div class="options-table">
     <div class="options-row">
         <div class="options-name-col">
