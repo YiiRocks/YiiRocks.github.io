@@ -13,11 +13,6 @@ plugins:
     - jekyll-seo-tag
     - jekyll-sitemap
 
-sitemap:
-    lastmod: true
-    changefreq: monthly
-    priority: 0.5
-
 sass:
     style: compressed
 
