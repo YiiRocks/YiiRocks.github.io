@@ -8,6 +8,9 @@ title: "Voyti - Two-Factor Authentication"
         <p>
             Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only the seams that let method packages hook into login. Install one or more method packages to activate 2FA.
         </p>
+        <p>
+            After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP entry), and verifies the result. On success, the login completes. Backup codes are auto-generated when enabling 2FA, allowing account recovery if the primary method is unavailable.
+        </p>
 
         <div class="row g-4 mb-4">
             <div class="col-12">
@@ -165,24 +168,24 @@ title: "Voyti - Two-Factor Authentication"
             </div>
         </div>
 
-        <!--<h4 class="doc-section-heading">How it works</h4>-->
-        <p>
-            After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP entry), and verifies the result. On success, the login completes. Backup codes are auto-generated when enabling 2FA, allowing account recovery if the primary method is unavailable.
-        </p>
-
-        <h4 class="doc-section-heading">Enforcing 2FA for a permission</h4>
-        <p>
-            List RBAC permissions that require 2FA in the base package's <code>forcedPermissions</code> param:
-        </p>
+        <h4 class="doc-section-heading">Configuration</h4>
         <pre class="doc-example mb-3"><code class="language-php">// config/params.php
 return [
-    'yiirocks/voyti-2fa' =&gt; [
-        'forcedPermissions' =&gt; ['voyti-admin'],
+    'yiirocks/voyti' =&gt; [
+        '2fa' =&gt; [
+            'forcedPermissions' =&gt; ['voyti-admin'],
+        ],
     ],
 ];</code></pre>
-        <p>
-            The enforcement middleware redirects such users to the setup screen until they enable 2FA. It's tagged <code>voyti.enforce-middleware</code> and joins <code>VoytiMiddleware</code> automatically.
-        </p>
+        <div class="options-table mb-3">
+            <div class="options-row">
+                <div class="options-name-col">
+                    <div class="options-name">forcedPermissions<span class="options-type"> array</span></div>
+                    <div class="options-default"><code>[]</code></div>
+                </div>
+                <div class="options-desc">RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>.</div>
+            </div>
+        </div>
 
         <h4 class="doc-section-heading">Writing a method plugin</h4>
         <ol>

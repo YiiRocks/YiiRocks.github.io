@@ -32,6 +32,14 @@ title: "Voyti - Social Authentication"
         </div>
 
         <h4 class="doc-section-heading">Configuration</h4>
+        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+return [
+    'yiirocks/voyti' =&gt; [
+        'social-auth' =&gt; [
+            'allowMultipleAccountsPerProvider' =&gt; true,
+        ],
+    ],
+];</code></pre>
         <div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
