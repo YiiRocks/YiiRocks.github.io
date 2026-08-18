@@ -5,22 +5,22 @@ title: reCAPTCHA
 description: Provides Google reCAPTCHA v2 and v3 field and server-side validation for your Yii 3 applications.
 ---
 
-        <p>
+<p>
             <a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a>
             provides Google reCAPTCHA v2 and v3 field + server-side
             validation for your <a href="http://www.yiiframework.com/"
             class="text-nowrap">Yii Framework 3</a> applications.
-        </p>
+</p>
 
 {% assign pkg = site.data.projects[page.pkgId] %}
 {% if pkg.features %}
-        <h2 class="doc-section-heading">Features</h2>
-        <div class="features-grid mb-4">
+<h2 class="doc-section-heading">Features</h2>
+<div class="features-grid mb-4">
 {% for feat in pkg.features %}
             <div class="feature-card">
                 <div class="fw-bold mb-1">{{ feat.label }}</div>
                 <div class="feature-card__detail">{{ feat.detail }}</div>
             </div>
 {% endfor %}
-        </div>
+</div>
 {% endif %}

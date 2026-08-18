@@ -5,42 +5,46 @@ section: social
 title: "Voyti - Social Authentication"
 ---
 
-        <p>
+<p>
             Social/OAuth2 login ships as a separate package,
             <code>yiirocks/voyti-social-auth</code>. It builds on
             <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>,
             which handles all OAuth2 protocol logic - Voyti adds the callback
             routing, account linking, and registration flow, plus the
             <code>user_social_account</code> table.
-        </p>
+</p>
 
-        <h4 class="doc-section-heading">Installation</h4>
-        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+<h4 class="doc-section-heading">Installation</h4>
+<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
             <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-social-auth</button>
             <a href="https://github.com/YiiRocks/voyti-social-auth/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
                 <a href="https://packagist.org/packages/yiirocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
-        </div>
-        <div class="mb-4">
+</div>
+<div class="mb-4">
             <p>
                 Run your migration command to create the <code>user_social_account</code>
                 table after installation:
             </p>
             <button type="button" class="copy-btn copy-btn--inline">./yii migrate:up</button>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Configuration</h4>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+<h4 class="doc-section-heading">Configuration</h4>
+<div class="doc-example mb-3">
+{% highlight php %}
+// config/params.php
 return [
-    'yiirocks/voyti' =&gt; [
-        'social-auth' =&gt; [
-            'allowMultipleAccountsPerProvider' =&gt; true,
+    'yiirocks/voyti' => [
+        'social-auth' => [
+            'allowMultipleAccountsPerProvider' => true,
         ],
     ],
-];</code></pre>
-        <div class="options-table mb-3">
+];
+{% endhighlight %}
+</div>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">enableSocialNetworkRegistration<span class="options-type"> bool</span></div>
@@ -55,18 +59,20 @@ return [
                 </div>
                 <div class="options-desc">Whether a single user may link more than one account from the same provider.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Provider configuration</h4>
-        <p>
+<h4 class="doc-section-heading">Provider configuration</h4>
+<p>
             Configure providers via a <code>clients</code> map under the
             <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
             client's OAuth2 return URL to match its config key.
-        </p>
-        <p>
+</p>
+<p>
             To customize OAuth2 request parameters, add an <code>authParams</code> key to your client config.
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+// config/params.php
 return [
     'yiisoft/yii-auth-client' => [
         'clients' => [
@@ -85,19 +91,21 @@ return [
             ],
         ],
     ],
-];</code></pre>
-        <p>
+];
+{% endhighlight %}
+</div>
+<p>
             Your config key becomes the callback URL: <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>.
             Provider developer consoles require an exact match, so finalize your keys before registering the OAuth app.
-        </p>
-        <p>
+</p>
+<p>
             See the
             <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
             for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's OAuth2 documentation for available <code>authParams</code>.
-        </p>
+</p>
 
-        <h4 class="doc-section-heading">Routes</h4>
-        <div class="table-responsive">
+<h4 class="doc-section-heading">Routes</h4>
+<div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
@@ -114,15 +122,15 @@ return [
                     <tr><td><code>voyti/user-social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect a linked social account. Login required</td></tr>
                 </tbody>
             </table>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Supported providers</h4>
-        <p>
+<h4 class="doc-section-heading">Supported providers</h4>
+<p>
             yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
             (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
             Defaults (scope, endpoints) come from the vendor client's DI configuration.
-        </p>
-        <div class="table-responsive">
+</p>
+<div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
@@ -143,16 +151,16 @@ return [
                     <tr><td><code>Client\Yandex</code></td><td>Email read from <code>default_email</code>.</td></tr>
                 </tbody>
             </table>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">How it works</h4>
-        <p>With providers configured:</p>
-        <ul>
+<h4 class="doc-section-heading">How it works</h4>
+<p>With providers configured:</p>
+<ul>
             <li>The login page shows social login buttons for configured providers.</li>
             <li>The Networks page lists every connected account and renders connect buttons for providers.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
-        </ul>
-        <p>
+</ul>
+<p>
             Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
             <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.
-        </p>
+</p>

@@ -5,95 +5,108 @@ section: quick-start
 title: "Voyti - Quick Start"
 ---
 
-        <ol>
+<ol>
+            <li>
+                <h4>Verify prerequisites</h4>
+<ul class="mb-2">
+<li>PHP 8.3 or higher with <code>ext-intl</code></li>
+<li>A connected database in your host application via <a href="https://github.com/yiisoft/db" target="_blank">Yii Database</a></li>
+</ul>
+            </li>
             <li>
                 <h4>Install</h4>
-        <button type="button" class="copy-btn copy-btn--inline mb-3">composer require yiirocks/voyti</button>
-        <p class="mb-3">Optional packages to extend functionality:</p>
-        <div class="optional-grid mb-4">
+<button type="button" class="copy-btn copy-btn--inline mb-3">composer require yiirocks/voyti</button>
+<p class="mb-3">Optional packages to extend functionality:</p>
+<div class="optional-grid mb-4">
             <div class="feature-card">
                 <div class="fw-bold mb-1">Bot Protection</div>
                 <div class="feature-card__detail">Google reCAPTCHA v2/v3 for registration and login forms</div>
-                <button type="button" class="copy-btn">composer require yiirocks/recaptcha</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/recaptcha</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Two-Factor Authentication</div>
                 <div class="feature-card__detail">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP, or WebAuthn/passkeys</div>
-                <button type="button" class="copy-btn">composer require yiirocks/voyti-2fa-email</button>
-                <button type="button" class="copy-btn">composer require yiirocks/voyti-2fa-totp</button>
-                <button type="button" class="copy-btn">composer require yiirocks/voyti-2fa-webauthn</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-email</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-totp</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-webauthn</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Social Authentication</div>
                 <div class="feature-card__detail">OAuth2 login via Google, GitHub, Facebook, and more</div>
-                <button type="button" class="copy-btn">composer require yiirocks/voyti-social-auth</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-social-auth</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Toast Notifications</div>
                 <div class="feature-card__detail">Renders voyti's flash messages as Bootstrap 5 toasts</div>
-                <button type="button" class="copy-btn">composer require yiirocks/toast-bootstrap5</button>
+                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/toast-bootstrap5</button>
             </div>
-        </div>
+</div>
 
             </li>
             <li>
                 <h4 id="cookie-secret">Set the cookie secret</h4>
-        <div class="alert alert-danger" role="alert">
+<div class="alert alert-danger" role="alert">
             Voyti encrypts the remember-me cookie using <code>yiisoft/cookies</code>'
             secret key. Leaving it unset throws a <code>LogicException</code>.
             Generate a strong, random string and set it in <code>config/params.php</code>.
-        </div>
+</div>
 
-        <pre class="doc-example mb-3"><code class="language-php">return [
+<div class="doc-example mb-3">
+{% highlight php %}
+return [
     'yiisoft/cookies' => [
         'secretKey' => $_ENV['COOKIES_SECRET'],
     ],
-];</code></pre>
+];
+{% endhighlight %}
+</div>
 
             </li>
             <li>
                 <h4>Run migrations</h4>
-        <p>
+<p>
             Voyti provides its migration path through
             <code>config/params-console.php</code> using the standard
             <code>yiisoft/db-migration</code> configuration keys. With
             <code>yiisoft/db-migration</code> enabled in your console app, run:
-        </p>
-        <button type="button" class="copy-btn copy-btn--inline mb-3">./yii migrate:up</button>
-        <p>
+</p>
+<button type="button" class="copy-btn copy-btn--inline mb-3">./yii migrate:up</button>
+<p>
             Voyti's migration creates all 7 user-related tables (user, user_profile,
             user_social_account, user_token, user_sessions, user_password_history,
             user_audit_log) and seeds default roles and permissions into the RBAC
             tables created by <code>yiisoft/rbac-db</code>.
-        </p>
-        <p>
+</p>
+<p>
             If the <code>user</code> table is empty after these migrations run, a
             default admin account is seeded automatically: username <code>admin</code>,
             email <code>admin@example.com</code>, and a random password printed to
             the console. <strong class="text-danger">Change this password
             immediately after first login.</strong>
-        </p>
-        <p>
+</p>
+<p>
             The account is assigned the <code>administrator</code> role, which is
             granted the <code>administratorPermissionName</code> permission needed to
             reach the admin dashboard. If the <code>user</code> table already has
             rows (e.g. re-running migrations on an existing database), seeding is
             skipped entirely.
-        </p>
+</p>
 
             </li>
             <li>
                 <h4 id="register-routes">Register routes</h4>
-        <p>
+<p>
             Routes are <strong>not</strong> auto-registered - you must add them to
             your router configuration.
-        </p>
-        <p>
+</p>
+<p>
             Pull the <code>voyti-routes</code> config group into your router
             definition. The example below mounts them under a <code>/user/</code>
             prefix as their own group, alongside your app's own routes:
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\RouteCollection;
@@ -123,29 +136,33 @@ return [
             ),
         ],
     ],
-];</code></pre>
-        <p>
+];
+{% endhighlight %}
+</div>
+<p>
             <code>voyti-routes</code> already wraps itself with its own required
             middleware (see <code>config/routes.php</code>), so the group above
             doesn't repeat any of it, and adding <code>VoytiMiddleware</code> to
             your own group only extends that same coverage to your app's pages.
-        </p>
+</p>
 
             </li>
             <li>
                 <h4 id="configure-the-form-theme">Configure the form theme</h4>
-        <div class="alert alert-warning" role="alert">
+<div class="alert alert-warning" role="alert">
             This step is optional but highly recommended. Without it, forms and buttons will render without any styling.
-        </div>
-        <p>
+</div>
+<p>
             Voyti's forms (login, registration, profile, etc.) and button-styled links render through
             <code>yiisoft/form</code>'s <code>ThemeContainer</code>.
-        </p>
-        <p>
+</p>
+<p>
             Set a theme in <code>config/params.php</code>. <code>yiisoft/form</code>
             ships ready-made Bootstrap 5 configs you can use as-is:
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Form\Theme\ThemePath;
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+use Yiisoft\Form\Theme\ThemePath;
 use Yiisoft\FormModel\ValidationRulesEnricher;
 
 return [
@@ -159,13 +176,15 @@ return [
         ],
         'defaultTheme' => 'default',
     ],
-];</code></pre>
-        <p>
+];
+{% endhighlight %}
+</div>
+<p>
             Swap in <code>ThemePath::BOOTSTRAP5_HORIZONTAL</code> for a horizontal
             label/input layout, or write your own array of
             <code>Theme::__construct()</code> options if you're not using Bootstrap.
-        </p>
-        <p>
+</p>
+<p>
             <code>enrichFromValidationRules</code> and
             <code>validationRulesEnricher</code> translate the
             <code>yiisoft/validator</code> rules on your form models
@@ -173,10 +192,10 @@ return [
             into matching HTML5 input attributes (<code>required</code>,
             <code>minlength</code>/<code>maxlength</code>, <code>pattern</code>, and
             so on), giving you client-side validation automatically.
-        </p>
-        <div class="mb-4">
+</p>
+<div class="mb-4">
             <img src="/assets/images/voyti/quick-start-form-theme-comparison.png" alt="Before and after comparison - form styling without and with Bootstrap 5 theme" class="img-fluid rounded" loading="lazy" decoding="async">
-        </div>
+</div>
 
             </li>
             <li>
@@ -187,4 +206,4 @@ return [
                     plugin</a>. No manual wiring needed.
                 </p>
             </li>
-        </ol>
+</ol>

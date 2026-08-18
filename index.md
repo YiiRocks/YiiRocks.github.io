@@ -87,7 +87,11 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% endif %}
 
 {% if pkg.usage %}
-                    <pre class="docs-entry__usage"><code class="language-php">{{ pkg.usage | escape }}</code></pre>
+                    <div class="doc-example mb-3">
+{% highlight php %}
+{{ pkg.usage }}
+{% endhighlight %}
+</div>
 {% endif %}
                 </div>
 {% endif %}

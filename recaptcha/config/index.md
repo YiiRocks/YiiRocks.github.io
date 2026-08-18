@@ -5,11 +5,13 @@ section: config
 title: "reCAPTCHA - Configuration"
 ---
 
-        <p>
+<p>
             Set your site keys and secret keys via environment variables
             or directly in <code>config/params.php</code>:
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">'yiirocks/recaptcha' => [
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+'yiirocks/recaptcha' => [
     'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'],
     'secretV3' => $_ENV['RECAPTCHA_SECRET_V3'],
     'sendRemoteIp' => true,
@@ -18,10 +20,12 @@ title: "reCAPTCHA - Configuration"
     'container' => [
         'useContainer' => false,
     ],
-],</code></pre>
+],
+{% endhighlight %}
+</div>
 
-        <h4 class="doc-section-heading">General</h4>
-        <div class="options-table mb-3">
+<h4 class="doc-section-heading">General</h4>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">siteKeyV2<span class="options-type"> string</span></div>
@@ -92,16 +96,16 @@ title: "reCAPTCHA - Configuration"
                 </div>
                 <div class="options-desc">App-wide default badge for every <code>RecaptchaV3Field</code> (<code>BottomRight</code>, <code>BottomLeft</code>, or <code>Hidden</code>), unless a field overrides it with <code>-&gt;withBadge()</code>.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Container Defaults</h4>
-        <p>
+<h4 class="doc-section-heading">Container Defaults</h4>
+<p>
             Applied to every field's wrapper unless overridden per-field via
             <code>-&gt;useContainer()</code>, <code>-&gt;containerTag()</code>, or
             <code>-&gt;containerAttributes()</code> - see <a href="/recaptcha/v2/">v2</a> and
             <a href="/recaptcha/v3/">v3</a>.
-        </p>
-        <div class="options-table mb-3">
+</p>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">container.useContainer<span class="options-type"> bool</span></div>
@@ -123,4 +127,4 @@ title: "reCAPTCHA - Configuration"
                 </div>
                 <div class="options-desc">Wrapper HTML attributes.</div>
             </div>
-        </div>
+</div>

@@ -173,8 +173,6 @@ voyti:
     Provides highly customizable user management, authentication, and
     authorization for your Yii Framework 3 applications.
   sections:
-    - slug: requirements
-      title: Requirements
     - slug: quick-start
       title: Quick Start
     - slug: config

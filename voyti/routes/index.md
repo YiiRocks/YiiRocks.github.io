@@ -5,19 +5,19 @@ section: routes
 title: "Voyti - Available Routes"
 ---
 
-        <p>
+<p>
             The library does not provide a menu model or navigation contract.
             It only exposes named routes that the host application can use in its
             own menu, sidebar, or access rules. See the <a href="/voyti/cookbook/">Cookbook</a> for a
             Bootstrap 5 nav menu example.
-        </p>
-        <p>
+</p>
+<p>
             This table lists only core's own routes. Addon packages
             (<a href="/voyti/social/">Social Auth</a>, <a href="/voyti/two-factor/">Two-Factor</a>,
             <a href="/voyti/api/">REST API</a>, <a href="/voyti/gdpr/">GDPR</a>) register their own
             routes when installed - see each addon's own page.
-        </p>
-        <div class="table-responsive">
+</p>
+<div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
@@ -75,4 +75,4 @@ title: "Voyti - Available Routes"
                     <tr><td><code>voyti/admin-audit-log</code></td><td><code>GET</code></td><td><code>admin/audit-log/</code></td><td>Audit log of admin actions (RBAC and user management changes). Populated when <code>enableAuditLog</code> is <code>true</code></td></tr>
                 </tbody>
             </table>
-        </div>
+</div>

@@ -5,30 +5,32 @@ section: api
 title: "Voyti - REST API"
 ---
 
-        <p>
+<p>
             The JSON REST API for user management ships as a separate package,
             <code>yiirocks/voyti-api</code>. It adds the <code>voyti-routes-api</code>
             config group, Bearer-token authentication on top of core's
             <code>IdentityAdapter</code>, and two console commands for issuing and
             revoking API tokens. It reuses core's models, services, and
             <code>administratorPermissionName</code> permission check.
-        </p>
+</p>
 
-        <h4 class="doc-section-heading">Installation</h4>
-        <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+<h4 class="doc-section-heading">Installation</h4>
+<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
             <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-api</button>
             <a href="https://github.com/YiiRocks/voyti-api/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-api" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
                 <a href="https://packagist.org/packages/yiirocks/voyti-api" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
             </div>
-        </div>
-        <p>
+</div>
+<p>
             Routes are <strong>not</strong> auto-registered. Pull the
             <code>voyti-routes-api</code> config group into your router and mount it
             at whatever prefix you like:
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">use Yiisoft\Config\Config;
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\RouteCollection;
@@ -50,18 +52,24 @@ return [
             ),
         ],
     ],
-];</code></pre>
+];
+{% endhighlight %}
+</div>
 
-        <h4 class="doc-section-heading">Configuration</h4>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+<h4 class="doc-section-heading">Configuration</h4>
+<div class="doc-example mb-3">
+{% highlight php %}
+// config/params.php
 return [
-    'yiirocks/voyti' =&gt; [
-        'api' =&gt; [
-            'apiTokenLifespan' =&gt; 31536000,
+    'yiirocks/voyti' => [
+        'api' => [
+            'apiTokenLifespan' => 31536000,
         ],
     ],
-];</code></pre>
-        <div class="options-table mb-3">
+];
+{% endhighlight %}
+</div>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">apiTokenLifespan<span class="options-type"> int</span></div>
@@ -69,21 +77,21 @@ return [
                 </div>
                 <div class="options-desc">API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Authentication</h4>
-        <p>
+<h4 class="doc-section-heading">Authentication</h4>
+<p>
             Requests authenticate with an <code>Authorization: Bearer &lt;token&gt;</code>
             header. <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a
             user for that request only and returns <code>401</code> when the header is
             missing or the token is invalid or expired. <code>AccessRuleMiddleware</code>
             then enforces <code>administratorPermissionName</code> as usual, so API tokens
             only grant what that permission grants.
-        </p>
+</p>
 
-        <h4 class="doc-section-heading">Managing tokens</h4>
-        <p>The package registers two console commands under <code>yiisoft/yii-console</code>:</p>
-        <table class="table table-sm table-striped">
+<h4 class="doc-section-heading">Managing tokens</h4>
+<p>The package registers two console commands under <code>yiisoft/yii-console</code>:</p>
+<table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Command</th>
@@ -100,10 +108,10 @@ return [
                     <td>Revoke all REST API access tokens for a user</td>
                 </tr>
             </tbody>
-        </table>
+</table>
 
-        <h4 class="doc-section-heading">Endpoints</h4>
-        <div class="table-responsive">
+<h4 class="doc-section-heading">Endpoints</h4>
+<div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
@@ -122,4 +130,4 @@ return [
                     <tr><td><code>voyti/api-v1-users-delete</code></td><td><code>DELETE</code></td><td><code>v1/users/{id}</code></td><td>Delete a user</td></tr>
                 </tbody>
             </table>
-        </div>
+</div>

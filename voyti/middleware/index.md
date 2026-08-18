@@ -5,8 +5,8 @@ section: middleware
 title: "Voyti - Middleware"
 ---
 
-        <p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
-        <table class="table table-sm table-striped">
+<p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
+<table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Middleware</th>
@@ -46,10 +46,10 @@ title: "Voyti - Middleware"
                     <td>No, add it to the <code>Group</code> wrapping your app's own routes. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
                 </tr>
             </tbody>
-        </table>
+</table>
 
-        <h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
-        <table class="table table-sm table-striped">
+<h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
+<table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Middleware</th>
@@ -64,14 +64,14 @@ title: "Voyti - Middleware"
                     <td>Yes</td>
                 </tr>
             </tbody>
-        </table>
+</table>
 
-        <h4 class="doc-section-heading" id="site-wide-enforcement">Site-wide enforcement</h4>
-        <p>
+<h4 class="doc-section-heading" id="site-wide-enforcement">Site-wide enforcement</h4>
+<p>
             The auto-registration above only covers routes <em>this extension
             defines</em>. Without <code>VoytiMiddleware</code> wrapping your
             routes, a user with an expired password, missing 2FA, or a revoked
             session can still browse your app's own dashboard, home page, or
             any other route outside this extension - and a visitor with
             a valid remember-me cookie won't be logged back in either.
-        </p>
+</p>

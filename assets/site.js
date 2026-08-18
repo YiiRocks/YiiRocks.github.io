@@ -1,4 +1,3 @@
-(window.requestIdleCallback || function(f) { setTimeout(f, 0); })(function () { hljs.highlightAll(); });
 document.addEventListener('click', function (e) {
     var link = e.target.closest('main a');
     if (link && link.host !== location.host) link.target = '_blank';

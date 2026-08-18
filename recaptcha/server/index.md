@@ -5,10 +5,12 @@ section: server
 title: "reCAPTCHA - Server-Side Verification"
 ---
 
-        <p>
+<p>
             Use <code>RecaptchaClient</code> for manual verification:
-        </p>
-        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaClient;
+</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+use YiiRocks\Recaptcha\RecaptchaClient;
 
 /** @var RecaptchaClient $client */
 $result = $client->verify($token);
@@ -22,4 +24,6 @@ $result->errorCodes;  // array
 $result->hostname;    // ?string
 $result->challengeTs; // ?string
 
-$config = $client->getConfig(); // RecaptchaConfig</code></pre>
+$config = $client->getConfig(); // RecaptchaConfig
+{% endhighlight %}
+</div>

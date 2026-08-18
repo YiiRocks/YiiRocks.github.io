@@ -5,8 +5,10 @@ section: v2
 title: "reCAPTCHA - v2"
 ---
 
-        <h4>Field</h4>
-        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaV2Field;
+<h4>Field</h4>
+<div class="doc-example mb-3">
+{% highlight php %}
+use YiiRocks\Recaptcha\RecaptchaV2Field;
 use YiiRocks\Recaptcha\RecaptchaV2Theme;
 use YiiRocks\Recaptcha\RecaptchaV2Size;
 use YiiRocks\Recaptcha\RecaptchaV2Type;
@@ -17,10 +19,12 @@ echo RecaptchaV2Field::field($form, 'captcha')
     ->withType(RecaptchaV2Type::Audio)
     ->withId('my-captcha')
     ->withCallback('onSuccess')
-    ->render();</code></pre>
+    ->render();
+{% endhighlight %}
+</div>
 
-        <h4>Options</h4>
-        <div class="options-table mb-3">
+<h4>Options</h4>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">withSiteKey<span class="options-type">(string)</span></div>
@@ -81,10 +85,10 @@ echo RecaptchaV2Field::field($form, 'captcha')
                 </div>
                 <div class="options-desc">JavaScript callback function name when an error occurs.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Inherited from InputField</h4>
-        <div class="options-table mb-3">
+<h4 class="doc-section-heading">Inherited from InputField</h4>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">-&gt;name<span class="options-type">(string)</span></div>
@@ -99,10 +103,10 @@ echo RecaptchaV2Field::field($form, 'captcha')
                 </div>
                 <div class="options-desc">Override the hidden input ID.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Container (inherited from BaseField)</h4>
-        <div class="options-table mb-3">
+<h4 class="doc-section-heading">Container (inherited from BaseField)</h4>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">-&gt;containerTag<span class="options-type">(string)</span></div>
@@ -136,20 +140,24 @@ echo RecaptchaV2Field::field($form, 'captcha')
                 </div>
                 <div class="options-desc">Merge additional wrapper attributes.</div>
             </div>
-        </div>
+</div>
 
-        <h4>Validation</h4>
-        <p>Use the attribute on your form model property:</p>
-        <pre class="doc-example mb-3"><code class="language-php">use YiiRocks\Recaptcha\RecaptchaV2Rule;
+<h4>Validation</h4>
+<p>Use the attribute on your form model property:</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+use YiiRocks\Recaptcha\RecaptchaV2Rule;
 
 final class ContactForm
 {
     #[RecaptchaV2Rule(sendRemoteIp: true)]
     public string $gRecaptchaResponse = '';
-}</code></pre>
+}
+{% endhighlight %}
+</div>
 
-        <h4 class="doc-section-heading">Rule parameters</h4>
-        <div class="options-table mb-3">
+<h4 class="doc-section-heading">Rule parameters</h4>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">message</div>
@@ -171,4 +179,4 @@ final class ContactForm
                 </div>
                 <div class="options-desc">Whether to include the user's IP in verification.</div>
             </div>
-        </div>
+</div>

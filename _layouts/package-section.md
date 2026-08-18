@@ -19,7 +19,7 @@ layout: default
     </div>
 
     <div class="doc-section-layout">
-{% include doc_sidebar.html pkgId=page.pkgId section=page.section %}
+{% include doc_sidebar.md pkgId=page.pkgId section=page.section %}
         <div class="doc-section-content">
             <h2 class="h3 fw-bolder mb-2" id="section-{{ page.section }}">{{ current_title }}</h2>
             {{ content }}

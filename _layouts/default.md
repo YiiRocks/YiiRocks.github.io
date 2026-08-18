@@ -15,8 +15,7 @@
         <link rel="preconnect" href="{{ url }}" crossorigin>
 {% endfor %}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github-dark-dimmed.min.css">
-        <link rel="stylesheet" href="/assets/css/site.css">
+        <link rel="stylesheet" href="/assets/site.css">
         <script>
             document.documentElement.dataset.bsTheme=localStorage.theme||(window.matchMedia?.("(prefers-color-scheme:light)")?.matches?"light":"dark");
         </script>
@@ -48,7 +47,6 @@
             </div>
         </footer>
         <button type="button" class="scroll-top" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></button>
-        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js" defer></script>
-        <script src="/assets/js/site.js" defer></script>
+        <script src="/assets/site.js" defer></script>
     </body>
 </html>

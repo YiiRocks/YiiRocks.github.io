@@ -5,7 +5,7 @@ section: console
 title: "Voyti - Console Commands"
 ---
 
-        <table class="table table-sm table-striped">
+<table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Command</th>
@@ -30,4 +30,4 @@ title: "Voyti - Console Commands"
                     <td>Change a user's password</td>
                 </tr>
             </tbody>
-        </table>
+</table>

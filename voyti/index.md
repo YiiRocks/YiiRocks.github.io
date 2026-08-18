@@ -5,7 +5,7 @@ title: Voyti
 description: Provides highly customizable user management, authentication, and authorization for your Yii Framework 3 applications.
 ---
 
-        <blockquote class="text-muted text-center mb-5">
+<blockquote class="text-muted text-center mb-5">
             <div class="display-5 fw-normal">войти</div>
             <div class="fs-4 fst-italic text-body-secondary">/vɐjˈtʲi/</div>
             <div class="fst-italic small fw-semibold">verb</div>
@@ -13,33 +13,33 @@ description: Provides highly customizable user management, authentication, and a
             <p class="lead fst-italic mt-3 mb-0">
                 "to enter" · "to log in"
             </p>
-        </blockquote>
+</blockquote>
 
-        <p class="lead">
+<p class="lead">
             <a href="https://github.com/YiiRocks/voyti">Voyti</a> is a highly
             customizable and extensible user management, authentication, and
             authorization extension for
             <a href="https://www.yiiframework.com/" class="text-nowrap">Yii Framework&nbsp;3</a>.
-        </p>
+</p>
 
-        <p>
+<p>
             Originally ported from
             <a href="https://github.com/2amigos/yii2-usuario">Usuario</a>,
             Voyti has since been rebuilt around modern PSR standards and Yiisoft
             components. It has been extensively redesigned to provide a flexible,
             modular foundation that adapts to a wide range of authentication and
             authorization requirements.
-        </p>
+</p>
 
 {% assign pkg = site.data.projects[page.pkgId] %}
 {% if pkg.features %}
-        <h2 class="doc-section-heading">Features</h2>
-        <div class="features-grid mb-4">
+<h2 class="doc-section-heading">Features</h2>
+<div class="features-grid mb-4">
 {% for feat in pkg.features %}
             <div class="feature-card">
                 <div class="fw-bold mb-1">{{ feat.label }}</div>
                 <div class="feature-card__detail">{{ feat.detail }}</div>
             </div>
 {% endfor %}
-        </div>
+</div>
 {% endif %}

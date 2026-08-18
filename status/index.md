@@ -15,16 +15,16 @@ preconnect:
     {% assign svginline_keys = "svg-inline,svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}
 
     <div class="status-grid mb-5">
-{% include status_cards.html pkg_data=pkg_data filter_keys=general_keys %}
+{% include status_cards.md pkg_data=pkg_data filter_keys=general_keys %}
     </div>
 
     <h2 class="doc-section-heading mb-4">Voyti</h2>
     <div class="status-grid mb-5">
-{% include status_cards.html pkg_data=pkg_data filter_keys=voyti_keys %}
+{% include status_cards.md pkg_data=pkg_data filter_keys=voyti_keys %}
     </div>
 
     <h2 class="doc-section-heading mb-4">SVG Inline</h2>
     <div class="status-grid">
-{% include status_cards.html pkg_data=pkg_data filter_keys=svginline_keys %}
+{% include status_cards.md pkg_data=pkg_data filter_keys=svginline_keys %}
     </div>
 </div>

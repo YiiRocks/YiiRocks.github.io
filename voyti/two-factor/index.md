@@ -5,14 +5,14 @@ section: two-factor
 title: "Voyti - Two-Factor Authentication"
 ---
 
-        <p>
+<p>
             Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only the seams that let method packages hook into login. Install one or more method packages to activate 2FA.
-        </p>
-        <p>
+</p>
+<p>
             After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP entry), and verifies the result. On success, the login completes. Backup codes are auto-generated when enabling 2FA, allowing account recovery if the primary method is unavailable.
-        </p>
+</p>
 
-        <div class="row g-4 mb-4">
+<div class="row g-4 mb-4">
             <div class="col-12">
                 <div class="card h-100">
                     <div class="card-header d-flex align-items-center"><div class="card-header__icon me-2" style="background: #eef4ff;"><img src="/assets/icons/voyti-2fa-email.svg" alt="Email"></div>Email</div>
@@ -166,18 +166,22 @@ title: "Voyti - Two-Factor Authentication"
                     </div>
                 </div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Configuration</h4>
-        <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+<h4 class="doc-section-heading">Configuration</h4>
+<div class="doc-example mb-3">
+{% highlight php %}
+// config/params.php
 return [
-    'yiirocks/voyti' =&gt; [
-        '2fa' =&gt; [
-            'forcedPermissions' =&gt; ['voyti-admin'],
+    'yiirocks/voyti' => [
+        '2fa' => [
+            'forcedPermissions' => ['voyti-admin'],
         ],
     ],
-];</code></pre>
-        <div class="options-table mb-3">
+];
+{% endhighlight %}
+</div>
+<div class="options-table mb-3">
             <div class="options-row">
                 <div class="options-name-col">
                     <div class="options-name">forcedPermissions<span class="options-type"> array</span></div>
@@ -185,47 +189,55 @@ return [
                 </div>
                 <div class="options-desc">RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>.</div>
             </div>
-        </div>
+</div>
 
-        <h4 class="doc-section-heading">Writing a method plugin</h4>
-        <ol>
+<h4 class="doc-section-heading">Writing a method plugin</h4>
+<ol>
             <li>
                 <h4>Register the method</h4>
-        <p>Tag the provider class with <code>voyti.two-factor-method</code> in <code>config/di.php</code>. The registry collects tagged providers, keyed by <code>getName()</code>:</p>
-        <pre class="doc-example mb-3"><code class="language-php">// config/di.php
+<p>Tag the provider class with <code>voyti.two-factor-method</code> in <code>config/di.php</code>. The registry collects tagged providers, keyed by <code>getName()</code>:</p>
+<div class="doc-example mb-3">
+{% highlight php %}
+// config/di.php
 use MyNamespace\MyTwoFactorMethod;
 
 return [
-    MyTwoFactorMethod::class =&gt; [
-        'class' =&gt; MyTwoFactorMethod::class,
-        'tags' =&gt; ['voyti.two-factor-method'],
+    MyTwoFactorMethod::class => [
+        'class' => MyTwoFactorMethod::class,
+        'tags' => ['voyti.two-factor-method'],
     ],
-];</code></pre>
+];
+{% endhighlight %}
+</div>
             </li>
             <li>
                 <h4>Contribute setup routes</h4>
-        <p>Append routes to <code>yiirocks/voyti</code> → <code>twoFactorMethodRoutes</code> in <code>config/params.php</code>. They're spliced into the base package's <code>settings/</code> group, inheriting login guards and CSRF middleware:</p>
-                <pre class="doc-example mb-3"><code class="language-php">// config/params.php
+<p>Append routes to <code>yiirocks/voyti</code> → <code>twoFactorMethodRoutes</code> in <code>config/params.php</code>. They're spliced into the base package's <code>settings/</code> group, inheriting login guards and CSRF middleware:</p>
+                <div class="doc-example mb-3">
+{% highlight php %}
+// config/params.php
 use MyNamespace\MyMethodController;
 use Yiisoft\Router\Route;
 
 return [
-    'yiirocks/voyti' =&gt; [
-        'twoFactorMethodRoutes' =&gt; [
+    'yiirocks/voyti' => [
+        'twoFactorMethodRoutes' => [
             Route::get('two-factor/my-method/')
-                -&gt;name('voyti/user-two-factor-my-method')
-                -&gt;action([MyMethodController::class, 'settings']),
+                ->name('voyti/user-two-factor-my-method')
+                ->action([MyMethodController::class, 'settings']),
         ],
     ],
-];</code></pre>
+];
+{% endhighlight %}
+</div>
                 <p>
                     Route lists merge and append, so multiple method packages coexist without collision. Use the <code>voyti/user-two-factor-&lt;name&gt;</code> convention; that's what <code>getSettingsUrl()</code> generates. Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a top-level route group using <code>VoytiRoutes::webMiddleware()</code>.
                 </p>
             </li>
             <li>
                 <h4>Implement the interface</h4>
-        <p><code>TwoFactorMethodInterface</code> (namespace <code>YiiRocks\Voyti\TwoFactor</code>, provided by the base package) is the contract you must implement:</p>
-        <div class="table-responsive">
+<p><code>TwoFactorMethodInterface</code> (namespace <code>YiiRocks\Voyti\TwoFactor</code>, provided by the base package) is the contract you must implement:</p>
+<div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
                     <tr>
@@ -249,9 +261,9 @@ return [
                     <tr><td><code>onDisable($user)</code></td><td>Runs when 2FA is disabled entirely, to clear method-specific state.</td></tr>
                 </tbody>
             </table>
-        </div>
+</div>
             </li>
-        </ol>
+</ol>
 
-        <h4 class="doc-section-heading">Enrollment and storage</h4>
-        <p>Your setup routes persist secrets and render the enrollment UI. The base package handles finalization (verification, backup code generation) and teardown (disable, re-verify) generically - your plugin doesn't need to touch those. If your method needs a custom table, ship a model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>
+<h4 class="doc-section-heading">Enrollment and storage</h4>
+<p>Your setup routes persist secrets and render the enrollment UI. The base package handles finalization (verification, backup code generation) and teardown (disable, re-verify) generically - your plugin doesn't need to touch those. If your method needs a custom table, ship a model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>

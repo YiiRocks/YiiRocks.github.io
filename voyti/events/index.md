@@ -5,14 +5,14 @@ section: events
 title: "Voyti - Events & Listeners"
 ---
 
-        <p>Voyti dispatches events at key points in the user lifecycle,
+<p>Voyti dispatches events at key points in the user lifecycle,
         allowing your application to react, log, or extend behaviour. Each
         event carries a <code>const string</code> name to distinguish
         before/after variants. Attach your own listeners through the Yii3
         event dispatcher configuration.</p>
 
-        <h4>Events with default listeners</h4>
-        <table class="table table-sm table-striped">
+<h4>Events with default listeners</h4>
+<table class="table table-sm table-striped">
             <thead>
                 <tr>
                     <th>Event</th>
@@ -24,15 +24,15 @@ title: "Voyti - Events & Listeners"
                 <tr><td><code>AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session tracking</td></tr>
                 <tr><td><code>AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
             </tbody>
-        </table>
+</table>
 
-        <h4>Additional events (no default listeners)</h4>
-        <p>Dispatched by the library, but nothing consumes them by default -
+<h4>Additional events (no default listeners)</h4>
+<p>Dispatched by the library, but nothing consumes them by default -
         attach your own listener via the event dispatcher configuration if you
         need to react to them.</p>
-        <ul>
+<ul>
             <li><strong>UserEvent</strong> - Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
             <li><strong>UserProfileEvent</strong> - Dispatched when a user updates their profile</li>
             <li><strong>ResetPasswordEvent</strong> - Password reset flow</li>
             <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
-        </ul>
+</ul>

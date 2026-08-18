@@ -4,9 +4,43 @@ url: "https://www.yii.rocks"
 logo: /assets/images/logo-180.png
 author: Mr. 42
 
+syntax_highlighter: rouge
+rouge_options:
+  formatter: html
+
 plugins:
+    - jekyll-redirect-from
     - jekyll-seo-tag
     - jekyll-sitemap
 
+sitemap:
+    lastmod: true
+    changefreq: monthly
+    priority: 0.5
+
 sass:
     style: compressed
+
+permalink: /:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+  - scope:
+      path: "voyti"
+      type: "pages"
+    values:
+      layout: package-section
+  - scope:
+      path: "recaptcha"
+      type: "pages"
+    values:
+      layout: package-section
+  - scope:
+      path: "svg-inline"
+      type: "pages"
+    values:
+      layout: package-section

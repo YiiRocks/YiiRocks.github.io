@@ -76,23 +76,31 @@ description: Add Font Awesome Icons inline to your Yii Framework 2.0 application
         </ul>
 
         <h3 class="fw-bolder mb-2">Usage as a Class</h3>
-        <pre class="doc-example mb-3"><code class="language-php">$icon = new \thoulah\fontawesome\Icon();
-echo $icon-&gt;show('at');
-echo $icon-&gt;show('github', ['style' =&gt; 'brands', 'fill' =&gt; '#003865']);
-echo $icon-&gt;show('font-awesome', ['class' =&gt; 'yourClass', 'style' =&gt; 'brands']);</code></pre>
+        <div class="doc-example mb-3">
+{% highlight php %}
+$icon = new \thoulah\fontawesome\Icon();
+echo $icon->show('at');
+echo $icon->show('github', ['style' => 'brands', 'fill' => '#003865']);
+echo $icon->show('font-awesome', ['class' => 'yourClass', 'style' => 'brands']);
+{% endhighlight %}
+</div>
 
         <h3 class="fw-bolder mb-2">Usage as a Widget</h3>
-        <pre class="doc-example mb-3"><code class="language-php">use thoulah\fontawesome\IconWidget4 as IconWidget;
-echo IconWidget::widget(['name' =&gt; 'at']);
-echo IconWidget::widget(['name' =&gt; 'github', 'options' =&gt; ['style' =&gt; 'brands', 'fill' =&gt; '#003865']]);
+        <div class="doc-example mb-3">
+{% highlight php %}
+use thoulah\fontawesome\IconWidget4 as IconWidget;
+echo IconWidget::widget(['name' => 'at']);
+echo IconWidget::widget(['name' => 'github', 'options' => ['style' => 'brands', 'fill' => '#003865']]);
 
 echo IconWidget::widget([
-    'name' =&gt; 'font-awesome',
-    'options' =&gt; [
-        'class' =&gt; 'yourClass',
-        'style' =&gt; 'brands'
+    'name' => 'font-awesome',
+    'options' => [
+        'class' => 'yourClass',
+        'style' => 'brands'
     ],
-]);</code></pre>
+]);
+{% endhighlight %}
+</div>
 
         <h3 class="fw-bolder mb-2">Usage as a Component</h3>
         <p>
@@ -100,50 +108,66 @@ echo IconWidget::widget([
             default options throughout your application.
         </p>
         Add the component to your Yii config file:
-        <pre class="doc-example mb-3"><code class="language-php">'components' =&gt; [
-    'fontawesome' =&gt; [
-        'class' =&gt; thoulah\fontawesome\IconComponent::class,
-//      'fontAwesomeFolder' =&gt; '@npm/fontawesome-pro/svgs',
-//      'style' =&gt; 'regular',
+        <div class="doc-example mb-3">
+{% highlight php %}
+'components' => [
+    'fontawesome' => [
+        'class' => thoulah\fontawesome\IconComponent::class,
+//      'fontAwesomeFolder' => '@npm/fontawesome-pro/svgs',
+//      'style' => 'regular',
     ]
-]</code></pre>
+]
+{% endhighlight %}
+</div>
         Now you can globally insert an icon:
-        <pre class="doc-example mb-3"><code class="language-php">echo Yii::$app-&gt;fontawesome-&gt;name('at');
-echo Yii::$app-&gt;fontawesome-&gt;name('github', 'brands')-&gt;fill-&gt;('#003865');
-echo Yii::$app-&gt;fontawesome-&gt;name('font-awesome', 'brands')-&gt;class('yourClass');</code></pre>
+        <div class="doc-example mb-3">
+{% highlight php %}
+echo Yii::$app->fontawesome->name('at');
+echo Yii::$app->fontawesome->name('github', 'brands')->fill->('#003865');
+echo Yii::$app->fontawesome->name('font-awesome', 'brands')->class('yourClass');
+{% endhighlight %}
+</div>
 
         <h3 class="fw-bolder mb-2">Usage from ActiveForm (automatic)</h3>
-        <pre class="doc-example mb-3"><code class="language-php">use thoulah\fontawesome\bootstrap4\ActiveForm;
+        <div class="doc-example mb-3">
+{% highlight php %}
+use thoulah\fontawesome\bootstrap4\ActiveForm;
 
 $form = ActiveForm::begin();
 
-echo $form-&gt;field($model, 'field1', [
-    'icon' =&gt; 'user',
+echo $form->field($model, 'field1', [
+    'icon' => 'user',
 ]);
 
-echo $form-&gt;field($model, 'field2', [
-    'icon' =&gt; [
-        'name' =&gt; 'github',
-        'style' =&gt; 'brands',
+echo $form->field($model, 'field2', [
+    'icon' => [
+        'name' => 'github',
+        'style' => 'brands',
     ],
 ]);
 
-echo $form-&gt;field($model, 'field3', [
-    'icon' =&gt; [
-        'name' =&gt; 'github',
-        'style' =&gt; 'brands',
-        'append' =&gt; true,
+echo $form->field($model, 'field3', [
+    'icon' => [
+        'name' => 'github',
+        'style' => 'brands',
+        'append' => true,
     ],
 ]);
 
-ActiveForm::end();</code></pre>
+ActiveForm::end();
+{% endhighlight %}
+</div>
 
         <h3 class="fw-bolder mb-2">Usage from ActiveForm (manual)</h3>
         For <code>$icon</code> you can use any earlier described usage method.
-        <pre class="doc-example mb-3"><code class="language-php">$form = ActiveForm::begin();
+        <div class="doc-example mb-3">
+{% highlight php %}
+$form = ActiveForm::begin();
 
-echo $form-&gt;field($model, 'field', [
-    'inputTemplate' =&gt; $icon->activeFieldAddon('font-awesome', ['style' =&gt; 'brands']),
+echo $form->field($model, 'field', [
+    'inputTemplate' => $icon->activeFieldAddon('font-awesome', ['style' => 'brands']),
 ]);
 
-ActiveForm::end();</code></pre>
+ActiveForm::end();
+{% endhighlight %}
+</div>
