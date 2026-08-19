@@ -10,7 +10,6 @@
         <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg">
         <link rel="alternate icon" href="/assets/images/favicon.ico">
         <link rel="apple-touch-icon" href="/assets/images/logo-180.png">
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 {% for url in page.preconnect %}
         <link rel="preconnect" href="{{ url }}" crossorigin>
 {% endfor %}

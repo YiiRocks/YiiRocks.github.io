@@ -41,7 +41,7 @@ scrollTop.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 if ('IntersectionObserver' in window) {
-    var animEls = document.querySelectorAll('.feature-card, .docs-entry');
+    var animEls = document.querySelectorAll('.feature-card, .docs-entry, .status-card');
     if (animEls.length) {
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {

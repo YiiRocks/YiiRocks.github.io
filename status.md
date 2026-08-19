@@ -3,7 +3,7 @@ layout: default
 title: Build Status
 description: Real-time build status and CI metrics for all Yii.Rocks packages including test coverage, mutation score, and download statistics.
 preconnect:
-    - "https://img.shields.io"
+  - https://img.shields.io
 ---
 
 <div class="doc-page">
