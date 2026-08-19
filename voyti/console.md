@@ -5,6 +5,33 @@ section: console
 title: "Voyti - Console Commands"
 ---
 
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>voyti:create</code></td>
+            <td>Create a new user</td>
+        </tr>
+        <tr>
+            <td><code>voyti:delete</code></td>
+            <td>Delete a user</td>
+        </tr>
+        <tr>
+            <td><code>voyti:confirm</code></td>
+            <td>Confirm a user's email</td>
+        </tr>
+        <tr>
+            <td><code>voyti:password</code></td>
+            <td>Change a user's password</td>
+        </tr>
+    </tbody>
+</table>
+
 ## voyti:create
 
 Create a new user account with optional password and role assignment.
