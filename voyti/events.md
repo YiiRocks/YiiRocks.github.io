@@ -30,12 +30,33 @@ title: "Voyti - Events & Listeners"
 <p>Dispatched by the library, but nothing consumes them by default -
         attach your own listener via the event dispatcher configuration if you
         need to react to them.</p>
-<ul>
-            <li><strong>UserEvent</strong> - Carries a <code>getType()</code> discriminator: <code>UserEvent::CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></li>
-            <li><strong>UserProfileEvent</strong> - Dispatched when a user updates their profile</li>
-            <li><strong>ResetPasswordEvent</strong> - Password reset flow</li>
-            <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
-</ul>
+
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\User\UserEvent</div>
+        </div>
+        <div class="opt-desc">Carries a <code>getType()</code> discriminator: <code>CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\User\UserProfileEvent</div>
+        </div>
+        <div class="opt-desc">Dispatched when a user updates their profile</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\User\ResetPasswordEvent</div>
+        </div>
+        <div class="opt-desc">Password reset flow</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\Session\SessionEvent</div>
+        </div>
+        <div class="opt-desc">Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</div>
+    </div>
+</div>
 
 <h4 class="doc-h">Example: Listening to Events</h4>
 
