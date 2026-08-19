@@ -18,16 +18,16 @@ title: "Voyti - Console Commands"
             <td>Create a new user</td>
         </tr>
         <tr>
-            <td><code>voyti:delete</code></td>
-            <td>Delete a user</td>
-        </tr>
-        <tr>
             <td><code>voyti:confirm</code></td>
             <td>Confirm a user's email</td>
         </tr>
         <tr>
             <td><code>voyti:password</code></td>
             <td>Change a user's password</td>
+        </tr>
+        <tr>
+            <td><code>voyti:delete</code></td>
+            <td>Delete a user</td>
         </tr>
     </tbody>
 </table>
@@ -75,46 +75,6 @@ voyti:create [options] [--] &lt;email&gt; &lt;username&gt;
 {% highlight bash %}
 php yii voyti:create user@example.com johndoe
 php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
-{% endhighlight %}
-</div>
-
-<h4 class="doc-h">voyti:delete</h4>
-
-<p>Delete a user account by ID, email, or username.</p>
-
-<div class="doc-example mb-3">
-voyti:delete [options]
-</div>
-
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--email<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by email address</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--username<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by username</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--id<span class="opt-type"> int</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by ID</div>
-    </div>
-</div>
-
-<div class="doc-example mb-3">
-{% highlight bash %}
-php yii voyti:delete --email=user@example.com
-php yii voyti:delete --username=johndoe
-php yii voyti:delete --id=42
 {% endhighlight %}
 </div>
 
@@ -195,5 +155,45 @@ voyti:password [options]
 php yii voyti:password --email=user@example.com
 php yii voyti:password --username=johndoe
 php yii voyti:password --id=42
+{% endhighlight %}
+</div>
+
+<h4 class="doc-h">voyti:delete</h4>
+
+<p>Delete a user account by ID, email, or username.</p>
+
+<div class="doc-example mb-3">
+voyti:delete [options]
+</div>
+
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--email<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by email address</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--username<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by username</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--id<span class="opt-type"> int</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by ID</div>
+    </div>
+</div>
+
+<div class="doc-example mb-3">
+{% highlight bash %}
+php yii voyti:delete --email=user@example.com
+php yii voyti:delete --username=johndoe
+php yii voyti:delete --id=42
 {% endhighlight %}
 </div>
