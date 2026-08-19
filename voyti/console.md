@@ -36,7 +36,7 @@ title: "Voyti - Console Commands"
 
 Create a new user account with optional password and role assignment.
 
-```bash
+```
 voyti:create [options] [--] <email> <username>
 ```
 
@@ -58,7 +58,7 @@ php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
 
 Delete a user account by ID, email, or username.
 
-```bash
+```
 voyti:delete [options]
 ```
 
@@ -78,7 +78,7 @@ php yii voyti:delete --id=42
 
 Mark a user account as email-confirmed.
 
-```bash
+```
 voyti:confirm [options]
 ```
 
@@ -98,7 +98,7 @@ php yii voyti:confirm --id=42
 
 Reset a user's password to a newly generated one.
 
-```bash
+```
 voyti:password [options]
 ```
 
