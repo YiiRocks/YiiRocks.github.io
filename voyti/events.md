@@ -5,26 +5,24 @@ section: events
 title: "Voyti - Events & Listeners"
 ---
 
-<p>Voyti dispatches events at key points in the user lifecycle,
-        allowing your application to react, log, or extend behaviour. Each
-        event carries a <code>const string</code> name to distinguish
-        before/after variants. Attach your own listeners through the Yii3
-        event dispatcher configuration.</p>
+<p>Voyti dispatches events at key points in the user lifecycle, allowing your application to react, log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher configuration.</p>
 
-<h4>Events with default listeners</h4>
-<table class="table table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Event</th>
-                    <th>Trigger</th>
-                    <th>Default behavior</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td><code>AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session tracking</td></tr>
-                <tr><td><code>AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
-            </tbody>
-</table>
+<h4 class="doc-h">Events with default listeners</h4>
+
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\Auth\AfterLoginEvent</div>
+        </div>
+        <div class="opt-desc"><strong>Trigger:</strong> User logs in<br><strong>Default:</strong> Triggers password expiration check and session tracking</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">YiiRocks\Voyti\Event\Auth\AfterRegisterEvent</div>
+        </div>
+        <div class="opt-desc"><strong>Trigger:</strong> New user registration<br><strong>Default:</strong> Sends admin notification email</div>
+    </div>
+</div>
 
 <h4>Additional events (no default listeners)</h4>
 <p>Dispatched by the library, but nothing consumes them by default -
