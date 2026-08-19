@@ -48,7 +48,7 @@ title: "Voyti - Middleware"
             </tbody>
 </table>
 
-<h5 class="doc-section-heading mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
+<h5 class="doc-h mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
 <table class="table table-sm table-striped">
             <thead>
                 <tr>
@@ -66,7 +66,7 @@ title: "Voyti - Middleware"
             </tbody>
 </table>
 
-<h4 class="doc-section-heading" id="site-wide-enforcement">Site-wide enforcement</h4>
+<h4 class="doc-h" id="site-wide-enforcement">Site-wide enforcement</h4>
 <p>
             The auto-registration above only covers routes <em>this extension
             defines</em>. Without <code>VoytiMiddleware</code> wrapping your

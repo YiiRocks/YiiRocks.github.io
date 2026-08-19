@@ -14,7 +14,7 @@ title: "Voyti - RBAC Management"
 
 <h3 class="mt-5">The RBAC Cookbook</h3>
 
-<h4 class="doc-section-heading">Checking permissions in code</h4>
+<h4 class="doc-h">Checking permissions in code</h4>
 <p>
             The examples below show how to implement RBAC checks in your host application. Voyti provides the admin UI and storage, plus helpers like <code>AuthHelper</code>, but permission checks ultimately use the underlying <code>yiisoft/rbac</code> interfaces.
 </p>
@@ -65,7 +65,7 @@ public function editPost(int $postId): ResponseInterface
 {% endhighlight %}
 </div>
 
-<h4 class="doc-section-heading">Role hierarchy</h4>
+<h4 class="doc-h">Role hierarchy</h4>
 <p>
             Roles and permissions form a hierarchy: a parent role inherits all permissions from its children, avoiding duplication across multiple roles.
 </p>
@@ -89,7 +89,7 @@ public function editPost(int $postId): ResponseInterface
             A user assigned the <strong>admin</strong> role automatically has <strong>post.edit</strong>, <strong>post.delete</strong>, and <strong>admin.manage-users</strong> permissions without explicit assignment. You can build hierarchies with both direct permissions and role-to-role inheritance.
 </p>
 
-<h4 class="doc-section-heading">Rules</h4>
+<h4 class="doc-h">Rules</h4>
 <p>
             Rules add conditional logic to permissions: a permission with a rule only grants access if the rule's code passes. Register custom rules by implementing <code>RuleInterface</code> and tagging them in your DI container.
 </p>
@@ -146,7 +146,7 @@ if ($this->rbacManager->userHasPermission($userId, 'post.edit-own', ['postId' =>
 {% endhighlight %}
 </div>
 
-<h4 class="doc-section-heading">Assignments</h4>
+<h4 class="doc-h">Assignments</h4>
 <p>
             Assignments link users to roles and permissions. The admin UI (under <strong>RBAC &gt; Roles</strong> and <strong>RBAC &gt; Permissions</strong>) shows an "Assigned users" section where you can add or remove user assignments. Programmatically, use <code>AssignmentsStorageInterface</code>:
 </p>
@@ -171,7 +171,7 @@ $userAssignments = $this->assignments->getByUserId($userId);
 {% endhighlight %}
 </div>
 
-<h4 class="doc-section-heading">Practical example</h4>
+<h4 class="doc-h">Practical example</h4>
 <p>
             Say you want to let users edit and publish their own posts but not others'. Create the structure via the admin UI:
 </p>

@@ -33,12 +33,12 @@ description: Provides highly customizable user management, authentication, and a
 
 {% assign pkg = site.data.projects[page.pkgId] %}
 {% if pkg.features %}
-<h2 class="doc-section-heading">Features</h2>
+<h2 class="doc-h">Features</h2>
 <div class="features-grid mb-4">
 {% for feat in pkg.features %}
             <div class="feature-card">
                 <div class="fw-bold mb-1">{{ feat.label }}</div>
-                <div class="feature-card__detail">{{ feat.detail }}</div>
+                <div class="feature-card__text">{{ feat.detail }}</div>
             </div>
 {% endfor %}
 </div>

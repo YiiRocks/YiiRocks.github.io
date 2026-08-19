@@ -14,9 +14,9 @@ title: "Voyti - REST API"
             <code>administratorPermissionName</code> permission check.
 </p>
 
-<h4 class="doc-section-heading">Installation</h4>
+<h4 class="doc-h">Installation</h4>
 <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-api</button>
+            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-api</button>
             <a href="https://github.com/YiiRocks/voyti-api/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-api" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -56,7 +56,7 @@ return [
 {% endhighlight %}
 </div>
 
-<h4 class="doc-section-heading">Configuration</h4>
+<h4 class="doc-h">Configuration</h4>
 <div class="doc-example mb-3">
 {% highlight php %}
 // config/params.php
@@ -69,17 +69,17 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">apiTokenLifespan<span class="options-type"> int</span></div>
-                    <div class="options-default"><code>0</code></div>
+<div class="opt-grid mb-3">
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">apiTokenLifespan<span class="opt-type"> int</span></div>
+                    <div class="opt-default"><code>0</code></div>
                 </div>
-                <div class="options-desc">API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token.</div>
+                <div class="opt-desc">API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token.</div>
             </div>
 </div>
 
-<h4 class="doc-section-heading">Authentication</h4>
+<h4 class="doc-h">Authentication</h4>
 <p>
             Requests authenticate with an <code>Authorization: Bearer &lt;token&gt;</code>
             header. <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a
@@ -89,7 +89,7 @@ return [
             only grant what that permission grants.
 </p>
 
-<h4 class="doc-section-heading">Managing tokens</h4>
+<h4 class="doc-h">Managing tokens</h4>
 <p>The package registers two console commands under <code>yiisoft/yii-console</code>:</p>
 <table class="table table-sm table-striped">
             <thead>
@@ -110,7 +110,7 @@ return [
             </tbody>
 </table>
 
-<h4 class="doc-section-heading">Endpoints</h4>
+<h4 class="doc-h">Endpoints</h4>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>

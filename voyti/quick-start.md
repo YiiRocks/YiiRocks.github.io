@@ -15,30 +15,30 @@ title: "Voyti - Quick Start"
             </li>
             <li>
                 <h4>Install</h4>
-<button type="button" class="copy-btn copy-btn--inline mb-3">composer require yiirocks/voyti</button>
+<button type="button" class="copy-btn copy--sm mb-3">composer require yiirocks/voyti</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
 <div class="optional-grid mb-4">
             <div class="feature-card">
                 <div class="fw-bold mb-1">Bot Protection</div>
-                <div class="feature-card__detail">Google reCAPTCHA v2/v3 for registration and login forms</div>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/recaptcha</button>
+                <div class="feature-card__text">Google reCAPTCHA v2/v3 for registration and login forms</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/recaptcha</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Two-Factor Authentication</div>
-                <div class="feature-card__detail">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP, or WebAuthn/passkeys</div>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-email</button>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-totp</button>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-2fa-webauthn</button>
+                <div class="feature-card__text">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP, or WebAuthn/passkeys</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-email</button>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-totp</button>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-webauthn</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Social Authentication</div>
-                <div class="feature-card__detail">OAuth2 login via Google, GitHub, Facebook, and more</div>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/voyti-social-auth</button>
+                <div class="feature-card__text">OAuth2 login via Google, GitHub, Facebook, and more</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-social-auth</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Toast Notifications</div>
-                <div class="feature-card__detail">Renders voyti's flash messages as Bootstrap 5 toasts</div>
-                <button type="button" class="copy-btn copy-btn--inline w-100">composer require yiirocks/toast-bootstrap5</button>
+                <div class="feature-card__text">Renders voyti's flash messages as Bootstrap 5 toasts</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/toast-bootstrap5</button>
             </div>
 </div>
 
@@ -70,7 +70,7 @@ return [
             <code>yiisoft/db-migration</code> configuration keys. With
             <code>yiisoft/db-migration</code> enabled in your console app, run:
 </p>
-<button type="button" class="copy-btn copy-btn--inline mb-3">./yii migrate:up</button>
+<button type="button" class="copy-btn copy--sm mb-3">./yii migrate:up</button>
 <p>
             Voyti's migration creates all 7 user-related tables (user, user_profile,
             user_social_account, user_token, user_sessions, user_password_history,

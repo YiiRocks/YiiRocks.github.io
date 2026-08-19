@@ -1,8 +1,8 @@
 {% assign pkg = site.data.projects[include.pkgId] %}
 {% if pkg %}
-    <h2 class="doc-section-heading" id="support">Support</h2>
+    <h2 class="doc-h" id="support">Support</h2>
     <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-        <button type="button" class="copy-btn copy-btn--inline">composer require {{ pkg.package }}</button>
+        <button type="button" class="copy-btn copy--sm">composer require {{ pkg.package }}</button>
         <a href="https://github.com/YiiRocks/{{ pkg.repo }}/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
     </div>
 {% endif %}

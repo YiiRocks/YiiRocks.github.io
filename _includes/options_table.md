@@ -1,14 +1,14 @@
 {% assign options = include.options %}
-    <div class="options-table">
+    <div class="opt-grid">
 {% for opt in options %}
-        <div class="options-row">
-            <div class="options-name-col">
-                <div class="options-name">{{ opt.name }}<span class="options-type fw-normal"> {{ opt.type }}</span></div>
+        <div class="opt-row">
+            <div class="opt-name">
+                <div class="opt-label">{{ opt.name }}<span class="opt-type fw-normal"> {{ opt.type }}</span></div>
 {% if opt.default %}
-                <div class="options-default">{{ opt.default }}</div>
+                <div class="opt-default">{{ opt.default }}</div>
 {% endif %}
             </div>
-            <div class="options-desc">{{ opt.desc }}</div>
+            <div class="opt-desc">{{ opt.desc }}</div>
         </div>
 {% endfor %}
     </div>

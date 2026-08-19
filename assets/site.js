@@ -57,7 +57,7 @@ if ('IntersectionObserver' in window) {
         });
     }
 }
-var sidebarItems = document.querySelectorAll('.homepage-sidebar__item');
+var sidebarItems = document.querySelectorAll('.home-nav__item');
 if (sidebarItems.length) {
     var sidebarMap = {}, activeItem = null;
     sidebarItems.forEach(function (item) { sidebarMap['#' + item.getAttribute('href').slice(1)] = item; });

@@ -17,21 +17,21 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
         {{ project_count }} open-source projects, actively maintained
     </div>
     <h1>The missing pieces for your <span class="accent">Yii&nbsp;3</span> projects.</h1>
-    <p>Small, focused libraries that drop straight into your Yii apps.</p>
+    <p class="fw-semibold">Small, focused libraries that drop straight into your Yii apps.</p>
 </div>
 
 <div class="section" id="packages">
-    <div class="homepage-layout">
-        <nav class="homepage-sidebar" aria-label="Package navigation">
-            <div class="homepage-sidebar__heading fw-bold fs-sm text-body-secondary mb-2">Packages</div>
-            <ul class="homepage-sidebar__list">
+    <div class="home-grid">
+        <nav class="home-nav" aria-label="Package navigation">
+            <div class="home-nav__title fw-bold fs-sm text-body-secondary mb-2">Packages</div>
+            <ul class="home-nav__list">
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
 {% unless pkg.listed == false %}
                 <li>
-                    <a href="#{{ key }}" class="homepage-sidebar__item">
-                        <span class="homepage-sidebar__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
+                    <a href="#{{ key }}" class="home-nav__item">
+                        <span class="home-nav__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-img"></span>
                         <span>{{ pkg.name }}</span>
                     </a>
                 </li>
@@ -40,7 +40,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
             </ul>
         </nav>
 
-        <div class="homepage-content">
+        <div class="home-main">
 {% for item in site.data.projects %}
 {% assign key = item[0] %}
 {% assign pkg = item[1] %}
@@ -48,10 +48,10 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
             <div class="docs-entry" id="{{ key }}">
                 <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
                     <div class="docs-entry__title d-flex align-items-center gap-3">
-                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-icon-img"></span>
+                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-img"></span>
                         <div>
                             <h3>{{ pkg.name }}</h3>
-                            <div class="docs-entry__tagline fw-semibold">{{ pkg.tagline }}</div>
+                            <div class="docs-entry__sub fw-semibold">{{ pkg.tagline }}</div>
                         </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
@@ -66,7 +66,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                     </div>
                 </div>
 
-                <p class="docs-entry__desc">{{ pkg.description }}</p>
+                <p class="docs-entry__text">{{ pkg.description }}</p>
 
 {% if pkg.features or pkg.usage %}
                 <div class="docs-entry__details" hidden>
@@ -80,7 +80,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% endif %}
                                 <div class="fw-bold">{{ feat.label }}</div>
                             </div>
-                            <div class="feature-card__detail">{{ feat.detail }}</div>
+                            <div class="feature-card__text">{{ feat.detail }}</div>
                         </div>
 {% endfor %}
                     </div>
@@ -97,7 +97,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% endif %}
 
                 <div class="d-flex align-items-center gap-3 flex-wrap">
-                    <button type="button" class="copy-btn copy-btn--inline">composer require {{ pkg.package }}</button>
+                        <button type="button" class="copy-btn copy--sm">composer require {{ pkg.package }}</button>
                 </div>
             </div>
 {% endunless %}

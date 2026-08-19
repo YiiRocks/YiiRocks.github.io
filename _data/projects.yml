@@ -45,7 +45,7 @@ recaptcha:
 svg-inline:
   name: SvgInline
   tagline: Inline SVG file manipulation
-  tint: "#eef4ff"
+  tint: "#e0f2fe"
   logo: /assets/icons/svg.svg
   package: yiirocks/svg-inline
   repo: svg-inline
@@ -82,7 +82,7 @@ svg-inline:
 
 svg-inline-bootstrap:
   name: SvgInline / Bootstrap
-  tint: "#eef4ff"
+  tint: "#dbeafe"
   logo: /assets/icons/bootstrap.svg
   package: yiirocks/svg-inline-bootstrap
   repo: svg-inline-bootstrap
@@ -93,7 +93,7 @@ svg-inline-bootstrap:
 
 svg-inline-fontawesome:
   name: SvgInline / Font Awesome
-  tint: "#eef4ff"
+  tint: "#e0e7ff"
   logo: /assets/icons/fontawesome.svg
   package: yiirocks/svg-inline-fontawesome
   repo: svg-inline-fontawesome
@@ -161,7 +161,7 @@ toast-bootstrap5:
 voyti:
   name: Voyti
   tagline: User management, authentication & authorization
-  tint: "#eef4ff"
+  tint: "#f3e8ff"
   logo: /assets/icons/voyti.svg
   package: yiirocks/voyti
   repo: voyti
@@ -235,7 +235,7 @@ voyti:
 
 voyti-api:
   name: Voyti / API
-  tint: "#eef4ff"
+  tint: "#ede9fe"
   logo: /assets/icons/voyti-api.svg
   package: yiirocks/voyti-api
   repo: voyti-api
@@ -246,7 +246,7 @@ voyti-api:
 
 voyti-2fa:
   name: Voyti / 2FA
-  tint: "#eef4ff"
+  tint: "#fce7f3"
   logo: /assets/icons/voyti-2fa.svg
   package: yiirocks/voyti-2fa
   repo: voyti-2fa
@@ -257,7 +257,7 @@ voyti-2fa:
 
 voyti-2fa-email:
   name: Voyti / 2FA Email
-  tint: "#eef4ff"
+  tint: "#ffe4e6"
   logo: /assets/icons/voyti-2fa-email.svg
   package: yiirocks/voyti-2fa-email
   repo: voyti-2fa-email
@@ -268,7 +268,7 @@ voyti-2fa-email:
 
 voyti-2fa-totp:
   name: Voyti / 2FA TOTP
-  tint: "#eef4ff"
+  tint: "#fef3c7"
   logo: /assets/icons/voyti-2fa-totp.svg
   package: yiirocks/voyti-2fa-totp
   repo: voyti-2fa-totp
@@ -279,7 +279,7 @@ voyti-2fa-totp:
 
 voyti-2fa-webauthn:
   name: Voyti / 2FA WebAuthn
-  tint: "#eef4ff"
+  tint: "#cffafe"
   logo: /assets/icons/voyti-2fa-webauthn.svg
   package: yiirocks/voyti-2fa-webauthn
   repo: voyti-2fa-webauthn
@@ -290,7 +290,7 @@ voyti-2fa-webauthn:
 
 voyti-gdpr:
   name: Voyti / GDPR
-  tint: "#eef4ff"
+  tint: "#d1fae5"
   logo: /assets/icons/voyti-gdpr.svg
   package: yiirocks/voyti-gdpr
   repo: voyti-gdpr
@@ -301,7 +301,7 @@ voyti-gdpr:
 
 voyti-social-auth:
   name: Voyti / Social Auth
-  tint: "#eef4ff"
+  tint: "#e0f7fa"
   logo: /assets/icons/voyti-social-auth.svg
   package: yiirocks/voyti-social-auth
   repo: voyti-social-auth

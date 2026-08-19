@@ -14,7 +14,7 @@
                 <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
                 <div class="status-card__info">
                     <h3 class="status-card__name">{{ pkg.name }}</h3>
-                    <div class="status-card__package">{{ pkg.package }}</div>
+                    <div class="status-card__pkg">{{ pkg.package }}</div>
                 </div>
             </div>
             <div class="status-card__badges">
@@ -28,7 +28,7 @@
                 <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI" class="status-badge" loading="lazy" decoding="async">
 {% endif %}
             </div>
-            <div class="status-card__metrics">
+            <div class="status-card__meta">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage" class="status-badge" loading="lazy" decoding="async">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI" class="status-badge" loading="lazy" decoding="async">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge" loading="lazy" decoding="async">

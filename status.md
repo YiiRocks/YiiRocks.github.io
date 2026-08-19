@@ -18,12 +18,12 @@ preconnect:
 {% include status_cards.md pkg_data=pkg_data filter_keys=general_keys %}
     </div>
 
-    <h2 class="doc-section-heading mb-4">Voyti</h2>
+    <h2 class="doc-h mb-4">Voyti</h2>
     <div class="status-grid mb-5">
 {% include status_cards.md pkg_data=pkg_data filter_keys=voyti_keys %}
     </div>
 
-    <h2 class="doc-section-heading mb-4">SVG Inline</h2>
+    <h2 class="doc-h mb-4">SVG Inline</h2>
     <div class="status-grid">
 {% include status_cards.md pkg_data=pkg_data filter_keys=svginline_keys %}
     </div>

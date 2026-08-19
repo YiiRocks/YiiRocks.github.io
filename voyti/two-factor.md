@@ -39,7 +39,7 @@ title: "Voyti - Two-Factor Authentication"
                     </div>
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-2fa-email</button>
+                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-email</button>
                             <a href="https://github.com/YiiRocks/voyti-2fa-email/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
                                 <a href="https://github.com/YiiRocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -75,7 +75,7 @@ title: "Voyti - Two-Factor Authentication"
                     </div>
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-2fa-totp</button>
+                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-totp</button>
                             <a href="https://github.com/YiiRocks/voyti-2fa-totp/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
                                 <a href="https://github.com/YiiRocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -112,7 +112,7 @@ title: "Voyti - Two-Factor Authentication"
                     </div>
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-2fa-webauthn</button>
+                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-webauthn</button>
                             <a href="https://github.com/YiiRocks/voyti-2fa-webauthn/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
                                 <a href="https://github.com/YiiRocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -156,7 +156,7 @@ title: "Voyti - Two-Factor Authentication"
                         </p>
                         <div class="d-flex align-items-center gap-3 flex-wrap">
                             After installing any 2FA package, run:
-                            <button type="button" class="copy-btn copy-btn--inline">./yii migrate:up</button>
+                            <button type="button" class="copy-btn copy--sm">./yii migrate:up</button>
                             <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
                                 <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -168,7 +168,7 @@ title: "Voyti - Two-Factor Authentication"
             </div>
 </div>
 
-<h4 class="doc-section-heading">Configuration</h4>
+<h4 class="doc-h">Configuration</h4>
 <div class="doc-example mb-3">
 {% highlight php %}
 // config/params.php
@@ -181,17 +181,17 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">forcedPermissions<span class="options-type"> array</span></div>
-                    <div class="options-default"><code>[]</code></div>
+<div class="opt-grid mb-3">
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">forcedPermissions<span class="opt-type"> array</span></div>
+                    <div class="opt-default"><code>[]</code></div>
                 </div>
-                <div class="options-desc">RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>.</div>
+                <div class="opt-desc">RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>.</div>
             </div>
 </div>
 
-<h4 class="doc-section-heading">Writing a method plugin</h4>
+<h4 class="doc-h">Writing a method plugin</h4>
 <ol>
             <li>
                 <h4>Register the method</h4>
@@ -265,5 +265,5 @@ return [
             </li>
 </ol>
 
-<h4 class="doc-section-heading">Enrollment and storage</h4>
+<h4 class="doc-h">Enrollment and storage</h4>
 <p>Your setup routes persist secrets and render the enrollment UI. The base package handles finalization (verification, backup code generation) and teardown (disable, re-verify) generically - your plugin doesn't need to touch those. If your method needs a custom table, ship a model and migration with <code>ON DELETE CASCADE</code> foreign keys.</p>

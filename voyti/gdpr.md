@@ -18,9 +18,9 @@ title: "Voyti - GDPR"
            export too.
 </p>
 
-<h4 class="doc-section-heading">Installation</h4>
+<h4 class="doc-h">Installation</h4>
 <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-gdpr</button>
+            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-gdpr</button>
             <a href="https://github.com/YiiRocks/voyti-gdpr/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-gdpr" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -28,7 +28,7 @@ title: "Voyti - GDPR"
             </div>
 </div>
 
-<h4 class="doc-section-heading">Configuration</h4>
+<h4 class="doc-h">Configuration</h4>
 <div class="doc-example mb-3">
 {% highlight php %}
 // config/params.php
@@ -41,24 +41,24 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">gdprExportProperties<span class="options-type"> array</span></div>
-                    <div class="options-default"><code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code></div>
+<div class="opt-grid mb-3">
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">gdprExportProperties<span class="opt-type"> array</span></div>
+                    <div class="opt-default"><code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code></div>
                 </div>
-                <div class="options-desc">Properties included in the data export (JSON). Unrecognized names are silently omitted, not exported as <code>null</code>. <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code>; <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload).</div>
+                <div class="opt-desc">Properties included in the data export (JSON). Unrecognized names are silently omitted, not exported as <code>null</code>. <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code>; <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload).</div>
             </div>
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">gdprAnonymizePrefix<span class="options-type"> string</span></div>
-                    <div class="options-default"><code>'GDPR'</code></div>
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">gdprAnonymizePrefix<span class="opt-type"> string</span></div>
+                    <div class="opt-default"><code>'GDPR'</code></div>
                 </div>
-                <div class="options-desc">Prefix used for the masked email/username on anonymization, followed by the user's numeric id (e.g. <code>GDPR42</code>, <code>GDPR42@example.com</code>).</div>
+                <div class="opt-desc">Prefix used for the masked email/username on anonymization, followed by the user's numeric id (e.g. <code>GDPR42</code>, <code>GDPR42@example.com</code>).</div>
             </div>
 </div>
 
-<h4 class="doc-section-heading">Routes</h4>
+<h4 class="doc-h">Routes</h4>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -76,7 +76,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-section-heading">Events</h4>
+<h4 class="doc-h">Events</h4>
 <p>
             Anonymizing an account dispatches <code>GdprEvent</code> (carrying the now-anonymized
             <code>User</code>) after it's saved. Nothing consumes it by default. Attach your own

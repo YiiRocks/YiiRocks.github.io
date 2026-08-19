@@ -14,9 +14,9 @@ title: "Voyti - Social Authentication"
             <code>user_social_account</code> table.
 </p>
 
-<h4 class="doc-section-heading">Installation</h4>
+<h4 class="doc-h">Installation</h4>
 <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy-btn--inline">composer require yiirocks/voyti-social-auth</button>
+            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-social-auth</button>
             <a href="https://github.com/YiiRocks/voyti-social-auth/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
             <div class="d-flex gap-2 flex-wrap ms-auto">
                 <a href="https://github.com/YiiRocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
@@ -28,10 +28,10 @@ title: "Voyti - Social Authentication"
                 Run your migration command to create the <code>user_social_account</code>
                 table after installation:
             </p>
-            <button type="button" class="copy-btn copy-btn--inline">./yii migrate:up</button>
+            <button type="button" class="copy-btn copy--sm">./yii migrate:up</button>
 </div>
 
-<h4 class="doc-section-heading">Configuration</h4>
+<h4 class="doc-h">Configuration</h4>
 <div class="doc-example mb-3">
 {% highlight php %}
 // config/params.php
@@ -44,24 +44,24 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="options-table mb-3">
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">enableSocialNetworkRegistration<span class="options-type"> bool</span></div>
-                    <div class="options-default"><code>true</code></div>
+<div class="opt-grid mb-3">
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">enableSocialNetworkRegistration<span class="opt-type"> bool</span></div>
+                    <div class="opt-default"><code>true</code></div>
                 </div>
-                <div class="options-desc">Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration.</div>
+                <div class="opt-desc">Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration.</div>
             </div>
-            <div class="options-row">
-                <div class="options-name-col">
-                    <div class="options-name">allowMultipleAccountsPerProvider<span class="options-type"> bool</span></div>
-                    <div class="options-default"><code>false</code></div>
+            <div class="opt-row">
+                <div class="opt-name">
+                    <div class="opt-label">allowMultipleAccountsPerProvider<span class="opt-type"> bool</span></div>
+                    <div class="opt-default"><code>false</code></div>
                 </div>
-                <div class="options-desc">Whether a single user may link more than one account from the same provider.</div>
+                <div class="opt-desc">Whether a single user may link more than one account from the same provider.</div>
             </div>
 </div>
 
-<h4 class="doc-section-heading">Provider configuration</h4>
+<h4 class="doc-h">Provider configuration</h4>
 <p>
             Configure providers via a <code>clients</code> map under the
             <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
@@ -104,7 +104,7 @@ return [
             for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's OAuth2 documentation for available <code>authParams</code>.
 </p>
 
-<h4 class="doc-section-heading">Routes</h4>
+<h4 class="doc-h">Routes</h4>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead>
@@ -124,7 +124,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-section-heading">Supported providers</h4>
+<h4 class="doc-h">Supported providers</h4>
 <p>
             yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
             (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
@@ -153,7 +153,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-section-heading">How it works</h4>
+<h4 class="doc-h">How it works</h4>
 <p>With providers configured:</p>
 <ul>
             <li>The login page shows social login buttons for configured providers.</li>

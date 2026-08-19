@@ -7,15 +7,13 @@ $indigo: #6366f1;
 $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
 $radius: 14px;
 
+// ─── Mixins ──────────────────────────────────────────────────────────────────
+
 @mixin gradient-text {
     background: $gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-}
-
-@mixin glass {
-    backdrop-filter: blur(20px) saturate(180%);
 }
 
 @mixin card {
@@ -34,7 +32,40 @@ $radius: 14px;
     border: 1px solid rgba(255, 255, 255, .06);
 }
 
-@mixin icon-shadow { box-shadow: 0 2px 8px rgba(0, 0, 0, .06); }
+@mixin hover-lift {
+    transition: transform .15s, box-shadow .2s;
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px -6px rgba(0, 0, 0, .1);
+    }
+}
+
+@mixin container($top: 0, $bottom: 0) {
+    max-width: $max-w;
+    margin: 0 auto;
+    padding: $top $pad $bottom;
+}
+
+@mixin sidebar-grid($bp: 768px) {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    align-items: start;
+
+    @media (max-width: $bp) {
+        grid-template-columns: 1fr;
+    }
+}
+
+@mixin sidebar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-left: 2px solid var(--yr-border);
+}
 
 @mixin sidebar-item {
     display: flex;
@@ -137,24 +168,21 @@ figure {
     top: 0;
     z-index: 100;
     background: var(--yr-nav-bg);
-    @include glass;
+    backdrop-filter: blur(20px) saturate(180%);
     border-bottom: 1px solid var(--yr-border);
 
     &::after {
         content: '';
         position: absolute;
         bottom: -1px;
-        left: 0; right: 0;
+        left: 0;
+        right: 0;
         height: 1px;
         background: linear-gradient(90deg, transparent, var(--yr-accent), transparent);
         opacity: .2;
     }
 
-    &__inner {
-        max-width: $max-w;
-        margin: 0 auto;
-        padding: 14px $pad;
-    }
+    &__inner { @include container(14px, 14px); }
 
     &__brand {
         text-decoration: none;
@@ -165,7 +193,8 @@ figure {
     }
 
     &__logo {
-        width: 36px; height: 36px;
+        width: 36px;
+        height: 36px;
         border-radius: 12px;
         background: $gradient;
         display: flex;
@@ -187,7 +216,8 @@ figure {
 }
 
 .theme-toggle {
-    width: 36px; height: 36px;
+    width: 36px;
+    height: 36px;
     border-radius: 12px;
     border: 1px solid var(--yr-border);
     background: var(--yr-card);
@@ -200,7 +230,8 @@ figure {
     justify-content: center;
     position: relative;
 
-    &__dark, &__light {
+    &__dark,
+    &__light {
         width: 16px;
         height: 16px;
         fill: currentColor;
@@ -224,13 +255,12 @@ figure {
 // ─── Hero ───────────────────────────────────────────────────────────────────
 
 .hero {
-    max-width: $max-w;
-    margin: 0 auto;
-    padding: 36px $pad 4px;
+    @include container(36px, 4px);
     position: relative;
     overflow: hidden;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: '';
         position: absolute;
         border-radius: 50%;
@@ -240,16 +270,20 @@ figure {
     }
 
     &::before {
-        width: 500px; height: 500px;
+        width: 500px;
+        height: 500px;
         background: var(--yr-g1);
-        top: -200px; right: -100px;
+        top: -200px;
+        right: -100px;
         animation: drift 13s ease-in-out infinite;
     }
 
     &::after {
-        width: 400px; height: 400px;
+        width: 400px;
+        height: 400px;
         background: var(--yr-g3);
-        bottom: -150px; left: -50px;
+        bottom: -150px;
+        left: -50px;
         animation: drift-alt 6s ease-in-out infinite;
     }
 
@@ -260,7 +294,8 @@ figure {
         letter-spacing: -.035em;
         margin: 0 0 20px;
         max-width: 780px;
-        position: relative; z-index: 1;
+        position: relative;
+        z-index: 1;
 
         .accent { @include gradient-text; }
     }
@@ -271,7 +306,8 @@ figure {
         color: var(--yr-muted);
         max-width: 640px;
         margin: 0 0 32px;
-        position: relative; z-index: 1;
+        position: relative;
+        z-index: 1;
     }
 
     &__badge {
@@ -286,10 +322,12 @@ figure {
         background: var(--yr-card);
         border: 1px solid var(--yr-border);
         margin-bottom: 28px;
-        position: relative; z-index: 1;
+        position: relative;
+        z-index: 1;
 
         &-dot {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #22c55e;
             box-shadow: 0 0 8px rgba(34, 197, 94, .5);
@@ -320,8 +358,10 @@ figure {
 
 .scroll-top {
     position: fixed;
-    bottom: 20px; right: 20px;
-    width: 42px; height: 42px;
+    bottom: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
     border-radius: 12px;
     border: none;
     background: $gradient;
@@ -355,24 +395,13 @@ figure {
 
 // ─── Section wrapper ────────────────────────────────────────────────────────
 
-.section {
-    max-width: $max-w;
-    margin: 0 auto;
-    padding: 8px $pad 16px;
-}
+.section { @include container(8px, 16px); }
 
 // ─── Homepage layout ────────────────────────────────────────────────────────
 
-.homepage-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 40px;
-    align-items: start;
+.home-grid { @include sidebar-grid(900px); }
 
-    @media (max-width: 900px) { grid-template-columns: 1fr; }
-}
-
-.homepage-sidebar {
+.home-nav {
     position: sticky;
     top: 24px;
 
@@ -381,7 +410,7 @@ figure {
         overflow-x: auto;
         margin-bottom: 8px;
 
-        &__heading { display: none; }
+        &__title { display: none; }
 
         &__list {
             flex-direction: row;
@@ -405,28 +434,21 @@ figure {
 
     @media (max-width: 640px) { display: none; }
 
-    &__list {
-        list-style: none;
-        margin: 0; padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        border-left: 2px solid var(--yr-border);
-    }
-
+    &__list { @include sidebar-list; }
     &__item { @include sidebar-item; }
 
     &__icon {
-        width: 28px; height: 28px;
+        width: 28px;
+        height: 28px;
         border-radius: 8px;
         font-size: 13px;
-        @include icon-shadow;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
     }
 }
 
-.pkg-icon-img { width: 55%; height: 55%; object-fit: contain; }
-
-.homepage-content, .doc-section-content { min-width: 0; }
+.pkg-img { width: 55%; height: 55%; object-fit: contain; }
+.home-main,
+.doc-body { min-width: 0; }
 
 // ─── Copy button ────────────────────────────────────────────────────────────
 
@@ -454,20 +476,21 @@ figure {
         border-color: var(--yr-accent-soft);
         box-shadow: 0 0 0 3px rgba($indigo, .08);
     }
+}
 
-    &--inline {
-        width: auto;
-        font-size: 13px;
-        padding: 10px 16px;
-        background: var(--yr-link-bg);
-        color: var(--yr-accent-muted);
-        border-color: var(--yr-link-border);
-    }
+.copy--sm {
+    width: auto;
+    font-size: 13px;
+    padding: 10px 16px;
+    background: var(--yr-link-bg);
+    color: var(--yr-accent-muted);
+    border: 1px solid var(--yr-link-border);
 }
 
 // ─── Docs entries (homepage) ────────────────────────────────────────────────
 
-#packages, .docs-entry { scroll-margin-top: 62px; }
+#packages,
+.docs-entry { scroll-margin-top: 62px; }
 
 .docs-entry {
     padding: 40px 0;
@@ -481,10 +504,11 @@ figure {
     }
 
     &__icon {
-        width: 48px; height: 48px;
+        width: 48px;
+        height: 48px;
         border-radius: $radius;
         font-size: 21px;
-        @include icon-shadow;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
     }
 
     &__title h3 {
@@ -494,7 +518,7 @@ figure {
         margin: 0 0 3px;
     }
 
-    &__tagline { font-size: 14.5px; color: var(--yr-accent-muted); }
+    &__sub { font-size: 14.5px; color: var(--yr-accent-muted); }
 
     &__link {
         font-size: 13px;
@@ -513,14 +537,15 @@ figure {
             box-shadow: 0 2px 8px -2px rgba($indigo, .4);
         }
 
-        &--github, &--packagist {
+        &--github,
+        &--packagist {
             @include card;
 
             &:hover { border-color: var(--yr-accent-soft); }
         }
     }
 
-    &__desc {
+    &__text {
         font-size: 15.5px;
         line-height: 1.7;
         color: var(--yr-text-soft);
@@ -583,20 +608,14 @@ figure {
 }
 
 .status-card {
-    display: block;
-    background: var(--yr-card);
-    border: 1px solid var(--yr-border);
+    @include card;
+    @include hover-lift;
     border-radius: $radius;
     padding: 20px;
-    transition: transform .15s, box-shadow .2s;
     color: inherit;
     text-decoration: none;
     position: relative;
-
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 16px -6px rgba(0, 0, 0, .1);
-    }
+    display: block;
 
     &__header {
         display: flex;
@@ -633,9 +652,7 @@ figure {
         }
     }
 
-    &__info {
-        min-width: 0;
-    }
+    &__info { min-width: 0; }
 
     &__name {
         font-size: 16px;
@@ -644,7 +661,7 @@ figure {
         line-height: 1.2;
     }
 
-    &__package {
+    &__pkg {
         font-size: 12px;
         font-family: $mono;
         color: var(--yr-muted);
@@ -660,7 +677,7 @@ figure {
         margin-bottom: 12px;
     }
 
-    &__metrics {
+    &__meta {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
@@ -669,9 +686,7 @@ figure {
     }
 }
 
-.status-badge {
-    max-height: 20px;
-}
+.status-badge { max-height: 20px; }
 
 // ─── Feature cards ──────────────────────────────────────────────────────────
 
@@ -683,25 +698,21 @@ figure {
 
 .feature-card {
     @include card;
+    @include hover-lift;
     border-radius: $radius;
     padding: 16px 18px;
-    transition: transform .15s, box-shadow .2s;
-
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 16px -6px rgba(0, 0, 0, .1);
-    }
 
     .copy-btn { margin-top: 10px; }
 
-    &__detail {
+    &__text {
         font-size: 13.5px;
         line-height: 1.55;
         color: var(--yr-text-soft);
     }
 
     &__icon {
-        width: 24px; height: 24px;
+        width: 24px;
+        height: 24px;
         object-fit: contain;
         opacity: .7;
         flex-shrink: 0;
@@ -711,9 +722,7 @@ figure {
 // ─── Doc page ───────────────────────────────────────────────────────────────
 
 .doc-page {
-    max-width: $max-w;
-    margin: 0 auto;
-    padding: 32px $pad 16px;
+    @include container(32px, 16px);
 
     table {
         --bs-table-bg: var(--yr-card);
@@ -742,19 +751,17 @@ figure {
             background: var(--yr-link-bg);
         }
 
-        tbody {
-            td {
-                padding: 12px 16px;
-                border-bottom: 1px solid var(--yr-border);
-                vertical-align: top;
-            }
+        tbody td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--yr-border);
+            vertical-align: top;
+        }
 
-            tr:last-child td { border-bottom: none; }
+        tbody tr:last-child td { border-bottom: none; }
 
-            tr {
-                transition: background .15s;
-                &:hover { background: var(--yr-link-bg); }
-            }
+        tbody tr {
+            transition: background .15s;
+            &:hover { background: var(--yr-link-bg); }
         }
     }
 }
@@ -763,10 +770,11 @@ figure {
     margin: 0 0 20px;
 
     &__icon {
-        width: 56px; height: 56px;
+        width: 56px;
+        height: 56px;
         border-radius: 16px;
         font-size: 25px;
-        @include icon-shadow;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
     }
 
     &__name {
@@ -776,10 +784,10 @@ figure {
         margin: 0 0 4px;
     }
 
-    &__tagline { font-size: 15px; color: var(--yr-accent-muted); }
+    &__sub { font-size: 15px; color: var(--yr-accent-muted); }
 }
 
-.doc-section-heading {
+.doc-h {
     font-size: 18px;
     font-weight: 700;
     letter-spacing: .1em;
@@ -798,7 +806,7 @@ figure {
     }
 }
 
-.options-table {
+.opt-grid {
     display: grid;
     gap: 1px;
     margin-bottom: 32px;
@@ -808,24 +816,23 @@ figure {
     background: var(--yr-border);
 }
 
-.options-row {
+.opt-row {
     display: grid;
     grid-template-columns: minmax(140px, 350px) 1fr;
     gap: 16px;
     padding: 14px 18px;
     background: var(--yr-card);
     transition: background .15s;
-
     &:hover { background: var(--yr-link-bg); }
 
-    .options-name-col { display: flex; flex-direction: column; gap: 6px; }
-    .options-name { font-family: $mono; font-size: 14px; font-weight: 600; }
-    .options-type { color: var(--yr-muted); }
-    .options-desc { font-size: 14.5px; line-height: 1.6; color: var(--yr-text-soft); }
-    .options-default { font-family: $mono; font-size: 13px; line-height: 1.4; color: var(--yr-muted); }
+    .opt-name { display: flex; flex-direction: column; gap: 6px; }
+    .opt-label { font-family: $mono; font-size: 14px; font-weight: 600; }
+    .opt-type { color: var(--yr-muted); }
+    .opt-desc { font-size: 14.5px; line-height: 1.6; color: var(--yr-text-soft); }
+    .opt-default { font-family: $mono; font-size: 13px; line-height: 1.4; color: var(--yr-muted); }
 }
 
-.doc-examples {
+.examples {
     display: grid;
     gap: 12px;
     margin-bottom: 32px;
@@ -836,7 +843,7 @@ figure {
     max-width: 100%;
 }
 
-.doc-description {
+.doc-desc {
     font-size: 16.5px;
     line-height: 1.7;
     color: var(--yr-text-soft);
@@ -855,14 +862,7 @@ figure {
 
 // ─── Sidebar ────────────────────────────────────────────────────────────────
 
-.doc-section-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 40px;
-    align-items: start;
-
-    @media (max-width: 768px) { grid-template-columns: 1fr; }
-}
+.doc-layout { @include sidebar-grid; }
 
 .doc-sidebar {
     position: sticky;
@@ -879,12 +879,7 @@ figure {
     }
 
     &__list {
-        list-style: none;
-        margin: 0; padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        border-left: 2px solid var(--yr-border);
+        @include sidebar-list;
 
         a {
             @include sidebar-item;
@@ -901,7 +896,7 @@ figure {
     }
 }
 
-.doc-section-prevnext {
+.doc-pager {
     margin: 40px 0 8px;
     padding-top: 24px;
     border-top: 1px solid var(--yr-border);
@@ -929,17 +924,15 @@ figure {
     &::before {
         content: '';
         position: absolute;
-        top: -1px; left: 0; right: 0;
+        top: -1px;
+        left: 0;
+        right: 0;
         height: 2px;
         background: linear-gradient(90deg, transparent, var(--yr-g1), var(--yr-g3), transparent);
         opacity: .25;
     }
 
-    &__inner {
-        max-width: $max-w;
-        margin: 0 auto;
-        padding: 24px $pad;
-    }
+    &__inner { @include container(24px, 24px); }
 }
 
 // ─── Error page ─────────────────────────────────────────────────────────────
@@ -994,28 +987,29 @@ main a[target="_blank"]:not(.docs-entry__link) {
     color: #c9d1d9;
     line-height: 1.5;
 
-    .c { color: #8b949e; } .ch { color: #8b949e; } .cm { color: #8b949e; } .cp { color: #8b949e; } .cpf { color: #8b949e; } .c1 { color: #8b949e; }
-    .k { color: #ff7b72; } .kd { color: #ff7b72; } .kn { color: #ff7b72; } .kp { color: #ff7b72; } .kr { color: #ff7b72; } .kt { color: #ff7b72; }
-    .s { color: #a5d6ff; } .sa { color: #a5d6ff; } .sb { color: #a5d6ff; } .sc { color: #a5d6ff; } .s1 { color: #a5d6ff; } .s2 { color: #a5d6ff; } .sd { color: #a5d6ff; } .se { color: #79c0ff; } .sh { color: #a5d6ff; } .si { color: #79c0ff; } .sx { color: #a5d6ff; } .sr { color: #a5d6ff; } .s1 { color: #a5d6ff; } .ss { color: #a5d6ff; }
-    .n { color: #c9d1d9; } .na { color: #79c0ff; } .nb { color: #79c0ff; } .bp { color: #79c0ff; } .nc { color: #f0883e; } .no { color: #79c0ff; } .nd { color: #79c0ff; } .ni { color: #79c0ff; } .ne { color: #f85149; } .nf { color: #d2a8ff; } .nl { color: #79c0ff; } .nn { color: #c9d1d9; } .nx { color: #c9d1d9; } .nt { color: #7ee787; } .nv { color: #79c0ff; } .vc { color: #79c0ff; } .vg { color: #79c0ff; } .vi { color: #79c0ff; } .vm { color: #79c0ff; }
-    .m { color: #79c0ff; } .mb { color: #79c0ff; } .mf { color: #79c0ff; } .mh { color: #79c0ff; } .mi { color: #79c0ff; } .il { color: #79c0ff; } .mo { color: #79c0ff; }
-    .o { color: #ff7b72; } .ow { color: #ff7b72; }
-    .p { color: #c9d1d9; }
-    .l { color: #79c0ff; } .ld { color: #79c0ff; }
-    .kc { color: #79c0ff; } .kv { color: #79c0ff; }
+    .c, .ch, .cm, .cp, .cpf, .c1 { color: #8b949e; }
+    .k, .kd, .kn, .kp, .kr, .kt { color: #ff7b72; }
+    .o, .ow { color: #ff7b72; }
+    .s, .sa, .sb, .sc, .s1, .s2, .sd, .sh, .sx, .sr, .ss { color: #a5d6ff; }
+    .se, .si { color: #79c0ff; }
+    .n, .nn, .nx, .p { color: #c9d1d9; }
+    .na, .nb, .bp, .no, .nd, .ni, .nl, .nv, .vc, .vg, .vi, .vm { color: #79c0ff; }
+    .m, .mb, .mf, .mh, .mi, .il, .mo { color: #79c0ff; }
+    .l, .ld, .kc, .kv { color: #79c0ff; }
+    .nc { color: #f0883e; }
+    .ne { color: #f85149; }
+    .nf { color: #d2a8ff; }
+    .nt { color: #7ee787; }
 }
 
-pre {
-    margin-bottom: 0;
-}
-
+pre { margin-bottom: 0; }
 [data-clipboard] { cursor: pointer; }
-
 .list-group-flush > .list-group-item:last-child { margin-bottom: 22px; }
 
 // ─── Scroll animations ──────────────────────────────────────────────────────
 
-.feature-card, .docs-entry {
+.feature-card,
+.docs-entry {
     opacity: 0;
     transform: translateY(16px);
     transition: opacity .5s ease, transform .5s ease, box-shadow .25s ease;
