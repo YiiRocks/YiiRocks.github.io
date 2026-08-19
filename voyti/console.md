@@ -32,84 +32,168 @@ title: "Voyti - Console Commands"
     </tbody>
 </table>
 
-## voyti:create
+<h4 class="doc-h">voyti:create</h4>
 
-Create a new user account with optional password and role assignment.
+<p>Create a new user account with optional password and role assignment.</p>
 
-```
-voyti:create [options] [--] <email> <username>
-```
+<div class="doc-example mb-3">
+voyti:create [options] [--] &lt;email&gt; &lt;username&gt;
+</div>
 
-**Arguments:**
-- `email` — Email address for the user
-- `username` — Username for the user
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">email</div>
+            <div class="opt-default">required</div>
+        </div>
+        <div class="opt-desc">Email address for the user</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">username</div>
+            <div class="opt-default">required</div>
+        </div>
+        <div class="opt-desc">Username for the user</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">-p, --password<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Password (auto-generated if omitted)</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">-r, --role<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">RBAC role to assign to the user</div>
+    </div>
+</div>
 
-**Options:**
-- `-p, --password=<password>` — Password (auto-generated if omitted)
-- `-r, --role=<role>` — RBAC role to assign to the user
-
-**Example:**
-```bash
+<div class="doc-example mb-3">
+{% highlight bash %}
 php yii voyti:create user@example.com johndoe
 php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
-```
+{% endhighlight %}
+</div>
 
-## voyti:delete
+<h4 class="doc-h">voyti:delete</h4>
 
-Delete a user account by ID, email, or username.
+<p>Delete a user account by ID, email, or username.</p>
 
-```
+<div class="doc-example mb-3">
 voyti:delete [options]
-```
+</div>
 
-**Options:**
-- `--email=<email>` — Delete user by email address
-- `--username=<username>` — Delete user by username
-- `--id=<id>` — Delete user by ID
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--email<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by email address</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--username<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by username</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--id<span class="opt-type"> int</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Delete user by ID</div>
+    </div>
+</div>
 
-**Example:**
-```bash
+<div class="doc-example mb-3">
+{% highlight bash %}
 php yii voyti:delete --email=user@example.com
 php yii voyti:delete --username=johndoe
 php yii voyti:delete --id=42
-```
+{% endhighlight %}
+</div>
 
-## voyti:confirm
+<h4 class="doc-h">voyti:confirm</h4>
 
-Mark a user account as email-confirmed.
+<p>Mark a user account as email-confirmed.</p>
 
-```
+<div class="doc-example mb-3">
 voyti:confirm [options]
-```
+</div>
 
-**Options:**
-- `--email=<email>` — Confirm user by email address
-- `--username=<username>` — Confirm user by username
-- `--id=<id>` — Confirm user by ID
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--email<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Confirm user by email address</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--username<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Confirm user by username</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--id<span class="opt-type"> int</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Confirm user by ID</div>
+    </div>
+</div>
 
-**Example:**
-```bash
+<div class="doc-example mb-3">
+{% highlight bash %}
 php yii voyti:confirm --email=user@example.com
 php yii voyti:confirm --username=johndoe
 php yii voyti:confirm --id=42
-```
+{% endhighlight %}
+</div>
 
-## voyti:password
+<h4 class="doc-h">voyti:password</h4>
 
-Reset a user's password to a newly generated one.
+<p>Reset a user's password to a newly generated one.</p>
 
-```
+<div class="doc-example mb-3">
 voyti:password [options]
-```
+</div>
 
-**Options:**
-- `--email=<email>` — Reset password for user by email address
-- `--username=<username>` — Reset password for user by username
-- `--id=<id>` — Reset password for user by ID
+<div class="opt-grid mb-3">
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--email<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Reset password for user by email address</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--username<span class="opt-type"> string</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Reset password for user by username</div>
+    </div>
+    <div class="opt-row">
+        <div class="opt-name">
+            <div class="opt-label">--id<span class="opt-type"> int</span></div>
+            <div class="opt-default">optional</div>
+        </div>
+        <div class="opt-desc">Reset password for user by ID</div>
+    </div>
+</div>
 
-**Example:**
-```bash
+<div class="doc-example mb-3">
+{% highlight bash %}
 php yii voyti:password --email=user@example.com
 php yii voyti:password --username=johndoe
 php yii voyti:password --id=42
-```
+{% endhighlight %}
+</div>
