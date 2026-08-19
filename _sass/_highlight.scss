@@ -1,0 +1,18 @@
+.highlight {
+    color: var(--hl-text);
+    line-height: 1.5;
+
+    .c, .ch, .cm, .cp, .cpf, .c1 { color: var(--hl-comment); }
+    .k, .kd, .kn, .kp, .kr, .kt { color: var(--hl-keyword); }
+    .o, .ow { color: var(--hl-keyword); }
+    .s, .sa, .sb, .sc, .s1, .s2, .sd, .sh, .sx, .sr, .ss { color: var(--hl-string); }
+    .se, .si { color: var(--hl-number); }
+    .n, .nn, .nx, .p { color: var(--hl-text); }
+    .na, .nb, .bp, .no, .nd, .ni, .nl, .nv, .vc, .vg, .vi, .vm { color: var(--hl-number); }
+    .m, .mb, .mf, .mh, .mi, .il, .mo { color: var(--hl-number); }
+    .l, .ld, .kc, .kv { color: var(--hl-number); }
+    .nc { color: var(--hl-class); }
+    .ne { color: var(--hl-error); }
+    .nf { color: var(--hl-function); }
+    .nt { color: var(--hl-tag); }
+}
