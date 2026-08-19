@@ -36,3 +36,30 @@ title: "Voyti - Events & Listeners"
             <li><strong>ResetPasswordEvent</strong> - Password reset flow</li>
             <li><strong>SessionEvent</strong> - Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion or being blocked). The <code>SESSION_UPDATED</code> type is defined but not currently dispatched.</li>
 </ul>
+
+<h4 class="doc-h">Example: Listening to Events</h4>
+
+<p>Attach listeners through the Yii3 event dispatcher configuration. Here's an example that logs when a user updates their profile:</p>
+
+<div class="doc-example mb-3">
+{% highlight php %}
+use Psr\EventDispatcher\EventDispatcherInterface;
+use YiiRocks\Voyti\Event\User\UserProfileEvent;
+
+return [
+    EventDispatcherInterface::class => static function() {
+        $dispatcher = new EventDispatcher();
+        
+        $dispatcher->attach(UserProfileEvent::class, static function(UserProfileEvent $event) {
+            // Log profile changes
+            $user = $event->getUser();
+            echo "User {$user->getUsername()} updated their profile\n";
+        });
+        
+        return $dispatcher;
+    }
+];
+{% endhighlight %}
+</div>
+
+<p>This listener fires automatically whenever a user updates their profile. You can listen to any event the same way—attach a callable that receives the event object.</p>
