@@ -189,17 +189,20 @@ voyti:
       title: Events
     - slug: cookbook
       title: Cookbook
+    - slug: lockout
+      title: Lockout
+      group: addon
+    - slug: gdpr
+      title: GDPR
+      group: addon
+    - slug: api
+      title: REST API
+      group: addon
     - slug: social
       title: Social Auth
       group: addon
     - slug: two-factor
       title: Two-Factor Auth
-      group: addon
-    - slug: api
-      title: REST API
-      group: addon
-    - slug: gdpr
-      title: GDPR
       group: addon
   features:
     - label: User management
@@ -297,6 +300,17 @@ voyti-gdpr:
   branch: main
   workflow: build.yml
   docsUrl: /voyti/gdpr/
+  listed: false
+
+voyti-lockout:
+  name: Voyti / Lockout
+  tint: "#e0f7f4"
+  logo: /assets/icons/voyti-lockout.svg
+  package: yiirocks/voyti-lockout
+  repo: voyti-lockout
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/lockout/
   listed: false
 
 voyti-social-auth:

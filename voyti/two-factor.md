@@ -145,6 +145,7 @@ title: "Voyti - Two-Factor Authentication"
                                     <tr><td><code>voyti/user-two-factor-enable</code></td><td><code>POST</code></td><td><code>settings/two-factor/enable</code></td><td>Enable 2FA - shared by every code-based method's code-entry form</td></tr>
                                     <tr><td><code>voyti/user-two-factor-disable</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/</code></td><td>Disable 2FA</td></tr>
                                     <tr><td><code>voyti/user-two-factor-disable-send-code</code></td><td><code>POST</code></td><td><code>settings/two-factor/disable/send-code</code></td><td>Send the disable-2FA one-time code (for methods that deliver a code)</td></tr>
+                                    <tr><td><code>voyti/user-two-factor-backup-codes</code></td><td><code>GET</code></td><td><code>settings/two-factor/backup-codes</code></td><td>Display the user's backup codes</td></tr>
                                     <tr><td><code>voyti/user-two-factor-regenerate-backup-codes</code></td><td><code>POST</code></td><td><code>settings/two-factor/backup-codes/regenerate</code></td><td>Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)</td></tr>
                                 </tbody>
                             </table>
