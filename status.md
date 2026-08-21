@@ -11,7 +11,7 @@ preconnect:
 
     {% assign pkg_data = site.data.projects %}
     {% assign general_keys = "recaptcha,toast-bootstrap5,yii-bootstrap-icons" | split: "," %}
-    {% assign voyti_keys = "voyti,voyti-api,voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn,voyti-gdpr,voyti-lockout,voyti-social-auth" | split: "," %}
+    {% assign voyti_keys = "voyti,voyti-api,voyti-2fa,voyti-2fa-email,voyti-2fa-totp,voyti-2fa-webauthn,voyti-gdpr,voyti-lockout,voyti-social-auth,voyti-views-bootstrap5" | split: "," %}
     {% assign svginline_keys = "svg-inline,svg-inline-bootstrap,svg-inline-fontawesome" | split: "," %}
 
     <div class="status-grid mb-5">

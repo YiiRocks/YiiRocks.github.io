@@ -328,6 +328,18 @@ voyti-social-auth:
   docsUrl: /voyti/social/
   listed: false
 
+voyti-views-bootstrap5:
+  name: Voyti / Views Bootstrap5
+  tint: "#dbeafe"
+  logo: /assets/icons/bootstrap.svg
+  package: yiirocks/voyti-views-bootstrap5
+  repo: voyti-views-bootstrap5
+  branch: main
+  workflow: build.yml
+  docsUrl: /voyti/
+  listed: false
+  hideMsi: true
+
 yii-bootstrap-icons:
   name: Yii / Bootstrap / Icons
   tagline: Bootstrap Icons asset bundle

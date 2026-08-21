@@ -30,7 +30,9 @@
             </div>
             <div class="status-card__meta">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage" class="status-badge" loading="lazy" decoding="async">
+{% unless pkg.hideMsi %}
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI" class="status-badge" loading="lazy" decoding="async">
+{% endunless %}
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge" loading="lazy" decoding="async">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions" class="status-badge" loading="lazy" decoding="async">
             </div>
