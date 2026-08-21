@@ -229,10 +229,14 @@ voyti:
       detail: JSON user CRUD (Bearer-token auth)
     - label: Bot Protection
       detail: Google reCAPTCHA v2/v3 for registration and login forms
+    - label: Brute-force protection
+      detail: Exponential backoff delays for failed login and registration attempts, tracked per IP address
     - label: i18n
       detail: Built-in translations for multiple languages
-    - label: Themed views
-      detail: Bootstrap 5 views shipped by default; mail templates separate and independently overridable
+    - label: Pluggable views
+      detail: View-agnostic core with Bootstrap 5 views available; alternative UI frameworks can implement the standard interface
+    - label: Email customization
+      detail: Mail templates are independently overridable for complete control over transactional email content and styling
     - label: Toast notifications
       detail: Native Bootstrap toast support with automatic fallback to flash messages
 

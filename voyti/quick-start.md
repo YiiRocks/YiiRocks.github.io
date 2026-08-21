@@ -15,7 +15,13 @@ title: "Voyti - Quick Start"
             </li>
             <li>
                 <h4>Install</h4>
-<button type="button" class="copy-btn copy--sm mb-3">composer require yiirocks/voyti</button>
+<p class="mb-3">
+            Voyti's core is view-agnostic; you need a views implementation package to render any pages.
+            <code>yiirocks/voyti-views-bootstrap5</code> is the reference implementation using Bootstrap 5. You can
+            substitute an alternative views package if you prefer a different UI framework, as long as it implements
+            the <code>yiirocks/voyti-views</code> interface.
+</p>
+<button type="button" class="copy-btn copy--sm mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
 <div class="optional-grid mb-4">
             <div class="feature-card">
@@ -24,11 +30,19 @@ title: "Voyti - Quick Start"
                 <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/recaptcha</button>
             </div>
             <div class="feature-card">
-                <div class="fw-bold mb-1">Two-Factor Authentication</div>
-                <div class="feature-card__text">Install the <code>voyti-2fa</code> base plus a method package - email, TOTP, or WebAuthn/passkeys</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-email</button>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-totp</button>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-webauthn</button>
+                <div class="fw-bold mb-1">Brute-force Protection</div>
+                <div class="feature-card__text">Exponential backoff delays for failed login and registration attempts, tracked per IP address</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-lockout</button>
+            </div>
+            <div class="feature-card">
+                <div class="fw-bold mb-1">GDPR Data Handling</div>
+                <div class="feature-card__text">Export user data and anonymize accounts for compliance with data protection regulations</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-gdpr</button>
+            </div>
+            <div class="feature-card">
+                <div class="fw-bold mb-1">REST API</div>
+                <div class="feature-card__text">JSON user CRUD endpoints with bearer-token authentication and API key lifecycle management</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-api</button>
             </div>
             <div class="feature-card">
                 <div class="fw-bold mb-1">Social Authentication</div>
@@ -39,6 +53,13 @@ title: "Voyti - Quick Start"
                 <div class="fw-bold mb-1">Toast Notifications</div>
                 <div class="feature-card__text">Renders voyti's flash messages as Bootstrap 5 toasts</div>
                 <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/toast-bootstrap5</button>
+            </div>
+            <div class="feature-card">
+                <div class="fw-bold mb-1">Two-Factor Authentication</div>
+                <div class="feature-card__text">Email codes and/or TOTP (authenticator app) and/or WebAuthn/passkeys for stronger account security</div>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-email</button>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-totp</button>
+                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-webauthn</button>
             </div>
 </div>
 
@@ -72,10 +93,11 @@ return [
 </p>
 <button type="button" class="copy-btn copy--sm mb-3">./yii migrate:up</button>
 <p>
-            Voyti's migration creates all 7 user-related tables (user, user_profile,
-            user_social_account, user_token, user_sessions, user_password_history,
-            user_audit_log) and seeds default roles and permissions into the RBAC
-            tables created by <code>yiisoft/rbac-db</code>.
+            Voyti's migration creates 6 user-related tables (user, user_profile,
+            user_token, user_sessions, user_password_history, user_audit_log) and
+            seeds default roles and permissions into the RBAC tables created by
+            <code>yiisoft/rbac-db</code>. Social authentication tables are provided by
+            the optional <code>yiirocks/voyti-social-auth</code> package.
 </p>
 <p>
             If the <code>user</code> table is empty after these migrations run, a

@@ -6,23 +6,16 @@ title: "Voyti - Configuration"
 ---
 
 <p>
-    Override Voyti params in your app's <code>config/params.php</code> using
-    the <code>yiirocks/voyti</code> key:
+    Override Voyti params in your app's <code>params.php</code>:
 </p>
 
 <div class="doc-example mb-3">
 {% highlight php %}
-use YiiRocks\Voyti\Enum\EmailChangeConfirmation;
 use YiiRocks\Voyti\Enum\ProfileVisibility;
-use YiiRocks\Voyti\Enum\RecaptchaVersion;
-use YiiRocks\Voyti\Enum\WebTheme;
 
 return [
     'yiirocks/voyti' => [
         'appName' => 'My Project',
-        'webTheme' => WebTheme::BOOTSTRAP5,
-        'emailChangeConfirmation' => EmailChangeConfirmation::BOTH,
-        'recaptchaVersion' => RecaptchaVersion::V2,
         'profileVisibility' => ProfileVisibility::PUBLIC,
     ],
 ];
@@ -183,13 +176,6 @@ return [
 
 <h4 class="doc-h">Views &amp; Mail</h4>
 <div class="opt-grid mb-3">
-    <div class="opt-row">
-<div class="opt-name">
-            <div class="opt-label">webTheme<span class="opt-type"> WebTheme</span></div>
-            <div class="opt-default"><code>WebTheme::BOOTSTRAP5</code></div>
-</div>
-<div class="opt-desc">Shipped theme to use as the base for web templates. Custom <code>viewPath</code> overrides are checked first; missing templates fall back to this selected theme.</div>
-    </div>
     <div class="opt-row">
 <div class="opt-name">
             <div class="opt-label">viewPath<span class="opt-type"> ?string</span></div>
