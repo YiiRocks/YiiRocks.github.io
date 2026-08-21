@@ -3,6 +3,61 @@ layout: package-section
 pkgId: voyti
 section: console
 title: "Voyti - Console Commands"
+option_groups:
+  create:
+    - name: email
+      default: "required"
+      desc: "Email address for the user"
+    - name: username
+      default: "required"
+      desc: "Username for the user"
+    - name: "-p, --password"
+      type: string
+      default: "optional"
+      desc: "Password (auto-generated if omitted)"
+    - name: "-r, --role"
+      type: string
+      default: "optional"
+      desc: "RBAC role to assign to the user"
+  confirm:
+    - name: "--email"
+      type: string
+      default: "optional"
+      desc: "Confirm user by email address"
+    - name: "--username"
+      type: string
+      default: "optional"
+      desc: "Confirm user by username"
+    - name: "--id"
+      type: int
+      default: "optional"
+      desc: "Confirm user by ID"
+  password_reset:
+    - name: "--email"
+      type: string
+      default: "optional"
+      desc: "Reset password for user by email address"
+    - name: "--username"
+      type: string
+      default: "optional"
+      desc: "Reset password for user by username"
+    - name: "--id"
+      type: int
+      default: "optional"
+      desc: "Reset password for user by ID"
+  delete:
+    - name: "--email"
+      type: string
+      default: "optional"
+      desc: "Delete user by email address"
+    - name: "--username"
+      type: string
+      default: "optional"
+      desc: "Delete user by username"
+    - name: "--id"
+      type: int
+      default: "optional"
+      desc: "Delete user by ID"
 ---
 
 <table class="table table-sm table-striped">
@@ -40,36 +95,7 @@ title: "Voyti - Console Commands"
 voyti:create [options] [--] &lt;email&gt; &lt;username&gt;
 </div>
 
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">email</div>
-            <div class="opt-default">required</div>
-        </div>
-        <div class="opt-desc">Email address for the user</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">username</div>
-            <div class="opt-default">required</div>
-        </div>
-        <div class="opt-desc">Username for the user</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">-p, --password<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Password (auto-generated if omitted)</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">-r, --role<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">RBAC role to assign to the user</div>
-    </div>
-</div>
+{% include options_table.md options=page.option_groups.create %}
 
 <div class="doc-example mb-3">
 {% highlight bash %}
@@ -86,29 +112,7 @@ php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
 voyti:confirm [options]
 </div>
 
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--email<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Confirm user by email address</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--username<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Confirm user by username</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--id<span class="opt-type"> int</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Confirm user by ID</div>
-    </div>
-</div>
+{% include options_table.md options=page.option_groups.confirm %}
 
 <div class="doc-example mb-3">
 {% highlight bash %}
@@ -126,29 +130,7 @@ php yii voyti:confirm --id=42
 voyti:password [options]
 </div>
 
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--email<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Reset password for user by email address</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--username<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Reset password for user by username</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--id<span class="opt-type"> int</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Reset password for user by ID</div>
-    </div>
-</div>
+{% include options_table.md options=page.option_groups.password_reset %}
 
 <div class="doc-example mb-3">
 {% highlight bash %}
@@ -166,29 +148,7 @@ php yii voyti:password --id=42
 voyti:delete [options]
 </div>
 
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--email<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by email address</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--username<span class="opt-type"> string</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by username</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">--id<span class="opt-type"> int</span></div>
-            <div class="opt-default">optional</div>
-        </div>
-        <div class="opt-desc">Delete user by ID</div>
-    </div>
-</div>
+{% include options_table.md options=page.option_groups.delete %}
 
 <div class="doc-example mb-3">
 {% highlight bash %}

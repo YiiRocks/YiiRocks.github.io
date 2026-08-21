@@ -3,6 +3,12 @@ layout: package-section
 pkgId: voyti
 section: api
 title: "Voyti - REST API"
+option_groups:
+  config:
+    - name: apiTokenLifespan
+      type: int
+      default: "<code>0</code>"
+      desc: "API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token."
 ---
 
 <p>
@@ -15,14 +21,7 @@ title: "Voyti - REST API"
 </p>
 
 <h4 class="doc-h">Installation</h4>
-<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-api</button>
-            <a href="https://github.com/YiiRocks/voyti-api/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-api" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-api" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-            </div>
-</div>
+{% include install_block.md package="yiirocks/voyti-api" repo="voyti-api" %}
 <p>
             Routes are <strong>not</strong> auto-registered. Pull the
             <code>voyti-routes-api</code> config group into your router and mount it
@@ -69,15 +68,7 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="opt-grid mb-3">
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">apiTokenLifespan<span class="opt-type"> int</span></div>
-                    <div class="opt-default"><code>0</code></div>
-                </div>
-                <div class="opt-desc">API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token.</div>
-            </div>
-</div>
+{% include options_table.md options=page.option_groups.config %}
 
 <h4 class="doc-h">Authentication</h4>
 <p>

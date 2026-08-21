@@ -147,7 +147,54 @@ sub_packages:
     <h2 class="doc-h mb-4">{{ group.title }}</h2>
 {% endif %}
     <div class="status-grid{% unless forloop.last %} mb-5{% endunless %}">
-{% include status_cards.md collection=site.packages status_data=page.sub_packages filter_keys=group.keys %}
+{% for key in group.keys %}
+{% assign doc = nil %}
+{% assign status_pkg = nil %}
+
+{%- for item in site.packages -%}
+  {%- if item.pkgId == key and item.section == nil -%}
+    {%- assign doc = item -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if page.sub_packages[key] -%}
+  {%- assign status_pkg = page.sub_packages[key] -%}
+{%- endif -%}
+
+{% if doc %}
+  {%- assign pkg = doc -%}
+{% elsif status_pkg %}
+  {%- assign pkg = status_pkg -%}
+{% else %}
+  {%- continue -%}
+{% endif %}
+
+{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="status-card">{% else %}<div class="status-card">{% endif %}
+{% if pkg.featured %}<div class="status-card__star"></div>{% endif %}
+            <div class="status-card__header">
+                <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
+                <div class="status-card__info">
+                    <h3 class="status-card__name">{{ pkg.name }}</h3>
+                    <div class="status-card__pkg">{{ pkg.package }}</div>
+                </div>
+            </div>
+            <div class="status-card__badges">
+                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}?style=flat-square" alt="Last Commit" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI" class="status-badge" loading="lazy" decoding="async">
+            </div>
+            <div class="status-card__meta">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage" class="status-badge" loading="lazy" decoding="async">
+{% unless pkg.hideMsi %}
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI" class="status-badge" loading="lazy" decoding="async">
+{% endunless %}
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions" class="status-badge" loading="lazy" decoding="async">
+            </div>
+{% if pkg.docsUrl %}</a>{% else %}</div>{% endif %}
+{% endfor %}
     </div>
 {% endfor %}
 </div>

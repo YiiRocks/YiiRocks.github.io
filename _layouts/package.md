@@ -19,11 +19,16 @@ layout: default
         <div class="doc-body">
             <h2 class="h3 fw-bolder mb-2" id="section-overview">Overview</h2>
             {{ content }}
+
+            {% include features_grid.md features=pkg.features %}
+
             {% include doc_support.md pkgId=page.pkgId %}
         </div>
     </div>
 {% else %}
     {{ content }}
+
+{% include features_grid.md features=pkg.features %}
 
 {% if pkg.options %}
     <h2 class="doc-h">Options</h2>

@@ -23,10 +23,10 @@ sections:
     title: "Console"
   - slug: "middleware"
     title: "Middleware"
-  - slug: "rbac"
-    title: "RBAC"
   - slug: "routes"
     title: "Routes"
+  - slug: "rbac"
+    title: "RBAC"
   - slug: "events"
     title: "Events"
   - slug: "cookbook"
@@ -108,15 +108,3 @@ features:
             modular foundation that adapts to a wide range of authentication and
             authorization requirements.
 </p>
-
-{% if page.features %}
-<h2 class="doc-h">Features</h2>
-<div class="features-grid mb-4">
-{% for feat in page.features %}
-            <div class="feature-card">
-                <div class="fw-bold mb-1">{{ feat.label }}</div>
-                <div class="feature-card__text">{{ feat.detail }}</div>
-            </div>
-{% endfor %}
-</div>
-{% endif %}

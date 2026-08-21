@@ -3,6 +3,12 @@ layout: package-section
 pkgId: voyti
 section: two-factor
 title: "Voyti - Two-Factor Authentication"
+option_groups:
+  config:
+    - name: forcedPermissions
+      type: array
+      default: "<code>[]</code>"
+      desc: "RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>."
 ---
 
 <p>
@@ -38,14 +44,7 @@ title: "Voyti - Two-Factor Authentication"
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-email</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa-email/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-                            <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-email" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-                            </div>
-                        </div>
+                        {% include install_block.md package="yiirocks/voyti-2fa-email" repo="voyti-2fa-email" %}
                     </div>
                 </div>
             </div>
@@ -74,14 +73,7 @@ title: "Voyti - Two-Factor Authentication"
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-totp</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa-totp/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-                            <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-totp" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-                            </div>
-                        </div>
+                        {% include install_block.md package="yiirocks/voyti-2fa-totp" repo="voyti-2fa-totp" %}
                     </div>
                 </div>
             </div>
@@ -111,14 +103,7 @@ title: "Voyti - Two-Factor Authentication"
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-2fa-webauthn</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa-webauthn/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-                            <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa-webauthn" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-                            </div>
-                        </div>
+                        {% include install_block.md package="yiirocks/voyti-2fa-webauthn" repo="voyti-2fa-webauthn" %}
                     </div>
                 </div>
             </div>
@@ -182,15 +167,7 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="opt-grid mb-3">
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">forcedPermissions<span class="opt-type"> array</span></div>
-                    <div class="opt-default"><code>[]</code></div>
-                </div>
-                <div class="opt-desc">RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>.</div>
-            </div>
-</div>
+{% include options_table.md options=page.option_groups.config %}
 
 <h4 class="doc-h">Writing a method plugin</h4>
 <ol>

@@ -3,6 +3,32 @@ layout: package-section
 pkgId: voyti
 section: lockout
 title: "Voyti - Lockout"
+option_groups:
+  config:
+    - name: loginMinRetentionSeconds
+      type: int
+      default: "<code>900</code>"
+      desc: "Minimum time, in seconds, a login failure count is remembered for one IP, even when the currently required delay is smaller. Renewed on every new failure."
+    - name: loginBaseDelaySeconds
+      type: int
+      default: "<code>1</code>"
+      desc: "Wait enforced on the very first failed login attempt. Doubles on every further failure: 1s, 2s, 4s..."
+    - name: loginMaxDelaySeconds
+      type: int
+      default: "<code>3600</code>"
+      desc: "Ceiling on the login delay. There is no cap on the attempt count itself: an attacker who keeps failing just keeps hitting this capped wait."
+    - name: registrationMinRetentionSeconds
+      type: int
+      default: "<code>60</code>"
+      desc: "Minimum time, in seconds, a registration failure count is remembered for one IP. Renewed on every new failure."
+    - name: registrationBaseDelaySeconds
+      type: int
+      default: "<code>1</code>"
+      desc: "Wait enforced on the very first failed registration attempt. Doubles on every further failure."
+    - name: registrationMaxDelaySeconds
+      type: int
+      default: "<code>600</code>"
+      desc: "Ceiling on the registration delay, lower than login's since registration abuse is lower stakes than an account-takeover attempt."
 ---
 
 <p>
@@ -21,14 +47,7 @@ title: "Voyti - Lockout"
 </p>
 
 <h4 class="doc-h">Installation</h4>
-<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-    <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-lockout</button>
-    <a href="https://github.com/YiiRocks/voyti-lockout/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-    <div class="d-flex gap-2 flex-wrap ms-auto">
-        <a href="https://github.com/YiiRocks/voyti-lockout" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-        <a href="https://packagist.org/packages/yiirocks/voyti-lockout" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-    </div>
-</div>
+{% include install_block.md package="yiirocks/voyti-lockout" repo="voyti-lockout" %}
 
 <h4 class="doc-h">Storage</h4>
 <p>
@@ -57,50 +76,7 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="opt-grid mb-3">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">loginMinRetentionSeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>900</code></div>
-        </div>
-        <div class="opt-desc">Minimum time, in seconds, a login failure count is remembered for one IP, even when the currently required delay is smaller. Renewed on every new failure.</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">loginBaseDelaySeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>1</code></div>
-        </div>
-        <div class="opt-desc">Wait enforced on the very first failed login attempt. Doubles on every further failure: 1s, 2s, 4s...</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">loginMaxDelaySeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>3600</code></div>
-        </div>
-        <div class="opt-desc">Ceiling on the login delay. There is no cap on the attempt count itself: an attacker who keeps failing just keeps hitting this capped wait.</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">registrationMinRetentionSeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>60</code></div>
-        </div>
-        <div class="opt-desc">Minimum time, in seconds, a registration failure count is remembered for one IP. Renewed on every new failure.</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">registrationBaseDelaySeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>1</code></div>
-        </div>
-        <div class="opt-desc">Wait enforced on the very first failed registration attempt. Doubles on every further failure.</div>
-    </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">registrationMaxDelaySeconds<span class="opt-type"> int</span></div>
-            <div class="opt-default"><code>600</code></div>
-        </div>
-        <div class="opt-desc">Ceiling on the registration delay, lower than login's since registration abuse is lower stakes than an account-takeover attempt.</div>
-    </div>
-</div>
+{% include options_table.md options=page.option_groups.config %}
 
 <h4 class="doc-h">How it works</h4>
 <div class="table-responsive">

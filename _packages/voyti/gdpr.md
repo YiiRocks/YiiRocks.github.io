@@ -3,6 +3,16 @@ layout: package-section
 pkgId: voyti
 section: gdpr
 title: "Voyti - GDPR"
+option_groups:
+  config:
+    - name: gdprExportProperties
+      type: array
+      default: "<code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code>"
+      desc: "Properties included in the data export (JSON). Unrecognized names are silently omitted, not exported as <code>null</code>. <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code>; <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload)."
+    - name: gdprAnonymizePrefix
+      type: string
+      default: "<code>'GDPR'</code>"
+      desc: "Prefix used for the masked email/username on anonymization, followed by the user's numeric id (e.g. <code>GDPR42</code>, <code>GDPR42@example.com</code>)."
 ---
 
 <p>
@@ -19,14 +29,7 @@ title: "Voyti - GDPR"
 </p>
 
 <h4 class="doc-h">Installation</h4>
-<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-gdpr</button>
-            <a href="https://github.com/YiiRocks/voyti-gdpr/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-gdpr" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-gdpr" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-            </div>
-</div>
+{% include install_block.md package="yiirocks/voyti-gdpr" repo="voyti-gdpr" %}
 
 <h4 class="doc-h">Configuration</h4>
 <div class="doc-example mb-3">
@@ -41,22 +44,7 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="opt-grid mb-3">
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">gdprExportProperties<span class="opt-type"> array</span></div>
-                    <div class="opt-default"><code>['email', 'username', 'userProfile.public_email', 'userProfile.name', 'userProfile.gravatar_email', 'userProfile.location', 'userProfile.website', 'userProfile.bio', 'userProfile.birthday', 'userSessions', 'userSocialAccount']</code></div>
-                </div>
-                <div class="opt-desc">Properties included in the data export (JSON). Unrecognized names are silently omitted, not exported as <code>null</code>. <code>userSessions</code> exports each login's <code>ip</code>, <code>user_agent</code>, <code>created_at</code>, <code>updated_at</code>; <code>userSocialAccount</code> exports each linked account's <code>provider</code>, <code>username</code>, <code>email</code>, <code>created_at</code>, and <code>data</code> (the decoded provider profile payload).</div>
-            </div>
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">gdprAnonymizePrefix<span class="opt-type"> string</span></div>
-                    <div class="opt-default"><code>'GDPR'</code></div>
-                </div>
-                <div class="opt-desc">Prefix used for the masked email/username on anonymization, followed by the user's numeric id (e.g. <code>GDPR42</code>, <code>GDPR42@example.com</code>).</div>
-            </div>
-</div>
+{% include options_table.md options=page.option_groups.config %}
 
 <h4 class="doc-h">Routes</h4>
 <div class="table-responsive">

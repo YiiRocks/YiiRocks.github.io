@@ -3,6 +3,16 @@ layout: package-section
 pkgId: voyti
 section: social
 title: "Voyti - Social Authentication"
+option_groups:
+  config:
+    - name: enableSocialNetworkRegistration
+      type: bool
+      default: "<code>true</code>"
+      desc: "Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration."
+    - name: allowMultipleAccountsPerProvider
+      type: bool
+      default: "<code>false</code>"
+      desc: "Whether a single user may link more than one account from the same provider."
 ---
 
 <p>
@@ -15,15 +25,8 @@ title: "Voyti - Social Authentication"
 </p>
 
 <h4 class="doc-h">Installation</h4>
-<div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-            <button type="button" class="copy-btn copy--sm">composer require yiirocks/voyti-social-auth</button>
-            <a href="https://github.com/YiiRocks/voyti-social-auth/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
-            <div class="d-flex gap-2 flex-wrap ms-auto">
-                <a href="https://github.com/YiiRocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                <a href="https://packagist.org/packages/yiirocks/voyti-social-auth" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-            </div>
-</div>
-<div class="mb-4">
+{% include install_block.md package="yiirocks/voyti-social-auth" repo="voyti-social-auth" %}
+<div>
             <p>
                 Run your migration command to create the <code>user_social_account</code>
                 table after installation:
@@ -44,22 +47,7 @@ return [
 ];
 {% endhighlight %}
 </div>
-<div class="opt-grid mb-3">
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">enableSocialNetworkRegistration<span class="opt-type"> bool</span></div>
-                    <div class="opt-default"><code>true</code></div>
-                </div>
-                <div class="opt-desc">Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration.</div>
-            </div>
-            <div class="opt-row">
-                <div class="opt-name">
-                    <div class="opt-label">allowMultipleAccountsPerProvider<span class="opt-type"> bool</span></div>
-                    <div class="opt-default"><code>false</code></div>
-                </div>
-                <div class="opt-desc">Whether a single user may link more than one account from the same provider.</div>
-            </div>
-</div>
+{% include options_table.md options=page.option_groups.config %}
 
 <h4 class="doc-h">Provider configuration</h4>
 <p>
