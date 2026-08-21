@@ -4,9 +4,8 @@ title: Yii.Rocks
 description: Small, focused open-source libraries for Yii 3 projects. Explore our collection of actively maintained packages designed to extend and enhance your Yii applications.
 ---
 {% assign project_count = 0 %}
-{% for item in site.data.projects %}
-{% assign pkg = item[1] %}
-{% unless pkg.listed == false %}
+{% for doc in site.packages %}
+{% unless doc.listed == false or doc.section %}
 {% assign project_count = project_count | plus: 1 %}
 {% endunless %}
 {% endfor %}
@@ -25,14 +24,12 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
         <nav class="home-nav" aria-label="Package navigation">
             <div class="home-nav__title fw-bold fs-sm text-body-secondary mb-2">Packages</div>
             <ul class="home-nav__list">
-{% for item in site.data.projects %}
-{% assign key = item[0] %}
-{% assign pkg = item[1] %}
-{% unless pkg.listed == false %}
+{% for doc in site.packages %}
+{% unless doc.listed == false or doc.section %}
                 <li>
-                    <a href="#{{ key }}" class="home-nav__item">
-                        <span class="home-nav__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-img"></span>
-                        <span>{{ pkg.name }}</span>
+                    <a href="#{{ doc.pkgId }}" class="home-nav__item">
+                        <span class="home-nav__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ doc.tint }};"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" class="pkg-img"></span>
+                        <span>{{ doc.name }}</span>
                     </a>
                 </li>
 {% endunless %}
@@ -41,38 +38,36 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
         </nav>
 
         <div class="home-main">
-{% for item in site.data.projects %}
-{% assign key = item[0] %}
-{% assign pkg = item[1] %}
-{% unless pkg.listed == false %}
-            <div class="docs-entry" id="{{ key }}">
+{% for doc in site.packages %}
+{% unless doc.listed == false or doc.section %}
+            <div class="docs-entry" id="{{ doc.pkgId }}">
                 <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
                     <div class="docs-entry__title d-flex align-items-center gap-3">
-                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-img"></span>
+                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ doc.tint }};"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" class="pkg-img"></span>
                         <div>
-                            <h3>{{ pkg.name }}</h3>
-                            <div class="docs-entry__sub fw-semibold">{{ pkg.tagline }}</div>
+                            <h3>{{ doc.name }}</h3>
+                            <div class="docs-entry__sub fw-semibold">{{ doc.tagline }}</div>
                         </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
-{% if pkg.features or pkg.usage %}
+{% if doc.features or doc.usage %}
                         <button type="button" class="docs-entry__toggle" aria-expanded="false" title="Show summary">Summary ▼</button>
 {% endif %}
-                        <a href="https://github.com/YiiRocks/{{ pkg.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                        <a href="https://packagist.org/packages/{{ pkg.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
-{% if pkg.docsUrl %}
-                        <a href="{{ pkg.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
+                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
+                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+{% if doc.docsUrl %}
+                        <a href="{{ doc.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
 {% endif %}
                     </div>
                 </div>
 
-                <p class="docs-entry__text">{{ pkg.description }}</p>
+                <p class="docs-entry__text">{{ doc.description }}</p>
 
-{% if pkg.features or pkg.usage %}
+{% if doc.features or doc.usage %}
                 <div class="docs-entry__details" hidden>
-{% if pkg.features %}
+{% if doc.features %}
                     <div class="features-grid">
-{% for feat in pkg.features %}
+{% for feat in doc.features %}
                         <div class="feature-card">
                             <div class="d-flex align-items-center gap-2 mb-1">
 {% if feat.icon %}
@@ -86,10 +81,10 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                     </div>
 {% endif %}
 
-{% if pkg.usage %}
+{% if doc.usage %}
                     <div class="doc-example mb-3">
 {% highlight php %}
-{{ pkg.usage }}
+{{ doc.usage }}
 {% endhighlight %}
 </div>
 {% endif %}
@@ -97,7 +92,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% endif %}
 
                 <div class="d-flex align-items-center gap-3 flex-wrap">
-                        <button type="button" class="copy-btn copy--sm">composer require {{ pkg.package }}</button>
+                        <button type="button" class="copy-btn copy--sm">composer require {{ doc.package }}</button>
                 </div>
             </div>
 {% endunless %}

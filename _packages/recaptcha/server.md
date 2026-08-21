@@ -3,6 +3,8 @@ layout: package-section
 pkgId: recaptcha
 section: server
 title: "reCAPTCHA - Server-Side Verification"
+description: "Manual server-side verification of reCAPTCHA v2 and v3 tokens using RecaptchaClient."
+excerpt_separator: ""
 ---
 
 <p>

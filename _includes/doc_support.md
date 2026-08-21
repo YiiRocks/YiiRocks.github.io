@@ -1,4 +1,5 @@
-{% assign pkg = site.data.projects[include.pkgId] %}
+{% assign pkg_matches = site.packages | where: "pkgId", include.pkgId | where_exp: "item", "item.section == nil" %}
+{% assign pkg = pkg_matches.first %}
 {% if pkg %}
     <h2 class="doc-h" id="support">Support</h2>
     <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">

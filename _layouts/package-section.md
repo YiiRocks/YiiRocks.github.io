@@ -1,7 +1,8 @@
 ---
 layout: default
 ---
-{% assign pkg = site.data.projects[page.pkgId] %}
+{% assign pkg_matches = site.packages | where: "pkgId", page.pkgId | where_exp: "item", "item.section == nil" %}
+{% assign pkg = pkg_matches.first %}
 {% assign current_index = -1 %}
 {% for s in pkg.sections %}
 {% if s.slug == page.section %}

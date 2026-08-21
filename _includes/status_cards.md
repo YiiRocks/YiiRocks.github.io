@@ -1,15 +1,27 @@
-{% for item in include.pkg_data %}
-{% assign key = item[0] %}
-{% assign pkg = item[1] %}
-{% if include.filter_keys contains key %}
-{% if pkg.docsUrl %}
-        <a href="{{ pkg.docsUrl }}" class="status-card">
+{% for key in include.filter_keys %}
+{% assign doc = nil %}
+{% assign status_pkg = nil %}
+
+{%- for item in include.collection -%}
+  {%- if item.pkgId == key and item.section == nil -%}
+    {%- assign doc = item -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if include.status_data[key] -%}
+  {%- assign status_pkg = include.status_data[key] -%}
+{%- endif -%}
+
+{% if doc %}
+  {%- assign pkg = doc -%}
+{% elsif status_pkg %}
+  {%- assign pkg = status_pkg -%}
 {% else %}
-        <div class="status-card">
+  {%- continue -%}
 {% endif %}
-{% if pkg.featured %}
-            <div class="status-card__star"></div>
-{% endif %}
+
+{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="status-card">{% else %}<div class="status-card">{% endif %}
+{% if pkg.featured %}<div class="status-card__star"></div>{% endif %}
             <div class="status-card__header">
                 <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
                 <div class="status-card__info">
@@ -36,10 +48,5 @@
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge" loading="lazy" decoding="async">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions" class="status-badge" loading="lazy" decoding="async">
             </div>
-{% if pkg.docsUrl %}
-        </a>
-{% else %}
-        </div>
-{% endif %}
-{% endif %}
+{% if pkg.docsUrl %}</a>{% else %}</div>{% endif %}
 {% endfor %}

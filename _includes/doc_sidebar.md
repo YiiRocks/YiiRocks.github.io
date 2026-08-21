@@ -1,4 +1,5 @@
-{% assign pkg = site.data.projects[include.pkgId] %}
+{% assign pkg_matches = site.packages | where: "pkgId", include.pkgId | where_exp: "item", "item.section == nil" %}
+{% assign pkg = pkg_matches.first %}
 {% assign addon_sections = "" | split: "" %}
 {% assign core_sections = "" | split: "" %}
 {% for s in pkg.sections %}

@@ -1,8 +1,42 @@
 ---
-layout: package
-pkgId: svg-inline
-title: SvgInline
-description: Add SVG files inline to your Yii Framework 3 applications. Extensible with Bootstrap Icons and Font Awesome Icons.
+permalink: "/svg-inline/"
+layout: "package"
+pkgId: "svg-inline"
+name: "SvgInline"
+tagline: "Inline SVG file manipulation"
+tint: "#e0f2fe"
+logo: "/assets/icons/svg.svg"
+package: "yiirocks/svg-inline"
+branch: "master"
+repo: "svg-inline"
+workflow: "build.yml"
+docsUrl: "/svg-inline/"
+featured: true
+title: "SvgInline"
+description: "Add SVG files inline to your Yii Framework 3 applications. Extensible with Bootstrap Icons and Font Awesome Icons."
+sections: 
+  - slug: "bootstrap"
+    title: "Bootstrap Icons"
+  - slug: "fontawesome"
+    title: "Font Awesome Icons"
+features: 
+  - label: "Bootstrap Icons"
+    detail: "Open-source Bootstrap Icons with clean, consistent aesthetics"
+    icon: "/assets/icons/bootstrap.svg"
+  - label: "Font Awesome Icons"
+    detail: "Font Awesome's vast library with thousands of icons and multiple style options"
+    icon: "/assets/icons/fontawesome.svg"
+  - label: "Attribute manipulation"
+    detail: "Set ID, classes, fill color, and custom CSS styles on SVG elements"
+  - label: "Flexible sizing"
+    detail: "Width/height with automatic aspect ratio calculation when only one dimension is specified"
+  - label: "Multiple size units"
+    detail: "Support for px, em, ex, pt, pc, in, cm, mm - automatically converts to pixels"
+  - label: "Fallback icons"
+    detail: "Automatically falls back to a default icon if the requested file cannot be found"
+  - label: "Immutable fluent API"
+    detail: "Method chaining with built-in cloning to prevent unintended mutations"
+usage: "$svg->file('@vendor/path/icon.svg');"
 ---
 
 <p class="doc-description">Provides simple functions for your Yii Framework 3 applications to add SVG files inline and manipulate their properties. It can be extended with Bootstrap Icons and Font Awesome Icons.</p>

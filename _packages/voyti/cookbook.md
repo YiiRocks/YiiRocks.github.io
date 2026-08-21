@@ -3,6 +3,8 @@ layout: package-section
 pkgId: voyti
 section: cookbook
 title: "Voyti - Cookbook"
+description: "Practical Voyti recipes: building a nav menu from routes, styling required-field indicators, rendering flash messages as toasts, and showing the impersonation banner."
+excerpt_separator: ""
 ---
 
 <h4>Building a nav menu from voyti's routes</h4>

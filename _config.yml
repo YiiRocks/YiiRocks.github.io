@@ -18,24 +18,14 @@ sass:
 
 permalink: /:path/
 
+collections:
+  packages:
+    output: true
+    permalink: /:path/
+
 defaults:
   - scope:
       path: ""
       type: "pages"
     values:
       layout: default
-  - scope:
-      path: "voyti"
-      type: "pages"
-    values:
-      layout: package-section
-  - scope:
-      path: "recaptcha"
-      type: "pages"
-    values:
-      layout: package-section
-  - scope:
-      path: "svg-inline"
-      type: "pages"
-    values:
-      layout: package-section

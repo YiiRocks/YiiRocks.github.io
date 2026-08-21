@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign pkg = site.data.projects[page.pkgId] %}
+{% assign pkg = page %}
 <div class="doc-page">
 {% if pkg %}
     <div class="doc-header d-flex align-items-center gap-4">
@@ -31,7 +31,8 @@ layout: default
 {% endif %}
 
 {% if pkg.inheritedFrom %}
-{% assign inherited_pkg = site.data.projects[pkg.inheritedFrom] %}
+{% assign inherited_matches = site.packages | where: "pkgId", pkg.inheritedFrom | where_exp: "item", "item.section == nil" %}
+{% assign inherited_pkg = inherited_matches.first %}
     <h2 class="doc-h">Inherited from <a href="{{ inherited_pkg.docsUrl }}">{{ inherited_pkg.name }}</a></h2>
     {% include options_table.md options=inherited_pkg.options %}
 {% endif %}
