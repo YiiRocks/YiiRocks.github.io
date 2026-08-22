@@ -87,6 +87,10 @@ option_groups:
       type: bool
       default: "<code>true</code>"
       desc: "Record admin actions (RBAC and user management changes) to the <code>user_audit_log</code> table, viewable at <code>admin/audit-log/</code>."
+    - name: rememberMeCookieDomain
+      type: "?string"
+      default: "<code>null</code>"
+      desc: "Domain attribute for the remember-me cookie, e.g. <code>'.example.com'</code>, letting a login on one subdomain (<code>app.example.com</code>) carry over to others (<code>admin.example.com</code>) that share the same root domain. Leave <code>null</code> to scope the cookie to the exact host it was issued on."
   views_mail:
     - name: viewPath
       type: "?string"

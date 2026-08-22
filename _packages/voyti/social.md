@@ -147,6 +147,7 @@ return [
             <li>The login page shows social login buttons for configured providers.</li>
             <li>The Networks page lists every connected account and renders connect buttons for providers.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
+            <li>A successful sign-in for an already-connected account completes through the same login path password login uses, so <code>BeforeLoginEvent</code> (cancellable, e.g. for fraud checks) and <code>AfterLoginEvent</code> fire for social logins too, and remember-me is always applied.</li>
 </ul>
 <p>
             Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
