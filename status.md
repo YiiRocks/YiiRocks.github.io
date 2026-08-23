@@ -139,8 +139,31 @@ sub_packages:
     docsUrl: "/svg-inline/fontawesome/"
 ---
 
+{% assign repo_count = 0 %}
+{% for group in page.groups %}
+{% for key in group.keys %}
+{% assign doc = nil %}
+{% assign status_pkg = nil %}
+{%- for item in site.packages -%}
+  {%- if item.pkgId == key and item.section == nil -%}
+    {%- assign doc = item -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if page.sub_packages[key] -%}
+  {%- assign status_pkg = page.sub_packages[key] -%}
+{%- endif -%}
+{% if doc or status_pkg %}
+{% assign repo_count = repo_count | plus: 1 %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 <div class="container py-5">
     <h1 class="mb-4">Build Status</h1>
+    <div class="d-inline-flex align-items-center gap-2 mb-4 py-1 px-3 rounded-pill fw-semibold small bg-body-secondary">
+        <span class="hero-badge-dot rounded-circle bg-success" style="width:.5rem;height:.5rem;"></span>
+        {{ repo_count }} repositories tracked
+    </div>
 
 {% for group in page.groups %}
 {% if group.title %}
@@ -188,12 +211,12 @@ sub_packages:
                 <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI"  loading="lazy" decoding="async">
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json&style=flat-square" alt="Coverage"  loading="lazy" decoding="async">
 {% unless pkg.hideMsi %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json&style=flat-square" alt="MSI"  loading="lazy" decoding="async">
 {% endunless %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json&style=flat-square" alt="Tests"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json&style=flat-square" alt="Assertions"  loading="lazy" decoding="async">
             </div>
             </div>
 {% if pkg.docsUrl %}</a>{% else %}</div>{% endif %}
