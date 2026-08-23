@@ -95,7 +95,7 @@ option_groups:
     - name: viewPath
       type: "?string"
       default: "<code>null</code>"
-      desc: "Optional custom directory for web template overrides. When a template is not found here, falls back to the bundled views of whichever package satisfies the virtual <code>yiirocks/voyti-views</code> requirement. Leave <code>null</code> to use only that package's views."
+      desc: "Optional custom directory for web template overrides. When a template is not found here, falls back to the bundled views of whichever installed package's name starts with <code>voyti-views-</code>."
     - name: mailPath
       type: string
       default: "<code>VoytiConfig::DEFAULT_MAIL_PATH</code>"
@@ -111,7 +111,7 @@ option_groups:
     Override Voyti params in your app's <code>params.php</code>:
 </p>
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 use YiiRocks\Voyti\Enum\ProfileVisibility;
 
@@ -124,17 +124,17 @@ return [
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">General</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">General</h5>
 {% include options_table.md options=page.option_groups.general %}
 
-<h4 class="doc-h">Authentication &amp; Registration</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication &amp; Registration</h5>
 {% include options_table.md options=page.option_groups.auth %}
 
-<h4 class="doc-h">Session &amp; Security</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Session &amp; Security</h5>
 {% include options_table.md options=page.option_groups.session %}
 
-<h4 class="doc-h">Views &amp; Mail</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Views &amp; Mail</h5>
 {% include options_table.md options=page.option_groups.views_mail %}
 
-<h4 class="doc-h">Admin Dashboard</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Admin Dashboard</h5>
 {% include options_table.md options=page.option_groups.admin_dashboard %}

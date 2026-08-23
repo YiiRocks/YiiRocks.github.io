@@ -10,7 +10,7 @@ excerpt_separator: ""
 <p>
             Use <code>RecaptchaClient</code> for manual verification:
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 use YiiRocks\Recaptcha\RecaptchaClient;
 

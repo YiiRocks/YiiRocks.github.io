@@ -52,37 +52,45 @@ examples:
   - "use YiiRocks\\ToastBootstrap5\\ToastType;\n\n$this->toast->add(ToastType::ERROR, 'Something went wrong.');"
 ---
 
-<p class="doc-desc">Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller with <code>FlashToastInterface</code>, render it in your layout with <code>$toast->render($this)</code>. No manual partials, no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and auto-hide behavior.</p>
+<p class="mb-4">Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller with <code>FlashToastInterface</code>, render it in your layout with <code>$toast->render($this)</code>. No manual partials, no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and auto-hide behavior.</p>
 
-<h2 class="doc-h">Types</h2>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Types</h5>
 <p>The first argument to <code>add()</code> is a <code>ToastType</code> case. Each maps to a Bootstrap 5 <code>text-bg-*</code> color and an ARIA live-region role. Urgent types interrupt with <code>role="alert"</code>, the rest announce politely with <code>role="status"</code>.</p>
-<div class="opt-grid">
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">ToastType::SUCCESS</div>
-            <div class="opt-default"><code>text-bg-success</code></div>
+<div class="list-group mb-4">
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="fw-semibold font-monospace">ToastType::SUCCESS</div>
+                <div class="font-monospace small text-muted"><code>text-bg-success</code></div>
+            </div>
+            <div class="col-md-8">Polite status message (<code>role="status"</code>).</div>
         </div>
-        <div class="opt-desc">Polite status message (<code>role="status"</code>).</div>
     </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">ToastType::ERROR</div>
-            <div class="opt-default"><code>text-bg-danger</code></div>
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="fw-semibold font-monospace">ToastType::ERROR</div>
+                <div class="font-monospace small text-muted"><code>text-bg-danger</code></div>
+            </div>
+            <div class="col-md-8">Urgent alert (<code>role="alert"</code>); stays up until dismissed by default, so it isn't lost to a timer.</div>
         </div>
-        <div class="opt-desc">Urgent alert (<code>role="alert"</code>); stays up until dismissed by default, so it isn't lost to a timer.</div>
     </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">ToastType::WARNING</div>
-            <div class="opt-default"><code>text-bg-warning</code></div>
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="fw-semibold font-monospace">ToastType::WARNING</div>
+                <div class="font-monospace small text-muted"><code>text-bg-warning</code></div>
+            </div>
+            <div class="col-md-8">Urgent alert (<code>role="alert"</code>).</div>
         </div>
-        <div class="opt-desc">Urgent alert (<code>role="alert"</code>).</div>
     </div>
-    <div class="opt-row">
-        <div class="opt-name">
-            <div class="opt-label">ToastType::INFO</div>
-            <div class="opt-default"><code>text-bg-info</code></div>
+    <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="fw-semibold font-monospace">ToastType::INFO</div>
+                <div class="font-monospace small text-muted"><code>text-bg-info</code></div>
+            </div>
+            <div class="col-md-8">Polite status message (<code>role="status"</code>).</div>
         </div>
-        <div class="opt-desc">Polite status message (<code>role="status"</code>).</div>
     </div>
 </div>

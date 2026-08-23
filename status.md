@@ -139,14 +139,14 @@ sub_packages:
     docsUrl: "/svg-inline/fontawesome/"
 ---
 
-<div class="doc-page">
+<div class="container py-5">
     <h1 class="mb-4">Build Status</h1>
 
 {% for group in page.groups %}
 {% if group.title %}
-    <h2 class="doc-h mb-4">{{ group.title }}</h2>
+    <h2 class="d-inline-block text-uppercase fw-bold">{{ group.title }}</h2>
 {% endif %}
-    <div class="status-grid{% unless forloop.last %} mb-5{% endunless %}">
+    <div class="row row-cols-1 row-cols-md-2 g-4{% unless forloop.last %} mb-5{% endunless %}">
 {% for key in group.keys %}
 {% assign doc = nil %}
 {% assign status_pkg = nil %}
@@ -169,31 +169,35 @@ sub_packages:
   {%- continue -%}
 {% endif %}
 
-{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="status-card">{% else %}<div class="status-card">{% endif %}
-{% if pkg.featured %}<div class="status-card__star"></div>{% endif %}
-            <div class="status-card__header">
-                <div class="status-card__icon" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}"></div>
-                <div class="status-card__info">
-                    <h3 class="status-card__name">{{ pkg.name }}</h3>
-                    <div class="status-card__pkg">{{ pkg.package }}</div>
+<div class="col">
+{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="card text-decoration-none position-relative">{% else %}<div class="card text-decoration-none position-relative">{% endif %}
+            <div class="card-body">
+{% if pkg.featured %}<span class="status-star position-absolute">&#9733;</span>{% endif %}
+            <div class="mb-3 d-flex align-items-center">
+                <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ pkg.tint }}; width:48px; height:48px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="30" height="30"></div>
+                <div class="ms-3">
+                    <h4 class="fw-bold mb-0">{{ pkg.name }}</h4>
+                    <div class="small text-truncate text-body-secondary font-monospace">{{ pkg.package }}</div>
                 </div>
             </div>
-            <div class="status-card__badges">
-                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version" class="status-badge" loading="lazy" decoding="async">
-                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version" class="status-badge" loading="lazy" decoding="async">
-                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads" class="status-badge" loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}?style=flat-square" alt="Last Commit" class="status-badge" loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI" class="status-badge" loading="lazy" decoding="async">
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}?style=flat-square" alt="Last Commit"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI"  loading="lazy" decoding="async">
             </div>
-            <div class="status-card__meta">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage" class="status-badge" loading="lazy" decoding="async">
+            <div class="d-flex flex-wrap gap-2">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage"  loading="lazy" decoding="async">
 {% unless pkg.hideMsi %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI"  loading="lazy" decoding="async">
 {% endunless %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests" class="status-badge" loading="lazy" decoding="async">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions" class="status-badge" loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions"  loading="lazy" decoding="async">
+            </div>
             </div>
 {% if pkg.docsUrl %}</a>{% else %}</div>{% endif %}
+</div>
 {% endfor %}
     </div>
 {% endfor %}

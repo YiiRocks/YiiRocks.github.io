@@ -7,72 +7,88 @@ title: "Voyti - Quick Start"
 
 <ol>
             <li>
-                <h4>Verify prerequisites</h4>
+                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Verify prerequisites</h5>
 <ul class="mb-2">
 <li>PHP 8.3 or higher with <code>ext-intl</code></li>
 <li>A connected database in your host application via <a href="https://github.com/yiisoft/db" target="_blank">Yii Database</a></li>
 </ul>
             </li>
             <li>
-                <h4>Install</h4>
+                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Install</h5>
 <p class="mb-3">
             Voyti's core is view-agnostic; you need a views implementation package to render any pages.
             <code>yiirocks/voyti-views-bootstrap5</code> is the reference implementation using Bootstrap 5. You can
             substitute an alternative views package if you prefer a different UI framework, as long as it implements
             the <code>yiirocks/voyti-views</code> interface.
 </p>
-<button type="button" class="copy-btn copy--sm mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
+<button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
-<div class="optional-grid mb-4">
-            <div class="feature-card">
+<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Bot Protection</div>
-                <div class="feature-card__text">Google reCAPTCHA v2/v3 for registration and login forms</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/recaptcha</button>
+                <div class="small lh-base mb-2 flex-grow-1">Google reCAPTCHA v2/v3 for registration and login forms</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/recaptcha</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Brute-force Protection</div>
-                <div class="feature-card__text">Exponential backoff delays for failed login and registration attempts, tracked per IP address</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-lockout</button>
+                <div class="small lh-base mb-2 flex-grow-1">Exponential backoff delays for failed login and registration attempts, tracked per IP address</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/voyti-lockout</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">GDPR Data Handling</div>
-                <div class="feature-card__text">Export user data and anonymize accounts for compliance with data protection regulations</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-gdpr</button>
+                <div class="small lh-base mb-2 flex-grow-1">Export user data and anonymize accounts for compliance with data protection regulations</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/voyti-gdpr</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">REST API</div>
-                <div class="feature-card__text">JSON user CRUD endpoints with bearer-token authentication and API key lifecycle management</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-api</button>
+                <div class="small lh-base mb-2 flex-grow-1">JSON user CRUD endpoints with bearer-token authentication and API key lifecycle management</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/voyti-api</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Social Authentication</div>
-                <div class="feature-card__text">OAuth2 login via Google, GitHub, Facebook, and more</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-social-auth</button>
+                <div class="small lh-base mb-2 flex-grow-1">OAuth2 login via Google, GitHub, Facebook, and more</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/voyti-social-auth</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Toast Notifications</div>
-                <div class="feature-card__text">Renders voyti's flash messages as Bootstrap 5 toasts</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/toast-bootstrap5</button>
+                <div class="small lh-base mb-2 flex-grow-1">Renders voyti's flash messages as Bootstrap 5 toasts</div>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/toast-bootstrap5</button>
             </div>
-            <div class="feature-card">
+            </div>
+            <div class="col">
+            <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Two-Factor Authentication</div>
-                <div class="feature-card__text">Email codes and/or TOTP (authenticator app) and/or WebAuthn/passkeys for stronger account security</div>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-email</button>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-totp</button>
-                <button type="button" class="copy-btn copy--sm w-100">composer require yiirocks/voyti-2fa-webauthn</button>
+                <div class="small lh-base mb-2 flex-grow-1">Email codes and/or TOTP (authenticator app) and/or WebAuthn/passkeys for stronger account security</div>
+                <div class="mt-auto">
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mb-2">composer require yiirocks/voyti-2fa-email</button>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mb-2">composer require yiirocks/voyti-2fa-totp</button>
+                <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace w-100">composer require yiirocks/voyti-2fa-webauthn</button>
+                </div>
+            </div>
             </div>
 </div>
 
             </li>
             <li>
-                <h4 id="cookie-secret">Set the cookie secret</h4>
+                <h5 id="cookie-secret" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Set the cookie secret</h5>
 <div class="alert alert-danger" role="alert">
             Voyti encrypts the remember-me cookie using <code>yiisoft/cookies</code>'
             secret key. Leaving it unset throws a <code>LogicException</code>.
             Generate a strong, random string and set it in <code>config/params.php</code>.
 </div>
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 return [
     'yiisoft/cookies' => [
@@ -84,14 +100,14 @@ return [
 
             </li>
             <li>
-                <h4>Run migrations</h4>
+                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Run migrations</h5>
 <p>
             Voyti provides its migration path through
             <code>config/params-console.php</code> using the standard
             <code>yiisoft/db-migration</code> configuration keys. With
             <code>yiisoft/db-migration</code> enabled in your console app, run:
 </p>
-<button type="button" class="copy-btn copy--sm mb-3">./yii migrate:up</button>
+<button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">./yii migrate:up</button>
 <p>
             Voyti's migration creates 6 user-related tables (user, user_profile,
             user_token, user_sessions, user_password_history, user_audit_log) and
@@ -116,7 +132,7 @@ return [
 
             </li>
             <li>
-                <h4 id="register-routes">Register routes</h4>
+                <h5 id="register-routes" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register routes</h5>
 <p>
             Routes are <strong>not</strong> auto-registered - you must add them to
             your router configuration.
@@ -126,7 +142,7 @@ return [
             definition. The example below mounts them under a <code>/user/</code>
             prefix as their own group, alongside your app's own routes:
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -170,7 +186,7 @@ return [
 
             </li>
             <li>
-                <h4 id="configure-the-form-theme">Configure the form theme</h4>
+                <h5 id="configure-the-form-theme" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configure the form theme</h5>
 <div class="alert alert-warning" role="alert">
             This step is optional but highly recommended. Without it, forms and buttons will render without any styling.
 </div>
@@ -182,7 +198,7 @@ return [
             Set a theme in <code>config/params.php</code>. <code>yiisoft/form</code>
             ships ready-made Bootstrap 5 configs you can use as-is:
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Form\Theme\ThemePath;
 use Yiisoft\FormModel\ValidationRulesEnricher;
@@ -221,7 +237,7 @@ return [
 
             </li>
             <li>
-                <h4>Done</h4>
+                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Done</h5>
                 <p>
                     DI bindings, event listeners, and console commands are auto-registered
                     via the <a href="https://github.com/yiisoft/config">Yii3 config

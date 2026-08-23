@@ -28,11 +28,11 @@ option_groups:
            export too.
 </p>
 
-<h4 class="doc-h">Installation</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-gdpr" repo="voyti-gdpr" %}
 
-<h4 class="doc-h">Configuration</h4>
-<div class="doc-example mb-3">
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 return [
@@ -46,10 +46,10 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h4 class="doc-h">Routes</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h5>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
-                <thead>
+                <thead class="fw-bold text-uppercase text-nowrap">
                     <tr>
                         <th>Route name</th>
                         <th>Method</th>
@@ -64,7 +64,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-h">Events</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events</h5>
 <p>
             Anonymizing an account dispatches <code>GdprEvent</code> (carrying the now-anonymized
             <code>User</code>) after it's saved. Nothing consumes it by default. Attach your own

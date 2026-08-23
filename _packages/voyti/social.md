@@ -24,18 +24,18 @@ option_groups:
             <code>user_social_account</code> table.
 </p>
 
-<h4 class="doc-h">Installation</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-social-auth" repo="voyti-social-auth" %}
 <div>
             <p>
                 Run your migration command to create the <code>user_social_account</code>
                 table after installation:
             </p>
-            <button type="button" class="copy-btn copy--sm">./yii migrate:up</button>
+            <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
 </div>
 
-<h4 class="doc-h">Configuration</h4>
-<div class="doc-example mb-3">
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 return [
@@ -49,7 +49,7 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h4 class="doc-h">Provider configuration</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Provider configuration</h5>
 <p>
             Configure providers via a <code>clients</code> map under the
             <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
@@ -58,7 +58,7 @@ return [
 <p>
             To customize OAuth2 request parameters, add an <code>authParams</code> key to your client config.
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 return [
@@ -92,10 +92,10 @@ return [
             for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's OAuth2 documentation for available <code>authParams</code>.
 </p>
 
-<h4 class="doc-h">Routes</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h5>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
-                <thead>
+                <thead class="fw-bold text-uppercase text-nowrap">
                     <tr>
                         <th>Route name</th>
                         <th>Method</th>
@@ -112,7 +112,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-h">Supported providers</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Supported providers</h5>
 <p>
             yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
             (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
@@ -120,7 +120,7 @@ return [
 </p>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
-                <thead>
+                <thead class="fw-bold text-uppercase text-nowrap">
                     <tr>
                         <th>Vendor class</th>
                         <th>Notes</th>
@@ -141,7 +141,7 @@ return [
             </table>
 </div>
 
-<h4 class="doc-h">How it works</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h5>
 <p>With providers configured:</p>
 <ul>
             <li>The login page shows social login buttons for configured providers.</li>

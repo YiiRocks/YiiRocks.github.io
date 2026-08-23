@@ -20,14 +20,14 @@ option_groups:
             <code>administratorPermissionName</code> permission check.
 </p>
 
-<h4 class="doc-h">Installation</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-api" repo="voyti-api" %}
 <p>
             Routes are <strong>not</strong> auto-registered. Pull the
             <code>voyti-routes-api</code> config group into your router and mount it
             at whatever prefix you like:
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Config\Config;
 use Yiisoft\Definitions\DynamicReference;
@@ -55,8 +55,8 @@ return [
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">Configuration</h4>
-<div class="doc-example mb-3">
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 return [
@@ -70,7 +70,7 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h4 class="doc-h">Authentication</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication</h5>
 <p>
             Requests authenticate with an <code>Authorization: Bearer &lt;token&gt;</code>
             header. <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a
@@ -80,10 +80,11 @@ return [
             only grant what that permission grants.
 </p>
 
-<h4 class="doc-h">Managing tokens</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Managing tokens</h5>
 <p>The package registers two console commands under <code>yiisoft/yii-console</code>:</p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-            <thead>
+            <thead class="fw-bold text-uppercase text-nowrap">
                 <tr>
                     <th>Command</th>
                     <th>Description</th>
@@ -100,11 +101,12 @@ return [
                 </tr>
             </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">Endpoints</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Endpoints</h5>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
-                <thead>
+                <thead class="fw-bold text-uppercase text-nowrap">
                     <tr>
                         <th>Route name</th>
                         <th>Method</th>

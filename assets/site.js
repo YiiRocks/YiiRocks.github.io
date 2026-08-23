@@ -3,7 +3,7 @@ document.addEventListener('click', function (e) {
     if (link && link.host !== location.host) link.target = '_blank';
 }, true);
 document.addEventListener('click', function (e) {
-    var el = e.target.closest('.copy-btn');
+    var el = e.target.closest('button.btn-copy');
     if (!el) return;
     var orig = el.textContent;
     navigator.clipboard.writeText(orig).then(function () {
@@ -13,7 +13,7 @@ document.addEventListener('click', function (e) {
 });
 document.addEventListener('keydown', function (e) {
     if (e.key !== 'Enter' && e.key !== ' ') return;
-    var el = e.target.closest('.copy-btn');
+    var el = e.target.closest('button.btn-copy');
     if (el) { e.preventDefault(); el.click(); }
 });
 document.getElementById('themeToggle').addEventListener('click', function () {
@@ -40,40 +40,27 @@ scrollTop.addEventListener('click', function () {
     history.replaceState(null, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-if ('IntersectionObserver' in window) {
-    var animEls = document.querySelectorAll('.feature-card, .docs-entry, .status-card');
-    if (animEls.length) {
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    io.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        animEls.forEach(function (el, i) {
-            el.style.transitionDelay = (i % 4) * 60 + 'ms';
-            io.observe(el);
-        });
-    }
-}
-var sidebarItems = document.querySelectorAll('.home-nav__item');
-if (sidebarItems.length) {
-    var sidebarMap = {}, activeItem = null;
-    sidebarItems.forEach(function (item) { sidebarMap['#' + item.getAttribute('href').slice(1)] = item; });
-    var navObs = new IntersectionObserver(function (observed) {
-        observed.forEach(function (entry) {
+function initCardAnimations() {
+    if (!('IntersectionObserver' in window)) return;
+    var animEls = document.querySelectorAll('.card:not(.card-body), .features-grid .card');
+    if (!animEls.length) return;
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
             if (entry.isIntersecting) {
-                var target = sidebarMap[entry.target.id];
-                if (target && target !== activeItem) {
-                    if (activeItem) activeItem.classList.remove('active');
-                    target.classList.add('active');
-                    activeItem = target;
-                }
+                entry.target.classList.add('visible');
+                io.unobserve(entry.target);
             }
         });
-    }, { threshold: 0, rootMargin: '-20% 0px -70% 0px' });
-    document.querySelectorAll('.docs-entry').forEach(function (el) { navObs.observe(el); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    animEls.forEach(function (el, i) {
+        el.style.transitionDelay = (i % 4) * 60 + 'ms';
+        io.observe(el);
+    });
+}
+if (document.readyState === 'complete') {
+    initCardAnimations();
+} else {
+    window.addEventListener('load', initCardAnimations);
 }
 var docSidebarLinks = document.querySelectorAll('.doc-sidebar a');
 if (docSidebarLinks.length) {
@@ -110,14 +97,16 @@ if (docSidebarLinks.length) {
 window.addEventListener('scroll', onScroll, { passive: true });
 var currentlyOpen = null;
 document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.docs-entry__toggle');
+    var btn = e.target.closest('[aria-controls]');
     if (!btn) return;
+    var details = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!details) return;
     e.preventDefault();
-    var entry = btn.closest('.docs-entry'), details = entry.querySelector('.docs-entry__details');
     var isExpanded = btn.getAttribute('aria-expanded') === 'true';
     if (!isExpanded && currentlyOpen && currentlyOpen !== btn) {
         currentlyOpen.setAttribute('aria-expanded', 'false');
-        currentlyOpen.closest('.docs-entry').querySelector('.docs-entry__details').hidden = true;
+        var openDetails = document.getElementById(currentlyOpen.getAttribute('aria-controls'));
+        if (openDetails) openDetails.hidden = true;
     }
     btn.setAttribute('aria-expanded', !isExpanded);
     details.hidden = isExpanded;

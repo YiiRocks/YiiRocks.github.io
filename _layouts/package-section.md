@@ -10,33 +10,35 @@ layout: default
 {% assign current_title = s.title %}
 {% endif %}
 {% endfor %}
-<div class="doc-page">
-    <div class="doc-header d-flex align-items-center gap-4">
-        <a href="{{ pkg.docsUrl }}" class="doc-header__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ pkg.tint }};"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" class="pkg-img"></a>
+<div class="container py-5">
+    <div class="d-flex align-items-center gap-4 mb-4">
+        <a href="{{ pkg.docsUrl }}" class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4" style="background:{{ pkg.tint }}; width:56px; height:56px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="32" height="32"></a>
         <div>
-            <a href="{{ pkg.docsUrl }}" class="link-body-emphasis link-underline-opacity-0"><h1 class="doc-header__name">{{ pkg.name }}</h1></a>
-            <div class="doc-header__sub fw-semibold">{{ pkg.tagline }}</div>
+            <a href="{{ pkg.docsUrl }}" class="link-body-emphasis link-underline-opacity-0"><h1 class="h2 fw-bold">{{ pkg.name }}</h1></a>
+            <div class="fw-semibold text-primary-emphasis small">{{ pkg.tagline }}</div>
         </div>
     </div>
 
-    <div class="doc-layout">
+    <div class="row gy-4">
+        <div class="col-md-3">
 {% include doc_sidebar.md pkgId=page.pkgId section=page.section %}
-        <div class="doc-body">
+        </div>
+        <div class="col-md-9">
             <h2 class="h3 fw-bolder mb-2" id="section-{{ page.section }}">{{ current_title }}</h2>
             {{ content }}
 
-            <div class="doc-pager d-flex justify-content-between gap-4">
+            <div class="d-flex justify-content-between gap-4 mt-4 pt-4 border-top">
 {% if current_index > 0 %}
 {% assign prev_index = current_index | minus: 1 %}
 {% assign prev = pkg.sections[prev_index] %}
-                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/">&larr; {{ prev.title }}</a>
+                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/" class="fw-semibold text-decoration-none">&larr; {{ prev.title }}</a>
 {% else %}
                 <span></span>
 {% endif %}
 {% assign next_index = current_index | plus: 1 %}
 {% if next_index < pkg.sections.size %}
 {% assign next = pkg.sections[next_index] %}
-                <a href="{{ pkg.docsUrl }}{{ next.slug }}/" class="doc-pager__next">{{ next.title }} &rarr;</a>
+                <a href="{{ pkg.docsUrl }}{{ next.slug }}/" class="fw-semibold text-decoration-none">{{ next.title }} &rarr;</a>
 {% endif %}
             </div>
         </div>

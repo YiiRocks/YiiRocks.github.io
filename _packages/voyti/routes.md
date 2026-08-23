@@ -19,7 +19,7 @@ title: "Voyti - Available Routes"
 </p>
 <div class="table-responsive">
             <table class="table table-sm table-striped">
-                <thead>
+                <thead class="fw-bold text-uppercase text-nowrap">
                     <tr>
                         <th>Route name</th>
                         <th>Method</th>

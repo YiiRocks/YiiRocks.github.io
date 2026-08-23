@@ -1,9 +1,9 @@
 {% assign pkg_matches = site.packages | where: "pkgId", include.pkgId | where_exp: "item", "item.section == nil" %}
 {% assign pkg = pkg_matches.first %}
 {% if pkg %}
-    <h2 class="doc-h" id="support">Support</h2>
+    <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="support">Support</h5>
     <div class="mb-4 d-flex align-items-center gap-3 flex-wrap">
-        <button type="button" class="copy-btn copy--sm">composer require {{ pkg.package }}</button>
-        <a href="https://github.com/YiiRocks/{{ pkg.repo }}/issues" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--docs">Create an issue &rarr;</a>
+        <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">composer require {{ pkg.package }}</button>
+        <a href="https://github.com/YiiRocks/{{ pkg.repo }}/issues" target="_blank" rel="noopener" class="btn btn-gradient btn-sm small fw-semibold">Create an issue &rarr;</a>
     </div>
 {% endif %}

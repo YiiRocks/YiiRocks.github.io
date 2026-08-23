@@ -7,9 +7,10 @@ title: "Voyti - Events & Listeners"
 
 <p>Voyti dispatches events at key points in the user lifecycle, allowing your application to react, log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher configuration.</p>
 
-<h4 class="doc-h">Events with default listeners</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events with default listeners</h5>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-    <thead>
+    <thead class="fw-bold text-uppercase text-nowrap">
         <tr>
             <th>Event</th>
             <th>Trigger</th>
@@ -21,11 +22,13 @@ title: "Voyti - Events & Listeners"
         <tr><td><code>YiiRocks\Voyti\Event\Auth\AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
     </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">Additional events</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h5>
 <p>Dispatched by the library, but nothing consumes them by default - attach your own listener via the event dispatcher configuration if you need to react to them.</p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-    <thead>
+    <thead class="fw-bold text-uppercase text-nowrap">
         <tr>
             <th>Event</th>
             <th>Description</th>
@@ -38,11 +41,13 @@ title: "Voyti - Events & Listeners"
         <tr><td><code>YiiRocks\Voyti\Event\Session\SessionEvent</code></td><td>Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, being blocked, admin revocation, or logout).</td></tr>
     </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">Cancellable events</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Cancellable events</h5>
 <p>A small set of events are dispatched <em>before</em> the action they precede takes effect. A listener can throw <code>YiiRocks\Voyti\Exception\ActionPreventedException</code> to stop the action; the dispatching service or controller catches it and turns it into a form error or failure result, using the exception's <code>getErrorDetails()</code> (a list of field/attribute names) when present.</p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-    <thead>
+    <thead class="fw-bold text-uppercase text-nowrap">
         <tr>
             <th>Event</th>
             <th>Timing and payload</th>
@@ -54,11 +59,13 @@ title: "Voyti - Events & Listeners"
         <tr><td><code>YiiRocks\Voyti\Event\User\BeforeAccountUpdateEvent</code></td><td>Fired before account-level fields (username, email, password) are saved. Carries the <code>User</code> and the list of field names about to change.</td></tr>
     </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">Form and login-flow events</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h5>
 <p>Emitted around the login and registration forms, and on account-level changes, for analytics, security monitoring, and paired-event flows.</p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-    <thead>
+    <thead class="fw-bold text-uppercase text-nowrap">
         <tr>
             <th>Event</th>
             <th>Description</th>
@@ -74,12 +81,13 @@ title: "Voyti - Events & Listeners"
         <tr><td><code>YiiRocks\Voyti\Event\User\AfterAccountUpdateEvent</code></td><td>Fired after account-level fields (username, email, password) are saved. Carries the updated <code>User</code> and the list of field names that changed. Distinct from <code>UserProfileEvent</code>, which covers cosmetic profile fields.</td></tr>
     </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">Example: A cancellable BEFORE event</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: A cancellable BEFORE event</h5>
 
 <p>Throw <code>ActionPreventedException</code> from a listener to reject the action - here, rate-limiting registrations by IP:</p>
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/events.php or config/events-web.php
 use YiiRocks\Voyti\Event\Auth\BeforeRegisterEvent;
@@ -97,13 +105,13 @@ return [
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">Example: Listening to Events</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: Listening to Events</h5>
 
 <p>Attach listeners through the Yii3 event dispatcher configuration:</p>
 
 <p>For events with discriminator types like <code>UserEvent</code>, check the type to handle specific actions. You can attach multiple listeners to the same event, and each receives the event object plus any other DI dependencies.</p>
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/events.php or config/events-web.php
 use Psr\Log\LoggerInterface;

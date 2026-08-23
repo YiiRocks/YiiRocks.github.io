@@ -1,14 +1,16 @@
 {% assign options = include.options %}
-<div class="opt-grid">
+<div class="list-group mb-4">
 {% for opt in options %}
-<div class="opt-row">
-<div class="opt-name">
-<div class="opt-label">{{ opt.name }}{% if opt.type %}<span class="opt-type fw-normal"> {{ opt.type }}</span>{% endif %}</div>
+<div class="list-group-item">
+<div class="row">
+<div class="col-md-4">
+<div class="fw-semibold font-monospace text-break">{{ opt.name }}{% if opt.type %}<span class="fw-normal text-body-tertiary"> {{ opt.type }}</span>{% endif %}</div>
 {% if opt.default %}
-<div class="opt-default">{{ opt.default }}</div>
+<div class="font-monospace small text-body-tertiary">{{ opt.default }}</div>
 {% endif %}
 </div>
-<div class="opt-desc">{{ opt.desc }}</div>
+<div class="col-md-8">{{ opt.desc }}</div>
+</div>
 </div>
 {% endfor %}
 </div>

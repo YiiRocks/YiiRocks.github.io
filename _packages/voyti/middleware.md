@@ -5,9 +5,11 @@ section: middleware
 title: "Voyti - Middleware"
 ---
 
-<p>The extension ships seven PSR-15 middleware classes for session handling and access control:</p>
+<p>Core ships seven PSR-15 middleware classes for session handling and access control; installed sibling packages can contribute their own on top.</p>
+<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\Middleware</code></p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-            <thead>
+            <thead class="fw-bold text-uppercase text-nowrap">
                 <tr>
                     <th>Middleware</th>
                     <th>Description</th>
@@ -47,10 +49,13 @@ title: "Voyti - Middleware"
                 </tr>
             </tbody>
 </table>
+</div>
 
-<h5 class="doc-h mt-2 mb-3 ps-3 border-start border-3">2FA</h5>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">2FA</h5>
+<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\TwoFactor\Middleware</code></p>
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-            <thead>
+            <thead class="fw-bold text-uppercase text-nowrap">
                 <tr>
                     <th>Middleware</th>
                     <th>Description</th>
@@ -65,8 +70,30 @@ title: "Voyti - Middleware"
                 </tr>
             </tbody>
 </table>
+</div>
 
-<h4 class="doc-h" id="site-wide-enforcement">Site-wide enforcement</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social auth</h5>
+<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\SocialAuth\Middleware</code></p>
+<div class="table-responsive">
+<table class="table table-sm table-striped">
+            <thead class="fw-bold text-uppercase text-nowrap">
+                <tr>
+                    <th>Middleware</th>
+                    <th>Description</th>
+                    <th>Auto-registered?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>CaptureAuthActionRequestMiddleware</code></td>
+                    <td>Stores the real incoming request so it survives past <code>yiisoft/yii-auth-client</code>'s <code>AuthAction</code>, which never forwards it to its success/cancel callbacks - needed so social login can complete through the same <code>LoginCompletionService::complete()</code> path password login uses</td>
+                    <td>Yes - wraps the whole <a href="/voyti/social/">social auth</a> route group</td>
+                </tr>
+            </tbody>
+</table>
+</div>
+
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="site-wide-enforcement">Site-wide enforcement</h5>
 <p>
             The auto-registration above only covers routes <em>this extension
             defines</em>. Without <code>VoytiMiddleware</code> wrapping your

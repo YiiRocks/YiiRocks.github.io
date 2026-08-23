@@ -64,7 +64,7 @@ option_groups:
             Set your site keys and secret keys via environment variables
             or directly in <code>config/params.php</code>:
 </p>
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 'yiirocks/recaptcha' => [
     'siteKeyV3' => $_ENV['RECAPTCHA_SITE_KEY_V3'],
@@ -79,10 +79,10 @@ option_groups:
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">General</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">General</h5>
 {% include options_table.md options=page.option_groups.general %}
 
-<h4 class="doc-h">Container Defaults</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Container Defaults</h5>
 <p>
             Applied to every field's wrapper unless overridden per-field via
             <code>-&gt;useContainer()</code>, <code>-&gt;containerTag()</code>, or

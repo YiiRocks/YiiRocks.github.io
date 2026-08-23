@@ -1,6 +1,13 @@
 .highlight {
     color: var(--hl-text);
     line-height: 1.5;
+    background: var(--bs-code-bg-value);
+    padding: 1.5rem;
+    border-radius: var(--bs-border-radius-lg);
+
+    pre {
+        margin-bottom: 0;
+    }
 
     .c, .ch, .cm, .cp, .cpf, .c1 { color: var(--hl-comment); }
     .k, .kd, .kn, .kp, .kr, .kt { color: var(--hl-keyword); }

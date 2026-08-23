@@ -38,7 +38,7 @@ option_groups:
     failure.
 </p>
 
-<h4 class="doc-h">Prerequisite</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Prerequisite</h5>
 <p>
     Your application must have a PSR-16 <code>Psr\SimpleCache\CacheInterface</code>
     implementation configured and bound in your DI container. Any PSR-16 compliant cache works. See
@@ -46,10 +46,10 @@ option_groups:
     documentation for one option and its available backends.
 </p>
 
-<h4 class="doc-h">Installation</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-lockout" repo="voyti-lockout" %}
 
-<h4 class="doc-h">Storage</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Storage</h5>
 <p>
     Failed-attempt counts are tracked in the cache. Each cache entry's
     key is a SHA-256 hash of the request's IP address, scoped separately for login
@@ -63,8 +63,8 @@ option_groups:
     be much longer, so the count can't reset while the caller is still required to wait.
 </p>
 
-<h4 class="doc-h">Configuration</h4>
-<div class="doc-example mb-3">
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 return [
@@ -78,10 +78,10 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h4 class="doc-h">How it works</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h5>
 <div class="table-responsive">
     <table class="table table-sm table-striped">
-        <thead>
+        <thead class="fw-bold text-uppercase text-nowrap">
             <tr>
                 <th>Listener</th>
                 <th>Core event</th>

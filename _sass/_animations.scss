@@ -3,11 +3,6 @@
     50% { opacity: .5; }
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
 @keyframes drift {
     0%, 100% { transform: translate(0, 0); }
     20% { transform: translate(25px, -15px); }
@@ -21,15 +16,4 @@
     25% { transform: translate(-18px, 22px); }
     50% { transform: translate(28px, -12px); }
     75% { transform: translate(-12px, -28px); }
-}
-
-@keyframes expandIn {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }

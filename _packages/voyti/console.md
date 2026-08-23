@@ -8,9 +8,11 @@ option_groups:
     - name: email
       default: "required"
       desc: "Email address for the user"
+      type: string
     - name: username
       default: "required"
       desc: "Username for the user"
+      type: string
     - name: "-p, --password"
       type: string
       default: "optional"
@@ -60,8 +62,9 @@ option_groups:
       desc: "Delete user by ID"
 ---
 
+<div class="table-responsive">
 <table class="table table-sm table-striped">
-    <thead>
+    <thead class="fw-bold text-uppercase text-nowrap">
         <tr>
             <th>Command</th>
             <th>Description</th>
@@ -86,35 +89,36 @@ option_groups:
         </tr>
     </tbody>
 </table>
+</div>
 
-<h4 class="doc-h">voyti:create</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:create</h5>
 
 <p>Create a new user account with optional password and role assignment.</p>
 
-<div class="doc-example mb-3">
-voyti:create [options] [--] &lt;email&gt; &lt;username&gt;
-</div>
+{% highlight bash %}
+voyti:create [options] [--] <email> <username> 
+{% endhighlight %}
 
 {% include options_table.md options=page.option_groups.create %}
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight bash %}
 php yii voyti:create user@example.com johndoe
 php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">voyti:confirm</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:confirm</h5>
 
 <p>Mark a user account as email-confirmed.</p>
 
-<div class="doc-example mb-3">
+{% highlight bash %}
 voyti:confirm [options]
-</div>
+{% endhighlight %}
 
 {% include options_table.md options=page.option_groups.confirm %}
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight bash %}
 php yii voyti:confirm --email=user@example.com
 php yii voyti:confirm --username=johndoe
@@ -122,17 +126,17 @@ php yii voyti:confirm --id=42
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">voyti:password</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:password</h5>
 
 <p>Reset a user's password to a newly generated one.</p>
 
-<div class="doc-example mb-3">
+{% highlight bash %}
 voyti:password [options]
-</div>
+{% endhighlight %}
 
 {% include options_table.md options=page.option_groups.password_reset %}
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight bash %}
 php yii voyti:password --email=user@example.com
 php yii voyti:password --username=johndoe
@@ -140,17 +144,17 @@ php yii voyti:password --id=42
 {% endhighlight %}
 </div>
 
-<h4 class="doc-h">voyti:delete</h4>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:delete</h5>
 
 <p>Delete a user account by ID, email, or username.</p>
 
-<div class="doc-example mb-3">
+{% highlight bash %}
 voyti:delete [options]
-</div>
+{% endhighlight %}
 
 {% include options_table.md options=page.option_groups.delete %}
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight bash %}
 php yii voyti:delete --email=user@example.com
 php yii voyti:delete --username=johndoe

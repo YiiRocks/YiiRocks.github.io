@@ -10,79 +10,67 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% endunless %}
 {% endfor %}
 
-<div class="hero mb-3">
-    <div class="hero__badge d-inline-flex align-items-center gap-2">
-        <span class="hero__badge-dot"></span>
+<div class="hero">
+<div class="container pt-4 px-4">
+    <div class="d-inline-flex align-items-center gap-2 mb-4 py-1 px-3 rounded-pill fw-semibold small bg-body-secondary">
+        <span class="hero-badge-dot rounded-circle bg-success" style="width:.5rem;height:.5rem;"></span>
         {{ project_count }} open-source projects, actively maintained
     </div>
-    <h1>The missing pieces for your <span class="accent">Yii&nbsp;3</span> projects.</h1>
-    <p class="fw-semibold">Small, focused libraries that drop straight into your Yii apps.</p>
+    <h1 class="display-5 fw-bold mb-4">The missing pieces for your <span class="accent">Yii&nbsp;3</span> projects.</h1>
+    <p class="fs-5 text-body-secondary mb-4">Small, focused libraries that drop straight into your Yii apps.</p>
+</div>
 </div>
 
-<div class="section" id="packages">
-    <div class="home-grid">
-        <nav class="home-nav" aria-label="Package navigation">
-            <div class="home-nav__title fw-bold fs-sm text-body-secondary mb-2">Packages</div>
-            <ul class="home-nav__list">
+<div class="container pt-4">
+<div id="packages">
 {% for doc in site.packages %}
 {% unless doc.listed == false or doc.section %}
-                <li>
-                    <a href="#{{ doc.pkgId }}" class="home-nav__item">
-                        <span class="home-nav__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ doc.tint }};"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" class="pkg-img"></span>
-                        <span>{{ doc.name }}</span>
-                    </a>
-                </li>
-{% endunless %}
-{% endfor %}
-            </ul>
-        </nav>
-
-        <div class="home-main">
-{% for doc in site.packages %}
-{% unless doc.listed == false or doc.section %}
-            <div class="docs-entry" id="{{ doc.pkgId }}">
+            <div class="card" id="{{ doc.pkgId }}">
+                <div class="card-body">
                 <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
-                    <div class="docs-entry__title d-flex align-items-center gap-3">
-                        <span class="docs-entry__icon d-flex align-items-center justify-content-center flex-shrink-0" style="background:{{ doc.tint }};"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" class="pkg-img"></span>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ doc.tint }}; width:48px; height:48px;"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" width="26" height="26"></span>
                         <div>
-                            <h3>{{ doc.name }}</h3>
-                            <div class="docs-entry__sub fw-semibold">{{ doc.tagline }}</div>
+                            <h3 class="h5 mb-0">{{ doc.name }}</h3>
+                            <div class="fw-semibold text-primary-emphasis">{{ doc.tagline }}</div>
                         </div>
                     </div>
-                    <div class="d-flex gap-2 flex-wrap">
+                    <div class="d-flex gap-2 flex-wrap justify-content-end flex-grow-1">
 {% if doc.features or doc.usage %}
-                        <button type="button" class="docs-entry__toggle" aria-expanded="false" title="Show summary">Summary ▼</button>
+                        <button type="button" class="btn btn-tint btn-sm small fw-semibold dropdown-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
 {% endif %}
-                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--github">GitHub &rarr;</a>
-                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="docs-entry__link docs-entry__link--packagist">Packagist &rarr;</a>
+                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">GitHub &rarr;</a>
+                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">Packagist &rarr;</a>
 {% if doc.docsUrl %}
-                        <a href="{{ doc.docsUrl }}" class="docs-entry__link docs-entry__link--docs">Documentation &rarr;</a>
+                        <a href="{{ doc.docsUrl }}" class="btn btn-gradient btn-sm small fw-semibold">Documentation &rarr;</a>
 {% endif %}
                     </div>
                 </div>
 
-                <p class="docs-entry__text">{{ doc.description }}</p>
+                <p class="m-0 mt-3 fs-6 lh-base">{{ doc.description }}</p>
 
 {% if doc.features or doc.usage %}
-                <div class="docs-entry__details" hidden>
+                <div class="mt-3" id="{{ doc.pkgId }}-details" hidden>
 {% if doc.features %}
-                    <div class="features-grid">
+                    <div class="row row-cols-1 row-cols-md-2 g-3">
 {% for feat in doc.features %}
-                        <div class="feature-card">
+                        <div class="col">
+                        <div class="card card-body p-3">
                             <div class="d-flex align-items-center gap-2 mb-1">
 {% if feat.icon %}
-                                <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="feature-card__icon">
+                                <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="opacity-75 flex-shrink-0" width="24" height="24">
 {% endif %}
                                 <div class="fw-bold">{{ feat.label }}</div>
                             </div>
-                            <div class="feature-card__text">{{ feat.detail }}</div>
+                            <div class="small lh-base text-body-secondary">{{ feat.detail }}</div>
+                        </div>
                         </div>
 {% endfor %}
                     </div>
 {% endif %}
 
 {% if doc.usage %}
-                    <div class="doc-example mb-3">
+                    <div class="mb-3 small lh-base">
 {% highlight php %}
 {{ doc.usage }}
 {% endhighlight %}
@@ -91,12 +79,12 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                 </div>
 {% endif %}
 
-                <div class="d-flex align-items-center gap-3 flex-wrap">
-                        <button type="button" class="copy-btn copy--sm">composer require {{ doc.package }}</button>
+                <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
+                        <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">composer require {{ doc.package }}</button>
+                </div>
                 </div>
             </div>
 {% endunless %}
 {% endfor %}
-        </div>
-    </div>
+</div>
 </div>

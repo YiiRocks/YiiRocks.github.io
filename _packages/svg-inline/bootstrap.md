@@ -69,23 +69,23 @@ option_groups:
     Provides simple functions to add <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener">Bootstrap Icons</a> inline. Depends on <a href="/svg-inline/">SvgInline</a>.
 </p>
 
-<div class="doc-example mb-3">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 echo $svg->bootstrap('alarm')->title('Wake Up');
 {% endhighlight %}
 </div>
 
-<h2 class="doc-h">Installation</h2>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/svg-inline-bootstrap" repo="svg-inline-bootstrap" %}
 
-<h2 class="doc-h">Configuration</h2>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
 <p>Configure Bootstrap Icons behavior in <code>config/params.php</code> under the <code>'yiirocks/svg-inline-bootstrap'</code> key:</p>
 {% include options_table.md options=page.option_groups.config %}
 
-<h2 class="doc-h">Method Parameters</h2>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h5>
 {% include options_table.md options=page.option_groups.method_params %}
 
-<h2 class="doc-h">Fluent API</h2>
+<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h5>
 <p>Additional options can be chained onto the <code>bootstrap()</code> call:</p>
 {% include options_table.md options=page.option_groups.fluent %}
 
