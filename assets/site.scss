@@ -129,25 +129,6 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     background: $gradient;
 }
 
-.theme-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-    --bs-btn-color: var(--bs-body-color);
-    --bs-btn-bg: var(--bs-card-bg-value);
-    --bs-btn-border-color: var(--bs-border-color);
-    --bs-btn-hover-color: var(--bs-body-color);
-    --bs-btn-hover-bg: var(--bs-card-bg-value);
-    --bs-btn-hover-border-color: var(--bs-primary);
-    --bs-btn-active-color: var(--bs-body-color);
-    --bs-btn-active-bg: var(--bs-card-bg-value);
-    --bs-btn-active-border-color: var(--bs-primary);
-
-    &:hover {
-        box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), .1);
-    }
-}
-
 .status-star {
     top: 12px;
     right: 12px;
@@ -217,80 +198,114 @@ code {
     animation: pulse 2s ease-in-out infinite;
 }
 
-.btn-copy {
-    @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-primary-bg-subtle), var(--bs-primary-border-subtle), var(--bs-primary));
-    --bs-btn-border-radius: 10px;
-    --bs-btn-padding-x: 16px;
-    --bs-btn-padding-y: 10px;
-    --bs-btn-font-size: 13px;
-    transition: border-color .2s, box-shadow .2s;
+.btn {
+    --bs-btn-font-size: 12px;
+    --bs-btn-padding-x: 10px;
+    --bs-btn-padding-y: 9px;
 
-    &:hover, &:focus {
-        box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), .08);
-    }
-}
-
-.btn-tint {
-    @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-primary));
-
-    &.dropdown-toggle::after {
-        transition: transform .2s ease;
+    &-arrow::after {
+        content: "\2192";
+        display: inline-block;
+        margin-left: .35em;
+        position: relative;
+        top: -3px;
     }
 
-    &.dropdown-toggle[aria-expanded="true"]::after {
-        transform: rotate(180deg);
+    &-copy {
+        @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-primary-bg-subtle), var(--bs-primary-border-subtle), var(--bs-primary));
+        --bs-btn-border-radius: 10px;
+        --bs-btn-padding-x: 16px;
+        --bs-btn-padding-y: 10px;
+        --bs-btn-font-size: 13px;
+        transition: border-color .2s, box-shadow .2s;
+
+        &:hover, &:focus {
+            box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), .08);
+        }
     }
-}
 
-.btn-tint-blue {
-    @include btn-tint-variant(var(--bs-stock-link-color), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-stock-link-color));
-}
+    &-tint {
+        @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-primary));
 
-.btn-gradient {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: var(--bs-primary);
-    --bs-btn-border-color: transparent;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--bs-primary-text-emphasis);
-    --bs-btn-hover-border-color: transparent;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: var(--bs-primary-text-emphasis);
-    --bs-btn-active-border-color: transparent;
-    --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: var(--bs-primary);
-    --bs-btn-disabled-border-color: transparent;
-    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
-    background-image: $gradient;
-    box-shadow: 0 4px 14px -3px rgba(var(--bs-primary-rgb), .5);
-    transition: color .15s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out;
+        &.dropdown-toggle::after {
+            transition: transform .2s ease;
+        }
 
-    &:hover, &:focus, &:active {
+        &.dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+
+        &-blue {
+            @include btn-tint-variant(var(--bs-stock-link-color), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-stock-link-color));
+        }
+    }
+
+    &-gradient {
+        --bs-btn-color: #fff;
+        --bs-btn-bg: var(--bs-primary);
+        --bs-btn-border-color: transparent;
+        --bs-btn-hover-color: #fff;
+        --bs-btn-hover-bg: var(--bs-primary-text-emphasis);
+        --bs-btn-hover-border-color: transparent;
+        --bs-btn-active-color: #fff;
+        --bs-btn-active-bg: var(--bs-primary-text-emphasis);
+        --bs-btn-active-border-color: transparent;
+        --bs-btn-disabled-color: #fff;
+        --bs-btn-disabled-bg: var(--bs-primary);
+        --bs-btn-disabled-border-color: transparent;
+        --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
         background-image: $gradient;
+        box-shadow: 0 4px 14px -3px rgba(var(--bs-primary-rgb), .5);
+        transition: color .15s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out;
+
+        &:hover, &:focus, &:active {
+            background-image: $gradient;
+        }
+
+        &:hover, &:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px -3px rgba(var(--bs-primary-rgb), .6);
+        }
     }
 
-    &:hover, &:focus {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px -3px rgba(var(--bs-primary-rgb), .6);
+    &.theme-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        --bs-btn-color: var(--bs-body-color);
+        --bs-btn-bg: var(--bs-card-bg-value);
+        --bs-btn-border-color: var(--bs-border-color);
+        --bs-btn-hover-color: var(--bs-body-color);
+        --bs-btn-hover-bg: var(--bs-card-bg-value);
+        --bs-btn-hover-border-color: var(--bs-primary);
+        --bs-btn-active-color: var(--bs-body-color);
+        --bs-btn-active-bg: var(--bs-card-bg-value);
+        --bs-btn-active-border-color: var(--bs-primary);
+
+        &:hover {
+            box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), .1);
+        }
+    }
+
+    &.scroll-top {
+        width: 42px;
+        height: 42px;
+        bottom: 4.5rem;
+        border-radius: 12px;
+        opacity: 0;
+        transform: translateY(12px);
+        pointer-events: none;
+        transition: opacity .3s, transform .3s, box-shadow .2s;
+
+        &.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+        }
     }
 }
 
-.scroll-top {
-    width: 42px;
-    height: 42px;
-    bottom: 4.5rem;
-    border-radius: 12px;
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
-    transition: opacity .3s, transform .3s, box-shadow .2s;
-
-    &.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-    }
-
-    &:hover {
-        transform: translateY(-2px);
-    }
-}

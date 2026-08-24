@@ -32,17 +32,17 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                         <span class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ doc.tint }}; width:48px; height:48px;"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" width="26" height="26"></span>
                         <div>
                             <h3 class="h5 mb-0">{{ doc.name }}</h3>
-                            <div class="fw-semibold text-primary-emphasis">{{ doc.tagline }}</div>
+                            <div class="small fw-semibold text-primary-emphasis">{{ doc.tagline }}</div>
                         </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap justify-content-end flex-grow-1">
 {% if doc.features or doc.usage %}
                         <button type="button" class="btn btn-tint btn-sm small fw-semibold dropdown-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
 {% endif %}
-                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">GitHub &rarr;</a>
-                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">Packagist &rarr;</a>
+                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">GitHub</a>
+                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">Packagist</a>
 {% if doc.docsUrl %}
-                        <a href="{{ doc.docsUrl }}" class="btn btn-gradient btn-sm small fw-semibold">Documentation &rarr;</a>
+                        <a href="{{ doc.docsUrl }}" class="btn btn-gradient btn-arrow btn-sm small fw-semibold">Documentation</a>
 {% endif %}
                     </div>
                 </div>
@@ -52,7 +52,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% if doc.features or doc.usage %}
                 <div class="mt-3" id="{{ doc.pkgId }}-details" hidden>
 {% if doc.features %}
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                    <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
 {% for feat in doc.features %}
                         <div class="col">
                         <div class="card card-body p-3">

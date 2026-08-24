@@ -143,10 +143,10 @@ option_groups:
                         <div class="d-flex align-items-center gap-3 flex-wrap">
                             After installing any 2FA package, run:
                             <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="btn btn-gradient btn-sm small fw-semibold">Create an issue &rarr;</a>
+                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="btn btn-gradient btn-arrow btn-sm small fw-semibold">Create an issue</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">GitHub &rarr;</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-tint-blue btn-sm small fw-semibold">Packagist &rarr;</a>
+                                <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">GitHub</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">Packagist</a>
                             </div>
                         </div>
                     </div>
