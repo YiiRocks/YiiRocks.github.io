@@ -21,7 +21,7 @@ title: "Voyti - Quick Start"
             substitute an alternative views package if you prefer a different UI framework, as long as it implements
             the <code>yiirocks/voyti-views</code> interface.
 </p>
-<button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
+<button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace mw-100 mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
 <div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
             <div class="col">
