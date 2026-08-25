@@ -5,8 +5,10 @@ section: middleware
 title: "Voyti - Middleware"
 ---
 
-<p>Core ships seven PSR-15 middleware classes for session handling and access control; installed sibling packages can contribute their own on top.</p>
-<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\Middleware</code></p>
+Core ships seven PSR-15 middleware classes for session handling and access control; installed
+sibling packages can contribute their own on top.
+
+<p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\Middleware`</p>
 <div class="table-responsive">
 <table class="table table-sm table-striped">
             <thead class="fw-bold text-uppercase text-nowrap">
@@ -52,7 +54,7 @@ title: "Voyti - Middleware"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">2FA</h5>
-<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\TwoFactor\Middleware</code></p>
+<p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\TwoFactor\Middleware`</p>
 <div class="table-responsive">
 <table class="table table-sm table-striped">
             <thead class="fw-bold text-uppercase text-nowrap">
@@ -73,7 +75,7 @@ title: "Voyti - Middleware"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social auth</h5>
-<p class="text-muted small">Namespace: <code>YiiRocks\Voyti\SocialAuth\Middleware</code></p>
+<p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\SocialAuth\Middleware`</p>
 <div class="table-responsive">
 <table class="table table-sm table-striped">
             <thead class="fw-bold text-uppercase text-nowrap">
@@ -94,11 +96,8 @@ title: "Voyti - Middleware"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="site-wide-enforcement">Site-wide enforcement</h5>
-<p>
-            The auto-registration above only covers routes <em>this extension
-            defines</em>. Without <code>VoytiMiddleware</code> wrapping your
-            routes, a user with an expired password, missing 2FA, or a revoked
-            session can still browse your app's own dashboard, home page, or
-            any other route outside this extension - and a visitor with
-            a valid remember-me cookie won't be logged back in either.
-</p>
+
+The auto-registration above only covers routes <em>this extension defines</em>. Without
+`VoytiMiddleware` wrapping your routes, a user with an expired password, missing 2FA, or
+a revoked session can still browse your app's own dashboard, home page, or any other route outside
+this extension - and a visitor with a valid remember-me cookie won't be logged back in either.

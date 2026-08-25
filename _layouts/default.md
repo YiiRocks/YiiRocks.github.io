@@ -45,7 +45,7 @@
                 <span class="text-body-secondary fs-sm">Yii.Rocks - crafted by <a href="https://www.mr42.me/" target="_blank" rel="noopener" title="Visit Mr.42" class="link-body-emphasis link-underline-opacity-0 fs-sm">Mr. 42</a></span>
             </div>
         </footer>
-        <button type="button" class="btn btn-gradient scroll-top position-fixed end-0 m-4 p-0 d-flex align-items-center justify-content-center" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></button>
+        <button type="button" class="btn btn-primary scroll-top position-fixed end-0 m-4 p-0 d-flex align-items-center justify-content-center" id="scrollTop" title="Scroll to top" aria-label="Scroll to top"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></button>
         <script src="/assets/site.js" defer></script>
     </body>
 </html>

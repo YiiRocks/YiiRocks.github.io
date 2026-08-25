@@ -11,22 +11,17 @@ option_groups:
       desc: "API token lifetime in seconds. <code>0</code> disables expiry entirely (tokens never expire). Enforced when resolving a Bearer token."
 ---
 
-<p>
-            The JSON REST API for user management ships as a separate package,
-            <code>yiirocks/voyti-api</code>. It adds the <code>voyti-routes-api</code>
-            config group, Bearer-token authentication on top of core's
-            <code>IdentityAdapter</code>, and two console commands for issuing and
-            revoking API tokens. It reuses core's models, services, and
-            <code>administratorPermissionName</code> permission check.
-</p>
+The JSON REST API for user management ships as a separate package, `yiirocks/voyti-api`. It adds
+the `voyti-routes-api` config group, Bearer-token authentication on top of core's
+`IdentityAdapter`, and two console commands for issuing and revoking API tokens. It reuses core's
+models, services, and `administratorPermissionName` permission check.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-api" repo="voyti-api" %}
-<p>
-            Routes are <strong>not</strong> auto-registered. Pull the
-            <code>voyti-routes-api</code> config group into your router and mount it
-            at whatever prefix you like:
-</p>
+
+Routes are <strong>not</strong> auto-registered. Pull the `voyti-routes-api` config
+group into your router and mount it at whatever prefix you like:
+
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Config\Config;
@@ -71,17 +66,16 @@ return [
 {% include options_table.md options=page.option_groups.config %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication</h5>
-<p>
-            Requests authenticate with an <code>Authorization: Bearer &lt;token&gt;</code>
-            header. <code>ApiTokenAuthenticationMiddleware</code> resolves the token to a
-            user for that request only and returns <code>401</code> when the header is
-            missing or the token is invalid or expired. <code>AccessRuleMiddleware</code>
-            then enforces <code>administratorPermissionName</code> as usual, so API tokens
-            only grant what that permission grants.
-</p>
+
+Requests authenticate with an `Authorization: Bearer &lt;token&gt;` header.
+`ApiTokenAuthenticationMiddleware` resolves the token to a user for that request only and returns
+`401` when the header is missing or the token is invalid or expired. `AccessRuleMiddleware` then
+enforces `administratorPermissionName` as usual, so API tokens only grant what that permission
+grants.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Managing tokens</h5>
-<p>The package registers two console commands under <code>yiisoft/yii-console</code>:</p>
+The package registers two console commands under `yiisoft/yii-console`:
+
 <div class="table-responsive">
 <table class="table table-sm table-striped">
             <thead class="fw-bold text-uppercase text-nowrap">

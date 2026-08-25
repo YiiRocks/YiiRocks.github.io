@@ -5,9 +5,12 @@ section: events
 title: "Voyti - Events & Listeners"
 ---
 
-<p>Voyti dispatches events at key points in the user lifecycle, allowing your application to react, log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher configuration.</p>
+Voyti dispatches events at key points in the user lifecycle, allowing your application to react,
+log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher
+configuration.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events with default listeners</h5>
+
 <div class="table-responsive">
 <table class="table table-sm table-striped">
     <thead class="fw-bold text-uppercase text-nowrap">
@@ -25,7 +28,10 @@ title: "Voyti - Events & Listeners"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h5>
-<p>Dispatched by the library, but nothing consumes them by default - attach your own listener via the event dispatcher configuration if you need to react to them.</p>
+
+Dispatched by the library, but nothing consumes them by default - attach your own listener via the
+event dispatcher configuration if you need to react to them.
+
 <div class="table-responsive">
 <table class="table table-sm table-striped">
     <thead class="fw-bold text-uppercase text-nowrap">
@@ -44,7 +50,12 @@ title: "Voyti - Events & Listeners"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Cancellable events</h5>
-<p>A small set of events are dispatched <em>before</em> the action they precede takes effect. A listener can throw <code>YiiRocks\Voyti\Exception\ActionPreventedException</code> to stop the action; the dispatching service or controller catches it and turns it into a form error or failure result, using the exception's <code>getErrorDetails()</code> (a list of field/attribute names) when present.</p>
+
+A small set of events are dispatched <em>before</em> the action they precede takes effect. A
+listener can throw `YiiRocks\Voyti\Exception\ActionPreventedException` to stop the action; the
+dispatching service or controller catches it and turns it into a form error or failure result,
+using the exception's `getErrorDetails()` (a list of field/attribute names) when present.
+
 <div class="table-responsive">
 <table class="table table-sm table-striped">
     <thead class="fw-bold text-uppercase text-nowrap">
@@ -62,7 +73,10 @@ title: "Voyti - Events & Listeners"
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h5>
-<p>Emitted around the login and registration forms, and on account-level changes, for analytics, security monitoring, and paired-event flows.</p>
+
+Emitted around the login and registration forms, and on account-level changes, for analytics,
+security monitoring, and paired-event flows.
+
 <div class="table-responsive">
 <table class="table table-sm table-striped">
     <thead class="fw-bold text-uppercase text-nowrap">
@@ -85,7 +99,8 @@ title: "Voyti - Events & Listeners"
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: A cancellable BEFORE event</h5>
 
-<p>Throw <code>ActionPreventedException</code> from a listener to reject the action - here, rate-limiting registrations by IP:</p>
+Throw `ActionPreventedException` from a listener to reject the action - here, rate-limiting
+registrations by IP:
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -107,9 +122,11 @@ return [
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: Listening to Events</h5>
 
-<p>Attach listeners through the Yii3 event dispatcher configuration:</p>
+Attach listeners through the Yii3 event dispatcher configuration:
 
-<p>For events with discriminator types like <code>UserEvent</code>, check the type to handle specific actions. You can attach multiple listeners to the same event, and each receives the event object plus any other DI dependencies.</p>
+For events with discriminator types like `UserEvent`, check the type to handle specific
+actions. You can attach multiple listeners to the same event, and each receives the event object
+plus any other DI dependencies.
 
 <div class="mb-3 small lh-base">
 {% highlight php %}

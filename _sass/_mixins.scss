@@ -1,0 +1,16 @@
+@mixin hover-lift($shadow-alpha: .1, $shadow-color: var(--bs-primary-rgb)) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px -3px rgba($shadow-color, $shadow-alpha);
+}
+
+@mixin btn-tint-variant($color, $bg, $border, $hover-border: $border) {
+    --bs-btn-color: #{$color};
+    --bs-btn-bg: #{$bg};
+    --bs-btn-border-color: #{$border};
+    --bs-btn-hover-color: #{$color};
+    --bs-btn-hover-bg: #{$bg};
+    --bs-btn-hover-border-color: #{$hover-border};
+    --bs-btn-active-color: #{$color};
+    --bs-btn-active-bg: #{$bg};
+    --bs-btn-active-border-color: #{$hover-border};
+}

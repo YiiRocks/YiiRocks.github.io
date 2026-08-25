@@ -93,18 +93,13 @@ features:
             </p>
 </blockquote>
 
-<p class="lead">
-            <a href="https://github.com/YiiRocks/voyti">Voyti</a> is a highly
-            customizable and extensible user management, authentication, and
-            authorization extension for
-            <a href="https://www.yiiframework.com/" class="text-nowrap">Yii Framework&nbsp;3</a>.
+<p class="lead" markdown="1">
+            **Voyti** is a highly customizable and extensible user management,
+            authentication, and authorization extension for
+            [Yii&nbsp;3](https://www.yiiframework.com/).
 </p>
 
-<p>
-            Originally ported from
-            <a href="https://github.com/2amigos/yii2-usuario">Usuario</a>,
-            Voyti has since been rebuilt around modern PSR standards and Yiisoft
-            components. It has been extensively redesigned to provide a flexible,
-            modular foundation that adapts to a wide range of authentication and
-            authorization requirements.
-</p>
+Originally ported from [Usuario](https://github.com/2amigos/yii2-usuario), Voyti has since been
+rebuilt around modern PSR standards and Yiisoft components. It has been extensively redesigned to
+provide a flexible, modular foundation that adapts to a wide range of authentication and
+authorization requirements.

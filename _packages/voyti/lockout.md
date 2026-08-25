@@ -31,37 +31,33 @@ option_groups:
       desc: "Ceiling on the registration delay, lower than login's since registration abuse is lower stakes than an account-takeover attempt."
 ---
 
-<p>
-    Brute-force protection for the login and registration forms ships as a separate package. It listens to
-    core's existing auth events to count failed attempts per IP address and delays further attempts, even
-    ones with the correct credentials, with an exponentially growing wait that starts from the very first
-    failure.
-</p>
+Brute-force protection for the login and registration forms ships as a separate package. It listens
+to core's existing auth events to count failed attempts per IP address and delays further attempts,
+even ones with the correct credentials, with an exponentially growing wait that starts from the
+very first failure.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Prerequisite</h5>
-<p>
-    Your application must have a PSR-16 <code>Psr\SimpleCache\CacheInterface</code>
-    implementation configured and bound in your DI container. Any PSR-16 compliant cache works. See
-    <a href="https://github.com/yiisoft/cache" target="_blank" rel="noopener">yiisoft/cache</a>
-    documentation for one option and its available backends.
-</p>
+
+Your application must have a PSR-16 `Psr\SimpleCache\CacheInterface` implementation configured and
+bound in your DI container. Any PSR-16 compliant cache works. See
+[yiisoft/cache](https://github.com/yiisoft/cache) documentation for one option and its available
+backends.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-lockout" repo="voyti-lockout" %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Storage</h5>
-<p>
-    Failed-attempt counts are tracked in the cache. Each cache entry's
-    key is a SHA-256 hash of the request's IP address, scoped separately for login
-    and registration so the two counters never collide. Its value is a plain attempt count.
-</p>
-<p>
-    The cache entry's TTL is renewed on every failure to at least <code>loginMinRetentionSeconds</code> /
-    <code>registrationMinRetentionSeconds</code>, creating a sliding window anchored to the most recent attempt:
-    an attacker who keeps failing stays tracked, and the entry only expires once attempts stop for that long.
-    Once the currently required delay grows past that minimum, the TTL instead tracks the delay itself, which can
-    be much longer, so the count can't reset while the caller is still required to wait.
-</p>
+
+Failed-attempt counts are tracked in the cache. Each cache entry's key is a SHA-256 hash of the
+request's IP address, scoped separately for login and registration so the two counters never
+collide. Its value is a plain attempt count.
+
+The cache entry's TTL is renewed on every failure to at least
+`loginMinRetentionSeconds` / `registrationMinRetentionSeconds`, creating a
+sliding window anchored to the most recent attempt: an attacker who keeps failing stays tracked,
+and the entry only expires once attempts stop for that long. Once the currently required delay
+grows past that minimum, the TTL instead tracks the delay itself, which can be much longer, so the
+count can't reset while the caller is still required to wait.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
 <div class="mb-3 small lh-base">
@@ -96,42 +92,35 @@ return [
         </tbody>
     </table>
 </div>
-<p>
-    Both blocking listeners throw core's <code>ActionPreventedException</code>,
-    the same cancellation mechanism core itself uses for
-    <code>BeforeLoginEvent</code> and <code>BeforeRegisterEvent</code>: the
-    dispatching controller catches it and surfaces a translated error on the
-    form instead of a raw exception. The translated message carries the
-    computed wait, in seconds, so the UI can tell the user exactly how long
-    to wait before retrying.
-</p>
+
+Both blocking listeners throw core's `ActionPreventedException`, the same cancellation mechanism
+core itself uses for `BeforeLoginEvent` and `BeforeRegisterEvent`: the dispatching controller
+catches it and surfaces a translated error on the form instead of a raw exception. The translated
+message carries the computed wait, in seconds, so the UI can tell the user exactly how long to wait
+before retrying.
 
 <h5>Design decisions</h5>
-<p>
-    <strong>IP-scoped, not account-scoped:</strong> Counters are scoped by IP address. Account scoping would let
-    an attacker lock a legitimate user out of their own account just by deliberately failing that user's login
-    from elsewhere, an easy denial-of-service. IP scoping avoids this while still stopping a single attacker
-    hammering one account or many.
-</p>
-<p>
-    <strong>Counts failures, not all traffic:</strong> This is a lockout, not a general-purpose rate limiter.
-    Only failed attempts increment the counter and trigger a delay. Traffic to <code>/login</code> or
-    <code>/register</code> that never fails is never delayed.
-</p>
-<p>
-    <strong>Progressive delay, not a hard deny:</strong> Every failure doubles the wait rather than denying
-    the attempt outright, starting from a barely noticeable second on the very first failure. There is no
-    attempt count that locks an IP out for good; the delay just keeps growing, capped at
-    <code>loginMaxDelaySeconds</code> / <code>registrationMaxDelaySeconds</code>. This follows OWASP's and
-    NIST's guidance against a lockout control that itself becomes a denial-of-service against the
-    legitimate user: a real attacker just waits out the capped delay indefinitely, while a locked-out
-    legitimate user is never permanently shut out.
-</p>
-<p>
-    <strong>Minimum retention is not the delay:</strong> <code>loginMinRetentionSeconds</code> /
-    <code>registrationMinRetentionSeconds</code> don't gate how long you wait to retry. That's driven
-    entirely by <code>baseDelaySeconds</code> / <code>maxDelaySeconds</code>. They only set a floor on how
-    long a failed-attempt count is remembered when the currently required delay is smaller, so a single
-    mistyped password isn't instantly forgotten while an attacker who stops trying still cools down
-    eventually.
-</p>
+
+<strong>IP-scoped, not account-scoped:</strong> Counters are scoped by IP address. Account scoping
+would let an attacker lock a legitimate user out of their own account just by deliberately failing
+that user's login from elsewhere, an easy denial-of-service. IP scoping avoids this while still
+stopping a single attacker hammering one account or many.
+
+<strong>Counts failures, not all traffic:</strong> This is a lockout, not a general-purpose rate
+limiter. Only failed attempts increment the counter and trigger a delay. Traffic to
+`/login` or `/register` that never fails is never delayed.
+
+<strong>Progressive delay, not a hard deny:</strong> Every failure doubles the wait rather than
+denying the attempt outright, starting from a barely noticeable second on the very first failure.
+There is no attempt count that locks an IP out for good; the delay just keeps growing, capped at
+`loginMaxDelaySeconds` / `registrationMaxDelaySeconds`. This follows OWASP's
+and NIST's guidance against a lockout control that itself becomes a denial-of-service against the
+legitimate user: a real attacker just waits out the capped delay indefinitely, while a locked-out
+legitimate user is never permanently shut out.
+
+<strong>Minimum retention is not the delay:</strong> `loginMinRetentionSeconds` /
+`registrationMinRetentionSeconds` don't gate how long you wait to retry. That's driven
+entirely by `baseDelaySeconds` / `maxDelaySeconds`. They only set a floor on
+how long a failed-attempt count is remembered when the currently required delay is smaller, so a
+single mistyped password isn't instantly forgotten while an attacker who stops trying still cools
+down eventually.

@@ -5,18 +5,14 @@ section: routes
 title: "Voyti - Available Routes"
 ---
 
-<p>
-            The library does not provide a menu model or navigation contract.
-            It only exposes named routes that the host application can use in its
-            own menu, sidebar, or access rules. See the <a href="/voyti/cookbook/">Cookbook</a> for a
-            Bootstrap 5 nav menu example.
-</p>
-<p>
-            This table lists only core's own routes. Addon packages
-            (<a href="/voyti/social/">Social Auth</a>, <a href="/voyti/two-factor/">Two-Factor</a>,
-            <a href="/voyti/api/">REST API</a>, <a href="/voyti/gdpr/">GDPR</a>) register their own
-            routes when installed - see each addon's own page.
-</p>
+The library does not provide a menu model or navigation contract. It only exposes named routes that
+the host application can use in its own menu, sidebar, or access rules. See the
+[Cookbook](/voyti/cookbook/) for a Bootstrap 5 nav menu example.
+
+This table lists only core's own routes. Addon packages ([Social Auth](/voyti/social/),
+[Two-Factor](/voyti/two-factor/), [REST API](/voyti/api/), [GDPR](/voyti/gdpr/)) register their own
+routes when installed - see each addon's own page.
+
 <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead class="fw-bold text-uppercase text-nowrap">

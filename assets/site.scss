@@ -3,20 +3,9 @@
 @import "theme";
 @import "animations";
 @import "highlight";
+@import "mixins";
 
 $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-
-@mixin btn-tint-variant($color, $bg, $border, $hover-border: $border) {
-    --bs-btn-color: #{$color};
-    --bs-btn-bg: #{$bg};
-    --bs-btn-border-color: #{$border};
-    --bs-btn-hover-color: #{$color};
-    --bs-btn-hover-bg: #{$bg};
-    --bs-btn-hover-border-color: #{$hover-border};
-    --bs-btn-active-color: #{$color};
-    --bs-btn-active-bg: #{$bg};
-    --bs-btn-active-border-color: #{$hover-border};
-}
 
 .list-group {
     --bs-list-group-bg: var(--bs-card-bg-value);
@@ -30,20 +19,7 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     transition: transform .15s, box-shadow .2s;
 
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 16px -6px rgba(0, 0, 0, .1);
-    }
-}
-
-.card:not(.card-body),
-.features-grid .card {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity .5s ease, transform .3s ease, box-shadow .2s ease;
-
-    &.visible {
-        opacity: 1;
-        transform: translateY(0);
+        @include hover-lift(.1, black);
     }
 }
 
@@ -53,6 +29,7 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     border-radius: 0;
     box-shadow: none;
     border-bottom: 1px solid var(--bs-border-color);
+    margin-bottom: 0 !important;
 
     > .card-body {
         padding: 2.5rem 0;
@@ -125,7 +102,7 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
 .nav-logo {
     width: 36px;
     height: 36px;
-    border-radius: 12px;
+    border-radius: 10px;
     background: $gradient;
 }
 
@@ -134,7 +111,14 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     right: 12px;
     font-size: 36px;
     line-height: 1;
-    color: #fbbf24;
+    color: var(--bs-warning);
+}
+
+.sidebar {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
 }
 
 .section-label {
@@ -198,10 +182,23 @@ code {
     animation: pulse 2s ease-in-out infinite;
 }
 
+main a[target="_blank"]:not(.btn)::after {
+    content: "";
+    display: inline-block;
+    width: .65em;
+    height: .65em;
+    margin-left: .25em;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E") no-repeat center / contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+
 .btn {
     --bs-btn-font-size: 12px;
     --bs-btn-padding-x: 10px;
     --bs-btn-padding-y: 9px;
+    --bs-btn-border-radius: 10px;
 
     &-arrow::after {
         content: "\2192";
@@ -211,9 +208,8 @@ code {
         top: -3px;
     }
 
-    &-copy {
+    &-outline-primary {
         @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-primary-bg-subtle), var(--bs-primary-border-subtle), var(--bs-primary));
-        --bs-btn-border-radius: 10px;
         --bs-btn-padding-x: 16px;
         --bs-btn-padding-y: 10px;
         --bs-btn-font-size: 13px;
@@ -224,7 +220,7 @@ code {
         }
     }
 
-    &-tint {
+    &-secondary {
         @include btn-tint-variant(var(--bs-primary-text-emphasis), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-primary));
 
         &.dropdown-toggle::after {
@@ -234,13 +230,13 @@ code {
         &.dropdown-toggle[aria-expanded="true"]::after {
             transform: rotate(180deg);
         }
-
-        &-blue {
-            @include btn-tint-variant(var(--bs-stock-link-color), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-stock-link-color));
-        }
     }
 
-    &-gradient {
+    &-info {
+        @include btn-tint-variant(var(--bs-stock-link-color), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-stock-link-color));
+    }
+
+    &-primary {
         --bs-btn-color: #fff;
         --bs-btn-bg: var(--bs-primary);
         --bs-btn-border-color: transparent;
@@ -263,15 +259,13 @@ code {
         }
 
         &:hover, &:focus {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px -3px rgba(var(--bs-primary-rgb), .6);
+            @include hover-lift(.6);
         }
     }
 
     &.theme-toggle {
         width: 36px;
         height: 36px;
-        border-radius: 12px;
         --bs-btn-color: var(--bs-body-color);
         --bs-btn-bg: var(--bs-card-bg-value);
         --bs-btn-border-color: var(--bs-border-color);
@@ -291,7 +285,6 @@ code {
         width: 42px;
         height: 42px;
         bottom: 4.5rem;
-        border-radius: 12px;
         opacity: 0;
         transform: translateY(12px);
         pointer-events: none;
@@ -308,4 +301,3 @@ code {
         }
     }
 }
-

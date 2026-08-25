@@ -15,18 +15,12 @@ option_groups:
       desc: "Prefix used for the masked email/username on anonymization, followed by the user's numeric id (e.g. <code>GDPR42</code>, <code>GDPR42@example.com</code>)."
 ---
 
-<p>
-            Data export and account anonymization ship as a separate package,
-            <code>yiirocks/voyti-gdpr</code>. Core only ever collects mandatory
-            personal-data-processing consent at signup and offers hard account
-            deletion. Export and anonymization are optional, and this package
-           provides this. It reuses core's <code>ConsentForm</code> for password
-           re-confirmation, and core's <code>User</code>, <code>UserProfile</code>,
-           and <code>UserSessions</code> models to build the export. When
-           <a href="/voyti/social/"><code>yiirocks/voyti-social-auth</code></a>
-           is also installed, connected social accounts are included in the
-           export too.
-</p>
+Data export and account anonymization ship as a separate package, `yiirocks/voyti-gdpr`. Core only
+ever collects mandatory personal-data-processing consent at signup and offers hard account
+deletion. Export and anonymization are optional, and this package provides this. It reuses core's
+`ConsentForm` for password re-confirmation, and core's `User`, `UserProfile`, and `UserSessions`
+models to build the export. When [`yiirocks/voyti-social-auth`](/voyti/social/) is also installed,
+connected social accounts are included in the export too.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-gdpr" repo="voyti-gdpr" %}
@@ -65,9 +59,7 @@ return [
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events</h5>
-<p>
-            Anonymizing an account dispatches <code>GdprEvent</code> (carrying the now-anonymized
-            <code>User</code>) after it's saved. Nothing consumes it by default. Attach your own
-            listener via the event dispatcher configuration for things like admin notification or
-            downstream data-retention cleanup.
-</p>
+
+Anonymizing an account dispatches `GdprEvent` (carrying the now-anonymized `User`) after it's
+saved. Nothing consumes it by default. Attach your own listener via the event dispatcher
+configuration for things like admin notification or downstream data-retention cleanup.

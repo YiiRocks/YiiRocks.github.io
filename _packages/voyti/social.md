@@ -15,23 +15,18 @@ option_groups:
       desc: "Whether a single user may link more than one account from the same provider."
 ---
 
-<p>
-            Social/OAuth2 login ships as a separate package,
-            <code>yiirocks/voyti-social-auth</code>. It builds on
-            <a href="https://github.com/yiisoft/yii-auth-client" target="_blank">yiisoft/yii-auth-client</a>,
-            which handles all OAuth2 protocol logic - Voyti adds the callback
-            routing, account linking, and registration flow, plus the
-            <code>user_social_account</code> table.
-</p>
+Social/OAuth2 login ships as a separate package, `yiirocks/voyti-social-auth`. It builds on
+[yiisoft/yii-auth-client](https://github.com/yiisoft/yii-auth-client), which handles all OAuth2
+protocol logic - Voyti adds the callback routing, account linking, and registration flow, plus the
+`user_social_account` table.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
 {% include install_block.md package="yiirocks/voyti-social-auth" repo="voyti-social-auth" %}
 <div>
-            <p>
-                Run your migration command to create the <code>user_social_account</code>
-                table after installation:
-            </p>
-            <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
+<p markdown="1">
+            Run your migration command to create the `user_social_account` table after installation:
+</p>
+            <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">./yii migrate:up</button>
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
@@ -50,14 +45,11 @@ return [
 {% include options_table.md options=page.option_groups.config %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Provider configuration</h5>
-<p>
-            Configure providers via a <code>clients</code> map under the
-            <code>yiisoft/yii-auth-client</code> params key. The package automatically sets each
-            client's OAuth2 return URL to match its config key.
-</p>
-<p>
-            To customize OAuth2 request parameters, add an <code>authParams</code> key to your client config.
-</p>
+
+Configure providers via a `clients` map under the `yiisoft/yii-auth-client` params key. The package
+automatically sets each client's OAuth2 return URL to match its config key.
+
+To customize OAuth2 request parameters, add an `authParams` key to your client config.
 <div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
@@ -82,15 +74,14 @@ return [
 ];
 {% endhighlight %}
 </div>
-<p>
-            Your config key becomes the callback URL: <code>https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;</code>.
-            Provider developer consoles require an exact match, so finalize your keys before registering the OAuth app.
-</p>
-<p>
-            See the
-            <a href="https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md" target="_blank">yii-auth-client Quick Start</a>
-            for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's OAuth2 documentation for available <code>authParams</code>.
-</p>
+Your config key becomes the callback URL:
+`https://your-domain.tld/&lt;prefix&gt;/auth/&lt;key&gt;`. Provider developer consoles require an
+exact match, so finalize your keys before registering the OAuth app.
+
+See the
+[yii-auth-client Quick Start](https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md)
+for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's
+OAuth2 documentation for available `authParams`.
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h5>
 <div class="table-responsive">
@@ -113,11 +104,10 @@ return [
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Supported providers</h5>
-<p>
-            yii-auth-client ships ten branded provider classes, each with its own <code>Yiisoft\Yii\AuthClient\Client\*</code> class
-            (plus a generic <code>Client\OpenIdConnect</code> for self-hosted OIDC).
-            Defaults (scope, endpoints) come from the vendor client's DI configuration.
-</p>
+
+yii-auth-client ships ten branded provider classes, each with its own
+`Yiisoft\Yii\AuthClient\Client\*` class (plus a generic `Client\OpenIdConnect` for self-hosted
+OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuration.
 <div class="table-responsive">
             <table class="table table-sm table-striped">
                 <thead class="fw-bold text-uppercase text-nowrap">
@@ -142,14 +132,14 @@ return [
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h5>
-<p>With providers configured:</p>
+With providers configured:
+
 <ul>
             <li>The login page shows social login buttons for configured providers.</li>
             <li>The Networks page lists every connected account and renders connect buttons for providers.</li>
             <li>New social identities redirect to the registration connect screen, where users can log in to an existing account or register a new one before the identity is linked.</li>
             <li>A successful sign-in for an already-connected account completes through the same login path password login uses, so <code>BeforeLoginEvent</code> (cancellable, e.g. for fraud checks) and <code>AfterLoginEvent</code> fire for social logins too, and remember-me is always applied.</li>
 </ul>
-<p>
-            Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
-            <code>Client\OpenIdConnect</code> class, configured the same way as other clients above.
-</p>
+
+Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
+`Client\OpenIdConnect` class, configured the same way as other clients above.

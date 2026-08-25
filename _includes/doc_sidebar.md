@@ -9,7 +9,7 @@
 {% assign core_sections = core_sections | push: s %}
 {% endif %}
 {% endfor %}
-        <nav>
+        <nav class="sidebar">
             <div class="d-flex flex-row flex-md-column gap-4 gap-md-0">
             <div class="flex-fill">
             <div class="fw-bold small text-body-secondary mb-2 text-uppercase ps-3">On this page</div>

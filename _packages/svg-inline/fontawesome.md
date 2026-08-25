@@ -73,9 +73,8 @@ option_groups:
       desc: "The width of the icon. If width is given without height, the latter will be calculated from the SVG size."
 ---
 
-<p>
-    Provides simple functions to add <a href="https://fontawesome.com/icons" target="_blank" rel="noopener">Font Awesome Icons</a> inline. Depends on <a href="/svg-inline/">SvgInline</a>.
-</p>
+Provides simple functions to add [Font Awesome Icons](https://fontawesome.com/icons) inline.
+Depends on [SvgInline](/svg-inline/).
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -88,13 +87,14 @@ echo $svg->fai('github', 'brands')->title('GitHub');
 {% include install_block.md package="yiirocks/svg-inline-fontawesome" repo="svg-inline-fontawesome" %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
-<p>Configure Font Awesome Icons behavior in <code>config/params.php</code> under the <code>'yiirocks/svg-inline-fontawesome'</code> key:</p>
+Configure Font Awesome Icons behavior in `config/params.php` under the
+`'yiirocks/svg-inline-fontawesome'` key:
 {% include options_table.md options=page.option_groups.config %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h5>
 {% include options_table.md options=page.option_groups.method_params %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h5>
-<p>Additional options can be chained onto the <code>fai()</code> call:</p>
+Additional options can be chained onto the `fai()` call:
 {% include options_table.md options=page.option_groups.fluent %}
 

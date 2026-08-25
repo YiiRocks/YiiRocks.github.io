@@ -72,12 +72,9 @@ included as part of the main text on a page, rather than in a separate section
 </p>
 </blockquote>
 
-<p>
-This extension provides simple functions for <a href="http://www.yiiframework.com/">Yii
-framework 2.0</a> applications to add <a href="https://fontawesome.com/">Font
-Awesome</a> <a href="https://fontawesome.com/icons">Icons</a> inline
-<strong><em>without the use of JavaScript</em></strong>.
-</p>
+This extension provides simple functions for [Yii framework 2.0](http://www.yiiframework.com/)
+applications to add [Font Awesome](https://fontawesome.com/) [Icons](https://fontawesome.com/icons)
+inline <strong><em>without the use of JavaScript</em></strong>.
 
 <h3 class="fw-bolder mb-2">Options</h3>
 {% include options_table.md options=page.option_groups.main %}
@@ -113,10 +110,9 @@ echo IconWidget::widget([
 </div>
 
 <h3 class="fw-bolder mb-2">Usage as a Component</h3>
-<p>
-This is the preferred method if you need to override any of the
-default options throughout your application.
-</p>
+This is the preferred method if you need to override any of the default options throughout your
+application.
+
 Add the component to your Yii config file:
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -169,7 +165,7 @@ ActiveForm::end();
 </div>
 
 <h3 class="fw-bolder mb-2">Usage from ActiveForm (manual)</h3>
-For <code>$icon</code> you can use any earlier described usage method.
+For `$icon` you can use any earlier described usage method.
 <div class="mb-3 small lh-base">
 {% highlight php %}
 $form = ActiveForm::begin();

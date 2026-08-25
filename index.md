@@ -25,7 +25,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 <div id="packages">
 {% for doc in site.packages %}
 {% unless doc.listed == false or doc.section %}
-            <div class="card" id="{{ doc.pkgId }}">
+            <div class="card mb-3" id="{{ doc.pkgId }}">
                 <div class="card-body">
                 <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
                     <div class="d-flex align-items-center gap-3">
@@ -37,12 +37,12 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                     </div>
                     <div class="d-flex gap-2 flex-wrap justify-content-end flex-grow-1">
 {% if doc.features or doc.usage %}
-                        <button type="button" class="btn btn-tint btn-sm small fw-semibold dropdown-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
+                        <button type="button" class="btn btn-secondary btn-sm small fw-semibold dropdown-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
 {% endif %}
-                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">GitHub</a>
-                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-tint-blue btn-arrow btn-sm small fw-semibold">Packagist</a>
+                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
+                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
 {% if doc.docsUrl %}
-                        <a href="{{ doc.docsUrl }}" class="btn btn-gradient btn-arrow btn-sm small fw-semibold">Documentation</a>
+                        <a href="{{ doc.docsUrl }}" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Documentation</a>
 {% endif %}
                     </div>
                 </div>
@@ -50,27 +50,11 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                 <p class="m-0 mt-3 fs-6 lh-base">{{ doc.description }}</p>
 
 {% if doc.features or doc.usage %}
-                <div class="mt-3" id="{{ doc.pkgId }}-details" hidden>
-{% if doc.features %}
-                    <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
-{% for feat in doc.features %}
-                        <div class="col">
-                        <div class="card card-body p-3">
-                            <div class="d-flex align-items-center gap-2 mb-1">
-{% if feat.icon %}
-                                <img src="{{ feat.icon | relative_url }}" alt="{{ feat.label }}" class="opacity-75 flex-shrink-0" width="24" height="24">
-{% endif %}
-                                <div class="fw-bold">{{ feat.label }}</div>
-                            </div>
-                            <div class="small lh-base text-body-secondary">{{ feat.detail }}</div>
-                        </div>
-                        </div>
-{% endfor %}
-                    </div>
-{% endif %}
+                <div class="mt-3" id="{{ doc.pkgId }}-details">
+{% include features_grid.md features=doc.features heading=false %}
 
 {% if doc.usage %}
-                    <div class="mb-3 small lh-base">
+                    <div class="mb-3 small">
 {% highlight php %}
 {{ doc.usage }}
 {% endhighlight %}
@@ -79,8 +63,8 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                 </div>
 {% endif %}
 
-                <div class="d-flex align-items-center gap-3 flex-wrap mt-3">
-                        <button type="button" class="btn btn-copy d-flex justify-content-between align-items-center gap-2 fw-medium text-start text-nowrap overflow-hidden font-monospace">composer require {{ doc.package }}</button>
+                <div class="d-flex align-items-center gap-2 flex-wrap mt-3">
+                        <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace">composer require {{ doc.package }}</button>
                 </div>
                 </div>
             </div>
