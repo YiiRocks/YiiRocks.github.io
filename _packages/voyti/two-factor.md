@@ -11,14 +11,14 @@ option_groups:
       desc: "RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>."
 ---
 
-Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
+<p class="mb-3" markdown="1">Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
 the seams that let method packages hook into login. Install one or more method packages to activate
-2FA.
+2FA.</p>
 
-After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
+<p class="mb-3" markdown="1">After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
 session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP
 entry), and verifies the result. On success, the login completes. Backup codes are auto-generated
-when enabling 2FA, allowing account recovery if the primary method is unavailable.
+when enabling 2FA, allowing account recovery if the primary method is unavailable.</p>
 
 <div class="row g-4 mb-4">
             <div class="col-12">
@@ -150,10 +150,10 @@ when enabling 2FA, allowing account recovery if the primary method is unavailabl
                         <div class="d-flex align-items-center gap-2 flex-wrap">
                             After installing any 2FA package, run:
                             <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Create an issue</a>
+                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" rel="noopener" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Create an issue</a>
                             <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
+                                <a href="https://github.com/YiiRocks/voyti-2fa" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
+                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
                             </div>
                         </div>
                     </div>
@@ -181,8 +181,8 @@ return [
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register the method</h5>
 
-Tag the provider class with `voyti.two-factor-method` in `config/di.php`. The
-registry collects tagged providers, keyed by `getName()`:
+<p class="mb-3" markdown="1">Tag the provider class with `voyti.two-factor-method` in `config/di.php`. The
+registry collects tagged providers, keyed by `getName()`:</p>
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -201,9 +201,9 @@ return [
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Contribute setup routes</h5>
 
-Append routes to `yiirocks/voyti` → `twoFactorMethodRoutes` in
+<p class="mb-3" markdown="1">Append routes to `yiirocks/voyti` → `twoFactorMethodRoutes` in
 `config/params.php`. They're spliced into the base package's `settings/` group,
-inheriting login guards and CSRF middleware:
+inheriting login guards and CSRF middleware:</p>
 
                 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -223,17 +223,17 @@ return [
 {% endhighlight %}
 </div>
 
-                Route lists merge and append, so multiple method packages coexist without collision. Use the
-                `voyti/user-two-factor-&lt;name&gt;` convention; that's what `getSettingsUrl()` generates.
+                <p markdown="1">Route lists merge and append, so multiple method packages coexist without collision. Use the
+                `voyti/user-two-factor-<name>` convention; that's what `getSettingsUrl()` generates.
                 Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a
-                top-level route group using `VoytiRoutes::webMiddleware()`.
+                top-level route group using `VoytiRoutes::webMiddleware()`.</p>
 
             </li>
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Implement the interface</h5>
 
-`TwoFactorMethodInterface` (namespace `YiiRocks\Voyti\TwoFactor`, provided by the base
-package) is the contract you must implement:
+<p class="mb-3" markdown="1">`TwoFactorMethodInterface` (namespace `YiiRocks\Voyti\TwoFactor`, provided by the base
+package) is the contract you must implement:</p>
 
 <div class="table-responsive">
             <table class="table table-sm table-striped">

@@ -39,8 +39,8 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
 {% if doc.features or doc.usage %}
                         <button type="button" class="btn btn-secondary btn-sm small fw-semibold dropdown-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
 {% endif %}
-                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
-                        <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
+                        <a href="https://github.com/YiiRocks/{{ doc.repo }}" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
+                        <a href="https://packagist.org/packages/{{ doc.package }}" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
 {% if doc.docsUrl %}
                         <a href="{{ doc.docsUrl }}" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Documentation</a>
 {% endif %}

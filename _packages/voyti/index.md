@@ -99,7 +99,7 @@ features:
             [Yii&nbsp;3](https://www.yiiframework.com/).
 </p>
 
-Originally ported from [Usuario](https://github.com/2amigos/yii2-usuario), Voyti has since been
+<p markdown="1">Originally ported from [Usuario](https://github.com/2amigos/yii2-usuario), Voyti has since been
 rebuilt around modern PSR standards and Yiisoft components. It has been extensively redesigned to
 provide a flexible, modular foundation that adapts to a wide range of authentication and
-authorization requirements.
+authorization requirements.</p>

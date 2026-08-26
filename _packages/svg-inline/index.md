@@ -98,12 +98,12 @@ echo $svg->file('@vendor/path/icon.svg')->height(42)->title('Yii Rocks');
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
-Configure SVG inline behavior in `config/params.php` under the `'yiirocks/svg-inline'` key:
+<p class="mb-3" markdown="1">Configure SVG inline behavior in `config/params.php` under the `'yiirocks/svg-inline'` key:</p>
 {% include options_table.md options=page.option_groups.config %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h5>
 {% include options_table.md options=page.option_groups.method_params %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h5>
-Additional options can be chained onto the `file()` call:
+<p class="mb-3" markdown="1">Additional options can be chained onto the `file()` call:</p>
 {% include options_table.md options=page.option_groups.fluent %}

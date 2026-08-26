@@ -60,9 +60,9 @@ auto-hide behavior.</p>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Types</h5>
 
-The first argument to `add()` is a `ToastType` case. Each maps to a Bootstrap 5 `text-bg-*` color
+<p class="mb-3" markdown="1">The first argument to `add()` is a `ToastType` case. Each maps to a Bootstrap 5 `text-bg-*` color
 and an ARIA live-region role. Urgent types interrupt with `role="alert"`, the rest announce
-politely with `role="status"`.
+politely with `role="status"`.</p>
 
 <div class="list-group mb-4">
     <div class="list-group-item">

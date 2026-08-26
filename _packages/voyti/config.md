@@ -107,7 +107,7 @@ option_groups:
       desc: "Show recommended sibling Voyti packages (REST API, GDPR, social auth, two-factor auth) in the admin dashboard when they are not already installed. Set to <code>false</code> to disable package recommendations entirely."
 ---
 
-Override Voyti params in your app's `params.php`:
+<p class="mb-3" markdown="1">Override Voyti params in your app's `params.php`:</p>
 
 <div class="mb-3 small lh-base">
 {% highlight php %}

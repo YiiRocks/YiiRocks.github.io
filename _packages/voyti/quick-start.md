@@ -8,9 +8,9 @@ title: "Voyti - Quick Start"
 <ol>
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Verify prerequisites</h5>
-<ul class="mb-2">
+<ul class="mb-3">
 <li>PHP 8.3 or higher with <code>ext-intl</code></li>
-<li>A connected database in your host application via <a href="https://github.com/yiisoft/db" target="_blank">Yii Database</a></li>
+<li>A connected database in your host application via <a href="https://github.com/yiisoft/db">Yii Database</a></li>
 </ul>
             </li>
             <li>
@@ -102,34 +102,34 @@ return [
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Run migrations</h5>
 
-Voyti provides its migration path through `config/params-console.php` using the standard
+<p class="mb-3" markdown="1">Voyti provides its migration path through `config/params-console.php` using the standard
 `yiisoft/db-migration` configuration keys. With `yiisoft/db-migration` enabled in your console app,
-run:
+run:</p>
 
 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">./yii migrate:up</button>
 
-Voyti's migration creates 6 user-related tables (user, user_profile, user_token, user_sessions,
+<p class="mb-3" markdown="1">Voyti's migration creates 6 user-related tables (user, user_profile, user_token, user_sessions,
 user_password_history, user_audit_log) and seeds default roles and permissions into the RBAC
 tables created by `yiisoft/rbac-db`. Social authentication tables are provided by the
-optional `yiirocks/voyti-social-auth` package.
+optional `yiirocks/voyti-social-auth` package.</p>
 
-If the `user` table is empty after these migrations run, a default admin account is
+<p class="mb-3" markdown="1">If the `user` table is empty after these migrations run, a default admin account is
 seeded automatically: username `admin`, email `admin@example.com`, and a
 random password printed to the console. <strong class="text-danger">Change this password
-immediately after first login.</strong>
+immediately after first login.</strong></p>
 
-The account is assigned the `administrator` role, which is granted the
+<p class="mb-3" markdown="1">The account is assigned the `administrator` role, which is granted the
 `administratorPermissionName` permission needed to reach the admin dashboard. If the `user` table
-already has rows (e.g. re-running migrations on an existing database), seeding is skipped entirely.
+already has rows (e.g. re-running migrations on an existing database), seeding is skipped entirely.</p>
 
             </li>
             <li>
                 <h5 id="register-routes" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register routes</h5>
 
-Routes are <strong>not</strong> auto-registered - you must add them to your router configuration.
+<p class="mb-3" markdown="1">Routes are <strong>not</strong> auto-registered - you must add them to your router configuration.</p>
 
-Pull the `voyti-routes` config group into your router definition. The example below
-mounts them under a `/user/` prefix as their own group, alongside your app's own routes:
+<p class="mb-3" markdown="1">Pull the `voyti-routes` config group into your router definition. The example below
+mounts them under a `/user/` prefix as their own group, alongside your app's own routes:</p>
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -167,9 +167,9 @@ return [
 {% endhighlight %}
 </div>
 
-`voyti-routes` already wraps itself with its own required middleware (see `config/routes.php`), so
+<p class="mb-3" markdown="1">`voyti-routes` already wraps itself with its own required middleware (see `config/routes.php`), so
 the group above doesn't repeat any of it, and adding `VoytiMiddleware` to your own group only
-extends that same coverage to your app's pages.
+extends that same coverage to your app's pages.</p>
 
             </li>
             <li>
@@ -178,11 +178,11 @@ extends that same coverage to your app's pages.
             This step is optional but highly recommended. Without it, forms and buttons will render without any styling.
 </div>
 
-Voyti's forms (login, registration, profile, etc.) and button-styled links render through
-`yiisoft/form`'s `ThemeContainer`.
+<p class="mb-3" markdown="1">Voyti's forms (login, registration, profile, etc.) and button-styled links render through
+`yiisoft/form`'s `ThemeContainer`.</p>
 
-Set a theme in `config/params.php`. `yiisoft/form` ships ready-made Bootstrap 5 configs you can use
-as-is:
+<p class="mb-3" markdown="1">Set a theme in `config/params.php`. `yiisoft/form` ships ready-made Bootstrap 5 configs you can use
+as-is:</p>
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -204,15 +204,15 @@ return [
 {% endhighlight %}
 </div>
 
-Swap in `ThemePath::BOOTSTRAP5_HORIZONTAL` for a horizontal label/input layout, or write your
-own array of `Theme::__construct()` options if you're not using Bootstrap.
+<p class="mb-3" markdown="1">Swap in `ThemePath::BOOTSTRAP5_HORIZONTAL` for a horizontal label/input layout, or write your
+own array of `Theme::__construct()` options if you're not using Bootstrap.</p>
 
-`enrichFromValidationRules` and `validationRulesEnricher` translate the `yiisoft/validator` rules
+<p class="mb-3" markdown="1">`enrichFromValidationRules` and `validationRulesEnricher` translate the `yiisoft/validator` rules
 on your form models (`Required`, `Length`, `Regex`, etc.) into matching HTML5 input attributes
 (`required`, `minlength`/`maxlength`, `pattern`, and so on), giving you client-side validation
-automatically.
+automatically.</p>
 
-<div class="mb-4">
+<div class="mb-3">
             <img src="/assets/images/voyti/quick-start-form-theme-comparison.png" alt="Before and after comparison - form styling without and with Bootstrap 5 theme" class="img-fluid rounded" loading="lazy" decoding="async">
 </div>
 
@@ -220,9 +220,8 @@ automatically.
             <li>
                 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Done</h5>
 
-                DI bindings, event listeners, and console commands are auto-registered
-                via the <a href="https://github.com/yiisoft/config">Yii3 config
-                plugin</a>. No manual wiring needed.
+<p markdown="1">DI bindings, event listeners, and console commands are auto-registered via the
+[Yii3 config plugin](https://github.com/yiisoft/config). No manual wiring needed.</p>
 
             </li>
 </ol>

@@ -60,7 +60,7 @@ option_groups:
       desc: "Wrapper HTML attributes."
 ---
 
-Set your site keys and secret keys via environment variables or directly in `config/params.php`:
+<p class="mb-3" markdown="1">Set your site keys and secret keys via environment variables or directly in `config/params.php`:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 'yiirocks/recaptcha' => [
@@ -80,7 +80,7 @@ Set your site keys and secret keys via environment variables or directly in `con
 {% include options_table.md options=page.option_groups.general %}
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Container Defaults</h5>
-Applied to every field's wrapper unless overridden per-field via `-&gt;useContainer()`,
-`-&gt;containerTag()`, or `-&gt;containerAttributes()` - see [v2](/recaptcha/v2/) and
-[v3](/recaptcha/v3/).
+<p class="mb-3" markdown="1">Applied to every field's wrapper unless overridden per-field via `->useContainer()`,
+`->containerTag()`, or `->containerAttributes()` - see [v2](/recaptcha/v2/) and
+[v3](/recaptcha/v3/).</p>
 {% include options_table.md options=page.option_groups.container %}

@@ -8,10 +8,10 @@ excerpt_separator: ""
 ---
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Building a nav menu from voyti's routes</h5>
-Voyti does not provide a menu model or navigation contract, it only exposes named routes that the
+<p class="mb-3" markdown="1">Voyti does not provide a menu model or navigation contract, it only exposes named routes that the
 host application wires into its own menu, sidebar, or access rules. For example, a
 [`yiisoft/yii-bootstrap5`](https://github.com/yiisoft/yii-bootstrap5) nav built from those routes
-might look like:
+might look like:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Yii\Bootstrap5\Nav;
@@ -29,8 +29,8 @@ echo Nav::widget()->items(
 );
 {% endhighlight %}
 </div>
-`voyti/session-logout` only accepts `POST`, so it can't be a plain
-`NavLink`. Render it as its own small form instead, styled to match the nav:
+<p class="mb-3" markdown="1">`voyti/session-logout` only accepts `POST`, so it can't be a plain
+`NavLink`. Render it as its own small form instead, styled to match the nav:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use Yiisoft\Html\Html;
@@ -45,14 +45,14 @@ if (!$this->currentUser->isGuest()) {
 }
 {% endhighlight %}
 </div>
-`$csrf` here is the `Csrf` value object that
+<p markdown="1">`$csrf` here is the `Csrf` value object that
 [`Yiisoft\Yii\View\Renderer\CsrfViewInjection`](https://github.com/yiisoft/yii-view-renderer) makes
-available to views when it's registered as a common parameter injection.
+available to views when it's registered as a common parameter injection.</p>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Styling required field indicators with CSS</h5>
-First, enable `enrichFromValidationRules` in your field theme config (see
+<p class="mb-3" markdown="1">First, enable `enrichFromValidationRules` in your field theme config (see
 [Quick Start](/voyti/quick-start/)) so that validation rules are translated to HTML5 attributes
-like `required`. Then add this to your stylesheet:
+like `required`. Then add this to your stylesheet:</p>
 <div class="mb-3 small lh-base">
 {% highlight css %}
 div:has([required]) > label::after {
@@ -63,12 +63,12 @@ div:has([required]) > label::after {
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rendering flash messages as Bootstrap toasts</h5>
-Voyti reports action outcomes - login, logout, password recovery, a saved profile - as session
+<p class="mb-3" markdown="1">Voyti reports action outcomes - login, logout, password recovery, a saved profile - as session
 flash messages, and its own pages render them for you: as Bootstrap 5 toasts when the optional
 [yiirocks/toast-bootstrap5](/voyti/quick-start/) package is installed, or plain alerts otherwise.
 To surface them on your own pages too - such as the home page, where
 [`voyti/session-logout`](/voyti/routes/) redirects after logout - render the toast container in
-your layout:
+your layout:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 <?= $toast->render($this) ?>
@@ -76,9 +76,9 @@ your layout:
 </div>
 
 <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Showing the impersonation banner in your own layout</h5>
-When an admin uses [`voyti/admin-users-switch-identity`](/voyti/routes/) to temporarily assume
+<p class="mb-3" markdown="1">When an admin uses [`voyti/admin-users-switch-identity`](/voyti/routes/) to temporarily assume
 another user's identity, drop in `YiiRocks\Voyti\Widget\SwitchIdentity` anywhere in your layout to
-show the "you're logged in as this user" banner with a restore button:
+show the "you're logged in as this user" banner with a restore button:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 if (!str_starts_with($this->currentRoute->getName() ?? '', 'voyti/')) {
@@ -86,5 +86,5 @@ if (!str_starts_with($this->currentRoute->getName() ?? '', 'voyti/')) {
 }
 {% endhighlight %}
 </div>
-Its dependencies resolve through the DI container, so this needs no wiring beyond having voyti
-installed, and it renders an empty string when nobody is impersonating anyone.
+<p markdown="1">Its dependencies resolve through the DI container, so this needs no wiring beyond having voyti
+installed, and it renders an empty string when nobody is impersonating anyone.</p>
