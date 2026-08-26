@@ -95,7 +95,7 @@ option_groups:
     - name: viewPath
       type: "?string"
       default: "<code>null</code>"
-      desc: "Optional custom directory for web template overrides. When a template is not found here, falls back to the bundled views of whichever installed package's name starts with <code>voyti-views-</code>."
+      desc: "Optional custom directory for web template overrides. When a template is not found here, falls back to the first installed views package's bundled views, announced via the <code>viewsPackagePaths</code> param (populated by the views package itself)."
     - name: mailPath
       type: string
       default: "<code>VoytiConfig::DEFAULT_MAIL_PATH</code>"

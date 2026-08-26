@@ -19,7 +19,7 @@ title: "Voyti - Quick Start"
             Voyti's core is view-agnostic; you need a views implementation package to render any pages.
             `yiirocks/voyti-views-bootstrap5` is the reference implementation using Bootstrap 5. You can
             substitute an alternative views package if you prefer a different UI framework, as long as it
-            implements the `yiirocks/voyti-views` interface.
+            announces its `views` directory through the `viewsPackagePaths` param.
 </p>
 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mw-100 mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
 <p class="mb-3">Optional packages to extend functionality:</p>

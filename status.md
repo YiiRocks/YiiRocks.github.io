@@ -38,7 +38,7 @@ groups:
 # docsUrl. Add hideMsi: true only if the repo has no MSI badge.
 sub_packages:
   voyti-api:
-    name: Voyti / API
+    name: API
     tint: "#ede9fe"
     logo: "/assets/icons/voyti-api.svg"
     package: yiirocks/voyti-api
@@ -47,7 +47,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/api/"
   voyti-2fa:
-    name: Voyti / 2FA
+    name: 2FA
     tint: "#fce7f3"
     logo: "/assets/icons/voyti-2fa.svg"
     package: yiirocks/voyti-2fa
@@ -56,7 +56,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/two-factor/"
   voyti-2fa-email:
-    name: Voyti / 2FA / Email
+    name: 2FA / Email
     tint: "#ffe4e6"
     logo: "/assets/icons/voyti-2fa-email.svg"
     package: yiirocks/voyti-2fa-email
@@ -65,7 +65,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/two-factor/"
   voyti-2fa-totp:
-    name: Voyti / 2FA / TOTP
+    name: 2FA / TOTP
     tint: "#fef3c7"
     logo: "/assets/icons/voyti-2fa-totp.svg"
     package: yiirocks/voyti-2fa-totp
@@ -74,7 +74,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/two-factor/"
   voyti-2fa-webauthn:
-    name: Voyti / 2FA / WebAuthn
+    name: 2FA / WebAuthn
     tint: "#cffafe"
     logo: "/assets/icons/voyti-2fa-webauthn.svg"
     package: yiirocks/voyti-2fa-webauthn
@@ -83,7 +83,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/two-factor/"
   voyti-gdpr:
-    name: Voyti / GDPR
+    name: GDPR
     tint: "#d1fae5"
     logo: "/assets/icons/voyti-gdpr.svg"
     package: yiirocks/voyti-gdpr
@@ -92,7 +92,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/gdpr/"
   voyti-lockout:
-    name: Voyti / Lockout
+    name: Lockout
     tint: "#e0f7f4"
     logo: "/assets/icons/voyti-lockout.svg"
     package: yiirocks/voyti-lockout
@@ -101,7 +101,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/lockout/"
   voyti-social-auth:
-    name: Voyti / Social Auth
+    name: Social Auth
     tint: "#e0f7fa"
     logo: "/assets/icons/voyti-social-auth.svg"
     package: yiirocks/voyti-social-auth
@@ -110,7 +110,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/social/"
   voyti-views-bootstrap5:
-    name: Voyti / Views / Bootstrap5
+    name: Views / Bootstrap5
     tint: "#dbeafe"
     logo: "/assets/icons/bootstrap.svg"
     package: yiirocks/voyti-views-bootstrap5
@@ -120,7 +120,7 @@ sub_packages:
     docsUrl: "/voyti/"
     hideMsi: true
   svg-inline-bootstrap:
-    name: SvgInline / Bootstrap
+    name: Bootstrap
     tint: "#dbeafe"
     logo: "/assets/icons/bootstrap.svg"
     package: yiirocks/svg-inline-bootstrap
@@ -129,7 +129,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/svg-inline/bootstrap/"
   svg-inline-fontawesome:
-    name: SvgInline / Font Awesome
+    name: Font Awesome
     tint: "#e0e7ff"
     logo: "/assets/icons/fontawesome.svg"
     package: yiirocks/svg-inline-fontawesome
