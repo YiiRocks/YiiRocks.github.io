@@ -31,7 +31,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
                     <div class="d-flex align-items-center gap-3">
                         <span class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ doc.tint }}; width:48px; height:48px;"><img src="{{ doc.logo | relative_url }}" alt="{{ doc.name }}" width="26" height="26"></span>
                         <div>
-                            <h3 class="h5 mb-0">{{ doc.name }}</h3>
+                            <h2 class="h5 mb-0">{{ doc.name }}</h2>
                             <div class="small fw-semibold text-primary-emphasis">{{ doc.tagline }}</div>
                         </div>
                     </div>

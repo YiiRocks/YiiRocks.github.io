@@ -1,6 +1,7 @@
 {% if include.features %}
+{% assign level = include.level | default: 2 %}
 {% unless include.heading == false %}
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Features</h5>
+<h{{ level }} class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Features</h{{ level }}>
 {% endunless %}
 <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
 {% for feat in include.features %}

@@ -159,17 +159,19 @@ sub_packages:
 {% endfor %}
 
 <div class="container py-5">
-    <h1 class="mb-4">Build Status</h1>
-    <div class="d-inline-flex align-items-center gap-2 mb-4 py-1 px-3 rounded-pill fw-semibold small bg-body-secondary">
-        <span class="hero-badge-dot rounded-circle bg-success" style="width:.5rem;height:.5rem;"></span>
-        {{ repo_count }} repositories tracked
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+        <h1 class="mb-0">Build Status</h1>
+        <div class="d-inline-flex align-items-center gap-2 py-1 px-3 rounded-pill fw-semibold small bg-body-secondary">
+            <span class="hero-badge-dot rounded-circle bg-success" style="width:.5rem;height:.5rem;"></span>
+            {{ repo_count }} repositories tracked
+        </div>
     </div>
 
 {% for group in page.groups %}
 {% if group.title %}
-    <h2 class="d-inline-block text-uppercase fw-bold">{{ group.title }}</h2>
+    <h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">{{ group.title }}</h2>
 {% endif %}
-    <div class="row row-cols-1 row-cols-md-2 g-4{% unless forloop.last %} mb-5{% endunless %}">
+    <div class="row row-cols-1 row-cols-md-2 g-3{% unless forloop.last %} mb-3{% endunless %}">
 {% for key in group.keys %}
 {% assign doc = nil %}
 {% assign status_pkg = nil %}
@@ -193,17 +195,17 @@ sub_packages:
 {% endif %}
 
 <div class="col">
-{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="card text-decoration-none position-relative">{% else %}<div class="card text-decoration-none position-relative">{% endif %}
+{% if pkg.docsUrl %}<a href="{{ pkg.docsUrl }}" class="card h-100 text-decoration-none position-relative">{% else %}<div class="card h-100 text-decoration-none position-relative">{% endif %}
             <div class="card-body">
 {% if pkg.featured %}<span class="status-star position-absolute">&#9733;</span>{% endif %}
             <div class="mb-3 d-flex align-items-center">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ pkg.tint }}; width:48px; height:48px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="30" height="30"></div>
                 <div class="ms-3">
-                    <h4 class="fw-bold mb-0">{{ pkg.name }}</h4>
+                    <h3 class="h4 fw-bold mb-0">{{ pkg.name }}</h3>
                     <div class="small text-truncate text-body-secondary font-monospace">{{ pkg.package }}</div>
                 </div>
             </div>
-            <div class="d-flex flex-wrap gap-2 mb-4">
+            <div class="d-flex flex-wrap gap-2 mb-3">
                 <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads"  loading="lazy" decoding="async">

@@ -12,7 +12,7 @@ title: "Voyti - RBAC Management"
 
 <h3 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">The RBAC Cookbook</h3>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Checking permissions in code</h5>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Checking permissions in code</h4>
 
 <p class="mb-3" markdown="1">The examples below show how to implement RBAC checks in your host application. Voyti provides the
 admin UI and storage, plus helpers like `AuthHelper`, but permission checks ultimately use the
@@ -63,7 +63,7 @@ public function editPost(int $postId): ResponseInterface
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Role hierarchy</h5>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Role hierarchy</h4>
 
 <p class="mb-3" markdown="1">Roles and permissions form a hierarchy: a parent role inherits all permissions from its children,
 avoiding duplication across multiple roles.</p>
@@ -80,7 +80,7 @@ avoiding duplication across multiple roles.</p>
 <strong>post.delete</strong>, and <strong>admin.manage-users</strong> permissions without explicit
 assignment. You can build hierarchies with both direct permissions and role-to-role inheritance.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rules</h5>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rules</h4>
 
 <p class="mb-3" markdown="1">Rules add conditional logic to permissions: a permission with a rule only grants access if the
 rule's code passes. Register custom rules by implementing `RuleInterface` and tagging them in your
@@ -138,7 +138,7 @@ if ($this->rbacManager->userHasPermission($userId, 'post.edit-own', ['postId' =>
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Assignments</h5>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Assignments</h4>
 
 <p class="mb-3" markdown="1">Assignments link users to roles and permissions. The admin UI (under <strong>RBAC &gt;
 Roles</strong> and <strong>RBAC &gt; Permissions</strong>) shows an "Assigned users" section where
@@ -165,7 +165,7 @@ $userAssignments = $this->assignments->getByUserId($userId);
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Practical example</h5>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Practical example</h4>
 
 <p class="mb-3" markdown="1">Say you want to let users edit and publish their own posts but not others'. Create the structure
 via the admin UI:</p>

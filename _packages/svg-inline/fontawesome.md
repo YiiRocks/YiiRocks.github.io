@@ -83,18 +83,18 @@ echo $svg->fai('github', 'brands')->title('GitHub');
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/svg-inline-fontawesome" repo="svg-inline-fontawesome" %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
 <p class="mb-3" markdown="1">Configure Font Awesome Icons behavior in `config/params.php` under the
 `'yiirocks/svg-inline-fontawesome'` key:</p>
 {% include options_table.md options=page.option_groups.config %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h3>
 {% include options_table.md options=page.option_groups.method_params %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h3>
 <p class="mb-3" markdown="1">Additional options can be chained onto the `fai()` call:</p>
 {% include options_table.md options=page.option_groups.fluent %}
 

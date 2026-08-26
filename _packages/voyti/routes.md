@@ -3,6 +3,58 @@ layout: package-section
 pkgId: voyti
 section: routes
 title: "Voyti - Available Routes"
+routes:
+  - { name: "voyti/session-login", method: "GET, POST", path: "login", purpose: "User login" }
+  - { name: "voyti/session-logout", method: "POST", path: "logout", purpose: "User logout" }
+  - { name: "voyti/registration-register", method: "GET, POST", path: "register", purpose: "New user registration" }
+  - { name: "voyti/registration-confirm", method: "GET, POST", path: "confirm/{id}/{code}", purpose: "Email confirmation link" }
+  - { name: "voyti/registration-resend", method: "GET, POST", path: "resend", purpose: "Resend confirmation email" }
+  - { name: "voyti/password-reset-request", method: "GET, POST", path: "forgot", purpose: "Password recovery request" }
+  - { name: "voyti/password-reset-confirm", method: "GET, POST", path: "recover/{id}/{code}", purpose: "Password reset" }
+  - { name: "voyti/profile", method: "GET", path: "profile/{id}", purpose: "Public user profile" }
+  - { name: "voyti/user", method: "GET", path: "settings/", purpose: "User dashboard" }
+  - { name: "voyti/user-profile", method: "GET, POST", path: "settings/profile", purpose: "Profile settings" }
+  - { name: "voyti/user-account", method: "GET, POST", path: "settings/account", purpose: "Account settings" }
+  - { name: "voyti/user-account-confirm", method: "GET", path: "settings/account/confirm/{code}", purpose: "Confirm account changes" }
+  - { name: "voyti/user-account-sessions", method: "GET", path: "settings/sessions/", purpose: "Self-service session/device list, current device highlighted" }
+  - { name: "voyti/user-account-sessions-terminate", method: "POST", path: "settings/sessions/terminate/{sessionId}", purpose: "Terminate one of the current user's own sessions" }
+  - name: "voyti/user-privacy"
+    method: "GET"
+    path: "settings/privacy/"
+    purpose: 'Privacy settings hub. Registered when <code>allowAccountDelete</code> is <code>true</code> or the <code>privacyMenuItems</code> param is non-empty, which the optional <a href="/voyti/gdpr/"><code>yiirocks/voyti-gdpr</code></a> addon populates automatically'
+  - { name: "voyti/user-privacy-delete", method: "GET, POST", path: "settings/privacy/delete", purpose: "Account deletion (hard delete). Registered when <code>allowAccountDelete</code> is <code>true</code>" }
+  - { name: "voyti/admin", method: "GET", path: "admin/", purpose: "Admin dashboard" }
+  - { name: "voyti/admin-users", method: "GET", path: "admin/users/", purpose: "Users" }
+  - { name: "voyti/admin-users-create", method: "GET, POST", path: "admin/users/create", purpose: "Create user" }
+  - { name: "voyti/admin-users-update", method: "GET, POST", path: "admin/users/update/{id}", purpose: "Update user" }
+  - { name: "voyti/admin-users-update-profile", method: "GET, POST", path: "admin/users/update-profile/{id}", purpose: "Update user profile" }
+  - { name: "voyti/admin-users-show", method: "GET", path: "admin/users/info/{id}", purpose: "User details" }
+  - { name: "voyti/admin-users-confirm", method: "POST", path: "admin/users/confirm/{id}", purpose: "Confirm user" }
+  - { name: "voyti/admin-users-delete", method: "POST", path: "admin/users/delete/{id}", purpose: "Delete user" }
+  - { name: "voyti/admin-users-block", method: "POST", path: "admin/users/block/{id}", purpose: "Block user" }
+  - { name: "voyti/admin-users-switch-identity", method: "POST", path: "admin/users/switch-identity/{id}", purpose: "Switch identity" }
+  - { name: "voyti/admin-users-switch-identity-restore", method: "POST", path: "admin/users/switch-identity/restore", purpose: "Restore identity after impersonating" }
+  - { name: "voyti/admin-users-password-reset", method: "POST", path: "admin/users/password-reset/{id}", purpose: "Send password reset" }
+  - { name: "voyti/admin-users-force-password-change", method: "POST", path: "admin/users/force-password-change/{id}", purpose: "Force password change" }
+  - { name: "voyti/admin-users-assignments", method: "GET, POST", path: "admin/users/assignments/{id}", purpose: "Manage RBAC assignments" }
+  - { name: "voyti/admin-users-sessions", method: "GET", path: "admin/users/sessions/{id}", purpose: "Session management" }
+  - { name: "voyti/admin-users-terminate-sessions", method: "POST", path: "admin/users/terminate-sessions/{id}", purpose: "Terminate sessions" }
+  - { name: "voyti/admin-rbac-permissions", method: "GET", path: "admin/rbac/permissions/", purpose: "List permissions" }
+  - { name: "voyti/admin-rbac-permissions-create", method: "GET, POST", path: "admin/rbac/permissions/create", purpose: "Create permission" }
+  - { name: "voyti/admin-rbac-permissions-update", method: "GET, POST", path: "admin/rbac/permissions/update/{name}", purpose: "Update permission" }
+  - { name: "voyti/admin-rbac-permissions-delete", method: "POST", path: "admin/rbac/permissions/delete/{name}", purpose: "Delete permission" }
+  - { name: "voyti/admin-rbac-roles", method: "GET", path: "admin/rbac/roles/", purpose: "List roles" }
+  - { name: "voyti/admin-rbac-roles-create", method: "GET, POST", path: "admin/rbac/roles/create", purpose: "Create role" }
+  - { name: "voyti/admin-rbac-roles-update", method: "GET, POST", path: "admin/rbac/roles/update/{name}", purpose: "Update role" }
+  - { name: "voyti/admin-rbac-roles-delete", method: "POST", path: "admin/rbac/roles/delete/{name}", purpose: "Delete role" }
+  - { name: "voyti/admin-rbac-rules", method: "GET", path: "admin/rbac/rules/", purpose: "List rules" }
+  - { name: "voyti/admin-rbac-rules-create", method: "GET, POST", path: "admin/rbac/rules/create", purpose: "Create rule" }
+  - { name: "voyti/admin-rbac-rules-update", method: "GET, POST", path: "admin/rbac/rules/update/{name}", purpose: "Update rule" }
+  - { name: "voyti/admin-rbac-rules-delete", method: "POST", path: "admin/rbac/rules/delete/{name}", purpose: "Delete rule" }
+  - name: "voyti/admin-audit-log"
+    method: "GET"
+    path: "admin/audit-log/"
+    purpose: 'Audit log of admin actions (RBAC and user management changes). Populated when <code>enableAuditLog</code> is <code>true</code>'
 ---
 
 <p class="mb-3" markdown="1">The library does not provide a menu model or navigation contract. It only exposes named routes that
@@ -13,62 +65,4 @@ the host application can use in its own menu, sidebar, or access rules. See the
 [Two-Factor](/voyti/two-factor/), [REST API](/voyti/api/), [GDPR](/voyti/gdpr/)) register their own
 routes when installed - see each addon's own page.</p>
 
-<div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead class="fw-bold text-uppercase text-nowrap">
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/session-login</code></td><td><code>GET, POST</code></td><td><code>login</code></td><td>User login</td></tr>
-                    <tr><td><code>voyti/session-logout</code></td><td><code>POST</code></td><td><code>logout</code></td><td>User logout</td></tr>
-                    <tr><td><code>voyti/registration-register</code></td><td><code>GET, POST</code></td><td><code>register</code></td><td>New user registration</td></tr>
-                    <tr><td><code>voyti/registration-confirm</code></td><td><code>GET, POST</code></td><td><code>confirm/{id}/{code}</code></td><td>Email confirmation link</td></tr>
-                    <tr><td><code>voyti/registration-resend</code></td><td><code>GET, POST</code></td><td><code>resend</code></td><td>Resend confirmation email</td></tr>
-                    <tr><td><code>voyti/password-reset-request</code></td><td><code>GET, POST</code></td><td><code>forgot</code></td><td>Password recovery request</td></tr>
-                    <tr><td><code>voyti/password-reset-confirm</code></td><td><code>GET, POST</code></td><td><code>recover/{id}/{code}</code></td><td>Password reset</td></tr>
-                    <tr><td><code>voyti/profile</code></td><td><code>GET</code></td><td><code>profile/{id}</code></td><td>Public user profile</td></tr>
-                    <tr><td><code>voyti/user</code></td><td><code>GET</code></td><td><code>settings/</code></td><td>User dashboard</td></tr>
-                    <tr><td><code>voyti/user-profile</code></td><td><code>GET, POST</code></td><td><code>settings/profile</code></td><td>Profile settings</td></tr>
-                    <tr><td><code>voyti/user-account</code></td><td><code>GET, POST</code></td><td><code>settings/account</code></td><td>Account settings</td></tr>
-                    <tr><td><code>voyti/user-account-confirm</code></td><td><code>GET</code></td><td><code>settings/account/confirm/{code}</code></td><td>Confirm account changes</td></tr>
-                    <tr><td><code>voyti/user-account-sessions</code></td><td><code>GET</code></td><td><code>settings/sessions/</code></td><td>Self-service session/device list, current device highlighted</td></tr>
-                    <tr><td><code>voyti/user-account-sessions-terminate</code></td><td><code>POST</code></td><td><code>settings/sessions/terminate/{sessionId}</code></td><td>Terminate one of the current user's own sessions</td></tr>
-                    <tr><td><code>voyti/user-privacy</code></td><td><code>GET</code></td><td><code>settings/privacy/</code></td><td>Privacy settings hub. Registered when <code>allowAccountDelete</code> is <code>true</code> or the <code>privacyMenuItems</code> param is non-empty, which the optional <a href="/voyti/gdpr/"><code>yiirocks/voyti-gdpr</code></a> addon populates automatically</td></tr>
-                    <tr><td><code>voyti/user-privacy-delete</code></td><td><code>GET, POST</code></td><td><code>settings/privacy/delete</code></td><td>Account deletion (hard delete). Registered when <code>allowAccountDelete</code> is <code>true</code></td></tr>
-                    <tr><td><code>voyti/admin</code></td><td><code>GET</code></td><td><code>admin/</code></td><td>Admin dashboard</td></tr>
-                    <tr><td><code>voyti/admin-users</code></td><td><code>GET</code></td><td><code>admin/users/</code></td><td>Users</td></tr>
-                    <tr><td><code>voyti/admin-users-create</code></td><td><code>GET, POST</code></td><td><code>admin/users/create</code></td><td>Create user</td></tr>
-                    <tr><td><code>voyti/admin-users-update</code></td><td><code>GET, POST</code></td><td><code>admin/users/update/{id}</code></td><td>Update user</td></tr>
-                    <tr><td><code>voyti/admin-users-update-profile</code></td><td><code>GET, POST</code></td><td><code>admin/users/update-profile/{id}</code></td><td>Update user profile</td></tr>
-                    <tr><td><code>voyti/admin-users-show</code></td><td><code>GET</code></td><td><code>admin/users/info/{id}</code></td><td>User details</td></tr>
-                    <tr><td><code>voyti/admin-users-confirm</code></td><td><code>POST</code></td><td><code>admin/users/confirm/{id}</code></td><td>Confirm user</td></tr>
-                    <tr><td><code>voyti/admin-users-delete</code></td><td><code>POST</code></td><td><code>admin/users/delete/{id}</code></td><td>Delete user</td></tr>
-                    <tr><td><code>voyti/admin-users-block</code></td><td><code>POST</code></td><td><code>admin/users/block/{id}</code></td><td>Block user</td></tr>
-                    <tr><td><code>voyti/admin-users-switch-identity</code></td><td><code>POST</code></td><td><code>admin/users/switch-identity/{id}</code></td><td>Switch identity</td></tr>
-                    <tr><td><code>voyti/admin-users-switch-identity-restore</code></td><td><code>POST</code></td><td><code>admin/users/switch-identity/restore</code></td><td>Restore identity after impersonating</td></tr>
-                    <tr><td><code>voyti/admin-users-password-reset</code></td><td><code>POST</code></td><td><code>admin/users/password-reset/{id}</code></td><td>Send password reset</td></tr>
-                    <tr><td><code>voyti/admin-users-force-password-change</code></td><td><code>POST</code></td><td><code>admin/users/force-password-change/{id}</code></td><td>Force password change</td></tr>
-                    <tr><td><code>voyti/admin-users-assignments</code></td><td><code>GET, POST</code></td><td><code>admin/users/assignments/{id}</code></td><td>Manage RBAC assignments</td></tr>
-                    <tr><td><code>voyti/admin-users-sessions</code></td><td><code>GET</code></td><td><code>admin/users/sessions/{id}</code></td><td>Session management</td></tr>
-                    <tr><td><code>voyti/admin-users-terminate-sessions</code></td><td><code>POST</code></td><td><code>admin/users/terminate-sessions/{id}</code></td><td>Terminate sessions</td></tr>
-                    <tr><td><code>voyti/admin-rbac-permissions</code></td><td><code>GET</code></td><td><code>admin/rbac/permissions/</code></td><td>List permissions</td></tr>
-                    <tr><td><code>voyti/admin-rbac-permissions-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/permissions/create</code></td><td>Create permission</td></tr>
-                    <tr><td><code>voyti/admin-rbac-permissions-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/permissions/update/{name}</code></td><td>Update permission</td></tr>
-                    <tr><td><code>voyti/admin-rbac-permissions-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/permissions/delete/{name}</code></td><td>Delete permission</td></tr>
-                    <tr><td><code>voyti/admin-rbac-roles</code></td><td><code>GET</code></td><td><code>admin/rbac/roles/</code></td><td>List roles</td></tr>
-                    <tr><td><code>voyti/admin-rbac-roles-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/roles/create</code></td><td>Create role</td></tr>
-                    <tr><td><code>voyti/admin-rbac-roles-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/roles/update/{name}</code></td><td>Update role</td></tr>
-                    <tr><td><code>voyti/admin-rbac-roles-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/roles/delete/{name}</code></td><td>Delete role</td></tr>
-                    <tr><td><code>voyti/admin-rbac-rules</code></td><td><code>GET</code></td><td><code>admin/rbac/rules/</code></td><td>List rules</td></tr>
-                    <tr><td><code>voyti/admin-rbac-rules-create</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/create</code></td><td>Create rule</td></tr>
-                    <tr><td><code>voyti/admin-rbac-rules-update</code></td><td><code>GET, POST</code></td><td><code>admin/rbac/rules/update/{name}</code></td><td>Update rule</td></tr>
-                    <tr><td><code>voyti/admin-rbac-rules-delete</code></td><td><code>POST</code></td><td><code>admin/rbac/rules/delete/{name}</code></td><td>Delete rule</td></tr>
-                    <tr><td><code>voyti/admin-audit-log</code></td><td><code>GET</code></td><td><code>admin/audit-log/</code></td><td>Audit log of admin actions (RBAC and user management changes). Populated when <code>enableAuditLog</code> is <code>true</code></td></tr>
-                </tbody>
-            </table>
-</div>
+{% include route_table.md routes=page.routes %}

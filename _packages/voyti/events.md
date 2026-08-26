@@ -9,7 +9,7 @@ title: "Voyti - Events & Listeners"
 log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher
 configuration.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events with default listeners</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events with default listeners</h3>
 
 <div class="table-responsive">
 <table class="table table-sm table-striped">
@@ -27,7 +27,7 @@ configuration.</p>
 </table>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h3>
 
 <p class="mb-3" markdown="1">Dispatched by the library, but nothing consumes them by default - attach your own listener via the
 event dispatcher configuration if you need to react to them.</p>
@@ -49,7 +49,7 @@ event dispatcher configuration if you need to react to them.</p>
 </table>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Cancellable events</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Cancellable events</h3>
 
 <p class="mb-3" markdown="1">A small set of events are dispatched <em>before</em> the action they precede takes effect. A
 listener can throw `YiiRocks\Voyti\Exception\ActionPreventedException` to stop the action; the
@@ -72,7 +72,7 @@ using the exception's `getErrorDetails()` (a list of field/attribute names) when
 </table>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h3>
 
 <p class="mb-3" markdown="1">Emitted around the login and registration forms, and on account-level changes, for analytics,
 security monitoring, and paired-event flows.</p>
@@ -97,7 +97,7 @@ security monitoring, and paired-event flows.</p>
 </table>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: A cancellable BEFORE event</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: A cancellable BEFORE event</h3>
 
 <p class="mb-3" markdown="1">Throw `ActionPreventedException` from a listener to reject the action - here, rate-limiting
 registrations by IP:</p>
@@ -120,7 +120,7 @@ return [
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: Listening to Events</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: Listening to Events</h3>
 
 <p class="mb-3" markdown="1">Attach listeners through the Yii3 event dispatcher configuration:</p>
 

@@ -3,99 +3,51 @@ layout: package-section
 pkgId: voyti
 section: middleware
 title: "Voyti - Middleware"
+middleware_groups:
+  core:
+    - name: "AccessRuleMiddleware"
+      desc: "Redirects guests to the login page (<code>voyti/session-login</code>); checks <code>administratorPermissionName</code> for admin access"
+      auto: "Yes - on <code>admin/*</code> (users and RBAC management)"
+    - name: "RequireLoginMiddleware"
+      desc: "Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code>"
+      auto: "Yes - on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)"
+    - name: "RememberMeMiddleware"
+      desc: "Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response - either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved"
+      auto: "Yes"
+    - name: "SessionRevocationEnforceMiddleware"
+      desc: "Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone - i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show \"last seen\" activity per device."
+      auto: "Yes"
+    - name: "PasswordAgeEnforceMiddleware"
+      desc: "Redirects to the account settings page (<code>voyti/user-account</code>) when <code>maxPasswordAge</code> is exceeded"
+      auto: "Yes, when <code>maxPasswordAge</code> is greater than <code>0</code>"
+    - name: "VoytiMiddleware"
+      desc: "Convenience wrapper that runs <code>RememberMeMiddleware</code> first, then every middleware tagged <code>voyti.enforce-middleware</code> - core contributes <code>SessionRevocationEnforceMiddleware</code> and <code>PasswordAgeEnforceMiddleware</code>, and installed packages contribute their own"
+      auto: "No, add it to the <code>Group</code> wrapping your app's own routes. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group."
+  twofactor:
+    - name: "TwoFactorAuthenticationEnforceMiddleware"
+      desc: "Enforces 2FA for users with <code>forcedPermissions</code> by redirecting to the settings page (<code>voyti/user-two-factor</code>) with an explanatory message. Two-factor and logout routes remain accessible during setup"
+      auto: "Yes"
+  social:
+    - name: "CaptureAuthActionRequestMiddleware"
+      desc: "Stores the real incoming request so it survives past <code>yiisoft/yii-auth-client</code>'s <code>AuthAction</code>, which never forwards it to its success/cancel callbacks - needed so social login can complete through the same <code>LoginCompletionService::complete()</code> path password login uses"
+      auto: 'Yes - wraps the whole <a href="/voyti/social/">social auth</a> route group'
 ---
 
 <p class="mb-3" markdown="1">Core ships seven PSR-15 middleware classes for session handling and access control; installed
 sibling packages can contribute their own on top.</p>
 
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\Middleware`</p>
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-            <thead class="fw-bold text-uppercase text-nowrap">
-                <tr>
-                    <th>Middleware</th>
-                    <th>Description</th>
-                    <th>Auto-registered?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>AccessRuleMiddleware</code></td>
-                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); checks <code>administratorPermissionName</code> for admin access</td>
-                    <td>Yes - on <code>admin/*</code> (users and RBAC management)</td>
-                </tr>
-                <tr>
-                    <td><code>RequireLoginMiddleware</code></td>
-                    <td>Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code></td>
-                    <td>Yes - on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)</td>
-                </tr>
-                <tr>
-                    <td><code>RememberMeMiddleware</code></td>
-                    <td>Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response - either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td><code>SessionRevocationEnforceMiddleware</code></td>
-                    <td>Logs out and redirects to the login page (<code>voyti/session-login</code>) when the current session's <code>user_sessions</code> row is gone - i.e. it was terminated from the sessions list (self-service or admin) on another request. Without this, terminating a session only removed the row; the browser that owned it stayed logged in until its PHP session expired on its own. Otherwise touches the row's <code>updated_at</code> on every request, so the sessions list can show "last seen" activity per device.</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td><code>PasswordAgeEnforceMiddleware</code></td>
-                    <td>Redirects to the account settings page (<code>voyti/user-account</code>) when <code>maxPasswordAge</code> is exceeded</td>
-                    <td>Yes, when <code>maxPasswordAge</code> is greater than <code>0</code></td>
-                </tr>
-                <tr>
-                    <td><code>VoytiMiddleware</code></td>
-                    <td>Convenience wrapper that runs <code>RememberMeMiddleware</code> first, then every middleware tagged <code>voyti.enforce-middleware</code> - core contributes <code>SessionRevocationEnforceMiddleware</code> and <code>PasswordAgeEnforceMiddleware</code>, and installed packages contribute their own</td>
-                    <td>No, add it to the <code>Group</code> wrapping your app's own routes. Make sure to place it after <code>SessionMiddleware</code> so <code>CurrentUser</code> is resolvable. Each sub-middleware checks its own feature flag, so disabled features are no-ops. Keep it scoped to your own routes, not the <code>voyti-routes</code> group.</td>
-                </tr>
-            </tbody>
-</table>
-</div>
+{% include middleware_table.md middleware=page.middleware_groups.core %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">2FA</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">2FA</h3>
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\TwoFactor\Middleware`</p>
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-            <thead class="fw-bold text-uppercase text-nowrap">
-                <tr>
-                    <th>Middleware</th>
-                    <th>Description</th>
-                    <th>Auto-registered?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>TwoFactorAuthenticationEnforceMiddleware</code></td>
-                    <td>Enforces 2FA for users with <code>forcedPermissions</code> by redirecting to the settings page (<code>voyti/user-two-factor</code>) with an explanatory message. Two-factor and logout routes remain accessible during setup</td>
-                    <td>Yes</td>
-                </tr>
-            </tbody>
-</table>
-</div>
+{% include middleware_table.md middleware=page.middleware_groups.twofactor %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social auth</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social auth</h3>
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\SocialAuth\Middleware`</p>
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-            <thead class="fw-bold text-uppercase text-nowrap">
-                <tr>
-                    <th>Middleware</th>
-                    <th>Description</th>
-                    <th>Auto-registered?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>CaptureAuthActionRequestMiddleware</code></td>
-                    <td>Stores the real incoming request so it survives past <code>yiisoft/yii-auth-client</code>'s <code>AuthAction</code>, which never forwards it to its success/cancel callbacks - needed so social login can complete through the same <code>LoginCompletionService::complete()</code> path password login uses</td>
-                    <td>Yes - wraps the whole <a href="/voyti/social/">social auth</a> route group</td>
-                </tr>
-            </tbody>
-</table>
-</div>
+{% include middleware_table.md middleware=page.middleware_groups.social %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="site-wide-enforcement">Site-wide enforcement</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="site-wide-enforcement">Site-wide enforcement</h3>
 
 <p markdown="1">The auto-registration above only covers routes <em>this extension defines</em>. Without
 `VoytiMiddleware` wrapping your routes, a user with an expired password, missing 2FA, or

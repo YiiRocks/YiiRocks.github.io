@@ -122,17 +122,17 @@ return [
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">General</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">General</h3>
 {% include options_table.md options=page.option_groups.general %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication &amp; Registration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication &amp; Registration</h3>
 {% include options_table.md options=page.option_groups.auth %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Session &amp; Security</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Session &amp; Security</h3>
 {% include options_table.md options=page.option_groups.session %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Views &amp; Mail</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Views &amp; Mail</h3>
 {% include options_table.md options=page.option_groups.views_mail %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Admin Dashboard</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Admin Dashboard</h3>
 {% include options_table.md options=page.option_groups.admin_dashboard %}

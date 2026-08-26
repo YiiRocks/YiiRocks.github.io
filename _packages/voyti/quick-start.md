@@ -7,14 +7,14 @@ title: "Voyti - Quick Start"
 
 <ol>
             <li>
-                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Verify prerequisites</h5>
+                <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Verify prerequisites</h3>
 <ul class="mb-3">
 <li>PHP 8.3 or higher with <code>ext-intl</code></li>
 <li>A connected database in your host application via <a href="https://github.com/yiisoft/db">Yii Database</a></li>
 </ul>
             </li>
             <li>
-                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Install</h5>
+                <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Install</h3>
 <p class="mb-3" markdown="1">
             Voyti's core is view-agnostic; you need a views implementation package to render any pages.
             `yiirocks/voyti-views-bootstrap5` is the reference implementation using Bootstrap 5. You can
@@ -23,7 +23,7 @@ title: "Voyti - Quick Start"
 </p>
 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mw-100 mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
-<div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+<div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
             <div class="col">
             <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Bot Protection</div>
@@ -81,7 +81,7 @@ title: "Voyti - Quick Start"
 
             </li>
             <li>
-                <h5 id="cookie-secret" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Set the cookie secret</h5>
+                <h3 id="cookie-secret" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Set the cookie secret</h3>
 <div class="alert alert-danger" role="alert">
             Voyti encrypts the remember-me cookie using <code>yiisoft/cookies</code>'
             secret key. Leaving it unset throws a <code>LogicException</code>.
@@ -100,7 +100,7 @@ return [
 
             </li>
             <li>
-                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Run migrations</h5>
+                <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Run migrations</h3>
 
 <p class="mb-3" markdown="1">Voyti provides its migration path through `config/params-console.php` using the standard
 `yiisoft/db-migration` configuration keys. With `yiisoft/db-migration` enabled in your console app,
@@ -124,7 +124,7 @@ already has rows (e.g. re-running migrations on an existing database), seeding i
 
             </li>
             <li>
-                <h5 id="register-routes" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register routes</h5>
+                <h3 id="register-routes" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register routes</h3>
 
 <p class="mb-3" markdown="1">Routes are <strong>not</strong> auto-registered - you must add them to your router configuration.</p>
 
@@ -173,7 +173,7 @@ extends that same coverage to your app's pages.</p>
 
             </li>
             <li>
-                <h5 id="configure-the-form-theme" class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configure the form theme</h5>
+                <h3 id="configure-the-form-theme" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configure the form theme</h3>
 <div class="alert alert-warning" role="alert">
             This step is optional but highly recommended. Without it, forms and buttons will render without any styling.
 </div>
@@ -218,7 +218,7 @@ automatically.</p>
 
             </li>
             <li>
-                <h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Done</h5>
+                <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Done</h3>
 
 <p markdown="1">DI bindings, event listeners, and console commands are auto-registered via the
 [Yii3 config plugin](https://github.com/yiisoft/config). No manual wiring needed.</p>

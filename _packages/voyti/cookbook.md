@@ -7,7 +7,7 @@ description: "Practical Voyti recipes: building a nav menu from routes, styling 
 excerpt_separator: ""
 ---
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Building a nav menu from voyti's routes</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Building a nav menu from voyti's routes</h3>
 <p class="mb-3" markdown="1">Voyti does not provide a menu model or navigation contract, it only exposes named routes that the
 host application wires into its own menu, sidebar, or access rules. For example, a
 [`yiisoft/yii-bootstrap5`](https://github.com/yiisoft/yii-bootstrap5) nav built from those routes
@@ -49,7 +49,7 @@ if (!$this->currentUser->isGuest()) {
 [`Yiisoft\Yii\View\Renderer\CsrfViewInjection`](https://github.com/yiisoft/yii-view-renderer) makes
 available to views when it's registered as a common parameter injection.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Styling required field indicators with CSS</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Styling required field indicators with CSS</h3>
 <p class="mb-3" markdown="1">First, enable `enrichFromValidationRules` in your field theme config (see
 [Quick Start](/voyti/quick-start/)) so that validation rules are translated to HTML5 attributes
 like `required`. Then add this to your stylesheet:</p>
@@ -62,7 +62,7 @@ div:has([required]) > label::after {
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rendering flash messages as Bootstrap toasts</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rendering flash messages as Bootstrap toasts</h3>
 <p class="mb-3" markdown="1">Voyti reports action outcomes - login, logout, password recovery, a saved profile - as session
 flash messages, and its own pages render them for you: as Bootstrap 5 toasts when the optional
 [yiirocks/toast-bootstrap5](/voyti/quick-start/) package is installed, or plain alerts otherwise.
@@ -75,7 +75,7 @@ your layout:</p>
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Showing the impersonation banner in your own layout</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Showing the impersonation banner in your own layout</h3>
 <p class="mb-3" markdown="1">When an admin uses [`voyti/admin-users-switch-identity`](/voyti/routes/) to temporarily assume
 another user's identity, drop in `YiiRocks\Voyti\Widget\SwitchIdentity` anywhere in your layout to
 show the "you're logged in as this user" banner with a restore button:</p>

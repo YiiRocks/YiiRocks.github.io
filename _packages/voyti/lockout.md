@@ -36,17 +36,17 @@ to core's existing auth events to count failed attempts per IP address and delay
 even ones with the correct credentials, with an exponentially growing wait that starts from the
 very first failure.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Prerequisite</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Prerequisite</h3>
 
 <p markdown="1">Your application must have a PSR-16 `Psr\SimpleCache\CacheInterface` implementation configured and
 bound in your DI container. Any PSR-16 compliant cache works. See
 [yiisoft/cache](https://github.com/yiisoft/cache) documentation for one option and its available
 backends.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/voyti-lockout" repo="voyti-lockout" %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Storage</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Storage</h3>
 
 <p class="mb-3" markdown="1">Failed-attempt counts are tracked in the cache. Each cache entry's key is a SHA-256 hash of the
 request's IP address, scoped separately for login and registration so the two counters never
@@ -59,7 +59,7 @@ and the entry only expires once attempts stop for that long. Once the currently 
 grows past that minimum, the TTL instead tracks the delay itself, which can be much longer, so the
 count can't reset while the caller is still required to wait.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
@@ -74,7 +74,7 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h3>
 <div class="table-responsive">
     <table class="table table-sm table-striped">
         <thead class="fw-bold text-uppercase text-nowrap">
@@ -99,7 +99,7 @@ catches it and surfaces a translated error on the form instead of a raw exceptio
 message carries the computed wait, in seconds, so the UI can tell the user exactly how long to wait
 before retrying.</p>
 
-<h5>Design decisions</h5>
+<h3 class="h5">Design decisions</h3>
 
 <p class="mb-3" markdown="1"><strong>IP-scoped, not account-scoped:</strong> Counters are scoped by IP address. Account scoping
 would let an attacker lock a legitimate user out of their own account just by deliberately failing

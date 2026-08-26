@@ -87,7 +87,7 @@ option_groups:
       desc: "The width of the icon. If width is given without height, the latter will be calculated from the SVG size."
 ---
 
-<p class="mb-4">Provides simple functions for your Yii Framework 3 applications to add SVG
+<p class="mb-3">Provides simple functions for your Yii Framework 3 applications to add SVG
 files inline and manipulate their properties. It can be extended with Bootstrap Icons and Font
 Awesome Icons.</p>
 
@@ -97,13 +97,13 @@ echo $svg->file('@vendor/path/icon.svg')->height(42)->title('Yii Rocks');
 {% endhighlight %}
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
 <p class="mb-3" markdown="1">Configure SVG inline behavior in `config/params.php` under the `'yiirocks/svg-inline'` key:</p>
 {% include options_table.md options=page.option_groups.config %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h3>
 {% include options_table.md options=page.option_groups.method_params %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h3>
 <p class="mb-3" markdown="1">Additional options can be chained onto the `file()` call:</p>
 {% include options_table.md options=page.option_groups.fluent %}

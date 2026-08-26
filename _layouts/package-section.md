@@ -11,7 +11,7 @@ layout: default
 {% endif %}
 {% endfor %}
 <div class="container py-5">
-    <div class="d-flex align-items-center gap-4 mb-4">
+    <div class="d-flex align-items-center gap-4 mb-3">
         <a href="{{ pkg.docsUrl }}" class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4" style="background:{{ pkg.tint }}; width:56px; height:56px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="32" height="32"></a>
         <div>
             <a href="{{ pkg.docsUrl }}" class="link-body-emphasis link-underline-opacity-0"><h1 class="h2 fw-bold">{{ pkg.name }}</h1></a>

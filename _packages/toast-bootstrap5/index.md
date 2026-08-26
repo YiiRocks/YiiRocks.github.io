@@ -52,19 +52,19 @@ examples:
   - "use YiiRocks\\ToastBootstrap5\\ToastType;\n\n$this->toast->add(ToastType::ERROR, 'Something went wrong.');"
 ---
 
-<p class="mb-4" markdown="1">Renders Bootstrap 5 toast notifications from your Yii Framework 3
+<p class="mb-3" markdown="1">Renders Bootstrap 5 toast notifications from your Yii Framework 3
 application's session flash messages. Queue a message from a controller with
 `FlashToastInterface`, render it in your layout with `$toast->render($this)`. No manual partials,
 no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and
 auto-hide behavior.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Types</h5>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Types</h2>
 
 <p class="mb-3" markdown="1">The first argument to `add()` is a `ToastType` case. Each maps to a Bootstrap 5 `text-bg-*` color
 and an ARIA live-region role. Urgent types interrupt with `role="alert"`, the rest announce
 politely with `role="status"`.</p>
 
-<div class="list-group mb-4">
+<div class="list-group mb-3">
     <div class="list-group-item">
         <div class="row">
             <div class="col-md-4">

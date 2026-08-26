@@ -76,13 +76,13 @@ included as part of the main text on a page, rather than in a separate section
 applications to add [Font Awesome](https://fontawesome.com/) [Icons](https://fontawesome.com/icons)
 inline <strong><em>without the use of JavaScript</em></strong>.</p>
 
-<h3 class="fw-bolder mb-2">Options</h3>
+<h2 class="h3 fw-bolder mb-2">Options</h2>
 {% include options_table.md options=page.option_groups.main %}
 
-<h3 class="fw-bolder mb-2">ActiveForm Specific Global Options</h3>
+<h2 class="h3 fw-bolder mb-2">ActiveForm Specific Global Options</h2>
 {% include options_table.md options=page.option_groups.activeform %}
 
-<h3 class="fw-bolder mb-2">Usage as a Class</h3>
+<h2 class="h3 fw-bolder mb-2">Usage as a Class</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 $icon = new \thoulah\fontawesome\Icon();
@@ -92,7 +92,7 @@ echo $icon->show('font-awesome', ['class' => 'yourClass', 'style' => 'brands']);
 {% endhighlight %}
 </div>
 
-<h3 class="fw-bolder mb-2">Usage as a Widget</h3>
+<h2 class="h3 fw-bolder mb-2">Usage as a Widget</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use thoulah\fontawesome\IconWidget4 as IconWidget;
@@ -109,7 +109,7 @@ echo IconWidget::widget([
 {% endhighlight %}
 </div>
 
-<h3 class="fw-bolder mb-2">Usage as a Component</h3>
+<h2 class="h3 fw-bolder mb-2">Usage as a Component</h2>
 <p class="mb-3" markdown="1">This is the preferred method if you need to override any of the default options throughout your
 application.</p>
 
@@ -134,7 +134,7 @@ echo Yii::$app->fontawesome->name('font-awesome', 'brands')->class('yourClass');
 {% endhighlight %}
 </div>
 
-<h3 class="fw-bolder mb-2">Usage from ActiveForm (automatic)</h3>
+<h2 class="h3 fw-bolder mb-2">Usage from ActiveForm (automatic)</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use thoulah\fontawesome\bootstrap4\ActiveForm;
@@ -164,7 +164,7 @@ ActiveForm::end();
 {% endhighlight %}
 </div>
 
-<h3 class="fw-bolder mb-2">Usage from ActiveForm (manual)</h3>
+<h2 class="h3 fw-bolder mb-2">Usage from ActiveForm (manual)</h2>
 <p class="mb-3" markdown="1">For `$icon` you can use any earlier described usage method.</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}

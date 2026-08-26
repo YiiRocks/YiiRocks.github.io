@@ -13,6 +13,11 @@ option_groups:
       type: bool
       default: "<code>false</code>"
       desc: "Whether a single user may link more than one account from the same provider."
+routes:
+  - { name: "voyti/session-auth", method: "GET", path: "auth/{authclient}", purpose: "OAuth2 callback - the provider redirects here after authorization" }
+  - { name: "voyti/registration-connect", method: "GET", path: "connect/{code}", purpose: "Registration connect screen - link the pending social identity to an existing account or register a new one" }
+  - { name: "voyti/user-social-network", method: "GET", path: "settings/networks/", purpose: "Networks settings page - list connected accounts and connect more. Login required" }
+  - { name: "voyti/user-social-network-delete", method: "POST", path: "settings/networks/disconnect/{id}", purpose: "Disconnect a linked social account. Login required" }
 ---
 
 <p markdown="1">Social/OAuth2 login ships as a separate package, `yiirocks/voyti-social-auth`. It builds on
@@ -20,7 +25,7 @@ option_groups:
 protocol logic - Voyti adds the callback routing, account linking, and registration flow, plus the
 `user_social_account` table.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/voyti-social-auth" repo="voyti-social-auth" %}
 <div>
 <p markdown="1">
@@ -29,7 +34,7 @@ protocol logic - Voyti adds the callback routing, account linking, and registrat
             <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mb-3">./yii migrate:up</button>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
@@ -44,7 +49,7 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Provider configuration</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Provider configuration</h3>
 
 <p class="mb-3" markdown="1">Configure providers via a `clients` map under the `yiisoft/yii-auth-client` params key. The package
 automatically sets each client's OAuth2 return URL to match its config key.</p>
@@ -83,27 +88,10 @@ exact match, so finalize your keys before registering the OAuth app.</p>
 for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's
 OAuth2 documentation for available `authParams`.</p>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h5>
-<div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead class="fw-bold text-uppercase text-nowrap">
-                    <tr>
-                        <th>Route name</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>voyti/session-auth</code></td><td><code>GET</code></td><td><code>auth/{authclient}</code></td><td>OAuth2 callback - the provider redirects here after authorization</td></tr>
-                    <tr><td><code>voyti/registration-connect</code></td><td><code>GET</code></td><td><code>connect/{code}</code></td><td>Registration connect screen - link the pending social identity to an existing account or register a new one</td></tr>
-                    <tr><td><code>voyti/user-social-network</code></td><td><code>GET</code></td><td><code>settings/networks/</code></td><td>Networks settings page - list connected accounts and connect more. Login required</td></tr>
-                    <tr><td><code>voyti/user-social-network-delete</code></td><td><code>POST</code></td><td><code>settings/networks/disconnect/{id}</code></td><td>Disconnect a linked social account. Login required</td></tr>
-                </tbody>
-            </table>
-</div>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h3>
+{% include route_table.md routes=page.routes %}
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Supported providers</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Supported providers</h3>
 
 <p class="mb-3" markdown="1">yii-auth-client ships ten branded provider classes, each with its own
 `Yiisoft\Yii\AuthClient\Client\*` class (plus a generic `Client\OpenIdConnect` for self-hosted
@@ -131,7 +119,7 @@ OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuratio
             </table>
 </div>
 
-<h5 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h5>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h3>
 <p class="mb-3" markdown="1">With providers configured:</p>
 
 - The login page shows social login buttons for configured providers.
