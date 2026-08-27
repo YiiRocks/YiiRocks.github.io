@@ -9,6 +9,19 @@ option_groups:
       type: array
       default: "<code>[]</code>"
       desc: "RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>."
+  disable:
+    - name: "--email"
+      type: string
+      default: "optional"
+      desc: "Disable 2FA for user by email address"
+    - name: "--username"
+      type: string
+      default: "optional"
+      desc: "Disable 2FA for user by username"
+    - name: "--id"
+      type: int
+      default: "optional"
+      desc: "Disable 2FA for user by ID"
 methods:
   - key: email
     icon: "/assets/icons/voyti-2fa-email.svg"
@@ -107,6 +120,36 @@ return [
 {% endhighlight %}
 </div>
 {% include options_table.md options=page.option_groups.config %}
+
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Console Commands</h3>
+<p class="mb-3" markdown="1">The base package registers one console command under `yiisoft/yii-console`:</p>
+
+<div class="table-responsive">
+<table class="table table-sm table-striped">
+    <thead class="fw-bold text-uppercase text-nowrap">
+        <tr>
+            <th>Command</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>voyti:2fa:disable</code></td>
+            <td>Disable two-factor authentication for a user, bypassing re-authentication</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+{% include options_table.md options=page.option_groups.disable %}
+
+<div class="mb-3 small lh-base">
+{% highlight bash %}
+php yii voyti:2fa:disable --email=user@example.com
+php yii voyti:2fa:disable --username=johndoe
+php yii voyti:2fa:disable --id=42
+{% endhighlight %}
+</div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Writing a method plugin</h3>
 <ol>
