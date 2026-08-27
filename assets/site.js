@@ -17,7 +17,7 @@ function toggleDetails(btn) {
         if (openDetails) openDetails.hidden = true;
     }
     btn.setAttribute('aria-expanded', !isExpanded);
-    details.hidden = isExpanded;
+    details.classList.toggle('show', !isExpanded);
     currentlyOpen = isExpanded ? null : btn;
 }
 
@@ -54,8 +54,3 @@ scrollTop.addEventListener('click', function () {
 });
 
 window.addEventListener('scroll', onScroll, { passive: true });
-
-document.querySelectorAll('[aria-controls][aria-expanded="false"]').forEach(function (btn) {
-    var details = document.getElementById(btn.getAttribute('aria-controls'));
-    if (details) details.hidden = true;
-});

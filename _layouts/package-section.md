@@ -31,14 +31,14 @@ layout: default
 {% if current_index > 0 %}
 {% assign prev_index = current_index | minus: 1 %}
 {% assign prev = pkg.sections[prev_index] %}
-                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/" class="fw-semibold text-decoration-none">&larr; {{ prev.title }}</a>
+                <a href="{{ pkg.docsUrl }}{{ prev.slug }}/" class="fw-semibold text-decoration-none link-prev">{{ prev.title }}</a>
 {% else %}
                 <span></span>
 {% endif %}
 {% assign next_index = current_index | plus: 1 %}
 {% if next_index < pkg.sections.size %}
 {% assign next = pkg.sections[next_index] %}
-                <a href="{{ pkg.docsUrl }}{{ next.slug }}/" class="fw-semibold text-decoration-none">{{ next.title }} &rarr;</a>
+                <a href="{{ pkg.docsUrl }}{{ next.slug }}/" class="fw-semibold text-decoration-none link-next">{{ next.title }}</a>
 {% endif %}
             </div>
         </div>

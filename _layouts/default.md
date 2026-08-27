@@ -15,6 +15,7 @@
 {% endfor %}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="/assets/site.css">
+        <noscript><link rel="stylesheet" href="/assets/site-noscript.css"></noscript>
         <script>
             document.documentElement.dataset.bsTheme=localStorage.theme||(window.matchMedia?.("(prefers-color-scheme:light)")?.matches?"light":"dark");
         </script>

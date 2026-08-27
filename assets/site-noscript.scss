@@ -1,0 +1,15 @@
+---
+---
+.summary-details {
+    display: block !important;
+}
+
+.summary-toggle,
+.theme-toggle {
+    display: none !important;
+}
+
+[data-clipboard] {
+    -webkit-user-select: text;
+    user-select: text;
+}

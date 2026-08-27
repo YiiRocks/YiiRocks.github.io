@@ -11,6 +11,14 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     --bs-list-group-bg: var(--bs-card-bg-value);
 }
 
+.summary-details {
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}
+
 .card {
     --bs-card-bg: var(--bs-card-bg-value);
     --bs-card-border-color: var(--bs-card-bg-value);
@@ -193,6 +201,13 @@ main a[target="_blank"]:not(.btn)::after {
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
+.link-prev::before {
+    @include arrow-glyph(left);
+}
+
+.link-next::after {
+    @include arrow-glyph(right);
+}
 
 .btn {
     --bs-btn-font-size: 12px;
@@ -201,11 +216,7 @@ main a[target="_blank"]:not(.btn)::after {
     --bs-btn-border-radius: 10px;
 
     &-arrow::after {
-        content: "\2192";
-        display: inline-block;
-        margin-left: .35em;
-        position: relative;
-        top: -3px;
+        @include arrow-glyph(right);
     }
 
     &-outline-primary {
