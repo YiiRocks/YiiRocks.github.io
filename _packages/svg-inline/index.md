@@ -31,7 +31,7 @@ features:
   - label: "Flexible sizing"
     detail: "Width/height with automatic aspect ratio calculation when only one dimension is specified"
   - label: "Multiple size units"
-    detail: "Support for px, em, ex, pt, pc, in, cm, mm - automatically converts to pixels"
+    detail: "Support for px, em, ex, pt, pc, in, cm, mm, automatically converts to pixels"
   - label: "Fallback icons"
     detail: "Automatically falls back to a default icon if the requested file cannot be found"
   - label: "Immutable fluent API"

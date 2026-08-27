@@ -17,15 +17,15 @@ features:
   - label: "Flash-backed queue"
     detail: "Queue success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts"
   - label: "Zero-config rendering"
-    detail: "$toast is injected into every web view via the config-plugin, and its render() returns empty when no messages are pending"
+    detail: "<code>$toast</code> is injected into every web view via the config-plugin, and its <code>render()</code> returns empty when no messages are pending"
   - label: "Per-type styling"
     detail: "Each type maps to a Bootstrap 5 text-bg-* color with the correct alert role/aria-live and close-button contrast"
   - label: "Configurable auto-dismiss"
-    detail: "Per-type delay in milliseconds, or null to require manual dismissal - the default for error, so it isn't lost to a timer"
+    detail: "Per-type delay in milliseconds, or null to require manual dismissal (the default for error, so it isn't lost to a timer)"
   - label: "Optional icons"
     detail: "Bootstrap Icon per type via the optional yiirocks/svg-inline-bootstrap sibling, rendering silently without one when it isn't installed"
   - label: "Bootstrap's own JS"
-    detail: "Registers a small show-script through the view (at end of body, after Bootstrap's bundle regardless of load order) that calls bootstrap.Toast's own API - the only JS this package ships"
+    detail: "Registers a small show-script through the view (at end of body, after Bootstrap's bundle regardless of load order) that calls <code>bootstrap.Toast</code>'s own API, the only JS this package ships"
 usage: |
   use YiiRocks\ToastBootstrap5\ToastType;
   

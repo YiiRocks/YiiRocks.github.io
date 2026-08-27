@@ -54,7 +54,7 @@ features:
   - label: "Social authentication"
     detail: "OAuth2 login via Google, GitHub, Facebook, and more"
   - label: "Two-factor authentication"
-    detail: "Email codes, TOTP (authenticator app) with QR provisioning, or WebAuthn/passkeys - with enforced-per-permission support and one-time backup codes for account recovery"
+    detail: "Email codes, TOTP (authenticator app) with QR provisioning, or WebAuthn/passkeys, with enforced-per-permission support and one-time backup codes for account recovery"
   - label: "RBAC Management"
     detail: "Full admin UI for roles, permissions, and rules with parent-child hierarchy, assignment management, and filtering"
   - label: "Identity switching"
