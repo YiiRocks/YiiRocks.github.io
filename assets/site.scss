@@ -210,10 +210,19 @@ main a[target="_blank"]:not(.btn)::after {
 }
 
 .btn {
-    --bs-btn-font-size: 12px;
-    --bs-btn-padding-x: 10px;
-    --bs-btn-padding-y: 9px;
-    --bs-btn-border-radius: 10px;
+        --bs-btn-border-radius: 10px;
+
+    &-sm {
+        --bs-btn-font-size: 12px;
+        --bs-btn-padding-x: 12px;
+        --bs-btn-padding-y: 10px;
+    }
+
+    &-md {
+        --bs-btn-font-size: 14px;
+        --bs-btn-padding-x: 14px;
+        --bs-btn-padding-y: 11px;
+    }
 
     &-arrow::after {
         @include arrow-glyph(right);
@@ -248,16 +257,16 @@ main a[target="_blank"]:not(.btn)::after {
     }
 
     &-primary {
-        --bs-btn-color: #fff;
+        --bs-btn-color: #f5f3ff;
         --bs-btn-bg: var(--bs-primary);
         --bs-btn-border-color: transparent;
-        --bs-btn-hover-color: #fff;
+        --bs-btn-hover-color: #f5f3ff;
         --bs-btn-hover-bg: var(--bs-primary-text-emphasis);
         --bs-btn-hover-border-color: transparent;
-        --bs-btn-active-color: #fff;
+        --bs-btn-active-color: #f5f3ff;
         --bs-btn-active-bg: var(--bs-primary-text-emphasis);
         --bs-btn-active-border-color: transparent;
-        --bs-btn-disabled-color: #fff;
+        --bs-btn-disabled-color: #f5f3ff;
         --bs-btn-disabled-bg: var(--bs-primary);
         --bs-btn-disabled-border-color: transparent;
         --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);

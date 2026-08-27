@@ -35,14 +35,14 @@ description: Small, focused open-source libraries for Yii3 projects. Explore our
                             <div class="small fw-semibold text-primary-emphasis">{{ doc.tagline }}</div>
                         </div>
                     </div>
-                    <div class="d-flex gap-2 flex-wrap justify-content-end flex-grow-1">
+                    <div class="d-flex align-items-start gap-2 flex-wrap justify-content-end flex-grow-1">
 {% if doc.features or doc.usage %}
                         <button type="button" class="btn btn-secondary btn-sm small fw-semibold dropdown-toggle summary-toggle" aria-expanded="false" aria-controls="{{ doc.pkgId }}-details" title="Show summary">Summary</button>
 {% endif %}
                         <a href="https://github.com/YiiRocks/{{ doc.repo }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
                         <a href="https://packagist.org/packages/{{ doc.package }}" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
 {% if doc.docsUrl %}
-                        <a href="{{ doc.docsUrl }}" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Documentation</a>
+                        <a href="{{ doc.docsUrl }}" class="btn btn-primary btn-arrow btn-md fw-semibold">Documentation</a>
 {% endif %}
                     </div>
                 </div>

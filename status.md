@@ -206,19 +206,19 @@ sub_packages:
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}?style=flat-square" alt="Packagist Version"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}?style=flat-square" alt="PHP Version"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}?style=flat-square" alt="Downloads"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}?style=flat-square" alt="Last Commit"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}?style=flat-square" alt="CI"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}" alt="Packagist Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}" alt="PHP Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}" alt="Downloads"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}" alt="Last Commit"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}" alt="CI"  loading="lazy" decoding="async">
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json&style=flat-square" alt="Coverage"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage"  loading="lazy" decoding="async">
 {% unless pkg.hideMsi %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json&style=flat-square" alt="MSI"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fmsi.json" alt="MSI"  loading="lazy" decoding="async">
 {% endunless %}
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json&style=flat-square" alt="Tests"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json&style=flat-square" alt="Assertions"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Ftests.json" alt="Tests"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fassertions.json" alt="Assertions"  loading="lazy" decoding="async">
             </div>
             </div>
 {% if pkg.docsUrl %}</a>{% else %}</div>{% endif %}
