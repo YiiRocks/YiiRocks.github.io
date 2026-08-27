@@ -12,7 +12,7 @@ repo: "toast-bootstrap5"
 workflow: "build.yml"
 docsUrl: "/toast-bootstrap5/"
 title: "Toast Bootstrap5"
-description: "Renders Bootstrap 5 toast notifications from your Yii Framework 3 application's session flash messages. Queue a message from a controller, render $toast in your layout. No manual partials, no bundled JS asset."
+description: "Renders Bootstrap 5 toast notifications from your Yii3 application's session flash messages. Queue a message from a controller, render $toast in your layout. No manual partials, no bundled JS asset."
 features: 
   - label: "Flash-backed queue"
     detail: "Queue success/error/warning/info messages onto the session flash; multiple messages of the same type stack as separate toasts"
@@ -52,7 +52,7 @@ examples:
   - "use YiiRocks\\ToastBootstrap5\\ToastType;\n\n$this->toast->add(ToastType::ERROR, 'Something went wrong.');"
 ---
 
-<p class="mb-3" markdown="1">Renders Bootstrap 5 toast notifications from your Yii Framework 3
+<p class="mb-3" markdown="1">Renders Bootstrap 5 toast notifications from your Yii3
 application's session flash messages. Queue a message from a controller with
 `FlashToastInterface`, render it in your layout with `$toast->render($this)`. No manual partials,
 no bundled JS asset. Requires Bootstrap 5's JS bundle to be loaded on the page for the dismiss and

@@ -14,9 +14,9 @@
             <div class="flex-fill">
             <div class="fw-bold small text-body-secondary mb-2 text-uppercase ps-3">On this page</div>
             <ul class="nav nav-pills flex-column gap-1">
-                <li class="nav-item"><a href="{{ pkg.docsUrl }}" class="nav-link{% unless include.section %} active{% endunless %}">Overview</a></li>
+                <li class="nav-item"><a href="{{ pkg.docsUrl }}" class="nav-link{% unless include.section %} active fw-bold{% endunless %}">Overview</a></li>
 {% for s in core_sections %}
-                <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ s.slug }}/" class="nav-link{% if s.slug == include.section %} active{% endif %}">{{ s.title }}</a></li>
+                <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ s.slug }}/" class="nav-link{% if s.slug == include.section %} active fw-bold{% endif %}">{{ s.title }}</a></li>
 {% endfor %}
             </ul>
             </div>
@@ -25,7 +25,7 @@
             <div class="fw-bold small text-body-secondary mb-2 mt-md-4 text-uppercase ps-3">Addon Packages</div>
             <ul class="nav nav-pills flex-column gap-1">
 {% for s in addon_sections %}
-                <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ s.slug }}/" class="nav-link{% if s.slug == include.section %} active{% endif %}">{{ s.title }}</a></li>
+                <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ s.slug }}/" class="nav-link{% if s.slug == include.section %} active fw-bold{% endif %}">{{ s.title }}</a></li>
 {% endfor %}
             </ul>
             </div>

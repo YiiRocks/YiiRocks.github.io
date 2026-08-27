@@ -13,7 +13,7 @@ workflow: "build.yml"
 docsUrl: "/svg-inline/"
 featured: true
 title: "SvgInline"
-description: "Add SVG files inline to your Yii Framework 3 applications. Extensible with Bootstrap Icons and Font Awesome Icons."
+description: "Add SVG files inline to your Yii3 applications. Extensible with Bootstrap Icons and Font Awesome Icons."
 sections: 
   - slug: "bootstrap"
     title: "Bootstrap Icons"
@@ -87,7 +87,7 @@ option_groups:
       desc: "The width of the icon. If width is given without height, the latter will be calculated from the SVG size."
 ---
 
-<p class="mb-3">Provides simple functions for your Yii Framework 3 applications to add SVG
+<p class="mb-3">Provides simple functions for your Yii3 applications to add SVG
 files inline and manipulate their properties. It can be extended with Bootstrap Icons and Font
 Awesome Icons.</p>
 

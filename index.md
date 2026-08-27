@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Yii.Rocks
-description: Small, focused open-source libraries for Yii 3 projects. Explore our collection of actively maintained packages designed to extend and enhance your Yii applications.
+description: Small, focused open-source libraries for Yii3 projects. Explore our collection of actively maintained packages designed to extend and enhance your Yii applications.
 ---
 {% assign project_count = 0 %}
 {% for doc in site.packages %}
@@ -16,7 +16,7 @@ description: Small, focused open-source libraries for Yii 3 projects. Explore ou
         <span class="hero-badge-dot rounded-circle bg-success" style="width:.5rem;height:.5rem;"></span>
         {{ project_count }} open-source projects, actively maintained
     </div>
-    <h1 class="display-5 fw-bold mb-4">The missing pieces for your <span class="accent">Yii&nbsp;3</span> projects.</h1>
+    <h1 class="display-5 fw-bold mb-4">The missing pieces for your <span class="accent">Yii3</span> projects.</h1>
     <p class="fs-5 text-body-secondary mb-4">Small, focused libraries that drop straight into your Yii apps.</p>
 </div>
 </div>

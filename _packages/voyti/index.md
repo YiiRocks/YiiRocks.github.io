@@ -13,7 +13,7 @@ workflow: "build.yml"
 docsUrl: "/voyti/"
 featured: true
 title: "Voyti"
-description: "Provides highly customizable user management, authentication, and authorization for your Yii Framework 3 applications."
+description: "Provides highly customizable user management, authentication, and authorization for your Yii3 applications."
 sections: 
   - slug: "quick-start"
     title: "Quick Start"

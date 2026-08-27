@@ -4,16 +4,16 @@
 }
 
 @mixin arrow-glyph($direction: right) {
-    content: if($direction == left, "\2190", "\2192");
+    @if $direction == left {
+        content: "\2190";
+        margin-right: .35em;
+    } @else {
+        content: "\2192";
+        margin-left: .35em;
+    }
     display: inline-block;
     position: relative;
     top: -3px;
-
-    @if $direction == left {
-        margin-right: .35em;
-    } @else {
-        margin-left: .35em;
-    }
 }
 
 @mixin btn-tint-variant($color, $bg, $border, $hover-border: $border) {
