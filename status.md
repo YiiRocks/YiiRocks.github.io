@@ -46,6 +46,7 @@ sub_packages:
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/api/"
+    unreleased: true
   voyti-2fa:
     name: 2FA
     tint: "#fce7f3"
@@ -109,6 +110,7 @@ sub_packages:
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/social/"
+    unreleased: true
   voyti-views-bootstrap5:
     name: Views / Bootstrap5
     tint: "#dbeafe"
@@ -119,6 +121,7 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/"
     hideMsi: true
+    unreleased: true
   svg-inline-bootstrap:
     name: Bootstrap
     tint: "#dbeafe"
@@ -206,8 +209,12 @@ sub_packages:
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2 mb-3">
+{% if pkg.unreleased %}
+                <img src="https://img.shields.io/badge/-unreleased-grey" alt="Unreleased"  loading="lazy" decoding="async">
+{% else %}
                 <img src="https://img.shields.io/packagist/v/{{ pkg.package }}" alt="Packagist Version"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}" alt="PHP Version"  loading="lazy" decoding="async">
+{% endif %}
                 <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}" alt="Downloads"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}" alt="Last Commit"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}" alt="CI"  loading="lazy" decoding="async">

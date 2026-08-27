@@ -12,6 +12,7 @@ repo: "voyti"
 workflow: "build.yml"
 docsUrl: "/voyti/"
 featured: true
+unreleased: true
 title: "Voyti"
 description: "Provides highly customizable user management, authentication, and authorization for your Yii3 applications."
 sections: 
