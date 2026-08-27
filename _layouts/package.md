@@ -2,7 +2,7 @@
 layout: default
 ---
 {% assign pkg = page %}
-<div class="container py-5">
+<div class="container py-3">
 {% if pkg %}
     <div class="d-flex align-items-center gap-4 mb-3">
         <span class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4" style="background:{{ pkg.tint }}; width:56px; height:56px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="32" height="32"></span>

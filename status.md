@@ -158,7 +158,7 @@ sub_packages:
 {% endfor %}
 {% endfor %}
 
-<div class="container py-5">
+<div class="container py-3">
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
         <h1 class="mb-0">Build Status</h1>
         <div class="d-inline-flex align-items-center gap-2 py-1 px-3 rounded-pill fw-semibold small bg-body-secondary">
