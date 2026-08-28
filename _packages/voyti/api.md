@@ -150,8 +150,10 @@ grants.</p>
 // config/params.php
 return [
     'yiirocks/voyti' => [
-        'apiRateLimiter' => [
-            'requestsPerWindow' => 120,
+        'api' => [
+            'rateLimiter' => [
+                'requestsPerWindow' => 120,
+            ],
         ],
     ],
 ];
