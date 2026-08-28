@@ -18,6 +18,10 @@ option_groups:
       type: int
       default: "<code>60</code>"
       desc: "Window length in seconds."
+    - name: useApcu
+      type: bool
+      default: "<code>false</code>"
+      desc: "Store counters in APCu instead of the host's PSR-16 cache, for real atomic compare-and-swap. Only safe on a single-server deployment - a load-balanced/multi-server host would enforce the limit independently per server instead of across the cluster."
 routes:
   - { name: "voyti/api-openapi", method: "GET", path: "openapi.json", purpose: "OpenAPI 3.1 spec (JSON). Public, so tooling (Swagger UI, codegen) can fetch it without a Bearer token." }
   - { name: "voyti/api-v1-users-index", method: "GET", path: "v1/users", purpose: "List users" }
@@ -127,15 +131,24 @@ grants.</p>
             <div class="card-body">
                 <p class="card-text" markdown="1">
                     Per-user rate limiting for these routes ships as a separate package,
-                    `voyti-api-rate-limiter`. It scopes limits per authenticated user rather
-                    than per IP address, since API clients often sit behind shared or NAT'd IPs.
-                    Requests over the limit get a `429 Too Many Requests` response with a
-                    `Retry-After` header.
+                    `voyti-api-rate-limiter`, built on
+                    [yiisoft/rate-limiter](https://github.com/yiisoft/rate-limiter). It scopes
+                    limits per authenticated user. Every response carries
+                    `X-Rate-Limit-Limit`, `X-Rate-Limit-Remaining`, and `X-Rate-Limit-Reset`
+                    headers; requests over the limit get a `429 Too Many Requests` response.
                 </p>
-                <p class="mb-0" markdown="1">
+                <p markdown="1">
                     No wiring is required: this package's own middleware chain runs every installed
                     extension package automatically, so installing `voyti-api-rate-limiter`
                     turns rate limiting on immediately, and removing it turns rate limiting back off.
+                </p>
+                <p class="mb-0" markdown="1">
+                    By default, your application must have a PSR-16 `Psr\SimpleCache\CacheInterface`
+                    implementation configured and bound in your DI container. Any PSR-16 compliant
+                    cache works; see the [yiisoft/cache](https://github.com/yiisoft/cache)
+                    documentation for one option and its available backends. Setting `useApcu` to
+                    `true` drops this requirement entirely: counters are stored in APCu instead,
+                    for real atomic compare-and-swap.
                 </p>
             </div>
             <div class="card-footer">
@@ -152,7 +165,7 @@ return [
     'yiirocks/voyti' => [
         'api' => [
             'rateLimiter' => [
-                'requestsPerWindow' => 120,
+                'useApcu' => true,
             ],
         ],
     ],
