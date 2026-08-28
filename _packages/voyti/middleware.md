@@ -10,7 +10,7 @@ middleware_groups:
       auto: "Yes - on <code>admin/*</code> (users and RBAC management)"
     - name: "RequireLoginMiddleware"
       desc: "Redirects guests to the login page (<code>voyti/session-login</code>); unlike <code>AccessRuleMiddleware</code>, only requires an authenticated user, not an admin permission. Returns a JSON <code>401</code> instead when the request's <code>Accept</code> header includes <code>application/json</code>"
-      auto: "Yes - on <code>settings/*</code> (profile, account, social networks, sessions, privacy, two-factor)"
+      auto: "Yes - on <code>settings/*</code> (profile, account, social authentication, sessions, privacy, two-factor authentication)"
     - name: "RememberMeMiddleware"
       desc: "Logs a guest back in from the <code>autoLogin</code> remember-me cookie, then writes the cookie back onto the response - either the immediate reissue after a session rotation or the periodic sliding-expiration refresh. Must run after session middleware and before the enforcement middleware below, since those need <code>CurrentUser</code> already resolved"
       auto: "Yes"
@@ -30,7 +30,7 @@ middleware_groups:
   social:
     - name: "CaptureAuthActionRequestMiddleware"
       desc: "Stores the real incoming request so it survives past <code>yiisoft/yii-auth-client</code>'s <code>AuthAction</code>, which never forwards it to its success/cancel callbacks - needed so social login can complete through the same <code>LoginCompletionService::complete()</code> path password login uses"
-      auto: 'Yes - wraps the whole <a href="/voyti/social/">social auth</a> route group'
+      auto: 'Yes - wraps the whole <a href="/voyti/social/">social authentication</a> route group'
 ---
 
 <p class="mb-3" markdown="1">Core ships seven PSR-15 middleware classes for session handling and access control; installed
@@ -43,7 +43,7 @@ sibling packages can contribute their own on top.</p>
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\TwoFactor\Middleware`</p>
 {% include middleware_table.md middleware=page.middleware_groups.twofactor %}
 
-<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social auth</h3>
+<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Social Authentication</h3>
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\SocialAuth\Middleware`</p>
 {% include middleware_table.md middleware=page.middleware_groups.social %}
 

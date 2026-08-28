@@ -5,7 +5,7 @@ section: social
 title: "Voyti - Social Authentication"
 option_groups:
   config:
-    - name: enableSocialNetworkRegistration
+    - name: enableSocialAuthRegistration
       type: bool
       default: "<code>true</code>"
       desc: "Whether a guest signing in via a configured provider can be logged in or auto-registered. When disabled, social sign-in attempts fail regardless of provider configuration."
@@ -16,8 +16,8 @@ option_groups:
 routes:
   - { name: "voyti/session-auth", method: "GET", path: "auth/{authclient}", purpose: "OAuth2 callback - the provider redirects here after authorization" }
   - { name: "voyti/registration-connect", method: "GET", path: "connect/{code}", purpose: "Registration connect screen - link the pending social identity to an existing account or register a new one" }
-  - { name: "voyti/user-social-network", method: "GET", path: "settings/networks/", purpose: "Networks settings page - list connected accounts and connect more. Login required" }
-  - { name: "voyti/user-social-network-delete", method: "POST", path: "settings/networks/disconnect/{id}", purpose: "Disconnect a linked social account. Login required" }
+  - { name: "voyti/user-social-auth", method: "GET", path: "settings/social/", purpose: "Social authentication settings page - list connected accounts and connect more. Login required" }
+  - { name: "voyti/user-social-auth-delete", method: "POST", path: "settings/social/disconnect/{id}", purpose: "Disconnect a linked social account. Login required" }
 ---
 
 <p markdown="1">Social/OAuth2 login ships as a separate package, `yiirocks/voyti-social-auth`. It builds on
@@ -123,7 +123,7 @@ OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuratio
 <p class="mb-3" markdown="1">With providers configured:</p>
 
 - The login page shows social login buttons for configured providers.
-- The Networks page lists every connected account and renders connect buttons for providers.
+- The Social Authentication page lists every connected account and renders connect buttons for providers.
 - New social identities redirect to the registration connect screen, where users can log in to an
   existing account or register a new one before the identity is linked.
 - A successful sign-in for an already-connected account completes through the same login path

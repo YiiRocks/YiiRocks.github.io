@@ -210,7 +210,7 @@ sub_packages:
             </div>
             <div class="d-flex flex-wrap gap-2 mb-3">
 {% if pkg.unreleased %}
-                <img src="https://img.shields.io/badge/-unreleased-grey" alt="Unreleased"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/badge/-unreleased-orange" alt="Unreleased"  loading="lazy" decoding="async">
 {% else %}
                 <img src="https://img.shields.io/packagist/v/{{ pkg.package }}" alt="Packagist Version"  loading="lazy" decoding="async">
                 <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}" alt="PHP Version"  loading="lazy" decoding="async">

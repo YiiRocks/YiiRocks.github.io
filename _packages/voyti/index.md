@@ -42,10 +42,10 @@ sections:
     title: "REST API"
     group: "addon"
   - slug: "social"
-    title: "Social Auth"
+    title: "Social Authentication"
     group: "addon"
   - slug: "two-factor"
-    title: "Two-Factor Auth"
+    title: "Two-Factor Authentication"
     group: "addon"
 features: 
   - label: "User management"

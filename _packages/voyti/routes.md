@@ -61,7 +61,7 @@ routes:
 the host application can use in its own menu, sidebar, or access rules. See the
 [Cookbook](/voyti/cookbook/) for a Bootstrap 5 nav menu example.</p>
 
-<p class="mb-3" markdown="1">This table lists only core's own routes. Addon packages ([Social Auth](/voyti/social/),
+<p class="mb-3" markdown="1">This table lists only core's own routes. Addon packages ([Social Authentication](/voyti/social/),
 [Two-Factor](/voyti/two-factor/), [REST API](/voyti/api/), [GDPR](/voyti/gdpr/)) register their own
 routes when installed - see each addon's own page.</p>
 
