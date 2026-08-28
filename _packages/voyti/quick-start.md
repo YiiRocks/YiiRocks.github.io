@@ -118,14 +118,12 @@ run:</p>
 user_password_history, user_audit_log) and seeds default roles and permissions into the RBAC
 tables created by `yiisoft/rbac-db`.</p>
 
-<p class="mb-3" markdown="1">If the `user` table is empty after these migrations run, a default admin account is
-seeded automatically: username `admin`, email `admin@example.com`, and a
-random password printed to the console. <strong class="text-danger">Change this password
-immediately after first login.</strong></p>
+<p class="mb-3" markdown="1">The same migration also seeds a default admin account: username `admin`, email
+`admin@example.com`, and a random password printed to the console. <strong class="text-danger">Change
+this password immediately after first login.</strong></p>
 
 <p class="mb-3" markdown="1">The account is assigned the `administrator` role, which is granted the
-`administratorPermissionName` permission needed to reach the admin dashboard. If the `user` table
-already has rows (e.g. re-running migrations on an existing database), seeding is skipped entirely.</p>
+`administratorPermissionName` permission needed to reach the admin dashboard.</p>
 
             </li>
             <li>
