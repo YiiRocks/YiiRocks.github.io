@@ -62,11 +62,11 @@ route_groups:
     - { name: "voyti/user-two-factor-regenerate-backup-codes", method: "POST", path: "settings/two-factor/backup-codes/regenerate", purpose: "Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)" }
 ---
 
-<p class="mb-3" markdown="1">Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
+<p class="mb-3">Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
 the seams that let method packages hook into login. Install one or more method packages to activate
 2FA.</p>
 
-<p class="mb-3" markdown="1">After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
+<p class="mb-3">After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
 session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP
 entry), and verifies the result. On success, the login completes. Backup codes are auto-generated
 when enabling 2FA, allowing account recovery if the primary method is unavailable.</p>

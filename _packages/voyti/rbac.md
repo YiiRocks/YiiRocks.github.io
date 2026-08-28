@@ -65,10 +65,10 @@ public function editPost(int $postId): ResponseInterface
 
 <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Role hierarchy</h4>
 
-<p class="mb-3" markdown="1">Roles and permissions form a hierarchy: a parent role inherits all permissions from its children,
+<p class="mb-3">Roles and permissions form a hierarchy: a parent role inherits all permissions from its children,
 avoiding duplication across multiple roles.</p>
 
-<p class="mb-3" markdown="1">Example hierarchy:</p>
+<p class="mb-3">Example hierarchy:</p>
 
 - **admin** (role) → inherits from **moderator**
   - **moderator** (role) → inherits from **editor**
@@ -76,7 +76,7 @@ avoiding duplication across multiple roles.</p>
     - **post.delete** (permission)
   - **admin.manage-users** (permission)
 
-<p markdown="1">A user assigned the <strong>admin</strong> role automatically has <strong>post.edit</strong>,
+<p>A user assigned the <strong>admin</strong> role automatically has <strong>post.edit</strong>,
 <strong>post.delete</strong>, and <strong>admin.manage-users</strong> permissions without explicit
 assignment. You can build hierarchies with both direct permissions and role-to-role inheritance.</p>
 
@@ -127,7 +127,7 @@ return [
 {% endhighlight %}
 </div>
 
-<p class="mb-3" markdown="1">Create a permission <strong>post.edit-own</strong> via the admin UI or code, attach the
+<p class="mb-3">Create a permission <strong>post.edit-own</strong> via the admin UI or code, attach the
 <strong>isPostOwner</strong> rule to it, then check it by passing params:</p>
 
 <div class="mb-3 small lh-base">
@@ -167,7 +167,7 @@ $userAssignments = $this->assignments->getByUserId($userId);
 
 <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Practical example</h4>
 
-<p class="mb-3" markdown="1">Say you want to let users edit and publish their own posts but not others'. Create the structure
+<p class="mb-3">Say you want to let users edit and publish their own posts but not others'. Create the structure
 via the admin UI:</p>
 
 1. Create permission **post.edit**
@@ -176,7 +176,7 @@ via the admin UI:</p>
 4. Create role **author** with **post.edit-own** and **post.publish**
 5. Assign the **author** role to your users
 
-<p class="mb-3" markdown="1">In your controller:</p>
+<p class="mb-3">In your controller:</p>
 
 <div class="mb-3 small lh-base">
 {% highlight php %}

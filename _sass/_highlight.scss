@@ -4,7 +4,8 @@
     padding: 1rem;
     border-radius: var(--bs-border-radius-lg);
 
-    pre {
+    pre,
+    .mb-0 > & {
         margin-bottom: 0;
     }
 

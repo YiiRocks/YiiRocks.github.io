@@ -93,7 +93,7 @@ option_groups:
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:create</h3>
 
-<p class="mb-3" markdown="1">Create a new user account with optional password and role assignment.</p>
+<p class="mb-3">Create a new user account with optional password and role assignment.</p>
 
 {% highlight bash %}
 voyti:create [options] [--] <email> <username> 
@@ -110,7 +110,7 @@ php yii voyti:create --password=secret123 --role=admin user@example.com johndoe
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:confirm</h3>
 
-<p class="mb-3" markdown="1">Mark a user account as email-confirmed.</p>
+<p class="mb-3">Mark a user account as email-confirmed.</p>
 
 {% highlight bash %}
 voyti:confirm [options]
@@ -128,7 +128,7 @@ php yii voyti:confirm --id=42
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:password</h3>
 
-<p class="mb-3" markdown="1">Reset a user's password to a newly generated one.</p>
+<p class="mb-3">Reset a user's password to a newly generated one.</p>
 
 {% highlight bash %}
 voyti:password [options]
@@ -146,7 +146,7 @@ php yii voyti:password --id=42
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:delete</h3>
 
-<p class="mb-3" markdown="1">Delete a user account by ID, email, or username.</p>
+<p class="mb-3">Delete a user account by ID, email, or username.</p>
 
 {% highlight bash %}
 voyti:delete [options]

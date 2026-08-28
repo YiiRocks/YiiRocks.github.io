@@ -110,10 +110,10 @@ echo IconWidget::widget([
 </div>
 
 <h2 class="h3 fw-bolder mb-2">Usage as a Component</h2>
-<p class="mb-3" markdown="1">This is the preferred method if you need to override any of the default options throughout your
+<p class="mb-3">This is the preferred method if you need to override any of the default options throughout your
 application.</p>
 
-<p class="mb-3" markdown="1">Add the component to your Yii config file:</p>
+<p class="mb-3">Add the component to your Yii config file:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 'components' => [
@@ -125,7 +125,7 @@ application.</p>
 ]
 {% endhighlight %}
 </div>
-<p class="mb-3" markdown="1">Now you can globally insert an icon:</p>
+<p class="mb-3">Now you can globally insert an icon:</p>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 echo Yii::$app->fontawesome->name('at');

@@ -129,7 +129,7 @@ this password immediately after first login.</strong></p>
             <li>
                 <h3 id="register-routes" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register routes</h3>
 
-<p class="mb-3" markdown="1">Routes are <strong>not</strong> auto-registered - you must add them to your router configuration.</p>
+<p class="mb-3">Routes are <strong>not</strong> auto-registered - you must add them to your router configuration.</p>
 
 <p class="mb-3" markdown="1">Pull the `voyti-routes` config group into your router definition. The example below
 mounts them under a `/user/` prefix as their own group, alongside your app's own routes:</p>

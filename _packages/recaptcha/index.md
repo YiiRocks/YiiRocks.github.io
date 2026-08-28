@@ -44,6 +44,5 @@ usage: |
       ->withFormId('login-form');
 ---
 
-<p markdown="1"><a href="https://github.com/YiiRocks/recaptcha" class="text-nowrap">recaptcha</a> provides Google
-reCAPTCHA v2 and v3 field + server-side validation for your <a href="http://www.yiiframework.com/"
-class="text-nowrap">Yii3</a> applications.</p>
+[recaptcha](https://github.com/YiiRocks/recaptcha) provides Google reCAPTCHA v2 and v3 field +
+server-side validation for your [Yii3](http://www.yiiframework.com/) applications.

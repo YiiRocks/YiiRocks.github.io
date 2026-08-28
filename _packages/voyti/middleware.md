@@ -33,7 +33,7 @@ middleware_groups:
       auto: 'Yes - wraps the whole <a href="/voyti/social/">social authentication</a> route group'
 ---
 
-<p class="mb-3" markdown="1">Core ships {{ page.middleware_groups.core | size }} PSR-15 middleware classes for session handling and access control; installed
+<p class="mb-3">Core ships {{ page.middleware_groups.core | size }} PSR-15 middleware classes for session handling and access control; installed
 sibling packages can contribute their own on top.</p>
 
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\Middleware`</p>

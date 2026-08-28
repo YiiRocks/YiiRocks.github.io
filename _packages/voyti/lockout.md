@@ -31,7 +31,7 @@ option_groups:
       desc: "Ceiling on the registration delay, lower than login's since registration abuse is lower stakes than an account-takeover attempt."
 ---
 
-<p markdown="1">Brute-force protection for the login and registration forms ships as a separate package. It listens
+<p>Brute-force protection for the login and registration forms ships as a separate package. It listens
 to core's existing auth events to count failed attempts per IP address and delays further attempts,
 even ones with the correct credentials, with an exponentially growing wait that starts from the
 very first failure.</p>
@@ -48,7 +48,7 @@ backends.</p>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Storage</h3>
 
-<p class="mb-3" markdown="1">Failed-attempt counts are tracked in the cache. Each cache entry's key is a SHA-256 hash of the
+<p class="mb-3">Failed-attempt counts are tracked in the cache. Each cache entry's key is a SHA-256 hash of the
 request's IP address, scoped separately for login and registration so the two counters never
 collide. Its value is a plain attempt count.</p>
 
@@ -101,7 +101,7 @@ before retrying.</p>
 
 <h3 class="h5">Design decisions</h3>
 
-<p class="mb-3" markdown="1"><strong>IP-scoped, not account-scoped:</strong> Counters are scoped by IP address. Account scoping
+<p class="mb-3"><strong>IP-scoped, not account-scoped:</strong> Counters are scoped by IP address. Account scoping
 would let an attacker lock a legitimate user out of their own account just by deliberately failing
 that user's login from elsewhere, an easy denial-of-service. IP scoping avoids this while still
 stopping a single attacker hammering one account or many.</p>

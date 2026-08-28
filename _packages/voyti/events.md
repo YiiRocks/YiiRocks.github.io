@@ -5,7 +5,7 @@ section: events
 title: "Voyti - Events & Listeners"
 ---
 
-<p markdown="1">Voyti dispatches events at key points in the user lifecycle, allowing your application to react,
+<p>Voyti dispatches events at key points in the user lifecycle, allowing your application to react,
 log, or extend behaviour. Attach your own listeners through the Yii3 event dispatcher
 configuration.</p>
 
@@ -29,7 +29,7 @@ configuration.</p>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h3>
 
-<p class="mb-3" markdown="1">Dispatched by the library, but nothing consumes them by default - attach your own listener via the
+<p class="mb-3">Dispatched by the library, but nothing consumes them by default - attach your own listener via the
 event dispatcher configuration if you need to react to them.</p>
 
 <div class="table-responsive">
@@ -74,7 +74,7 @@ using the exception's `getErrorDetails()` (a list of field/attribute names) when
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h3>
 
-<p class="mb-3" markdown="1">Emitted around the login and registration forms, and on account-level changes, for analytics,
+<p class="mb-3">Emitted around the login and registration forms, and on account-level changes, for analytics,
 security monitoring, and paired-event flows.</p>
 
 <div class="table-responsive">
@@ -95,61 +95,4 @@ security monitoring, and paired-event flows.</p>
         <tr><td><code>YiiRocks\Voyti\Event\User\AfterAccountUpdateEvent</code></td><td>Fired after account-level fields (username, email, password) are saved. Carries the updated <code>User</code> and the list of field names that changed. Distinct from <code>UserProfileEvent</code>, which covers cosmetic profile fields.</td></tr>
     </tbody>
 </table>
-</div>
-
-<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: A cancellable BEFORE event</h3>
-
-<p class="mb-3" markdown="1">Throw `ActionPreventedException` from a listener to reject the action - here, rate-limiting
-registrations by IP:</p>
-
-<div class="mb-3 small lh-base">
-{% highlight php %}
-// config/events.php or config/events-web.php
-use YiiRocks\Voyti\Event\Auth\BeforeRegisterEvent;
-use YiiRocks\Voyti\Exception\ActionPreventedException;
-
-return [
-    BeforeRegisterEvent::class => [
-        static function(BeforeRegisterEvent $event, RateLimiterInterface $rateLimiter) {
-            if ($rateLimiter->isExceededForCurrentIp()) {
-                throw new ActionPreventedException('Too many registrations from this address.');
-            }
-        }
-    ],
-];
-{% endhighlight %}
-</div>
-
-<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Example: Listening to Events</h3>
-
-<p class="mb-3" markdown="1">Attach listeners through the Yii3 event dispatcher configuration:</p>
-
-<p class="mb-3" markdown="1">For events with discriminator types like `UserEvent`, check the type to handle specific
-actions. You can attach multiple listeners to the same event, and each receives the event object
-plus any other DI dependencies.</p>
-
-<div class="mb-3 small lh-base">
-{% highlight php %}
-// config/events.php or config/events-web.php
-use Psr\Log\LoggerInterface;
-use YiiRocks\Voyti\Event\User\UserProfileEvent;
-use YiiRocks\Voyti\Event\User\UserEvent;
-
-return [
-    UserEvent::class => [
-        static function(UserEvent $event, LoggerInterface $logger) {
-            if ($event->getType() === UserEvent::BLOCK) {
-                $user = $event->getUser();
-                $logger->warning("User blocked: {$user->getUsername()}");
-            }
-        }
-    ],
-    UserProfileEvent::class => [
-        static function(UserProfileEvent $event, LoggerInterface $logger) {
-            $user = $event->getUser();
-            $logger->info("User profile updated: {$user->getUsername()}");
-        }
-    ],
-];
-{% endhighlight %}
 </div>

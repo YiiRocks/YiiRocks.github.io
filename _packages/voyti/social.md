@@ -120,7 +120,7 @@ OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuratio
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h3>
-<p class="mb-3" markdown="1">With providers configured:</p>
+<p class="mb-3">With providers configured:</p>
 
 - The login page shows social login buttons for configured providers.
 - The Social Authentication page lists every connected account and renders connect buttons for providers.

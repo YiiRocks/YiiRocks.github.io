@@ -72,3 +72,12 @@ scrollTop.addEventListener('click', function () {
 });
 
 window.addEventListener('scroll', onScroll, { passive: true });
+
+function openTargetDetails() {
+    if (!location.hash) return;
+    var target = document.getElementById(location.hash.slice(1));
+    var details = target && target.closest('details');
+    if (details && !details.open) details.open = true;
+}
+openTargetDetails();
+window.addEventListener('hashchange', openTargetDetails);
