@@ -3,7 +3,7 @@ layout: package-section
 pkgId: voyti
 section: cookbook
 title: "Voyti - Cookbook"
-description: "Practical Voyti recipes: building a nav menu from routes, styling required-field indicators, rendering flash messages as toasts, showing the impersonation banner, attaching a listener to a voyti event, and rejecting an action from a cancellable event."
+description: "Practical Voyti recipes: building a nav menu from routes, styling required-field indicators, rendering flash messages as toasts, showing the impersonation banner, and attaching a listener to a voyti event."
 excerpt_separator: ""
 ---
 
@@ -81,7 +81,7 @@ div:has([required]) > label::after {
 <div class="card-body">
 <p class="mb-3" markdown="1">Voyti reports action outcomes - login, logout, password recovery, a saved profile - as session
 flash messages, and its own pages render them for you: as Bootstrap 5 toasts when the optional
-[yiirocks/toast-bootstrap5](/voyti/quick-start/) package is installed, or plain alerts otherwise.
+[toast-bootstrap5](/voyti/quick-start/) package is installed, or plain alerts otherwise.
 To surface them on your own pages too - such as the home page, where
 [`voyti/session-logout`](/voyti/routes/) redirects after logout - render the toast container in
 your layout:</p>
@@ -110,33 +110,6 @@ if (!str_starts_with($this->currentRoute->getName() ?? '', 'voyti/')) {
 </div>
 <p class="mb-0">Its dependencies resolve through the DI container, so this needs no wiring beyond having voyti
 installed, and it renders an empty string when nobody is impersonating anyone.</p>
-</div>
-</details>
-
-<details class="card mb-3">
-<summary class="card-header d-flex justify-content-between align-items-center">
-<h3 id="rejecting-an-action-from-a-cancellable-event" class="h5 mb-0 text-primary-emphasis">Rejecting an action from a cancellable event</h3>
-</summary>
-<div class="card-body">
-<p class="mb-0" markdown="1">Throw `ActionPreventedException` from a listener to reject the action - here, rate-limiting
-registrations by IP:</p>
-<div class="mb-0 small lh-base">
-{% highlight php %}
-// config/events.php or config/events-web.php
-use YiiRocks\Voyti\Event\Auth\BeforeRegisterEvent;
-use YiiRocks\Voyti\Exception\ActionPreventedException;
-
-return [
-    BeforeRegisterEvent::class => [
-        static function(BeforeRegisterEvent $event, RateLimiterInterface $rateLimiter) {
-            if ($rateLimiter->isExceededForCurrentIp()) {
-                throw new ActionPreventedException('Too many registrations from this address.');
-            }
-        }
-    ],
-];
-{% endhighlight %}
-</div>
 </div>
 </details>
 

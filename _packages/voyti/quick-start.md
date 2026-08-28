@@ -17,7 +17,7 @@ title: "Voyti - Quick Start"
                 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Install</h3>
 <p class="mb-3" markdown="1">
             Voyti's core is view-agnostic; you need a views implementation package to render any pages.
-            `yiirocks/voyti-views-bootstrap5` is the reference implementation using Bootstrap 5. You can
+            `voyti-views-bootstrap5` is the reference implementation using Bootstrap 5. You can
             substitute an alternative views package if you prefer a different UI framework, as long as it
             announces its `views` directory through the `viewsPackagePaths` param.
 </p>

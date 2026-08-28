@@ -20,7 +20,7 @@ routes:
   - { name: "voyti/user-social-auth-delete", method: "POST", path: "settings/social/disconnect/{id}", purpose: "Disconnect a linked social account. Login required" }
 ---
 
-<p markdown="1">Social/OAuth2 login ships as a separate package, `yiirocks/voyti-social-auth`. It builds on
+<p markdown="1">Social/OAuth2 login ships as a separate package, `voyti-social-auth`. It builds on
 [yiisoft/yii-auth-client](https://github.com/yiisoft/yii-auth-client), which handles all OAuth2
 protocol logic - Voyti adds the callback routing, account linking, and registration flow, plus the
 `user_social_account` table.</p>

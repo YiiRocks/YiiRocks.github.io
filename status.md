@@ -19,6 +19,7 @@ groups:
     keys:
       - voyti
       - voyti-api
+      - voyti-api-rate-limiter
       - voyti-2fa
       - voyti-2fa-email
       - voyti-2fa-totp
@@ -46,6 +47,16 @@ sub_packages:
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/api/"
+    unreleased: true
+  voyti-api-rate-limiter:
+    name: API Rate Limiter
+    tint: "#ffedd5"
+    logo: "/assets/icons/voyti-api-rate-limiter.svg"
+    package: yiirocks/voyti-api-rate-limiter
+    repo: voyti-api-rate-limiter
+    branch: main
+    workflow: build.yml
+    docsUrl: "/voyti/api/#rate-limiting"
     unreleased: true
   voyti-2fa:
     name: 2FA
