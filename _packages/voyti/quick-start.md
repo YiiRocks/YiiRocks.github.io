@@ -98,6 +98,12 @@ return [
 {% endhighlight %}
 </div>
 
+<p class="mb-3" markdown="1">Here's a random value for `secretKey`, in case you need one:</p>
+<div class="d-flex gap-2 mb-3">
+<button type="button" data-clipboard data-secret-value class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace">Enable JavaScript to generate a random value</button>
+<button type="button" data-secret-renew class="btn btn-secondary flex-shrink-0 p-0 d-flex align-items-center justify-content-center" style="width: 44px;" aria-label="Generate a new secret key" title="Generate a new secret key"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192"/></svg></button>
+</div>
+
             </li>
             <li>
                 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Run migrations</h3>
@@ -110,8 +116,7 @@ run:</p>
 
 <p class="mb-3" markdown="1">Voyti's migration creates 6 user-related tables (user, user_profile, user_token, user_sessions,
 user_password_history, user_audit_log) and seeds default roles and permissions into the RBAC
-tables created by `yiisoft/rbac-db`. Social authentication tables are provided by the
-optional `yiirocks/voyti-social-auth` package.</p>
+tables created by `yiisoft/rbac-db`.</p>
 
 <p class="mb-3" markdown="1">If the `user` table is empty after these migrations run, a default admin account is
 seeded automatically: username `admin`, email `admin@example.com`, and a

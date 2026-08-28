@@ -6,6 +6,17 @@ function copyToClipboard(el) {
     });
 }
 
+function randomSecret() {
+    var bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    var binary = Array.from(bytes, function (b) { return String.fromCharCode(b); }).join('');
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+document.querySelectorAll('[data-secret-value]').forEach(function (el) {
+    el.textContent = randomSecret();
+});
+
 var currentlyOpen = null;
 function toggleDetails(btn) {
     var details = document.getElementById(btn.getAttribute('aria-controls'));
@@ -28,6 +39,13 @@ document.querySelectorAll('main a').forEach(function (link) {
 document.addEventListener('click', function (e) {
     var copyEl = e.target.closest('[data-clipboard]');
     if (copyEl) { copyToClipboard(copyEl); return; }
+
+    var renewBtn = e.target.closest('[data-secret-renew]');
+    if (renewBtn) {
+        var valueEl = renewBtn.previousElementSibling;
+        if (valueEl) valueEl.textContent = randomSecret();
+        return;
+    }
 
     var toggleBtn = e.target.closest('[aria-controls]');
     if (toggleBtn) { e.preventDefault(); toggleDetails(toggleBtn); }
