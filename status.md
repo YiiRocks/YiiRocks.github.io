@@ -19,6 +19,7 @@ groups:
     keys:
       - voyti
       - voyti-api
+      - voyti-api-user
       - voyti-api-rate-limiter
       - voyti-2fa
       - voyti-2fa-email
@@ -44,6 +45,16 @@ sub_packages:
     logo: "/assets/icons/voyti-api.svg"
     package: yiirocks/voyti-api
     repo: voyti-api
+    branch: main
+    workflow: build.yml
+    docsUrl: "/voyti/api/"
+    unreleased: true
+  voyti-api-user:
+    name: API User
+    tint: "#e0e7ff"
+    logo: "/assets/icons/voyti-api-user.svg"
+    package: yiirocks/voyti-api-user
+    repo: voyti-api-user
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/api/"

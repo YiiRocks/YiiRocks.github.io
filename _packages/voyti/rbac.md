@@ -29,11 +29,7 @@ both direct permissions and role-to-role inheritance.
 
 <h3 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">The RBAC Cookbook</h3>
 
-<details class="card mb-3">
-<summary class="card-header d-flex justify-content-between align-items-center">
-<h4 class="h5 mb-0 text-primary-emphasis">Checking permissions in code</h4>
-</summary>
-<div class="card-body" markdown="1">
+{% capture content %}
 The examples below show how to implement RBAC checks in your host application. Voyti provides the
 admin UI and storage, plus helpers like `AuthHelper`, but permission checks ultimately use the
 underlying `yiisoft/rbac` interfaces.
@@ -82,14 +78,10 @@ public function editPost(int $postId): ResponseInterface
 }
 {% endhighlight %}
 </div>
-</div>
-</details>
+{% endcapture %}
+{% include collapsible_card.md group="rbac-cookbook" heading="h4" id="checking-permissions-in-code" title="Checking permissions in code" content=content %}
 
-<details class="card mb-3">
-<summary class="card-header d-flex justify-content-between align-items-center">
-<h4 class="h5 mb-0 text-primary-emphasis">Rules</h4>
-</summary>
-<div class="card-body" markdown="1">
+{% capture content %}
 Rules add conditional logic to permissions: a permission with a rule only grants access if the
 rule's code passes. Register custom rules by implementing `RuleInterface` and tagging them in your
 DI container.
@@ -145,14 +137,10 @@ if ($this->rbacManager->userHasPermission($userId, 'post.edit-own', ['postId' =>
 }
 {% endhighlight %}
 </div>
-</div>
-</details>
+{% endcapture %}
+{% include collapsible_card.md group="rbac-cookbook" heading="h4" id="rules" title="Rules" content=content %}
 
-<details class="card mb-3">
-<summary class="card-header d-flex justify-content-between align-items-center">
-<h4 class="h5 mb-0 text-primary-emphasis">Assignments</h4>
-</summary>
-<div class="card-body" markdown="1">
+{% capture content %}
 Assignments link users to roles and permissions. The admin UI (under **RBAC > Roles** and
 **RBAC > Permissions**) shows an "Assigned users" section where you can add or remove user
 assignments. Programmatically, use `AssignmentsStorageInterface`:
@@ -177,14 +165,10 @@ $this->assignments->revoke($role, $userId);
 $userAssignments = $this->assignments->getByUserId($userId);
 {% endhighlight %}
 </div>
-</div>
-</details>
+{% endcapture %}
+{% include collapsible_card.md group="rbac-cookbook" heading="h4" id="assignments" title="Assignments" content=content %}
 
-<details class="card mb-3">
-<summary class="card-header d-flex justify-content-between align-items-center">
-<h4 class="h5 mb-0 text-primary-emphasis">Practical example</h4>
-</summary>
-<div class="card-body" markdown="1">
+{% capture content %}
 Say you want to let users edit and publish their own posts but not others'. Create the structure
 via the admin UI:
 
@@ -211,5 +195,5 @@ public function editPost(int $postId): ResponseInterface
 }
 {% endhighlight %}
 </div>
-</div>
-</details>
+{% endcapture %}
+{% include collapsible_card.md group="rbac-cookbook" heading="h4" id="practical-example" title="Practical example" content=content %}

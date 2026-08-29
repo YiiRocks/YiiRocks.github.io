@@ -50,7 +50,7 @@ title: "Voyti - Quick Start"
                 <div class="fw-bold mb-1">REST API with rate limiting</div>
                 <div class="small lh-base mb-2 flex-grow-1">JSON user CRUD endpoints with bearer-token authentication and API key lifecycle management, plus optional per-user request throttling</div>
                 <div class="mt-auto">
-                <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mb-2">composer require yiirocks/voyti-api</button>
+                <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mb-2">composer require yiirocks/voyti-api-user</button>
                 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace w-100">composer require yiirocks/voyti-api-rate-limiter</button>
                 </div>
             </div>
@@ -65,7 +65,7 @@ title: "Voyti - Quick Start"
             <div class="col">
             <div class="card card-body p-3 h-100 d-flex flex-column">
                 <div class="fw-bold mb-1">Toast Notifications</div>
-                <div class="small lh-base mb-2 flex-grow-1">Renders voyti's flash messages as Bootstrap 5 toasts</div>
+                <div class="small lh-base mb-2 flex-grow-1">Renders Voyti's flash messages as Bootstrap 5 toasts</div>
                 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace w-100 mt-auto">composer require yiirocks/toast-bootstrap5</button>
             </div>
             </div>
