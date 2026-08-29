@@ -10,15 +10,35 @@ title: "Voyti - RBAC Management"
 - **Parent-child hierarchy** - roles can have child permissions/roles
 - **Rule management** - register and manage custom `RuleInterface` classes
 
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Role hierarchy</h4>
+
+Roles and permissions form a hierarchy: a parent role inherits all permissions from its children,
+avoiding duplication across multiple roles.
+
+Example hierarchy:
+
+- **admin** (role) → inherits from **moderator**
+  - **moderator** (role) → inherits from **editor**
+    - **post.edit** (permission)
+    - **post.delete** (permission)
+  - **admin.manage-users** (permission)
+
+A user assigned the **admin** role automatically has **post.edit**, **post.delete**, and
+**admin.manage-users** permissions without explicit assignment. You can build hierarchies with
+both direct permissions and role-to-role inheritance.
+
 <h3 class="text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">The RBAC Cookbook</h3>
 
-<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Checking permissions in code</h4>
-
-<p class="mb-3" markdown="1">The examples below show how to implement RBAC checks in your host application. Voyti provides the
+<details class="card mb-3">
+<summary class="card-header d-flex justify-content-between align-items-center">
+<h4 class="h5 mb-0 text-primary-emphasis">Checking permissions in code</h4>
+</summary>
+<div class="card-body" markdown="1">
+The examples below show how to implement RBAC checks in your host application. Voyti provides the
 admin UI and storage, plus helpers like `AuthHelper`, but permission checks ultimately use the
-underlying `yiisoft/rbac` interfaces.</p>
+underlying `yiisoft/rbac` interfaces.
 
-<p class="mb-3" markdown="1">Use `AuthHelper` to check if a user has a specific role or is an administrator:</p>
+Use `AuthHelper` to check if a user has a specific role or is an administrator:
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -43,9 +63,9 @@ public function someAction(): ResponseInterface
 {% endhighlight %}
 </div>
 
-<p class="mb-3" markdown="1">For more complex permission checks, inject `ManagerInterface` directly:</p>
+For more complex permission checks, inject `ManagerInterface` directly:
 
-<div class="mb-3 small lh-base">
+<div class="mb-0 small lh-base">
 {% highlight php %}
 use Yiisoft\Rbac\ManagerInterface;
 
@@ -62,29 +82,17 @@ public function editPost(int $postId): ResponseInterface
 }
 {% endhighlight %}
 </div>
+</div>
+</details>
 
-<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Role hierarchy</h4>
-
-<p class="mb-3">Roles and permissions form a hierarchy: a parent role inherits all permissions from its children,
-avoiding duplication across multiple roles.</p>
-
-<p class="mb-3">Example hierarchy:</p>
-
-- **admin** (role) → inherits from **moderator**
-  - **moderator** (role) → inherits from **editor**
-    - **post.edit** (permission)
-    - **post.delete** (permission)
-  - **admin.manage-users** (permission)
-
-<p>A user assigned the <strong>admin</strong> role automatically has <strong>post.edit</strong>,
-<strong>post.delete</strong>, and <strong>admin.manage-users</strong> permissions without explicit
-assignment. You can build hierarchies with both direct permissions and role-to-role inheritance.</p>
-
-<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rules</h4>
-
-<p class="mb-3" markdown="1">Rules add conditional logic to permissions: a permission with a rule only grants access if the
+<details class="card mb-3">
+<summary class="card-header d-flex justify-content-between align-items-center">
+<h4 class="h5 mb-0 text-primary-emphasis">Rules</h4>
+</summary>
+<div class="card-body" markdown="1">
+Rules add conditional logic to permissions: a permission with a rule only grants access if the
 rule's code passes. Register custom rules by implementing `RuleInterface` and tagging them in your
-DI container.</p>
+DI container.
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -114,7 +122,7 @@ final readonly class IsPostOwnerRule implements RuleInterface
 {% endhighlight %}
 </div>
 
-<p class="mb-3" markdown="1">Register the rule in `config/di.php`:</p>
+Register the rule in `config/di.php`:
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -127,24 +135,29 @@ return [
 {% endhighlight %}
 </div>
 
-<p class="mb-3">Create a permission <strong>post.edit-own</strong> via the admin UI or code, attach the
-<strong>isPostOwner</strong> rule to it, then check it by passing params:</p>
+Create a permission **post.edit-own** via the admin UI or code, attach the **isPostOwner** rule to
+it, then check it by passing params:
 
-<div class="mb-3 small lh-base">
+<div class="mb-0 small lh-base">
 {% highlight php %}
 if ($this->rbacManager->userHasPermission($userId, 'post.edit-own', ['postId' => 42])) {
     // User owns post 42 and can edit it
 }
 {% endhighlight %}
 </div>
+</div>
+</details>
 
-<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Assignments</h4>
+<details class="card mb-3">
+<summary class="card-header d-flex justify-content-between align-items-center">
+<h4 class="h5 mb-0 text-primary-emphasis">Assignments</h4>
+</summary>
+<div class="card-body" markdown="1">
+Assignments link users to roles and permissions. The admin UI (under **RBAC > Roles** and
+**RBAC > Permissions**) shows an "Assigned users" section where you can add or remove user
+assignments. Programmatically, use `AssignmentsStorageInterface`:
 
-<p class="mb-3" markdown="1">Assignments link users to roles and permissions. The admin UI (under <strong>RBAC &gt;
-Roles</strong> and <strong>RBAC &gt; Permissions</strong>) shows an "Assigned users" section where
-you can add or remove user assignments. Programmatically, use `AssignmentsStorageInterface`:</p>
-
-<div class="mb-3 small lh-base">
+<div class="mb-0 small lh-base">
 {% highlight php %}
 use Yiisoft\Rbac\AssignmentsStorageInterface;
 
@@ -164,11 +177,16 @@ $this->assignments->revoke($role, $userId);
 $userAssignments = $this->assignments->getByUserId($userId);
 {% endhighlight %}
 </div>
+</div>
+</details>
 
-<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Practical example</h4>
-
-<p class="mb-3">Say you want to let users edit and publish their own posts but not others'. Create the structure
-via the admin UI:</p>
+<details class="card mb-3">
+<summary class="card-header d-flex justify-content-between align-items-center">
+<h4 class="h5 mb-0 text-primary-emphasis">Practical example</h4>
+</summary>
+<div class="card-body" markdown="1">
+Say you want to let users edit and publish their own posts but not others'. Create the structure
+via the admin UI:
 
 1. Create permission **post.edit**
 2. Create permission **post.publish**
@@ -176,9 +194,9 @@ via the admin UI:</p>
 4. Create role **author** with **post.edit-own** and **post.publish**
 5. Assign the **author** role to your users
 
-<p class="mb-3">In your controller:</p>
+In your controller:
 
-<div class="mb-3 small lh-base">
+<div class="mb-0 small lh-base">
 {% highlight php %}
 public function editPost(int $postId): ResponseInterface
 {
@@ -193,3 +211,5 @@ public function editPost(int $postId): ResponseInterface
 }
 {% endhighlight %}
 </div>
+</div>
+</details>
