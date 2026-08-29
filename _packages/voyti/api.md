@@ -40,9 +40,9 @@ route_groups:
     - { name: "voyti/api-openapi", method: "GET", path: "openapi.json", purpose: "OpenAPI 3.1 spec (JSON), assembled from every installed resource package. Public, so tooling (Swagger UI, codegen) can fetch it without a Bearer token." }
 ---
 
-The JSON REST API is optional and pluggable: the base package, `voyti-api`, carries no resource
+The JSON REST API is optional and pluggable: the base API package carries no resource
 endpoints of its own, only Bearer-token authentication, RBAC-admin gating, and the shared route group
-resource packages plug into. Install one or more resource packages to expose actual endpoints.
+resource packages plug into. Install a resource packages to expose actual endpoints.
 
 Every resource package's routes are wrapped in the same authenticated group: `ApiTokenAuthenticationMiddleware`
 resolves the Bearer token, then any installed extension middleware runs (e.g. rate limiting, below),
@@ -65,7 +65,42 @@ contributes its own OpenAPI paths and schemas, merged into one `openapi.json` do
                             token authentication, admin-access gating, OpenAPI spec assembly, and the shared route
                             group.
                         </p>
-{% include route_table.md routes=page.route_groups.base class="mb-0" %}
+{% include route_table.md routes=page.route_groups.base class="mb-3" %}
+                        <p class="mb-3" markdown="1">Two console commands are registered under `yiisoft/yii-console`:</p>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0">
+                                <thead class="fw-bold text-uppercase text-nowrap">
+                                    <tr>
+                                        <th>Command</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>voyti:api-token:generate</code></td>
+                                        <td>Generate a REST API access token for a user (printed once)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>voyti:api-token:revoke</code></td>
+                                        <td>Revoke all REST API access tokens for a user</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="fw-semibold mb-2 mt-3">Configuration</p>
+                        <div class="mb-3 small lh-base">
+{% highlight php %}
+// config/params.php
+return [
+    'yiirocks/voyti' => [
+        'api' => [
+            'apiTokenLifespan' => 31536000,
+        ],
+    ],
+];
+{% endhighlight %}
+                        </div>
+{% include options_table.md options=page.option_groups.config %}
                     </div>
                     <div class="card-footer">
                         <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -101,7 +136,7 @@ return [
             'collector' => DynamicReference::to(
                 static fn() => (new RouteCollector())
                     ->addRoute(
-                        Group::create('/user/api/')
+                        Group::create('/api/')
                             ->routes(...$config->get('voyti-routes-api')),
                     )
             ),
@@ -111,21 +146,6 @@ return [
 {% endhighlight %}
 </div>
 
-<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
-<div class="mb-3 small lh-base">
-{% highlight php %}
-// config/params.php
-return [
-    'yiirocks/voyti' => [
-        'api' => [
-            'apiTokenLifespan' => 31536000,
-        ],
-    ],
-];
-{% endhighlight %}
-</div>
-{% include options_table.md options=page.option_groups.config %}
-
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Authentication</h3>
 
 <p markdown="1">Requests authenticate with an `Authorization: Bearer <token>` header.
@@ -133,30 +153,6 @@ return [
 `401` when the header is missing or the token is invalid or expired. `AccessRuleMiddleware` then
 enforces `administratorPermissionName` as usual, so API tokens only grant what that permission
 grants.</p>
-
-<h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Managing tokens</h3>
-<p class="mb-3" markdown="1">The base package registers two console commands under `yiisoft/yii-console`:</p>
-
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-            <thead class="fw-bold text-uppercase text-nowrap">
-                <tr>
-                    <th>Command</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><code>voyti:api-token:generate</code></td>
-                    <td>Generate a REST API access token for a user (printed once)</td>
-                </tr>
-                <tr>
-                    <td><code>voyti:api-token:revoke</code></td>
-                    <td>Revoke all REST API access tokens for a user</td>
-                </tr>
-            </tbody>
-</table>
-</div>
 
 <h3 id="rate-limiting" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Rate limiting</h3>
 
