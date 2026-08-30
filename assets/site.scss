@@ -98,6 +98,9 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
 .table thead {
     --bs-table-bg: var(--bs-primary-bg-subtle);
     --bs-table-color: var(--bs-primary-text-emphasis);
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .table > :not(caption) > * > * {

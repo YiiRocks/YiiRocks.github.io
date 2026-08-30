@@ -11,88 +11,59 @@ configuration.</p>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events with default listeners</h3>
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Event</th>
-            <th>Trigger</th>
-            <th>Default behavior</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\AfterLoginEvent</code></td><td>User logs in</td><td>Triggers password expiration check and session tracking</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\AfterRegisterEvent</code></td><td>New user registration</td><td>Sends admin notification email</td></tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Event | Trigger | Default behavior |
+| --- | --- | --- |
+| `YiiRocks\Voyti\Event\Auth\AfterLoginEvent` | User logs in | Triggers password expiration check and session tracking |
+| `YiiRocks\Voyti\Event\Auth\AfterRegisterEvent` | New user registration | Sends admin notification email |
+{: .table .table-sm .table-striped }
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Additional events</h3>
 
-<p class="mb-3">Dispatched by the library, but nothing consumes them by default - attach your own listener via the
-event dispatcher configuration if you need to react to them.</p>
+Dispatched by the library, but nothing consumes them by default - attach your own listener via the
+event dispatcher configuration if you need to react to them.
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Event</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>YiiRocks\Voyti\Event\User\UserEvent</code></td><td>Carries a <code>getType()</code> discriminator: <code>CREATE</code>, <code>BLOCK</code>, <code>UNBLOCK</code>, <code>CONFIRM</code>, <code>SWITCH_IDENTITY</code>, <code>RESTORE_IDENTITY</code>, <code>PASSWORD_RESET</code>, or <code>DELETE</code></td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\User\UserProfileEvent</code></td><td>Dispatched when a user updates their profile (cosmetic fields such as name, phone, avatar)</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\User\ResetPasswordEvent</code></td><td>Password reset flow</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Session\SessionEvent</code></td><td>Dispatched with type <code>SESSION_CREATED</code> on login, and with type <code>SESSION_TERMINATED</code> whenever a user's sessions are terminated (account deletion, being blocked, admin revocation, or logout).</td></tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Event | Description |
+| --- | --- |
+| `YiiRocks\Voyti\Event\User\UserEvent` | Carries a `getType()` discriminator: `CREATE`, `BLOCK`, `UNBLOCK`, `CONFIRM`, `SWITCH_IDENTITY`, `RESTORE_IDENTITY`, `PASSWORD_RESET`, or `DELETE` |
+| `YiiRocks\Voyti\Event\User\UserProfileEvent` | Dispatched when a user updates their profile (cosmetic fields such as name, phone, avatar) |
+| `YiiRocks\Voyti\Event\User\ResetPasswordEvent` | Password reset flow |
+| `YiiRocks\Voyti\Event\Session\SessionEvent` | Dispatched with type `SESSION_CREATED` on login, and with type `SESSION_TERMINATED` whenever a user's sessions are terminated (account deletion, being blocked, admin revocation, or logout). |
+{: .table .table-sm .table-striped }
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Cancellable events</h3>
 
-<p class="mb-3" markdown="1">A small set of events are dispatched <em>before</em> the action they precede takes effect. A
+A small set of events are dispatched <em>before</em> the action they precede takes effect. A
 listener can throw `YiiRocks\Voyti\Exception\ActionPreventedException` to stop the action; the
 dispatching service or controller catches it and turns it into a form error or failure result,
-using the exception's `getErrorDetails()` (a list of field/attribute names) when present.</p>
+using the exception's `getErrorDetails()` (a list of field/attribute names) when present.
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Event</th>
-            <th>Timing and payload</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\BeforeLoginEvent</code></td><td>Fired after all login preconditions pass but before the session is established. Carries the about-to-log-in <code>User</code> and server params.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\BeforeRegisterEvent</code></td><td>Fired after the validated form data is hydrated into a <code>User</code> but before it is persisted. Carries the validated form data and the hydrated (not yet saved) <code>User</code>.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\User\BeforeAccountUpdateEvent</code></td><td>Fired before account-level fields (username, email, password) are saved. Carries the <code>User</code> and the list of field names about to change.</td></tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Event | Timing and payload |
+| --- | --- |
+| `YiiRocks\Voyti\Event\Auth\BeforeLoginEvent` | Fired after all login preconditions pass but before the session is established. Carries the about-to-log-in `User` and server params. |
+| `YiiRocks\Voyti\Event\Auth\BeforeRegisterEvent` | Fired after the validated form data is hydrated into a `User` but before it is persisted. Carries the validated form data and the hydrated (not yet saved) `User`. |
+| `YiiRocks\Voyti\Event\User\BeforeAccountUpdateEvent` | Fired before account-level fields (username, email, password) are saved. Carries the `User` and the list of field names about to change. |
+{: .table .table-sm .table-striped }
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Form and login-flow events</h3>
 
-<p class="mb-3">Emitted around the login and registration forms, and on account-level changes, for analytics,
-security monitoring, and paired-event flows.</p>
+Emitted around the login and registration forms, and on account-level changes, for analytics,
+security monitoring, and paired-event flows.
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Event</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\BeforeLoginFormValidationEvent</code></td><td>Fired once the login form is populated from the request but before it is validated. Carries the raw submitted form data and server params.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\LoginFormValidationFailedEvent</code></td><td>Fired when the login form fails validation. Carries the form data, validation errors, and server params.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\FailedLoginEvent</code></td><td>Fired whenever a login attempt fails, whether at form validation (<code>'validation_failed'</code>) or post-validation (<code>'user_not_found'</code>, <code>'invalid_password'</code>, <code>'account_blocked'</code>). Carries the submitted login identifier and server params. Useful for brute-force detection and security monitoring.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\LogoutEvent</code></td><td>Fired when a user intentionally logs out. Carries the <code>User</code> and the terminated session id, letting listeners distinguish an intentional logout from passive session termination.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\BeforeRegisterFormValidationEvent</code></td><td>Fired once the registration form is populated from the request but before it is validated. Carries the raw submitted form data and server params.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\Auth\RegisterFormValidationFailedEvent</code></td><td>Fired when the registration form fails validation. Carries the form data, validation errors, and server params.</td></tr>
-        <tr><td><code>YiiRocks\Voyti\Event\User\AfterAccountUpdateEvent</code></td><td>Fired after account-level fields (username, email, password) are saved. Carries the updated <code>User</code> and the list of field names that changed. Distinct from <code>UserProfileEvent</code>, which covers cosmetic profile fields.</td></tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Event | Description |
+| --- | --- |
+| `YiiRocks\Voyti\Event\Auth\BeforeLoginFormValidationEvent` | Fired once the login form is populated from the request but before it is validated. Carries the raw submitted form data and server params. |
+| `YiiRocks\Voyti\Event\Auth\LoginFormValidationFailedEvent` | Fired when the login form fails validation. Carries the form data, validation errors, and server params. |
+| `YiiRocks\Voyti\Event\Auth\FailedLoginEvent` | Fired whenever a login attempt fails, whether at form validation (`'validation_failed'`) or post-validation (`'user_not_found'`, `'invalid_password'`, `'account_blocked'`). Carries the submitted login identifier and server params. Useful for brute-force detection and security monitoring. |
+| `YiiRocks\Voyti\Event\Auth\LogoutEvent` | Fired when a user intentionally logs out. Carries the `User` and the terminated session id, letting listeners distinguish an intentional logout from passive session termination. |
+| `YiiRocks\Voyti\Event\Auth\BeforeRegisterFormValidationEvent` | Fired once the registration form is populated from the request but before it is validated. Carries the raw submitted form data and server params. |
+| `YiiRocks\Voyti\Event\Auth\RegisterFormValidationFailedEvent` | Fired when the registration form fails validation. Carries the form data, validation errors, and server params. |
+| `YiiRocks\Voyti\Event\User\AfterAccountUpdateEvent` | Fired after account-level fields (username, email, password) are saved. Carries the updated `User` and the list of field names that changed. Distinct from `UserProfileEvent`, which covers cosmetic profile fields. |
+{: .table .table-sm .table-striped }
 </div>

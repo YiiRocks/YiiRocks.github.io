@@ -18,12 +18,12 @@ routes:
   - { name: "voyti/user-privacy-anonymize", method: "GET, POST", path: "settings/privacy/anonymize", purpose: "Anonymize account (password-confirmed). Masks email/username, blocks login, rotates the auth key; the row itself is kept" }
 ---
 
-<p markdown="1">Data export and account anonymization ship as a separate package, `voyti-gdpr`. Core only
+Data export and account anonymization ship as a separate package, `voyti-gdpr`. Core only
 ever collects mandatory personal-data-processing consent at signup and offers hard account
 deletion. Export and anonymization are optional, and this package provides this. It reuses core's
 `ConsentForm` for password re-confirmation, and core's `User`, `UserProfile`, and `UserSessions`
 models to build the export. When [`voyti-social-auth`](/voyti/social/) is also installed,
-connected social accounts are included in the export too.</p>
+connected social accounts are included in the export too.
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/voyti-gdpr" repo="voyti-gdpr" %}
@@ -48,6 +48,6 @@ return [
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Events</h3>
 
-<p markdown="1">Anonymizing an account dispatches `GdprEvent` (carrying the now-anonymized `User`) after it's
+Anonymizing an account dispatches `GdprEvent` (carrying the now-anonymized `User`) after it's
 saved. Nothing consumes it by default. Attach your own listener via the event dispatcher
-configuration for things like admin notification or downstream data-retention cleanup.</p>
+configuration for things like admin notification or downstream data-retention cleanup.

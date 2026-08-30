@@ -123,9 +123,9 @@ session continuity across them:
 
 <h3 id="gdpr" class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">GDPR</h3>
 
-<p markdown="1">When [`voyti-gdpr`](/voyti/gdpr/) is installed, self-service data export and account
+When [`voyti-gdpr`](/voyti/gdpr/) is installed, self-service data export and account
 anonymization become available, delegating to that package's own `GdprExportService` and
-`AnonymizeUserService`:</p>
+`AnonymizeUserService`:
 
 {% include route_table.md routes=page.gdpr_routes %}
 

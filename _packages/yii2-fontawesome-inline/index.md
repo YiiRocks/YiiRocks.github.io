@@ -72,17 +72,17 @@ included as part of the main text on a page, rather than in a separate section
 </p>
 </blockquote>
 
-<p markdown="1">This extension provides simple functions for [Yii framework 2.0](http://www.yiiframework.com/)
+This extension provides simple functions for [Yii framework 2.0](http://www.yiiframework.com/)
 applications to add [Font Awesome](https://fontawesome.com/) [Icons](https://fontawesome.com/icons)
-inline <strong><em>without the use of JavaScript</em></strong>.</p>
+inline ***without the use of JavaScript***.
 
-<h2 class="h3 fw-bolder mb-2">Options</h2>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Options</h2>
 {% include options_table.md options=page.option_groups.main %}
 
-<h2 class="h3 fw-bolder mb-2">ActiveForm Specific Global Options</h2>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">ActiveForm Specific Global Options</h2>
 {% include options_table.md options=page.option_groups.activeform %}
 
-<h2 class="h3 fw-bolder mb-2">Usage as a Class</h2>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Usage as a Class</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 $icon = new \thoulah\fontawesome\Icon();
@@ -92,7 +92,7 @@ echo $icon->show('font-awesome', ['class' => 'yourClass', 'style' => 'brands']);
 {% endhighlight %}
 </div>
 
-<h2 class="h3 fw-bolder mb-2">Usage as a Widget</h2>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Usage as a Widget</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use thoulah\fontawesome\IconWidget4 as IconWidget;
@@ -100,32 +100,32 @@ echo IconWidget::widget(['name' => 'at']);
 echo IconWidget::widget(['name' => 'github', 'options' => ['style' => 'brands', 'fill' => '#003865']]);
 
 echo IconWidget::widget([
-'name' => 'font-awesome',
-'options' => [
-'class' => 'yourClass',
-'style' => 'brands'
-],
+    'name' => 'font-awesome',
+    'options' => [
+        'class' => 'yourClass',
+        'style' => 'brands',
+    ],
 ]);
 {% endhighlight %}
 </div>
 
-<h2 class="h3 fw-bolder mb-2">Usage as a Component</h2>
-<p class="mb-3">This is the preferred method if you need to override any of the default options throughout your
-application.</p>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Usage as a Component</h2>
+This is the preferred method if you need to override any of the default options throughout your
+application.
 
-<p class="mb-3">Add the component to your Yii config file:</p>
+Add the component to your Yii config file:
 <div class="mb-3 small lh-base">
 {% highlight php %}
 'components' => [
-'fontawesome' => [
-'class' => thoulah\fontawesome\IconComponent::class,
-//      'fontAwesomeFolder' => '@npm/fontawesome-pro/svgs',
-//      'style' => 'regular',
-]
+    'fontawesome' => [
+        'class' => thoulah\fontawesome\IconComponent::class,
+        // 'fontAwesomeFolder' => '@npm/fontawesome-pro/svgs',
+        // 'style' => 'regular',
+    ],
 ]
 {% endhighlight %}
 </div>
-<p class="mb-3">Now you can globally insert an icon:</p>
+Now you can globally insert an icon:
 <div class="mb-3 small lh-base">
 {% highlight php %}
 echo Yii::$app->fontawesome->name('at');
@@ -134,7 +134,7 @@ echo Yii::$app->fontawesome->name('font-awesome', 'brands')->class('yourClass');
 {% endhighlight %}
 </div>
 
-<h2 class="h3 fw-bolder mb-2">Usage from ActiveForm (automatic)</h2>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Usage from ActiveForm (automatic)</h2>
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use thoulah\fontawesome\bootstrap4\ActiveForm;
@@ -142,36 +142,36 @@ use thoulah\fontawesome\bootstrap4\ActiveForm;
 $form = ActiveForm::begin();
 
 echo $form->field($model, 'field1', [
-'icon' => 'user',
+    'icon' => 'user',
 ]);
 
 echo $form->field($model, 'field2', [
-'icon' => [
-'name' => 'github',
-'style' => 'brands',
-],
+    'icon' => [
+        'name' => 'github',
+        'style' => 'brands',
+    ],
 ]);
 
 echo $form->field($model, 'field3', [
-'icon' => [
-'name' => 'github',
-'style' => 'brands',
-'append' => true,
-],
+    'icon' => [
+        'name' => 'github',
+        'style' => 'brands',
+        'append' => true,
+    ],
 ]);
 
 ActiveForm::end();
 {% endhighlight %}
 </div>
 
-<h2 class="h3 fw-bolder mb-2">Usage from ActiveForm (manual)</h2>
-<p class="mb-3" markdown="1">For `$icon` you can use any earlier described usage method.</p>
+<h2 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Usage from ActiveForm (manual)</h2>
+For `$icon` you can use any earlier described usage method.
 <div class="mb-3 small lh-base">
 {% highlight php %}
 $form = ActiveForm::begin();
 
 echo $form->field($model, 'field', [
-'inputTemplate' => $icon->activeFieldAddon('font-awesome', ['style' => 'brands']),
+    'inputTemplate' => $icon->activeFieldAddon('font-awesome', ['style' => 'brands']),
 ]);
 
 ActiveForm::end();

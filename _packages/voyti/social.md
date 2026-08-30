@@ -20,10 +20,10 @@ routes:
   - { name: "voyti/user-social-auth-delete", method: "POST", path: "settings/social/disconnect/{id}", purpose: "Disconnect a linked social account. Login required" }
 ---
 
-<p markdown="1">Social/OAuth2 login ships as a separate package, `voyti-social-auth`. It builds on
+Social/OAuth2 login ships as a separate package, `voyti-social-auth`. It builds on
 [yiisoft/yii-auth-client](https://github.com/yiisoft/yii-auth-client), which handles all OAuth2
 protocol logic - Voyti adds the callback routing, account linking, and registration flow, plus the
-`user_social_account` table.</p>
+`user_social_account` table.
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/voyti-social-auth" repo="voyti-social-auth" %}
@@ -51,10 +51,10 @@ return [
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Provider configuration</h3>
 
-<p class="mb-3" markdown="1">Configure providers via a `clients` map under the `yiisoft/yii-auth-client` params key. The package
-automatically sets each client's OAuth2 return URL to match its config key.</p>
+Configure providers via a `clients` map under the `yiisoft/yii-auth-client` params key. The package
+automatically sets each client's OAuth2 return URL to match its config key.
 
-<p class="mb-3" markdown="1">To customize OAuth2 request parameters, add an `authParams` key to your client config.</p>
+To customize OAuth2 request parameters, add an `authParams` key to your client config.
 <div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
@@ -79,48 +79,40 @@ return [
 ];
 {% endhighlight %}
 </div>
-<p class="mb-3" markdown="1">Your config key becomes the callback URL:
-`https://your-domain.tld/<prefix>/auth/<key>`. Provider developer consoles require an
-exact match, so finalize your keys before registering the OAuth app.</p>
+Your config key becomes the callback URL: `https://your-domain.tld/<prefix>/auth/<key>`. Provider
+developer consoles require an exact match, so finalize your keys before registering the OAuth app.
 
-<p markdown="1">See the
+See the
 [yii-auth-client Quick Start](https://github.com/yiisoft/yii-auth-client/blob/master/docs/guide/en/quick-start.md)
 for per-client options (custom scope, extra auth-URL parameters, etc.). Refer to your provider's
-OAuth2 documentation for available `authParams`.</p>
+OAuth2 documentation for available `authParams`.
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Routes</h3>
 {% include route_table.md routes=page.routes %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Supported providers</h3>
 
-<p class="mb-3" markdown="1">yii-auth-client ships ten branded provider classes, each with its own
+yii-auth-client ships ten branded provider classes, each with its own
 `Yiisoft\Yii\AuthClient\Client\*` class (plus a generic `Client\OpenIdConnect` for self-hosted
-OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuration.</p>
-<div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead class="fw-bold text-uppercase text-nowrap">
-                    <tr>
-                        <th>Vendor class</th>
-                        <th>Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>Client\Discord</code></td><td>Requests <code>identify email</code> scopes by default - <code>identify</code> provides basic user info, <code>email</code> provides email access.</td></tr>
-                    <tr><td><code>Client\Facebook</code></td><td>The vendor client's default requested fields don't include email; same as GitHub, the package leaves it null rather than issuing a secondary Graph API call.</td></tr>
-                    <tr><td><code>Client\GitHub</code></td><td>If <code>/user</code> doesn't include an email (private-email accounts), <code>email</code> is left null - the user supplies it during registration.</td></tr>
-                    <tr><td><code>Client\Google</code></td><td>Standard <code>id</code>/<code>email</code>/<code>name</code> claims.</td></tr>
-                    <tr><td><code>Client\LinkedIn</code></td><td>Identity comes from the OIDC-style <code>sub</code> claim rather than <code>id</code>.</td></tr>
-                    <tr><td><code>Client\Microsoft</code></td><td>Hits the raw Microsoft Graph <code>/v1.0/me</code> endpoint (email under <code>mail</code>, name under <code>displayName</code>). Multi-tenant apps just add a <code>tenant</code> key to the <code>clients</code> entry - the client resolves its <code>authUrl</code>/<code>tokenUrl</code> placeholder against it internally.</td></tr>
-                    <tr><td><code>Client\TikTok</code></td><td>Identity comes from <code>open_id</code> rather than <code>id</code>. Never returns email.</td></tr>
-                    <tr><td><code>Client\VKontakte</code></td><td>Uses the newer VK ID endpoints (<code>id.vk.ru</code>) rather than the legacy <code>oauth.vk.com</code>/<code>api.vk.com</code> ones. The response has no username-like field at all - falls back to the email's local part.</td></tr>
-                    <tr><td><code>Client\X</code></td><td>Response is unwrapped from its <code>data</code> envelope. Never returns email (X API v2 doesn't expose it without elevated access).</td></tr>
-                    <tr><td><code>Client\Yandex</code></td><td>Email read from <code>default_email</code>.</td></tr>
-                </tbody>
-            </table>
+OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuration.
+<div class="table-responsive" markdown="1">
+| Vendor class | Notes |
+| ------------ | ----- |
+| `Client\Discord` | Requests `identify email` scopes by default - `identify` provides basic user info, `email` provides email access. |
+| `Client\Facebook` | The vendor client's default requested fields don't include email; same as GitHub, the package leaves it null rather than issuing a secondary Graph API call. |
+| `Client\GitHub` | If `/user` doesn't include an email (private-email accounts), `email` is left null - the user supplies it during registration. |
+| `Client\Google` | Standard `id`/`email`/`name` claims. |
+| `Client\LinkedIn` | Identity comes from the OIDC-style `sub` claim rather than `id`. |
+| `Client\Microsoft` | Hits the raw Microsoft Graph `/v1.0/me` endpoint (email under `mail`, name under `displayName`). Multi-tenant apps just add a `tenant` key to the `clients` entry - the client resolves its `authUrl`/`tokenUrl` placeholder against it internally. |
+| `Client\TikTok` | Identity comes from `open_id` rather than `id`. Never returns email. |
+| `Client\VKontakte` | Uses the newer VK ID endpoints (`id.vk.ru`) rather than the legacy `oauth.vk.com`/`api.vk.com` ones. The response has no username-like field at all - falls back to the email's local part. |
+| `Client\X` | Response is unwrapped from its `data` envelope. Never returns email (X API v2 doesn't expose it without elevated access). |
+| `Client\Yandex` | Email read from `default_email`. |
+{: .table .table-sm .table-striped }
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">How it works</h3>
-<p class="mb-3">With providers configured:</p>
+With providers configured:
 
 - The login page shows social login buttons for configured providers.
 - The Social Authentication page lists every connected account and renders connect buttons for providers.
@@ -131,4 +123,4 @@ OIDC). Defaults (scope, endpoints) come from the vendor client's DI configuratio
   `AfterLoginEvent` fire for social logins too, and remember-me is always applied.
 
 Self-hosted OpenID Connect providers are not built-in. Use yii-auth-client's generic
-	`Client\OpenIdConnect` class, configured the same way as other clients above.
+`Client\OpenIdConnect` class, configured the same way as other clients above.

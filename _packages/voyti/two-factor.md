@@ -62,14 +62,14 @@ route_groups:
     - { name: "voyti/user-two-factor-regenerate-backup-codes", method: "POST", path: "settings/two-factor/backup-codes/regenerate", purpose: "Invalidate existing backup codes and generate a fresh set (requires re-verifying the current method)" }
 ---
 
-<p class="mb-3">Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
+Two-factor authentication is optional and pluggable: the core carries no 2FA code of its own, only
 the seams that let method packages hook into login. Install one or more method packages to activate
-2FA.</p>
+2FA.
 
-<p class="mb-3">After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
+After password login succeeds, 2FA checks if the user has an enabled method. If so, it holds the
 session pending 2FA verification, runs the method's confirmation step (e.g., email code, TOTP
 entry), and verifies the result. On success, the login completes. Backup codes are auto-generated
-when enabling 2FA, allowing account recovery if the primary method is unavailable.</p>
+when enabling 2FA, allowing account recovery if the primary method is unavailable.
 
 {% assign status_page = site.pages | where: "url", "/status/" | first %}
 <div class="row g-4 mb-3">
@@ -78,32 +78,32 @@ when enabling 2FA, allowing account recovery if the primary method is unavailabl
 {% assign m_tint = status_page.sub_packages[m.repo].tint %}
 {% include method_card.md icon=m.icon label=m.label tint=m_tint text=m.text package=m.package repo=m.repo routes=m_routes %}
 {% endfor %}
-            <div class="col-12">
-                <div class="card h-100">
-                    <div class="card-header d-flex align-items-center"><div class="me-2 d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ status_page.sub_packages['voyti-2fa'].tint }}; width:32px; height:32px;"><img width="20" height="20" src="/assets/icons/voyti-2fa.svg" alt="2FA Base Package"></div>2FA Base Package</div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Pulled in automatically as a dependency by method packages, the base package supplies shared
-                            routes, backup codes, and database tables.
-                        </p>
+<div class="col-12">
+<div class="card h-100">
+<div class="card-header d-flex align-items-center"><div class="me-2 d-flex align-items-center justify-content-center flex-shrink-0 rounded-3" style="background:{{ status_page.sub_packages['voyti-2fa'].tint }}; width:32px; height:32px;"><img width="20" height="20" src="/assets/icons/voyti-2fa.svg" alt="2FA Base Package"></div>2FA Base Package</div>
+<div class="card-body">
+<p class="card-text">
+    Pulled in automatically as a dependency by method packages, the base package supplies shared
+    routes, backup codes, and database tables.
+</p>
 {% include route_table.md routes=page.route_groups.base class="mb-0" %}
-                    </div>
-                    <div class="card-footer">
-                        <p class="mb-2" markdown="1">
-                            Method packages can contribute their own tables and migrations, registered for `yiisoft/db-migration`.
-                        </p>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            After installing any 2FA package, run:
-                            <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
-                            <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Create an issue</a>
-                            <div class="d-flex gap-2 flex-wrap ms-auto">
-                                <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
-                                <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+</div>
+<div class="card-footer">
+<p class="mb-2" markdown="1">
+    Method packages can contribute their own tables and migrations, registered for `yiisoft/db-migration`.
+</p>
+<div class="d-flex align-items-center gap-2 flex-wrap">
+    After installing any 2FA package, run:
+    <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace">./yii migrate:up</button>
+    <a href="https://github.com/YiiRocks/voyti-2fa/issues" target="_blank" rel="noopener" class="btn btn-primary btn-arrow btn-sm small fw-semibold">Create an issue</a>
+    <div class="d-flex gap-2 flex-wrap ms-auto">
+        <a href="https://github.com/YiiRocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">GitHub</a>
+        <a href="https://packagist.org/packages/yiirocks/voyti-2fa" target="_blank" rel="noopener" class="btn btn-info btn-arrow btn-sm small fw-semibold">Packagist</a>
+    </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
@@ -122,23 +122,13 @@ return [
 {% include options_table.md options=page.option_groups.config %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Console Commands</h3>
-<p class="mb-3" markdown="1">The base package registers one console command under `yiisoft/yii-console`:</p>
+The base package registers one console command under `yiisoft/yii-console`:
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Command</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>voyti:2fa:disable</code></td>
-            <td>Disable two-factor authentication for a user, bypassing re-authentication</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Command | Description |
+| --- | --- |
+| `voyti:2fa:disable` | Disable two-factor authentication for a user, bypassing re-authentication |
+{: .table .table-sm .table-striped }
 </div>
 
 {% include options_table.md options=page.option_groups.disable %}
@@ -153,10 +143,10 @@ php yii voyti:2fa:disable --id=42
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Writing a method plugin</h3>
 <ol>
-            <li>
-                <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register the method</h4>
+<li>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Register the method</h4>
 
-<p class="mb-3" markdown="1">Tag the provider class with `voyti.two-factor-method` in `config/di.php`. The
+<p markdown="1">Tag the provider class with `voyti.two-factor-method` in `config/di.php`. The
 registry collects tagged providers, keyed by `getName()`:</p>
 
 <div class="mb-3 small lh-base">
@@ -172,15 +162,15 @@ return [
 ];
 {% endhighlight %}
 </div>
-            </li>
-            <li>
-                <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Contribute setup routes</h4>
+</li>
+<li>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Contribute setup routes</h4>
 
-<p class="mb-3" markdown="1">Append routes to `yiirocks/voyti` → `twoFactorMethodRoutes` in
+<p markdown="1">Append routes to `yiirocks/voyti` → `twoFactorMethodRoutes` in
 `config/params.php`. They're spliced into the base package's `settings/` group,
 inheriting login guards and CSRF middleware:</p>
 
-                <div class="mb-3 small lh-base">
+<div class="mb-3 small lh-base">
 {% highlight php %}
 // config/params.php
 use MyNamespace\MyMethodController;
@@ -198,44 +188,37 @@ return [
 {% endhighlight %}
 </div>
 
-                <p markdown="1">Route lists merge and append, so multiple method packages coexist without collision. Use the
-                `voyti/user-two-factor-<name>` convention; that's what `getSettingsUrl()` generates.
-                Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a
-                top-level route group using `VoytiRoutes::webMiddleware()`.</p>
+<p markdown="1">Route lists merge and append, so multiple method packages coexist without collision. Use the
+`voyti/user-two-factor-<name>` convention; that's what `getSettingsUrl()` generates.
+Client-collected methods (WebAuthn) register their guest-accessible confirmation fragment as a
+top-level route group using `VoytiRoutes::webMiddleware()`.</p>
 
-            </li>
-            <li>
-                <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Implement the interface</h4>
+</li>
+<li>
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Implement the interface</h4>
 
-<p class="mb-3" markdown="1">`TwoFactorMethodInterface` (namespace `YiiRocks\Voyti\TwoFactor`, provided by the base
+<p markdown="1">`TwoFactorMethodInterface` (namespace `YiiRocks\Voyti\TwoFactor`, provided by the base
 package) is the contract you must implement:</p>
 
-<div class="table-responsive">
-            <table class="table table-sm table-striped">
-                <thead class="fw-bold text-uppercase text-nowrap">
-                    <tr>
-                        <th>Method</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><code>getName()</code></td><td>The exclusive name the method is stored under; also the registry key.</td></tr>
-                    <tr><td><code>isAvailable()</code></td><td>Whether the backing library is installed. Unavailable methods are hidden and never chosen as the default - the graceful self-disable hook.</td></tr>
-                    <tr><td><code>isCodeBased()</code></td><td><code>true</code> for a user-typed code (TOTP, email), <code>false</code> for a client-collected payload.</td></tr>
-                    <tr><td><code>requiresCodeDelivery()</code></td><td>Whether a code must be delivered before the user can enter it (email) versus available on demand (TOTP, WebAuthn). Drives the disable flow's "send a code first" pre-step generically.</td></tr>
-                    <tr><td><code>verify($user, $data)</code></td><td>Validate the attempt. <code>$data</code> is <code>['code' =&gt; ...]</code> for code-based methods, <code>['payload' =&gt; ...]</code> for client-collected ones.</td></tr>
-                    <tr><td><code>getSettingsUrl($url)</code></td><td>GET route for the method's settings screen; the settings page also fetches it to lazy-load the setup fragment.</td></tr>
-                    <tr><td><code>getConfirmFragmentUrl($url)</code></td><td>GET route for the login-confirmation fragment, or <code>null</code> for code-based methods (their code form is rendered inline).</td></tr>
-                    <tr><td><code>getReauthFragmentUrl($url)</code></td><td>GET route for the re-authentication fragment used by sensitive actions (disable 2FA, regenerate backup codes), or <code>null</code> for code-based methods (their code is rendered inline). For client-collected methods like WebAuthn, this fragment runs the assertion ceremony.</td></tr>
-                    <tr><td><code>getButtonLabel($translator)</code></td><td>Short label for the method-switch button.</td></tr>
-                    <tr><td><code>getEnabledWithMethodName($translator)</code></td><td>Name shown in the "2FA is enabled with {method}" message.</td></tr>
-                    <tr><td><code>getErrorMessage()</code></td><td>Translated error from the last failed <code>verify()</code>; empty on success.</td></tr>
-                    <tr><td><code>onAuthenticationStepStart($user)</code></td><td>Runs when a login reaches this method's confirmation step (e.g. email a fresh code); a no-op for methods with nothing to send.</td></tr>
-                    <tr><td><code>onDisable($user)</code></td><td>Runs when 2FA is disabled entirely, to clear method-specific state.</td></tr>
-                </tbody>
-            </table>
+<div class="table-responsive" markdown="1">
+| Method | Purpose |
+| --- | --- |
+| `getName()` | The exclusive name the method is stored under; also the registry key. |
+| `isAvailable()` | Whether the backing library is installed. Unavailable methods are hidden and never chosen as the default - the graceful self-disable hook. |
+| `isCodeBased()` | `true` for a user-typed code (TOTP, email), `false` for a client-collected payload. |
+| `requiresCodeDelivery()` | Whether a code must be delivered before the user can enter it (email) versus available on demand (TOTP, WebAuthn). Drives the disable flow's "send a code first" pre-step generically. |
+| `verify($user, $data)` | Validate the attempt. `$data` is `['code' => ...]` for code-based methods, `['payload' => ...]` for client-collected ones. |
+| `getSettingsUrl($url)` | GET route for the method's settings screen; the settings page also fetches it to lazy-load the setup fragment. |
+| `getConfirmFragmentUrl($url)` | GET route for the login-confirmation fragment, or `null` for code-based methods (their code form is rendered inline). |
+| `getReauthFragmentUrl($url)` | GET route for the re-authentication fragment used by sensitive actions (disable 2FA, regenerate backup codes), or `null` for code-based methods (their code is rendered inline). For client-collected methods like WebAuthn, this fragment runs the assertion ceremony. |
+| `getButtonLabel($translator)` | Short label for the method-switch button. |
+| `getEnabledWithMethodName($translator)` | Name shown in the "2FA is enabled with {method}" message. |
+| `getErrorMessage()` | Translated error from the last failed `verify()`; empty on success. |
+| `onAuthenticationStepStart($user)` | Runs when a login reaches this method's confirmation step (e.g. email a fresh code); a no-op for methods with nothing to send. |
+| `onDisable($user)` | Runs when 2FA is disabled entirely, to clear method-specific state. |
+{: .table .table-sm .table-striped }
 </div>
-            </li>
+</li>
 </ol>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Enrollment and storage</h3>

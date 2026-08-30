@@ -7,7 +7,7 @@ description: "Manual server-side verification of reCAPTCHA v2 and v3 tokens usin
 excerpt_separator: ""
 ---
 
-<p class="mb-3" markdown="1">Use `RecaptchaClient` for manual verification:</p>
+Use `RecaptchaClient` for manual verification:
 <div class="mb-3 small lh-base">
 {% highlight php %}
 use YiiRocks\Recaptcha\RecaptchaClient;

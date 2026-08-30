@@ -65,8 +65,8 @@ option_groups:
       desc: "The width of the icon. If width is given without height, the latter will be calculated from the SVG size."
 ---
 
-<p class="mb-3" markdown="1">Provides simple functions to add [Bootstrap Icons](https://icons.getbootstrap.com/) inline.
-Depends on [SvgInline](/svg-inline/).</p>
+Provides simple functions to add [Bootstrap Icons](https://icons.getbootstrap.com/) inline.
+Depends on [SvgInline](/svg-inline/).
 
 <div class="mb-3 small lh-base">
 {% highlight php %}
@@ -78,14 +78,14 @@ echo $svg->bootstrap('alarm')->title('Wake Up');
 {% include install_block.md package="yiirocks/svg-inline-bootstrap" repo="svg-inline-bootstrap" %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Configuration</h3>
-<p class="mb-3" markdown="1">Configure Bootstrap Icons behavior in `config/params.php` under the
-`'yiirocks/svg-inline-bootstrap'` key:</p>
+Configure Bootstrap Icons behavior in `config/params.php` under the
+`'yiirocks/svg-inline-bootstrap'` key:
 {% include options_table.md options=page.option_groups.config %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Method Parameters</h3>
 {% include options_table.md options=page.option_groups.method_params %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Fluent API</h3>
-<p class="mb-3" markdown="1">Additional options can be chained onto the `bootstrap()` call:</p>
+Additional options can be chained onto the `bootstrap()` call:
 {% include options_table.md options=page.option_groups.fluent %}
 

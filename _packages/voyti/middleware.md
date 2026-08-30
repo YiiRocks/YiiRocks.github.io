@@ -33,8 +33,8 @@ middleware_groups:
       auto: 'Yes - wraps the whole <a href="/voyti/social/">social authentication</a> route group'
 ---
 
-<p class="mb-3">Core ships {{ page.middleware_groups.core | size }} PSR-15 middleware classes for session handling and access control; installed
-sibling packages can contribute their own on top.</p>
+Core ships {{ page.middleware_groups.core | size }} PSR-15 middleware classes for session handling and access control; installed
+sibling packages can contribute their own on top.
 
 <p class="text-muted small" markdown="1">Namespace: `YiiRocks\Voyti\Middleware`</p>
 {% include middleware_table.md middleware=page.middleware_groups.core %}
@@ -49,7 +49,7 @@ sibling packages can contribute their own on top.</p>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label" id="site-wide-enforcement">Site-wide enforcement</h3>
 
-<p markdown="1">The auto-registration above only covers routes <em>this extension defines</em>. Without
+The auto-registration above only covers routes <em>this extension defines</em>. Without
 `VoytiMiddleware` wrapping your routes, a user with an expired password, missing 2FA, or
 a revoked session can still browse your app's own dashboard, home page, or any other route outside
-this extension - and a visitor with a valid remember-me cookie won't be logged back in either.</p>
+this extension - and a visitor with a valid remember-me cookie won't be logged back in either.

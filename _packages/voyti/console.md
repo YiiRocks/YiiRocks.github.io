@@ -62,33 +62,14 @@ option_groups:
       desc: "Delete user by ID"
 ---
 
-<div class="table-responsive">
-<table class="table table-sm table-striped">
-    <thead class="fw-bold text-uppercase text-nowrap">
-        <tr>
-            <th>Command</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>voyti:create</code></td>
-            <td>Create a new user</td>
-        </tr>
-        <tr>
-            <td><code>voyti:confirm</code></td>
-            <td>Confirm a user's email</td>
-        </tr>
-        <tr>
-            <td><code>voyti:password</code></td>
-            <td>Change a user's password</td>
-        </tr>
-        <tr>
-            <td><code>voyti:delete</code></td>
-            <td>Delete a user</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive" markdown="1">
+| Command | Description |
+| --- | --- |
+| `voyti:create` | Create a new user |
+| `voyti:confirm` | Confirm a user's email |
+| `voyti:password` | Change a user's password |
+| `voyti:delete` | Delete a user |
+{: .table .table-sm .table-striped }
 </div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">voyti:create</h3>
