@@ -23,6 +23,12 @@ option_groups:
       default: "<code>false</code>"
       desc: "Store counters in APCu instead of the host's PSR-16 cache, for real atomic compare-and-swap. Only safe on a single-server deployment - a load-balanced/multi-server host would enforce the limit independently per server instead of across the cluster."
 resources:
+  - key: stateless-client
+    icon: "/assets/icons/voyti-api-stateless-client.svg"
+    label: "Stateless Client"
+    text: "A REST API for any stateless client: credential login/logout, self-registration, password reset, own-profile and own-sessions management, plus admin RBAC and audit-log endpoints. See the <a href=\"/voyti/stateless-client/\">full Stateless Client page</a> for the complete endpoint list."
+    package: "yiirocks/voyti-api-stateless-client"
+    repo: "voyti-api-stateless-client"
   - key: user
     icon: "/assets/icons/voyti-api-user.svg"
     label: "User"
@@ -41,12 +47,26 @@ route_groups:
 ---
 
 The JSON REST API is optional and pluggable: the base API package carries no resource
-endpoints of its own, only Bearer-token authentication, RBAC-admin gating, and the shared route group
-resource packages plug into. Install a resource packages to expose actual endpoints.
+endpoints of its own, only Bearer-token authentication, RBAC-admin gating, and the shared route groups
+resource packages plug into. Install a resource package to expose actual endpoints.
 
-Every resource package's routes are wrapped in the same authenticated group: `ApiTokenAuthenticationMiddleware`
-resolves the Bearer token, then any installed extension middleware runs (e.g. rate limiting, below),
-then `AccessRuleMiddleware` enforces `administratorPermissionName`. Each resource package also
+There are three route groups, contributed under `yiirocks/voyti` &rarr; `api` &rarr; `routes` /
+`authenticatedRoutes` / `publicRoutes` respectively:
+
+<div class="table-responsive mb-3">
+<table class="table table-sm table-striped">
+<thead class="fw-bold text-uppercase text-nowrap"><tr><th>Params key</th><th>Middleware</th><th>Use for</th></tr></thead>
+<tbody>
+<tr><td><code>routes</code></td><td>Bearer auth + extensions + admin-access check</td><td>Admin-only endpoints (e.g. user CRUD, RBAC)</td></tr>
+<tr><td><code>authenticatedRoutes</code></td><td>Bearer auth + extensions</td><td>Any authenticated caller acting on their own behalf (e.g. "my profile", "my sessions")</td></tr>
+<tr><td><code>publicRoutes</code></td><td>Extensions only, no auth</td><td>Endpoints reachable before a token exists (e.g. login, registration)</td></tr>
+</tbody>
+</table>
+</div>
+
+Every
+group still passes through installed extension middleware (e.g. rate limiting, below), and
+`routes` additionally has `AccessRuleMiddleware` enforce `administratorPermissionName`. Each resource package also
 contributes its own OpenAPI paths and schemas, merged into one `openapi.json` document.
 
 {% assign status_page = site.pages | where: "url", "/status/" | first %}

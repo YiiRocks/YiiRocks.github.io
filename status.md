@@ -19,8 +19,9 @@ groups:
     keys:
       - voyti
       - voyti-api
-      - voyti-api-user
       - voyti-api-rate-limiter
+      - voyti-api-stateless-client
+      - voyti-api-user
       - voyti-2fa
       - voyti-2fa-email
       - voyti-2fa-totp
@@ -49,16 +50,6 @@ sub_packages:
     workflow: build.yml
     docsUrl: "/voyti/api/"
     unreleased: true
-  voyti-api-user:
-    name: API User
-    tint: "#e0e7ff"
-    logo: "/assets/icons/voyti-api-user.svg"
-    package: yiirocks/voyti-api-user
-    repo: voyti-api-user
-    branch: main
-    workflow: build.yml
-    docsUrl: "/voyti/api/"
-    unreleased: true
   voyti-api-rate-limiter:
     name: API Rate Limiter
     tint: "#ffedd5"
@@ -68,6 +59,26 @@ sub_packages:
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/api/#rate-limiting"
+    unreleased: true
+  voyti-api-stateless-client:
+    name: API Stateless Client
+    tint: "#fef9c3"
+    logo: "/assets/icons/voyti-api-stateless-client.svg"
+    package: yiirocks/voyti-api-stateless-client
+    repo: voyti-api-stateless-client
+    branch: main
+    workflow: build.yml
+    docsUrl: "/voyti/stateless-client/"
+    unreleased: true
+  voyti-api-user:
+    name: API User
+    tint: "#e0e7ff"
+    logo: "/assets/icons/voyti-api-user.svg"
+    package: yiirocks/voyti-api-user
+    repo: voyti-api-user
+    branch: main
+    workflow: build.yml
+    docsUrl: "/voyti/api/"
     unreleased: true
   voyti-2fa:
     name: 2FA

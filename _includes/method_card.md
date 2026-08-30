@@ -5,7 +5,7 @@
             <p class="card-text">
                 {{ include.text }}
             </p>
-            {% include route_table.md routes=include.routes class="mb-0" %}
+            {% if include.routes %}{% include route_table.md routes=include.routes class="mb-0" %}{% endif %}
         </div>
         <div class="card-footer">
             {% include install_block.md package=include.package repo=include.repo class="mb-0" %}

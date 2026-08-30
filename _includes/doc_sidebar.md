@@ -25,7 +25,14 @@
             <div class="fw-bold small text-body-secondary mb-2 mt-md-4 text-uppercase ps-3">Addon Packages</div>
             <ul class="nav nav-pills flex-column gap-1">
 {% for s in addon_sections %}
+{% unless s.parent %}
                 <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ s.slug }}/" class="nav-link{% if s.slug == include.section %} active fw-bold{% endif %}">{{ s.title }}</a></li>
+{% for c in addon_sections %}
+{% if c.parent == s.slug %}
+                <li class="nav-item"><a href="{{ pkg.docsUrl }}{{ c.slug }}/" class="nav-link ps-4{% if c.slug == include.section %} active fw-bold{% endif %}">{{ c.title }}</a></li>
+{% endif %}
+{% endfor %}
+{% endunless %}
 {% endfor %}
             </ul>
             </div>

@@ -22,6 +22,12 @@ title: "Voyti - Quick Start"
             announces its `views` directory through the `viewsPackagePaths` param.
 </p>
 <button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mw-100 mb-3">composer require yiirocks/voyti yiirocks/voyti-views-bootstrap5</button>
+<p class="mb-3" markdown="1">
+            Building an API-only backend instead? [`voyti-api-stateless-client`](/voyti/stateless-client/) already provides the
+            `yiirocks/voyti-views` contract itself, so installing it satisfies this requirement without
+            a separate views package.
+</p>
+<button type="button" data-clipboard class="btn btn-outline-primary fw-medium text-start text-nowrap overflow-hidden font-monospace mw-100 mb-3">composer require yiirocks/voyti yiirocks/voyti-api-stateless-client</button>
 <p class="mb-3">Optional packages to extend functionality:</p>
 <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
             <div class="col">
