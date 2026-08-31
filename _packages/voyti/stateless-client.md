@@ -8,7 +8,7 @@ option_groups:
     - name: redirectUrl
       type: string
       default: "<code>''</code>"
-      desc: "SPA URL the OAuth2 popup redirects to after a social login attempt, with either <code>?code=...</code> (success) or <code>?error=...</code> in the query string. Required for the social-auth bridge to work; requests fail with <code>500</code> until it's set."
+      desc: "URL the OAuth2 popup redirects to after a social login attempt, with either <code>?code=...</code> (success) or <code>?error=...</code> in the query string. Required for the social-auth bridge to work; requests fail with <code>500</code> until it's set."
 public_routes:
   - { name: "voyti/api-v1-auth-login", method: "POST", path: "v1/auth/login", purpose: "Credential login. Returns a bearer token, or a <code>challenge_required</code> body if 2FA is enabled for the account" }
   - { name: "voyti/api-v1-auth-register", method: "POST", path: "v1/auth/register", purpose: "Self-registration" }
@@ -28,6 +28,8 @@ admin_routes:
   - { name: "voyti/api-v1-rbac-create", method: "POST", path: "v1/rbac/{itemType}", purpose: "Create a role or permission" }
   - { name: "voyti/api-v1-rbac-update", method: "PATCH", path: "v1/rbac/{itemType}/{name}", purpose: "Update name/description/rule/children" }
   - { name: "voyti/api-v1-rbac-delete", method: "DELETE", path: "v1/rbac/{itemType}/{name}", purpose: "Delete a role or permission" }
+  - { name: "voyti/api-v1-rbac-assignments-index", method: "GET", path: "v1/rbac/{itemType}/{name}/assignments", purpose: "List users assigned to a role or permission" }
+  - { name: "voyti/api-v1-rbac-assignments-update", method: "PUT", path: "v1/rbac/{itemType}/{name}/assignments", purpose: "Replace the full set of assigned users (diffs against the current assignment list)" }
 two_factor_routes:
   - { name: "voyti/api-v1-auth-challenge-verify", method: "POST", path: "v1/auth/challenge/verify", purpose: "Verify the 2FA code (or backup code, or WebAuthn-style payload) and receive the real bearer token" }
 two_factor_management_routes:
@@ -50,9 +52,14 @@ social_routes:
   - { name: "voyti/api-v1-auth-social-exchange", method: "POST", path: "v1/auth/social/exchange", purpose: "Trade the one-time code from the popup redirect for a real bearer token" }
 ---
 
-A REST API for a browser-based single-page application, or SPA (or any other stateless client),
-built on `voyti-api`'s bearer-token infrastructure: credential login/logout, self-registration,
-password reset, own-profile and own-sessions management, plus admin RBAC and audit-log endpoints.
+A stateless REST API for any client that can hold a bearer token, a browser-based single-page
+application (SPA) foremost among them, built on `voyti-api`'s bearer-token infrastructure:
+credential login/logout, self-registration, password reset, own-profile and own-sessions
+management, plus admin RBAC and audit-log endpoints.
+
+Response messages are translatable. A consumer picks the language with a standard `Accept-Language`
+request header; `voyti-api`'s `LocaleMiddleware` matches it against the installed catalogs and falls
+back to `ApiConfig::$defaultLocale` if nothing matches.
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Installation</h3>
 {% include install_block.md package="yiirocks/voyti-api-stateless-client" repo="voyti-api-stateless-client" %}
@@ -74,10 +81,10 @@ this API. If the account has 2FA enabled, login instead returns a challenge - se
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Admin</h3>
 
-Reuse the same admin-gated group `voyti-api-user`'s endpoints do
-(`AccessRuleMiddleware` enforces `administratorPermissionName`). RBAC mirrors core's HTML admin
-screen: `{itemType}` is `role` or `permission`. Per-user assignment management isn't included here
-yet - it's a separate sub-resource, not a property of the item itself.
+RBAC mirrors core's HTML admin screen: `{itemType}` is `role` or `permission`. Per-user assignment
+management is a separate sub-resource, not a property of the item itself: `update` diffs the
+submitted `userIds` against the current assignment list, removing and adding as needed, and rejects
+any ID that doesn't match an existing user.
 
 {% include route_table.md routes=page.admin_routes %}
 
