@@ -51,7 +51,7 @@ sub_packages:
     docsUrl: "/voyti/api/"
     unreleased: true
   voyti-api-rate-limiter:
-    name: API Rate Limiter
+    name: API / Rate Limiter
     tint: "#ffedd5"
     logo: "/assets/icons/voyti-api-rate-limiter.svg"
     package: yiirocks/voyti-api-rate-limiter
@@ -61,7 +61,7 @@ sub_packages:
     docsUrl: "/voyti/api/#rate-limiting"
     unreleased: true
   voyti-api-stateless-client:
-    name: API Stateless Client
+    name: API / Stateless Client
     tint: "#fef9c3"
     logo: "/assets/icons/voyti-api-stateless-client.svg"
     package: yiirocks/voyti-api-stateless-client
@@ -71,7 +71,7 @@ sub_packages:
     docsUrl: "/voyti/stateless-client/"
     unreleased: true
   voyti-api-user:
-    name: API User
+    name: API / User
     tint: "#e0e7ff"
     logo: "/assets/icons/voyti-api-user.svg"
     package: yiirocks/voyti-api-user
