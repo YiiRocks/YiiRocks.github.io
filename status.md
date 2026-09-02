@@ -243,14 +243,14 @@ sub_packages:
             </div>
             <div class="d-flex flex-wrap gap-2 mb-3">
 {% if pkg.unreleased %}
-                <img src="https://img.shields.io/badge/-unreleased-orange" alt="Unreleased"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/badge/unreleased-orange.svg" alt="Unreleased"  loading="lazy" decoding="async">
 {% else %}
-                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}" alt="Packagist Version"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/packagist/php-v/{{ pkg.package }}" alt="PHP Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/v/{{ pkg.package }}.svg" alt="Packagist Version"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/dependency-v/{{ pkg.package }}/php.svg" alt="PHP Version"  loading="lazy" decoding="async">
 {% endif %}
-                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}" alt="Downloads"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}" alt="Last Commit"  loading="lazy" decoding="async">
-                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}" alt="CI"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/packagist/dt/{{ pkg.package }}.svg" alt="Downloads"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/last-commit/YiiRocks/{{ pkg.repo }}.svg" alt="Last Commit"  loading="lazy" decoding="async">
+                <img src="https://img.shields.io/github/actions/workflow/status/YiiRocks/{{ pkg.repo }}/{{ pkg.workflow }}.svg" alt="CI"  loading="lazy" decoding="async">
             </div>
             <div class="d-flex flex-wrap gap-2">
                 <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FYiiRocks%2F{{ pkg.repo }}%2Fbadges%2Fcoverage.json" alt="Coverage"  loading="lazy" decoding="async">
