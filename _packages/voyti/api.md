@@ -62,7 +62,8 @@ There are three route groups, contributed under `yiirocks/voyti` &rarr; `api` &r
 {: .table .table-sm .table-striped }
 </div>
 
-Every group still passes through installed extension middleware (e.g. rate limiting, below), and
+Every group still passes through installed extension middleware. The optional rate limiter enforces
+limits only after Bearer authentication resolves a user, so public routes pass through it unchanged.
 `routes` additionally has `AccessRuleMiddleware` enforce `administratorPermissionName`. Each resource package also
 contributes its own OpenAPI paths and schemas, merged into one `openapi.json` document.
 
@@ -169,10 +170,11 @@ enforces `administratorPermissionName` as usual, so API tokens only grant what t
     Per-user rate limiting for these routes ships as a separate package,
     `voyti-api-rate-limiter`, built on
     [yiisoft/rate-limiter](https://github.com/yiisoft/rate-limiter). It scopes
-    limits per authenticated user and applies to every resource package's endpoints
-    alike. Every response carries `X-Rate-Limit-Limit`, `X-Rate-Limit-Remaining`, and
-    `X-Rate-Limit-Reset` headers; requests over the limit get a `429 Too Many Requests`
-    response.
+    limits per authenticated user. It applies to every installed package's authenticated
+    endpoints, while public routes pass through without rate-limit headers because no user
+    identity exists to key the limit. Limited responses carry `X-Rate-Limit-Limit`,
+    `X-Rate-Limit-Remaining`, and `X-Rate-Limit-Reset` headers; requests over the limit
+    get a `429 Too Many Requests` response.
 </p>
 
 <p markdown="1">No wiring is required: this package's own middleware chain runs every installed

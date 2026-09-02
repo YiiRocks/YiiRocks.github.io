@@ -9,6 +9,15 @@ option_groups:
       type: array
       default: "<code>[]</code>"
       desc: "RBAC permissions whose holders must have 2FA enabled. Users with any of these permissions are redirected to 2FA setup until they enable a method. Enforced by <code>TwoFactorAuthenticationEnforceMiddleware</code>."
+  email:
+    - name: codeLifespan
+      type: int
+      default: "<code>600</code>"
+      desc: "Seconds for which an emailed verification code remains valid."
+    - name: maxAttempts
+      type: int
+      default: "<code>5</code>"
+      desc: "Maximum verification attempts allowed for one emailed code. Requesting a new code resets the limit."
   disable:
     - name: "--email"
       type: string
@@ -121,6 +130,23 @@ return [
 </div>
 {% include options_table.md options=page.option_groups.config %}
 
+<h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Email method</h4>
+<div class="mb-3 small lh-base">
+{% highlight php %}
+// config/params.php
+return [
+    'yiirocks/voyti' => [
+        '2fa' => [
+            'email' => [
+                'maxAttempts' => 3,
+            ],
+        ],
+    ],
+];
+{% endhighlight %}
+</div>
+{% include options_table.md options=page.option_groups.email %}
+
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Console Commands</h3>
 The base package registers one console command under `yiisoft/yii-console`:
 
@@ -166,7 +192,7 @@ return [
 <li>
 <h4 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Contribute setup routes</h4>
 
-<p markdown="1">Append routes to `yiirocks/voyti` → `twoFactorMethodRoutes` in
+<p markdown="1">Append routes to `yiirocks/voyti` → `2fa` → `methodRoutes` in
 `config/params.php`. They're spliced into the base package's `settings/` group,
 inheriting login guards and CSRF middleware:</p>
 
@@ -178,10 +204,12 @@ use Yiisoft\Router\Route;
 
 return [
     'yiirocks/voyti' => [
-        'twoFactorMethodRoutes' => [
-            Route::get('two-factor/my-method/')
-                ->name('voyti/user-two-factor-my-method')
-                ->action([MyMethodController::class, 'settings']),
+        '2fa' => [
+            'methodRoutes' => [
+                Route::get('two-factor/my-method/')
+                    ->name('voyti/user-two-factor-my-method')
+                    ->action([MyMethodController::class, 'settings']),
+            ],
         ],
     ],
 ];
