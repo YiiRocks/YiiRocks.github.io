@@ -6,6 +6,7 @@
 @import "mixins";
 
 $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+$transition-interactive: transform .2s ease-in-out, box-shadow .2s ease-in-out;
 
 // Cards & lists
 
@@ -51,6 +52,12 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
     box-shadow: none;
     border-bottom: 1px solid var(--bs-border-color);
     margin-bottom: 0 !important;
+    transition: background .2s ease;
+
+    &:hover,
+    &:focus-within {
+        background: linear-gradient(225deg, var(--bs-primary-bg-subtle), transparent 42%);
+    }
 
     > .card-body {
         padding: 2.5rem 0;
@@ -110,7 +117,7 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
 // Buttons
 
 .btn {
-        --bs-btn-border-radius: 10px;
+    --bs-btn-border-radius: 10px;
 
     &-sm {
         --bs-btn-font-size: 12px;
@@ -156,6 +163,16 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
         @include btn-tint-variant(var(--bs-stock-link-color), var(--bs-tertiary-bg), var(--bs-tertiary-bg), var(--bs-stock-link-color));
     }
 
+    &-secondary, &-info {
+        transition: $transition-interactive;
+
+        &:hover, &:focus-visible {
+            border-color: transparent;
+            box-shadow: 0 4px 14px -3px rgba(var(--bs-primary-rgb), .3);
+            transform: translateY(-1px);
+        }
+    }
+
     &-primary {
         --bs-btn-color: #f5f3ff;
         --bs-btn-bg: var(--bs-primary);
@@ -172,11 +189,7 @@ $gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
         --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
         background-image: $gradient;
         box-shadow: 0 4px 14px -3px rgba(var(--bs-primary-rgb), .5);
-        transition: color .15s ease-in-out, transform .2s ease-in-out, box-shadow .2s ease-in-out;
-
-        &:hover, &:focus, &:active {
-            background-image: $gradient;
-        }
+        transition: color .15s ease-in-out, $transition-interactive;
 
         &:hover, &:focus {
             @include hover-lift(.6);
@@ -344,8 +357,12 @@ main a[target="_blank"]:not(.btn)::after {
         animation: drift-alt 6s ease-in-out infinite;
     }
 
-    h1 { max-width: 648px; position: relative; z-index: 1; }
-    p { position: relative; z-index: 1; }
+    h1, p {
+        position: relative;
+        z-index: 1;
+    }
+
+    h1 { max-width: 648px; }
 }
 
 .hero-badge-dot {

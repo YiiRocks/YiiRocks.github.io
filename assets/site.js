@@ -1,8 +1,13 @@
 function copyToClipboard(el) {
-    var orig = el.textContent;
+    var orig = el.dataset.clipboardOriginal || el.textContent;
+    el.dataset.clipboardOriginal = orig;
+    var version = (el.clipboardVersion || 0) + 1;
+    el.clipboardVersion = version;
+    clearTimeout(el.clipboardResetTimer);
     navigator.clipboard.writeText(orig).then(function () {
+        if (el.clipboardVersion !== version) return;
         el.textContent = 'Copied!';
-        setTimeout(function () { el.textContent = orig; }, 1500);
+        el.clipboardResetTimer = setTimeout(function () { el.textContent = orig; }, 1500);
     });
 }
 
@@ -43,7 +48,12 @@ document.addEventListener('click', function (e) {
     var renewBtn = e.target.closest('[data-secret-renew]');
     if (renewBtn) {
         var valueEl = renewBtn.previousElementSibling;
-        if (valueEl) valueEl.textContent = randomSecret();
+        if (valueEl) {
+            valueEl.clipboardVersion = (valueEl.clipboardVersion || 0) + 1;
+            clearTimeout(valueEl.clipboardResetTimer);
+            valueEl.textContent = randomSecret();
+            delete valueEl.dataset.clipboardOriginal;
+        }
         return;
     }
 
