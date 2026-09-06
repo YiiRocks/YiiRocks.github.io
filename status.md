@@ -20,6 +20,7 @@ groups:
       - voyti
       - voyti-api
       - voyti-api-rate-limiter
+      - voyti-api-scim
       - voyti-api-stateless-client
       - voyti-api-user
       - voyti-2fa
@@ -68,7 +69,7 @@ sub_packages:
     repo: voyti-api-stateless-client
     branch: main
     workflow: build.yml
-    docsUrl: "/voyti/stateless-client/"
+    docsUrl: "/voyti/api-stateless-client/"
     unreleased: true
   voyti-api-user:
     name: API / User
@@ -79,6 +80,16 @@ sub_packages:
     branch: main
     workflow: build.yml
     docsUrl: "/voyti/api/"
+    unreleased: true
+  voyti-api-scim:
+    name: API / SCIM
+    tint: "#dbeafe"
+    logo: "/assets/icons/voyti-api-scim.svg"
+    package: yiirocks/voyti-api-scim
+    repo: voyti-api-scim
+    branch: main
+    workflow: build.yml
+    docsUrl: "/voyti/api-scim/"
     unreleased: true
   voyti-2fa:
     name: 2FA

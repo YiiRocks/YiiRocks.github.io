@@ -23,15 +23,21 @@ option_groups:
       default: "<code>false</code>"
       desc: "Store counters in APCu instead of the host's PSR-16 cache, for real atomic compare-and-swap. Only safe on a single-server deployment - a load-balanced/multi-server host would enforce the limit independently per server instead of across the cluster."
 resources:
+  - key: scim
+    icon: "/assets/icons/voyti-api-scim.svg"
+    label: "SCIM 2.0"
+    text: "SCIM 2.0 provisioning for identity providers: Voyti users and RBAC roles exposed through Users and Groups resources. See the <a href=\"/voyti/api-scim/\">full SCIM provisioning page</a> for endpoint and behavior details."
+    package: "yiirocks/voyti-api-scim"
+    repo: "voyti-api-scim"
   - key: stateless-client
     icon: "/assets/icons/voyti-api-stateless-client.svg"
     label: "Stateless Client"
-    text: "A REST API for any stateless client: credential login/logout, self-registration, password reset, own-profile and own-sessions management, plus admin RBAC and audit-log endpoints. See the <a href=\"/voyti/stateless-client/\">full Stateless Client page</a> for the complete endpoint list."
+    text: "A REST API for any stateless client: credential login/logout, self-registration, password reset, own-profile and own-sessions management, plus admin RBAC and audit-log endpoints. See the <a href=\"/voyti/api-stateless-client/\">full Stateless Client page</a> for the complete endpoint list."
     package: "yiirocks/voyti-api-stateless-client"
     repo: "voyti-api-stateless-client"
   - key: user
     icon: "/assets/icons/voyti-api-user.svg"
-    label: "User"
+    label: "User CRUD"
     text: "REST CRUD endpoints for users, built on this package's token authentication and admin-access middleware. Contributes its routes into the shared authenticated group below and its own OpenApiSpecContributorInterface implementation into the merged openapi.json spec - no route or OpenAPI wiring of its own."
     package: "yiirocks/voyti-api-user"
     repo: "voyti-api-user"

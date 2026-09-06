@@ -1,7 +1,7 @@
 ---
 layout: package-section
 pkgId: voyti
-section: stateless-client
+section: api-stateless-client
 title: "Voyti - Stateless Client API"
 option_groups:
   social:
