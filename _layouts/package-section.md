@@ -10,7 +10,7 @@ layout: default
 {% assign current_title = s.title %}
 {% endif %}
 {% endfor %}
-<div class="container py-5">
+<div class="container py-3">
     <div class="d-flex align-items-center gap-4 mb-3">
         <a href="{{ pkg.docsUrl }}" class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4" style="background:{{ pkg.tint }}; width:56px; height:56px;"><img src="{{ pkg.logo | relative_url }}" alt="{{ pkg.name }}" width="32" height="32"></a>
         <div>
