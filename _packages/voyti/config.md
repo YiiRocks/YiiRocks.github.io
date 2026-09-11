@@ -61,7 +61,7 @@ option_groups:
     - name: recaptchaVersion
       type: RecaptchaVersion
       default: "<code>RecaptchaVersion::V3</code>"
-      desc: "<code>RecaptchaVersion::V2</code> or <code>RecaptchaVersion::V3</code>. Requires the optional <code>yiirocks/recaptcha</code> package plus a site key and secret configured for the selected version via that package's own <code>RecaptchaRegistry::configure()</code> - without it, forms silently render and validate without reCAPTCHA."
+      desc: "<code>RecaptchaVersion::V2</code> or <code>RecaptchaVersion::V3</code>. Requires the optional <code>yiirocks/recaptcha</code> package installed and configured. Without it, forms silently render and validate without reCAPTCHA."
   session:
     - name: maxPasswordAge
       type: int
@@ -69,7 +69,7 @@ option_groups:
       desc: "Max password age in days before a user is forced to set a new one. <code>0</code> disables password expiration entirely."
     - name: passwordPolicy
       type: array
-      desc: "Password length and character-count policy. The nested settings below define the length limits and Unicode character minimums. Minimums must be non-negative, and their sum must not exceed <code>maxLength</code>."
+      desc: "Nested settings to define the password policy. Minimums must be non-negative, and their sum must not exceed <code>maxLength</code>."
       options:
         - name: minLength
           type: int

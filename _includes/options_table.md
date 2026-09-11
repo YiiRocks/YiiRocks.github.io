@@ -12,10 +12,9 @@
 <div class="col-md-7">{{ opt.desc }}</div>
 </div>
 {% if opt.options %}
-<div class="mt-3">
-<div class="list-group list-group-flush mb-3">
+<div class="list-group list-group-flush mt-2">
 {% for subopt in opt.options %}
-<div class="list-group-item px-0 bg-transparent">
+<div class="list-group-item px-0 bg-transparent{% if forloop.last %} pb-0{% endif %}">
 <div class="row">
 <div class="col-md-5 ps-5 border-start">
 <div class="fw-semibold font-monospace text-break">{{ subopt.name }}{% if subopt.type %}<span class="fw-normal text-body-tertiary"> {{ subopt.type }}</span>{% endif %}</div>
@@ -27,7 +26,6 @@
 </div>
 </div>
 {% endfor %}
-</div>
 </div>
 {% endif %}
 </div>
