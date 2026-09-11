@@ -67,10 +67,9 @@ option_groups:
       type: int
       default: "<code>0</code>"
       desc: "Max password age in days before a user is forced to set a new one. <code>0</code> disables password expiration entirely."
-    - name: enablePasswordComplexity
-      type: bool
-      default: "<code>false</code>"
-      desc: "Require passwords to contain an uppercase letter, a lowercase letter, a digit, and a special character."
+    - name: passwordPolicy
+      type: array
+      desc: "Password length and character-count policy. The nested settings below define the length limits and Unicode character minimums. Minimums must be non-negative, and their sum must not exceed <code>maxLength</code>."
     - name: passwordHistoryLimit
       type: int
       default: "<code>10</code>"
@@ -116,6 +115,9 @@ use YiiRocks\Voyti\Enum\ProfileVisibility;
 return [
     'yiirocks/voyti' => [
         'appName' => 'My Project',
+        'passwordPolicy' => [
+            'minLength' => 8,
+        ],
         'profileVisibility' => ProfileVisibility::PUBLIC,
     ],
 ];
@@ -129,7 +131,47 @@ return [
 {% include options_table.md options=page.option_groups.auth %}
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Session &amp; Security</h3>
-{% include options_table.md options=page.option_groups.session %}
+<div class="list-group mb-3">
+{% for opt in page.option_groups.session %}
+<div class="list-group-item">
+<div class="row">
+<div class="col-md-5">
+<div class="fw-semibold font-monospace text-break">{{ opt.name }}{% if opt.type %}<span class="fw-normal text-body-tertiary"> {{ opt.type }}</span>{% endif %}</div>
+{% if opt.default %}
+<div class="font-monospace small text-body-tertiary">{{ opt.default }}</div>
+{% endif %}
+</div>
+<div class="col-md-7">{{ opt.desc }}</div>
+</div>
+{% if opt.name == 'passwordPolicy' %}
+<div class="mt-3 ms-3 ps-3 border-start" markdown="1">
+
+<div class="list-group list-group-flush mb-3">
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">minLength <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>6</code></div></div><div class="col-md-7">Minimum password length.</div></div>
+</div>
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">maxLength <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>72</code></div></div><div class="col-md-7">Maximum password length. Must not be smaller than <code>minLength</code>.</div></div>
+</div>
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">minUppercase <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>0</code></div></div><div class="col-md-7">Minimum Unicode uppercase (<code>Lu</code>) characters.</div></div>
+</div>
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">minLowercase <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>0</code></div></div><div class="col-md-7">Minimum Unicode lowercase (<code>Ll</code>) characters.</div></div>
+</div>
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">minDigits <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>0</code></div></div><div class="col-md-7">Minimum Unicode decimal-digit (<code>Nd</code>) characters.</div></div>
+</div>
+<div class="list-group-item px-0 bg-transparent">
+<div class="row"><div class="col-md-5"><div class="fw-semibold font-monospace">minSymbols <span class="fw-normal text-body-tertiary">int</span></div><div class="font-monospace small text-body-tertiary"><code>0</code></div></div><div class="col-md-7">Minimum characters outside Unicode letters and numbers.</div></div>
+</div>
+</div>
+
+</div>
+{% endif %}
+</div>
+{% endfor %}
+</div>
 
 <h3 class="h5 text-uppercase fw-bold pb-2 mb-3 border-bottom border-2 text-primary-emphasis section-label">Views &amp; Mail</h3>
 {% include options_table.md options=page.option_groups.views_mail %}
